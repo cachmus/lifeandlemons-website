@@ -1,0 +1,39 @@
+---
+/**
+ * Button für ein Angebot. Das Ziel kommt ausschließlich aus src/config/angebote.ts.
+ * Verwendung: <AngebotButton id="kursbuch" />
+ */
+import { angebotNachId } from '../config/angebote';
+
+interface Props {
+  id: string;
+  variante?: 'primaer' | 'zweitrangig';
+}
+
+const { id, variante = 'primaer' } = Astro.props;
+const { aktion, name } = angebotNachId(id);
+const extern = aktion.typ === 'checkout';
+const klasse = variante === 'zweitrangig' ? 'button button--zweitrangig' : 'button';
+---
+
+<a
+  class={klasse}
+  href={aktion.url}
+  data-angebot={id}
+  data-aktion={aktion.typ}
+  aria-label={`${aktion.label}: ${name}`}
+  {...extern ? { rel: 'noopener', target: '_blank' } : {}}
+>
+  {aktion.label}{extern && <span class="sr-hinweis"> (öffnet ein neues Fenster)</span>}
+</a>
+
+<style>
+  .sr-hinweis {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Platzhalter from '../components/Platzhalter.astro';
+import AngebotButton from '../components/AngebotButton.astro';
+import { site } from '../config/site';
+---
+
+<Base
+  title={site.rolle}
+  description="Entwirf drei mögliche Versionen deines Zukunfts-Ichs, löse deine innere Bremse und teste deine neue Richtung am echten Leben aus."
+>
+  <section class="section">
+    <div class="container text">
+      <h1>Entwirf dein Zukunfts-Ich</h1>
+      <!-- Kernbotschaft aus dem Kampagnenplan V8 -->
+      <p class="einleitung">
+        Entwirf drei mögliche Versionen deines Zukunfts-Ichs, löse deine innere Bremse und teste deine neue Richtung am
+        echten Leben aus.
+      </p>
+      <div class="aktionen">
+        <a class="button" href="/angebote/">Angebote ansehen</a>
+        <a class="button button--zweitrangig" href="/entwirf-dein-zukunfts-ich/">So arbeitet das Programm</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flaeche">
+    <div class="container text">
+      <h2>Wiedererkennen</h2>
+      <Platzhalter quelle="Broschüre V14, S. 2">
+        <p>Einstieg für Menschen, die spüren, dass etwas nicht mehr passt, und noch nicht sagen können, was es ist.</p>
+      </Platzhalter>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container text">
+      <h2>Der Weg durch das Programm</h2>
+      <Platzhalter quelle="Broschüre V14, S. 4 und 5">
+        <p>Die drei Teile des Kurses in Kurzform, mit Verweis auf die Programmseite.</p>
+      </Platzhalter>
+    </div>
+  </section>
+
+  <section class="section section--flaeche">
+    <div class="container text">
+      <h2>Über Christine</h2>
+      <Platzhalter quelle="Broschüre V14, S. 6">
+        <p>Zwei bis drei Sätze und Foto, mit Verweis auf „Über mich“.</p>
+      </Platzhalter>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container text">
+      <h2>Dein nächster Schritt</h2>
+      <Platzhalter quelle="Broschüre V14, S. 7">
+        <p>Kurzer Überblick über die Wege und den Einführungszeitraum.</p>
+      </Platzhalter>
+      <div class="aktionen">
+        <a class="button" href="/angebote/">Alle Angebote</a>
+        <AngebotButton id="kursbuch" variante="zweitrangig" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .einleitung {
+    font-size: 1.25rem;
+    color: var(--farbe-text-leise);
+  }
+  .aktionen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-s);
+    margin-top: var(--abstand-m);
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Platzhalter from '../components/Platzhalter.astro';
+import { site } from '../config/site';
+---
+
+<Base title="Impressum" description="Impressum von Life&Lemons.">
+  <section class="section">
+    <div class="container text">
+      <h1>Impressum</h1>
+      <Platzhalter>
+        <p>ENTWURF FOLGT. Vor dem Livegang fachlich prüfen lassen.</p>
+        <p>Benötigt: Name, ladungsfähige Anschrift, E-Mail, ggf. Telefon, ggf. Umsatzsteuer-ID oder Hinweis zur Kleinunternehmerregelung, verantwortliche Person für journalistisch-redaktionelle Inhalte.</p>
+      </Platzhalter>
+      <p>{site.inhaberin}<br />{site.name}<br />E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></p>
+    </div>
+  </section>
+</Base>

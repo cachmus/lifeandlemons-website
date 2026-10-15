@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Platzhalter from '../components/Platzhalter.astro';
+import { site } from '../config/site';
+---
+
+<Base
+  title="Über mich"
+  description={`${site.inhaberin}, ${site.rolle}: mein eigener Weg, meine Arbeitsweise und worauf sich das Programm stützt.`}
+>
+  <section class="section">
+    <div class="container text">
+      <h1>Über mich</h1>
+      <Platzhalter quelle="Foto aus Instagram-Posts/01_Fotos_SocialMedia, Auswahl offen">
+        <p>Porträtfoto</p>
+      </Platzhalter>
+    </div>
+  </section>
+
+  <section class="section section--flaeche">
+    <div class="container text">
+      <h2>Mein Weg</h2>
+      <Platzhalter quelle="Broschüre V14, S. 6">
+        <p>Eigene Geschichte, eigener Durchlauf, ehrlicher Test.</p>
+      </Platzhalter>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container text">
+      <h2>Worauf sich das Programm stützt</h2>
+      <Platzhalter quelle="Broschüre V14, S. 6">
+        <p>Die Forschung mit Namen und die Grenzen des Kurses.</p>
+      </Platzhalter>
+      <a class="button" href="/angebote/">Zu den Angeboten</a>
+    </div>
+  </section>
+</Base>

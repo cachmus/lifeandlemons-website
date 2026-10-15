@@ -1,0 +1,120 @@
+---
+import '../styles/global.css';
+import { site, hauptnavigation, fussnavigation } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Einzelne Seiten können unabhängig vom globalen Schalter ausgeschlossen werden */
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const seitentitel = Astro.url.pathname === '/' ? `${site.name} · ${title}` : `${title} · ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const robots = !site.indexierbar || noindex ? 'noindex, nofollow' : 'index, follow';
+const aktuellerPfad = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seitentitel}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={seitentitel} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+    <header class="kopf">
+      <div class="container kopf__innen">
+        <a href="/" class="kopf__marke">{site.name}</a>
+        <nav aria-label="Hauptnavigation">
+          <ul class="kopf__nav">
+            {
+              hauptnavigation.map((punkt) => (
+                <li>
+                  <a href={punkt.href} aria-current={aktuellerPfad.startsWith(punkt.href) ? 'page' : undefined}>
+                    {punkt.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="inhalt">
+      <slot />
+    </main>
+
+    <footer class="fuss">
+      <div class="container fuss__innen">
+        <p>{site.name} · {site.inhaberin}, {site.rolle}</p>
+        <p><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></p>
+        <nav aria-label="Rechtliches">
+          <ul class="fuss__nav">
+            {fussnavigation.map((punkt) => <li><a href={punkt.href}>{punkt.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .kopf {
+    border-bottom: 1px solid var(--farbe-linie);
+  }
+  .kopf__innen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--abstand-s) var(--abstand-m);
+    padding-top: var(--abstand-m);
+    padding-bottom: var(--abstand-m);
+  }
+  .kopf__marke {
+    font-family: var(--schrift-titel);
+    font-size: 1.4rem;
+    text-decoration: none;
+  }
+  .kopf__nav,
+  .fuss__nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-m);
+  }
+  .kopf__nav a {
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: inline-block;
+  }
+  .kopf__nav a[aria-current='page'] {
+    text-decoration: underline;
+  }
+  .fuss {
+    border-top: 1px solid var(--farbe-linie);
+    padding: var(--abstand-l) 0;
+    font-size: 0.95rem;
+    color: var(--farbe-text-leise);
+  }
+  .fuss__innen p {
+    margin-bottom: var(--abstand-s);
+  }
+</style>

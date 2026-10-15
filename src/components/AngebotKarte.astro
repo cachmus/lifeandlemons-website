@@ -1,0 +1,83 @@
+---
+import AngebotButton from './AngebotButton.astro';
+import { type Angebot, einfuehrungAktiv, formatEuro, formatDatum, EINFUEHRUNG_BIS } from '../config/angebote';
+
+interface Props {
+  angebot: Angebot;
+}
+
+const { angebot } = Astro.props;
+const einfuehrung = einfuehrungAktiv();
+const hatPreis = angebot.preisEinfuehrung !== undefined || angebot.preisRegulaer !== undefined;
+---
+
+<article class="karte">
+  <h3>{angebot.name}</h3>
+  <p>{angebot.kurz}</p>
+
+  {
+    hatPreis && (
+      <p class="karte__preis">
+        {angebot.preisEinfuehrung === null ? (
+          <strong>kostenlos</strong>
+        ) : einfuehrung && angebot.preisEinfuehrung !== undefined ? (
+          <>
+            <strong>{formatEuro(angebot.preisEinfuehrung)}</strong> Einführungspreis bis {formatDatum(EINFUEHRUNG_BIS)}
+            {angebot.preisRegulaer !== undefined && <span class="karte__danach">danach {formatEuro(angebot.preisRegulaer)}</span>}
+          </>
+        ) : (
+          angebot.preisRegulaer !== undefined && <strong>{formatEuro(angebot.preisRegulaer)}</strong>
+        )}
+      </p>
+    )
+  }
+
+  <dl class="karte__fakten">
+    {angebot.plaetze && (<><dt>Plätze</dt><dd>{angebot.plaetze}</dd></>)}
+    {angebot.termin && (<><dt>Termin</dt><dd>{angebot.termin}</dd></>)}
+    {angebot.besonderheit && (<><dt>Besonderheit</dt><dd>{angebot.besonderheit}</dd></>)}
+  </dl>
+
+  <AngebotButton id={angebot.id} />
+</article>
+
+<style>
+  .karte {
+    border: 1px solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--abstand-s);
+    background: var(--farbe-grund);
+  }
+  .karte p {
+    margin: 0;
+  }
+  .karte__preis strong {
+    font-size: 1.4rem;
+    margin-right: 0.35rem;
+  }
+  .karte__danach {
+    display: block;
+    color: var(--farbe-text-leise);
+    font-size: 0.95rem;
+  }
+  .karte__fakten {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem var(--abstand-s);
+    margin: 0 0 var(--abstand-s);
+    font-size: 0.95rem;
+  }
+  .karte__fakten dt {
+    color: var(--farbe-text-leise);
+  }
+  .karte__fakten dd {
+    margin: 0;
+  }
+  .karte :global(.button) {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+</style>

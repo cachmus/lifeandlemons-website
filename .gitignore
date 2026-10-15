@@ -1,0 +1,21 @@
+# Build
+dist/
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Umgebungsvariablen und lokale Zugangsdaten nie ins Repository
+.env
+.env.*
+!.env.example
+
+# Netlify lokal
+.netlify/
+
+# Betriebssystem und Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+npm-debug.log*
