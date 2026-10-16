@@ -1,0 +1,96 @@
+---
+/**
+ * Logo von Life&Lemons (Symbol: Zitrone mit Blatt und Profil; Wortmarke).
+ * Dateien in public/marke/, nachgezeichnet aus „Life&Lemons – Elegantes Zitronen-Logo.png“
+ * (Coaching/Design-System/Logo). Liegen später Vektor-Originale vor, nur die SVG-Dateien austauschen.
+ *
+ * quer:    Symbol neben Wortmarke, für die Kopfzeile auf hellem Grund
+ * gestapelt: Symbol über Wortmarke, für den Footer auf Tinte (helle Fassung)
+ */
+interface Props {
+  variante?: 'quer' | 'gestapelt';
+  /** Auf dunklem Grund die helle Fassung verwenden */
+  hell?: boolean;
+  /** Bild ist rein dekorativ, z. B. wenn der umgebende Link schon beschriftet ist */
+  dekorativ?: boolean;
+}
+
+const { variante = 'quer', hell = false, dekorativ = false } = Astro.props;
+const zusatz = hell ? '-hell' : '';
+// Seitenverhältnisse der SVG-Dateien (viewBox), damit kein Layoutspringen entsteht
+const SYMBOL = { b: 436, h: 632 };
+const WORT = { b: 1019, h: 141 };
+const masse = variante === 'quer' ? { symbol: 52, wort: 24 } : { symbol: 112, wort: 30 };
+---
+
+<span class:list={['logo', `logo--${variante}`]}>
+  <img
+    class="logo__symbol"
+    src={`/marke/symbol${zusatz}.svg`}
+    alt=""
+    width={Math.round((SYMBOL.b / SYMBOL.h) * masse.symbol)}
+    height={masse.symbol}
+    decoding="async"
+  />
+  <img
+    class="logo__wort"
+    src={`/marke/wortmarke${zusatz}.svg`}
+    alt={dekorativ ? '' : 'Life&Lemons'}
+    width={Math.round((WORT.b / WORT.h) * masse.wort)}
+    height={masse.wort}
+    decoding="async"
+  />
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .logo img {
+    display: block;
+    height: auto;
+  }
+
+  .logo--quer {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo--quer .logo__symbol {
+    width: clamp(30px, 2.6vw, 36px);
+  }
+
+  .logo--quer .logo__wort {
+    width: clamp(144px, 12vw, 173px);
+    margin-top: 6px;
+  }
+
+  @media (max-width: 400px) {
+    .logo--quer {
+      gap: 9px;
+    }
+    .logo--quer .logo__symbol {
+      width: 28px;
+    }
+    .logo--quer .logo__wort {
+      width: 128px;
+      margin-top: 4px;
+    }
+  }
+
+  .logo--gestapelt {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .logo--gestapelt .logo__symbol {
+    width: 77px;
+  }
+
+  .logo--gestapelt .logo__wort {
+    width: 217px;
+  }
+</style>

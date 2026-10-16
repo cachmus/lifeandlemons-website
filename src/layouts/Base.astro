@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { site, seiten, hauptnavigation, fussnavigation } from '../config/site';
 import { pruefeAngebote, fehlendeBestelladressen } from '../config/angebote';
-import Wortmarke from '../components/Wortmarke.astro';
+import Logo from '../components/Logo.astro';
 
 interface Props {
   /** Seitentitel ohne Markenname; auf der Startseite der vollständige Titel */
@@ -48,6 +48,8 @@ if (!g.__angeboteGeprueft) {
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#f5f2eb" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
@@ -55,6 +57,11 @@ if (!g.__angeboteGeprueft) {
     <meta property="og:title" content={seitentitel} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/marke/og-bild.png', site.url).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“" />
+    <meta name="twitter:card" content="summary_large_image" />
     <!--
       Bewegung erscheint nur mit JavaScript. Läuft das Hauptskript nicht innerhalb von 2,5 s,
       wird die Klasse wieder entfernt, damit nie Inhalte unsichtbar bleiben.
@@ -72,7 +79,7 @@ if (!g.__angeboteGeprueft) {
     <header class="kopf" data-kopf>
       <div class="container kopf__innen">
         <a href={seiten.start} class="kopf__marke" aria-label={`${site.name}, zur Startseite`}>
-          <Wortmarke />
+          <Logo variante="quer" dekorativ />
         </a>
         <nav class="kopf__nav" aria-label="Hauptnavigation">
           <ul>
@@ -98,7 +105,7 @@ if (!g.__angeboteGeprueft) {
     <footer class:list={['fuss', { 'fuss--uebergang': !dunklerSchluss }]}>
       <div class="container fuss__innen">
         <div class="fuss__marke">
-          <Wortmarke hell />
+          <Logo variante="gestapelt" hell />
           <p class="fuss__slogan">{site.slogan}</p>
         </div>
         <nav aria-label="Kontakt und Rechtliches">
@@ -141,10 +148,9 @@ if (!g.__angeboteGeprueft) {
   }
 
   .kopf__marke {
-    color: var(--tinte);
-    text-decoration: none;
-    font-size: 30px;
+    display: inline-flex;
     margin-right: auto;
+    padding: 6px 0;
   }
 
   .kopf__nav ul {
@@ -177,13 +183,11 @@ if (!g.__angeboteGeprueft) {
 
   @media (max-width: 760px) {
     .kopf__innen {
+      column-gap: 12px;
       flex-wrap: wrap;
       min-height: 0;
       padding-top: 10px;
       padding-bottom: 6px;
-    }
-    .kopf__marke {
-      font-size: 26px;
     }
     .kopf__nav {
       order: 3;
@@ -254,7 +258,9 @@ if (!g.__angeboteGeprueft) {
   }
 
   .fuss__marke {
-    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .fuss__slogan {
