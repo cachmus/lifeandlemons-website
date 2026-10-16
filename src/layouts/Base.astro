@@ -1,8 +1,11 @@
 ---
 import '../styles/global.css';
-import { site, hauptnavigation, fussnavigation } from '../config/site';
+import { site, seiten, hauptnavigation, fussnavigation } from '../config/site';
+import { pruefeAngebote } from '../config/angebote';
+import Wortmarke from '../components/Wortmarke.astro';
 
 interface Props {
+  /** Seitentitel ohne Markenname; auf der Startseite der vollständige Titel */
   title: string;
   description: string;
   /** Einzelne Seiten können unabhängig vom globalen Schalter ausgeschlossen werden */
@@ -10,10 +13,18 @@ interface Props {
 }
 
 const { title, description, noindex = false } = Astro.props;
-const seitentitel = Astro.url.pathname === '/' ? `${site.name} · ${title}` : `${title} · ${site.name}`;
+const istStart = Astro.url.pathname === '/';
+const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const robots = !site.indexierbar || noindex ? 'noindex, nofollow' : 'index, follow';
-const aktuellerPfad = Astro.url.pathname;
+const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+
+// Hinweise auf fehlende Entscheidungen im Build-Protokoll (einmal je Build)
+const g = globalThis as { __angeboteGeprueft?: boolean };
+if (!g.__angeboteGeprueft) {
+  g.__angeboteGeprueft = true;
+  for (const hinweis of pruefeAngebote()) console.warn(`\n[Angebote] ${hinweis}`);
+}
 ---
 
 <!doctype html>
@@ -26,25 +37,38 @@ const aktuellerPfad = Astro.url.pathname;
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f1eee7" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={seitentitel} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <!--
+      Bewegung erscheint nur mit JavaScript. Läuft das Hauptskript nicht innerhalb von 2,5 s,
+      wird die Klasse wieder entfernt, damit nie Inhalte unsichtbar bleiben.
+    -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      setTimeout(function () {
+        if (!document.documentElement.hasAttribute('data-bereit')) document.documentElement.classList.remove('js');
+      }, 2500);
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
-    <header class="kopf">
+    <header class="kopf" data-kopf>
       <div class="container kopf__innen">
-        <a href="/" class="kopf__marke">{site.name}</a>
-        <nav aria-label="Hauptnavigation">
-          <ul class="kopf__nav">
+        <a href={seiten.start} class="kopf__marke" aria-label={`${site.name}, zur Startseite`}>
+          <Wortmarke />
+        </a>
+        <nav class="kopf__nav" aria-label="Hauptnavigation">
+          <ul>
             {
               hauptnavigation.map((punkt) => (
                 <li>
-                  <a href={punkt.href} aria-current={aktuellerPfad.startsWith(punkt.href) ? 'page' : undefined}>
+                  <a href={punkt.href} aria-current={pfad.startsWith(punkt.href) ? 'page' : undefined}>
                     {punkt.label}
                   </a>
                 </li>
@@ -52,69 +76,165 @@ const aktuellerPfad = Astro.url.pathname;
             }
           </ul>
         </nav>
+        <a class="button button--klein kopf__button" href={`${seiten.modul1}#kursbuch`}>Zum Kursbuch</a>
       </div>
     </header>
 
-    <main id="inhalt">
+    <main id="inhalt" tabindex="-1">
       <slot />
     </main>
 
     <footer class="fuss">
       <div class="container fuss__innen">
-        <p>{site.name} · {site.inhaberin}, {site.rolle}</p>
-        <p><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></p>
-        <nav aria-label="Rechtliches">
-          <ul class="fuss__nav">
+        <div class="fuss__marke">
+          <Wortmarke hell />
+          <p class="fuss__slogan">{site.slogan}</p>
+        </div>
+        <nav aria-label="Kontakt und Rechtliches">
+          <ul class="fuss__links">
+            <li><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></li>
             {fussnavigation.map((punkt) => <li><a href={punkt.href}>{punkt.label}</a></li>)}
           </ul>
         </nav>
       </div>
     </footer>
+
+    <script>
+      import { starteBewegung } from '../scripts/bewegung';
+      starteBewegung();
+    </script>
   </body>
 </html>
 
 <style>
   .kopf {
-    border-bottom: 1px solid var(--farbe-linie);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--papier) 92%, transparent);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--linie);
+    transition: transform 300ms var(--kurve);
   }
+
+  :global(.kopf--weg) {
+    transform: translateY(-101%);
+  }
+
   .kopf__innen {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--abstand-s) var(--abstand-m);
-    padding-top: var(--abstand-m);
-    padding-bottom: var(--abstand-m);
+    gap: 12px 40px;
+    min-height: 80px;
   }
+
   .kopf__marke {
-    font-family: var(--schrift-titel);
-    font-size: 1.4rem;
+    color: var(--tinte);
     text-decoration: none;
+    font-size: 30px;
+    margin-right: auto;
   }
-  .kopf__nav,
-  .fuss__nav {
+
+  .kopf__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 32px;
+  }
+
+  .kopf__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    color: var(--tinte);
+    text-decoration: none;
+    background-image: linear-gradient(var(--terrakotta), var(--terrakotta));
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    background-position: 0 calc(50% + 0.9em);
+    transition: background-size 350ms var(--kurve), color 250ms var(--kurve);
+  }
+
+  .kopf__nav a:hover,
+  .kopf__nav a:focus-visible,
+  .kopf__nav a[aria-current='page'] {
+    background-size: 100% 1.5px;
+  }
+
+  @media (max-width: 760px) {
+    .kopf__innen {
+      flex-wrap: wrap;
+      min-height: 0;
+      padding-top: 10px;
+      padding-bottom: 6px;
+    }
+    .kopf__marke {
+      font-size: 26px;
+    }
+    .kopf__nav {
+      order: 3;
+      width: 100%;
+      border-top: 1px solid var(--linie);
+    }
+    .kopf__nav ul {
+      justify-content: space-between;
+      gap: 8px;
+    }
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  .fuss {
+    background: var(--tinte);
+    color: var(--papier);
+    padding: clamp(56px, 7vw, 96px) 0 clamp(40px, 5vw, 64px);
+  }
+
+  .fuss__innen {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px 64px;
+  }
+
+  .fuss__marke {
+    font-size: 28px;
+  }
+
+  .fuss__slogan {
+    margin-top: 8px;
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--papier);
+  }
+
+  .fuss__links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-m);
+    gap: 4px 28px;
+    font-size: 15px;
   }
-  .kopf__nav a {
-    text-decoration: none;
-    padding: 0.5rem 0;
-    display: inline-block;
+
+  .fuss__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--papier);
+    text-decoration-color: var(--terrakotta-hell);
   }
-  .kopf__nav a[aria-current='page'] {
-    text-decoration: underline;
-  }
-  .fuss {
-    border-top: 1px solid var(--farbe-linie);
-    padding: var(--abstand-l) 0;
-    font-size: 0.95rem;
-    color: var(--farbe-text-leise);
-  }
-  .fuss__innen p {
-    margin-bottom: var(--abstand-s);
+
+  .fuss__links a:hover,
+  .fuss__links a:focus-visible {
+    color: var(--terrakotta-hell);
   }
 </style>

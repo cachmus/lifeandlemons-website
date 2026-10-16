@@ -1,0 +1,407 @@
+---
+/**
+ * Seite Modul 1 „Entwirf dein Zukunfts-Ich“.
+ * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Broschüre mobil 02, Kursbuch Band 1, Umschlag V5).
+ * Preise, Fristen und Buttons: src/config/angebote.ts.
+ * Anker: #kursbuch (Kurzlink /buch), #club (Kurzlink /club), #formate
+ */
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import umschlag from '../../assets/kursbuch-umschlag.png';
+import FormatKarte from '../../components/FormatKarte.astro';
+import AngebotButton from '../../components/AngebotButton.astro';
+import { seiten, anfrageLink } from '../../config/site';
+import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
+
+const teile = [
+  {
+    nr: 'I',
+    titel: 'Heute',
+    text: 'Du schaust auf dein heutiges Leben, auf das, worauf du wartest, und auf den Menschen, der du in fünf Jahren wärst, wenn du nichts änderst. Schon nach diesem ersten Teil hast du deine innere Bremse benannt und ausgerechnet, was dich das Warten kostet.',
+    danach: 'Praxiswoche 1: ein kleiner Schritt, den du sonst aufschiebst',
+  },
+  {
+    nr: 'II',
+    titel: 'Drei mögliche Leben',
+    text: 'Du findest heraus, was dir liegt und wonach du dich sehnst. Daraus entwirfst du drei mögliche Versionen deines Zukunfts-Ichs. Aus ihnen leitest du deine Werte ab und prüfst einen Entwurf im echten Leben.',
+    danach: 'Praxiswoche 2: ein Gespräch mit einem Menschen, der so ähnlich schon lebt, oder ein Selbstversuch',
+  },
+  {
+    nr: 'III',
+    titel: 'Deine Richtung',
+    text: 'Du ziehst alle neuen Erkenntnisse zusammen und entscheidest dich für die Richtung, der du in den nächsten Monaten Raum geben möchtest. In der anschließenden Probezeit überprüfst du sie 14 Tage lang im Alltag.',
+    danach: 'Probezeit: eine erste Aktion und zwei Gewohnheiten, eine neue und eine, die du ablegst',
+  },
+];
+
+const ergebnisse = [
+  'Einen ausgearbeiteten und getesteten Entwurf als klare Richtung für deine nähere Zukunft',
+  'Drei Handlungen, die du getan und nicht nur geplant hast',
+  'Eine Gewohnheit deines Zukunfts-Ichs, die du 14 Tage lang eingeübt hast, und eine ungünstige, die du in dieser Zeit vermieden hast',
+  'Deine inneren Mechanismen, die dich bremsen und von deinen Zielen abbringen',
+  'Eine Rechnung darüber, was dich fünf weitere Jahre Warten kosten',
+  'Klarheit darüber, wohin dich dein nächster Lebensabschnitt führen soll und wie du anfängst',
+];
+
+const orientierung = anfrageLink(
+  'Orientierung',
+  'Hallo Christine,\n\nich möchte gern ein Orientierungsgespräch führen.\n\nName:\nTelefonnummer:\nZwei Zeitfenster, die mir passen:\n',
+);
+---
+
+<Base
+  title="Modul 1: Entwirf dein Zukunfts-Ich"
+  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, löst deine innere Bremse und testest deine neue Richtung am echten Leben aus. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
+>
+  <!-- Einstieg -->
+  <section class="kopf-abschnitt">
+    <div class="container">
+      <div class="kopf-abschnitt__innen">
+      <div class="kopf-abschnitt__text">
+        <p class="label">Modul 1 · Entwerfen</p>
+        <h1>Entwirf dein <span class="pivot">Zukunfts-Ich</span></h1>
+        <p class="unterzeile">Neue Wege eröffnen und deine innere Bremse lösen</p>
+        <p class="einleitung">
+          Für dich, wenn du spürst, dass sich etwas verändern soll, aber noch nicht genau sagen kannst, was es ist und wie dein erster
+          Schritt aussehen könnte. In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, löst deine innere Bremse und
+          testest deine neue Richtung am echten Leben aus.
+        </p>
+        <div class="aktionen">
+          <a class="button" href="#formate">Wähle deinen Weg <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="textlink" href="#kursbuch">Zum Kursbuch</a>
+        </div>
+      </div>
+      <div class="kopf-abschnitt__bild">
+        <Image
+          src={umschlag}
+          alt="Umschlag des Kursbuchs Entwirf dein Zukunfts-Ich"
+          widths={[400, 670]}
+          sizes="(max-width: 860px) 80vw, 34vw"
+          format="webp"
+          quality={85}
+          loading="eager"
+        />
+      </div>
+      </div>
+      <ul class="eckdaten" aria-label="Eckdaten">
+        <li>3 Teile</li>
+        <li>9 Einheiten</li>
+        <li>rund 10 Stunden</li>
+        <li>14 Tage Erprobung im Alltag</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 01 Ausgangslage -->
+  <section class="abschnitt abschnitt--rose" aria-labelledby="ausgangslage-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">01 · Ausgangslage</p>
+        <h2 id="ausgangslage-titel" class="zeile">
+          Was wäre, wenn wir es selbst in der Hand hätten, welcher <span class="pivot">Mensch</span> wir werden?
+        </h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Für die Auswahl eines Familienautos oder eines neuen Fernsehers nehmen wir uns oft wochenlang Zeit. Bei der viel größeren
+          Frage, wie wir eigentlich leben wollen, entscheiden wir häufig weit weniger bewusst. Aus vielen kleinen und großen
+          Entscheidungen setzt sich unser Leben dann wie ein zufälliges Mosaik zusammen, das wir uns so vorher gar nicht ausgemalt
+          haben.
+        </p>
+        <p>
+          Vielleicht steckt seit Jahren eine Idee in dir, die dein innerer Realist zuverlässig zurückhält. Vielleicht glaubst du, du
+          müsstest erst noch mehr wissen, mehr Geld haben, mehr Erfahrung sammeln oder den richtigen Zeitpunkt abwarten.
+        </p>
+        <p>
+          Du darfst für dein heutiges Leben dankbar sein und zugleich spüren, dass etwas nicht mehr zu dir passt. Beides kann wahr
+          sein. Im Kurs stellst du fest, was dir fehlt, worauf du wartest und was dich zurückhält.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Aufbau -->
+  <section class="abschnitt" aria-labelledby="aufbau-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Aufbau</p>
+        <h2 id="aufbau-titel" class="zeile">Wie der Kurs <span class="pivot">aufgebaut</span> ist</h2>
+        <p class="einleitung text">
+          Der Kurs besteht aus drei Teilen mit neun Einheiten von durchschnittlich einer Stunde. Zwischen den Teilen liegen zwei
+          Praxiswochen, in denen du ins Handeln kommst und deine Entwürfe im echten Leben erprobst.
+        </p>
+      </div>
+      <ol class="teile">
+        {
+          teile.map((teil) => (
+            <li class="teil" data-erscheinen>
+              <p class="teil__nr" aria-hidden="true">{teil.nr}</p>
+              <h3 class="teil__titel">
+                <span class="nur-screenreader">Teil {teil.nr}: </span>
+                {teil.titel}
+              </h3>
+              <p>{teil.text}</p>
+              <p class="teil__danach">{teil.danach}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="aufbau__summe gedaempft">
+        Insgesamt arbeitest du rund 10 Stunden aktiv an deinem Zukunfts-Ich, verteilt über bis zu 6 Wochen.
+      </p>
+    </div>
+  </section>
+
+  <!-- 03 Ergebnis -->
+  <section class="abschnitt abschnitt--sand" aria-labelledby="ergebnis-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">03 · Ergebnis</p>
+        <h2 id="ergebnis-titel" class="zeile">Das hast du am <span class="pivot">Ende</span></h2>
+      </div>
+      <ul class="ergebnisse" data-erscheinen>
+        {ergebnisse.map((e) => <li>{e}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 04 Formate -->
+  <section class="abschnitt" id="formate" aria-labelledby="formate-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">04 · Formate und Preise</p>
+        <h2 id="formate-titel" class="zeile">Wähle deinen <span class="pivot">Weg</span></h2>
+        <p class="einleitung text">
+          Alle vier Wege führen durch dieselben neun Einheiten. Sie unterscheiden sich darin, wie viel Begleitung du dir wünschst.
+          {
+            einfuehrungAktiv() && (
+              <>
+                {' '}Die Einführungspreise gelten für die ersten Durchläufe und bei Anmeldungen bis einschließlich{' '}
+                {formatDatum(STICHTAGE.einfuehrungBis)}.
+              </>
+            )
+          }
+        </p>
+      </div>
+
+      <div class="formate">
+        <FormatKarte id="kursbuch" anker="kursbuch" />
+        <FormatKarte id="club" anker="club" />
+        <FormatKarte id="einzel" anker="einzel-track" />
+        <FormatKarte id="vip" anker="vip-track" />
+      </div>
+
+      <div class="demnaechst" data-erscheinen>
+        <p><span class="label">In Vorbereitung</span> Ein Selbstlernkurs mit Videos zu den neun Einheiten.</p>
+        <AngebotButton id="selbstlernkurs" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Orientierung -->
+  <section class="abschnitt abschnitt--rose" aria-labelledby="orientierung-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">Orientierungsgespräch</p>
+        <h2 id="orientierung-titel" class="zeile">Noch unsicher, welcher Weg zu dir <span class="pivot">passt</span>?</h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Dann lass uns 15 Minuten telefonieren. Das Orientierungsgespräch ist kostenlos und unverbindlich. Schreib mir dafür eine
+          E-Mail mit deinem Namen, deiner Telefonnummer und zwei Zeitfenstern, die dir passen.
+        </p>
+        <p>
+          <a class="button" href={orientierung}>Orientierungsgespräch anfragen <span class="button__pfeil" aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Grundlagen -->
+  <section class="abschnitt" id="grundlagen" aria-labelledby="grundlagen-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">05 · Grundlagen</p>
+        <h2 id="grundlagen-titel" class="zeile">Worauf der Kurs sich <span class="pivot">stützt</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Die Übungen stützen sich auf psychologische Forschung zur Zielerreichung (Gabriele Oettingen, Peter Gollwitzer), zur Bildung
+          von Gewohnheiten (Wendy Wood) und zu den „möglichen Selbst“. Methodische Impulse stammen aus „Designing Your Life“ von Bill
+          Burnett und Dave Evans sowie aus „The Big Leap“ von Gay Hendricks.
+        </p>
+        <p>
+          Den Aufbau des Kurses und die Reihenfolge der Übungen habe ich selbst entwickelt und getestet. Im Kursbuch steht getrennt, was
+          Forschungsergebnis ist, was mich methodisch angeregt hat und was meine eigene Konstruktion ist.
+        </p>
+        <p class="gedaempft">Der Kurs ersetzt keine Psychotherapie, keine Suchtberatung und keine medizinische Behandlung.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Weiter mit Modul 2 -->
+  <section class="abschnitt abschnitt--sand" aria-labelledby="weiter-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">06 · Danach</p>
+        <h2 id="weiter-titel" class="zeile">Wie es danach <span class="pivot">weitergeht</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Hat deine Richtung die Probezeit bestanden, soll sie ein fester Teil deines Lebens werden. Dafür entsteht gerade Modul 2
+          „Manifestiere dein Zukunfts-Ich“. Darin übersetzt du deinen Weg in 90 Tage mit Meilensteinen und neuen Gewohnheiten.
+        </p>
+        <p><a class="textlink" href={seiten.modul2}>Mehr zu Modul 2 <span aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(48px, 7vw, 112px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf-abschnitt__innen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+  }
+
+  .kopf-abschnitt__text {
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .kopf-abschnitt__bild {
+    flex: 0 1 400px;
+    margin: 0 auto;
+    background: var(--rose);
+    padding: clamp(20px, 3vw, 40px);
+  }
+
+  .kopf-abschnitt__bild :global(img) {
+    width: 100%;
+    border: 1px solid var(--linie);
+  }
+
+  .kopf-abschnitt .einleitung {
+    max-width: 40rem;
+  }
+
+  .eckdaten {
+    list-style: none;
+    margin: clamp(40px, 5vw, 64px) 0 0;
+    padding: 18px 0;
+    border-top: 1px solid var(--linie);
+    border-bottom: 1px solid var(--linie);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .eckdaten li:not(:last-child)::after {
+    content: '·';
+    padding: 0 14px;
+    color: var(--terrakotta);
+  }
+
+  /* Aufbau */
+  .teile {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(24px, 4vw, 56px);
+  }
+
+  .teil {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 1px solid var(--tinte);
+    padding-top: 20px;
+    font-size: 16px;
+  }
+
+  .teil__nr {
+    font-family: var(--schrift-titel);
+    font-size: 44px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .teil__titel {
+    font-size: clamp(28px, 2.6vw, 36px);
+  }
+
+  .teil__danach {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--terrakotta);
+    font-size: 14.5px;
+    color: var(--terrakotta-tief);
+    font-weight: 700;
+  }
+
+  .aufbau__summe {
+    margin-top: clamp(32px, 4vw, 48px);
+    font-size: 16px;
+  }
+
+  /* Ergebnis */
+  .ergebnisse {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: ergebnis;
+  }
+
+  .ergebnisse li {
+    counter-increment: ergebnis;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 16px 0;
+    border-top: 1px solid var(--linie);
+  }
+
+  .ergebnisse li::before {
+    content: counter(ergebnis, decimal-leading-zero);
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--terrakotta-tief);
+  }
+
+  /* Formate */
+  .formate {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .demnaechst {
+    margin-top: clamp(32px, 4vw, 56px);
+    padding-top: 24px;
+    border-top: 1px dashed var(--terrakotta);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+  }
+
+  .demnaechst .label {
+    margin-right: 12px;
+  }
+</style>

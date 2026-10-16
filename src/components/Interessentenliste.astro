@@ -1,0 +1,280 @@
+---
+/**
+ * Interessentenliste (Brevo, Double-Opt-in). Integrationspunkt: `newsletter` in src/config/site.ts.
+ *
+ * Ist dort eine Brevo-Formularadresse eingetragen, gehen die Angaben direkt an Brevo.
+ * Solange sie fehlt, öffnet das Formular eine vorbefüllte E-Mail an Christine.
+ * Die Felder heißen wie im Brevo-Formular (EMAIL, lists[], email_address_check, locale).
+ * Beim Einrichten mit dem HTML-Code aus Brevo abgleichen.
+ */
+import { newsletter, site, seiten, type InteresseId } from '../config/site';
+
+interface Props {
+  label: string;
+  titel: string;
+  pivot: string;
+  text: string;
+  /** Interessen, die beim Laden schon angehakt sind */
+  vorauswahl?: InteresseId[];
+}
+
+const { label, titel, pivot, text, vorauswahl = [] } = Astro.props;
+const angebunden = newsletter.formularAdresse.length > 0;
+const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktEmail}?subject=Interessentenliste`;
+---
+
+<section class="abschnitt abschnitt--rose liste" id="liste" aria-labelledby="liste-titel">
+  <div class="container zwei-spalten">
+    <div class="kopfblock">
+      <p class="label">{label}</p>
+      <h2 id="liste-titel" class="zeile">{titel} <span class="pivot">{pivot}</span></h2>
+      <p class="einleitung text">{text}</p>
+    </div>
+
+    <form
+      class="liste__form"
+      action={action}
+      method="post"
+      enctype={angebunden ? undefined : 'text/plain'}
+      data-liste
+      data-angebunden={angebunden ? 'ja' : 'nein'}
+      data-kontakt={site.kontaktEmail}
+      novalidate
+    >
+      <fieldset>
+        <legend>Ich interessiere mich für</legend>
+        {
+          newsletter.interessen.map((i) => (
+            <label class="liste__wahl">
+              <input
+                type="checkbox"
+                name={angebunden ? 'lists[]' : 'Interesse'}
+                value={angebunden ? i.brevoListe : i.label}
+                data-label={i.label}
+                checked={vorauswahl.includes(i.id)}
+              />
+              <span>{i.label}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+      <p class="liste__fehler" data-fehler="auswahl" hidden>Bitte wähle mindestens ein Thema aus.</p>
+
+      <div class="liste__feld">
+        <label for="liste-email">Deine E-Mail-Adresse</label>
+        <input
+          id="liste-email"
+          type="email"
+          name="EMAIL"
+          required
+          autocomplete="email"
+          inputmode="email"
+          placeholder="name@beispiel.de"
+          aria-describedby="liste-email-fehler"
+        />
+        <p class="liste__fehler" id="liste-email-fehler" data-fehler="email" hidden>
+          Bitte gib eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.
+        </p>
+      </div>
+
+      {
+        angebunden && (
+          <>
+            <input class="liste__honig" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="locale" value="de" />
+          </>
+        )
+      }
+
+      <p class="liste__einwilligung">
+        {angebunden ? newsletter.einwilligung : 'Deine Auswahl geht per E-Mail an mich.'}{' '}
+        Mehr dazu in der <a href={seiten.datenschutz}>Datenschutzerklärung</a>.
+      </p>
+
+      <button class="button" type="submit">Eintragen <span class="button__pfeil" aria-hidden="true">→</span></button>
+      <p class="liste__meldung" role="status" aria-live="polite" data-meldung></p>
+
+      {
+        import.meta.env.DEV && !angebunden && (
+          <p class="platzhalter">Nur in der Vorschau sichtbar: Brevo ist noch nicht verbunden (newsletter.formularAdresse in src/config/site.ts).</p>
+        )
+      }
+    </form>
+  </div>
+</section>
+
+<script>
+  function einrichten(form: HTMLFormElement) {
+    const angebunden = form.dataset.angebunden === 'ja';
+    const meldung = form.querySelector<HTMLElement>('[data-meldung]')!;
+    const fehlerAuswahl = form.querySelector<HTMLElement>('[data-fehler="auswahl"]')!;
+    const fehlerEmail = form.querySelector<HTMLElement>('[data-fehler="email"]')!;
+    const email = form.querySelector<HTMLInputElement>('input[type="email"]')!;
+    const boxen = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+
+    const pruefen = (): boolean => {
+      const gewaehlt = boxen.some((b) => b.checked);
+      const emailOk = email.value.trim() !== '' && email.validity.valid;
+      fehlerAuswahl.hidden = gewaehlt;
+      fehlerEmail.hidden = emailOk;
+      email.setAttribute('aria-invalid', emailOk ? 'false' : 'true');
+      if (!gewaehlt) boxen[0]?.focus();
+      else if (!emailOk) email.focus();
+      return gewaehlt && emailOk;
+    };
+
+    form.addEventListener('submit', async (ereignis) => {
+      ereignis.preventDefault();
+      meldung.textContent = '';
+      if (!pruefen()) return;
+
+      if (!angebunden) {
+        // Übergangslösung bis zur Brevo-Anbindung: vorbefüllte E-Mail
+        const themen = boxen.filter((b) => b.checked).map((b) => `- ${b.dataset.label}`).join('\n');
+        const text = `Hallo Christine,\n\nbitte schreib mir, wenn Folgendes startet:\n${themen}\n\nMeine E-Mail-Adresse: ${email.value.trim()}\n`;
+        window.location.href = `mailto:${form.dataset.kontakt}?subject=${encodeURIComponent('Interessentenliste')}&body=${encodeURIComponent(text)}`;
+        meldung.textContent = 'Dein E-Mail-Programm öffnet sich mit einer vorbereiteten Nachricht. Schick sie einfach ab.';
+        return;
+      }
+
+      const knopf = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      knopf.disabled = true;
+      try {
+        const antwort = await fetch(`${form.action}${form.action.includes('?') ? '&' : '?'}isAjax=1`, {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const daten = await antwort.json().catch(() => ({}));
+        if (antwort.ok && daten.success !== false) {
+          form.reset();
+          meldung.textContent = 'Fast geschafft: Bitte bestätige deine Anmeldung über den Link in der E-Mail, die gerade an dich unterwegs ist.';
+        } else {
+          meldung.textContent = 'Das hat leider nicht geklappt. Bitte versuch es noch einmal oder schreib mir eine E-Mail.';
+        }
+      } catch {
+        // Falls Brevo die Anfrage im Hintergrund nicht annimmt: normal absenden
+        form.submit();
+      } finally {
+        knopf.disabled = false;
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLFormElement>('form[data-liste]').forEach(einrichten);
+</script>
+
+<style>
+  .liste__form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: flex-start;
+  }
+
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  legend {
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .liste__wahl {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+    padding: 8px 0;
+    font-size: 15px;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  .liste__wahl input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--terrakotta-tief);
+  }
+
+  .liste__feld {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 460px;
+  }
+
+  .liste__feld label {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  input[type='email'] {
+    min-height: 52px;
+    padding: 0 16px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--tinte);
+    background: var(--sand);
+    border: 0;
+    border-bottom: 1px solid var(--tinte);
+    border-radius: 0;
+    caret-color: var(--terrakotta);
+    transition: background-color 250ms var(--kurve), border-color 250ms var(--kurve), box-shadow 250ms var(--kurve);
+  }
+
+  input[type='email']::placeholder {
+    color: var(--text-gedaempft);
+  }
+
+  input[type='email']:focus {
+    outline: none;
+    background: var(--papier-hell);
+    border-bottom-color: var(--terrakotta-tief);
+    box-shadow: inset 0 -1px 0 var(--terrakotta-tief);
+  }
+
+  input[type='email']:focus-visible {
+    outline: 2px solid var(--terrakotta-tief);
+    outline-offset: 4px;
+  }
+
+  .liste__fehler {
+    color: var(--terrakotta-tief);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .liste__einwilligung {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text-gedaempft);
+    max-width: 52ch;
+  }
+
+  .liste__meldung:empty {
+    display: none;
+  }
+
+  .liste__meldung {
+    font-weight: 700;
+    max-width: 52ch;
+  }
+
+  .liste__honig {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+</style>

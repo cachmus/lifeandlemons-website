@@ -1,0 +1,28 @@
+---
+/** Typografische Wortmarke „Life&Lemons“. Die Schriftgröße kommt vom umgebenden Element. */
+interface Props {
+  /** Auf dunklem Grund (tinte): „&“ in terrakotta-hell */
+  hell?: boolean;
+}
+const { hell = false } = Astro.props;
+---
+
+<span class:list={['wortmarke', { 'wortmarke--hell': hell }]}>Life<span class="wortmarke__und">&amp;</span>Lemons</span>
+
+<style>
+  .wortmarke {
+    font-family: var(--schrift-titel);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    white-space: nowrap;
+  }
+  .wortmarke__und {
+    font-style: italic;
+    color: var(--terrakotta);
+    padding: 0 0.04em;
+  }
+  .wortmarke--hell .wortmarke__und {
+    color: var(--terrakotta-hell);
+  }
+</style>

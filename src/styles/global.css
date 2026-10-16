@@ -1,29 +1,44 @@
 /*
- * VORLÄUFIGES Erscheinungsbild bis zur Designentscheidung.
- * Farben, Schriften und Abstände sind als Variablen angelegt, damit das finale Design
- * an dieser einen Stelle eingesetzt werden kann. Schriften werden später lokal eingebunden,
- * nicht über Google Fonts.
+ * Erscheinungsbild von Life&Lemons.
+ * Verbindliche Vorgabe: claude/Gestaltung_Website.md (Projekt in claude.ai).
+ * Grundregeln: Ecken 0 px, keine Schatten, keine Verläufe. Terrakotta ist der einzige Akzent.
+ * Schriften werden lokal ausgeliefert (Fontsource), nicht über das Google-CDN.
  */
 
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource/arimo/latin-400.css';
+@import '@fontsource/arimo/latin-400-italic.css';
+@import '@fontsource/arimo/latin-700.css';
+@import '@fontsource/caveat/latin-400.css';
+
 :root {
-  --farbe-grund: #ffffff;
-  --farbe-flaeche: #f4f4f2;
-  --farbe-text: #1f1f1f;
-  --farbe-text-leise: #555555;
-  --farbe-akzent: #1f1f1f;
-  --farbe-akzent-text: #ffffff;
-  --farbe-linie: #d9d9d6;
+  /* Farben */
+  --papier: #f1eee7;
+  --papier-hell: #faf8f4;
+  --sand: #ede3db;
+  --rose: #f2dddb;
+  --tinte: #3a2f2b;
+  --terrakotta: #c86a4a; /* als Text nur ab 24px oder 19px fett */
+  --terrakotta-tief: #9e4a2c;
+  --terrakotta-hell: #dba08b; /* Akzent auf tinte */
+  --text-gedaempft: #6b6250;
+  --linie: #cfc6bb;
+  --linie-rose: #c9b3ae;
 
-  --schrift-text: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --schrift-titel: Georgia, 'Times New Roman', serif;
+  /* Schriften */
+  --schrift-titel: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --schrift-text: Arimo, Arial, 'Helvetica Neue', sans-serif;
+  --schrift-hand: Caveat, 'Segoe Print', cursive;
 
-  --breite-text: 40rem;
-  --breite-seite: 72rem;
-  --abstand-s: 0.75rem;
-  --abstand-m: 1.5rem;
-  --abstand-l: 3rem;
-  --abstand-xl: 5rem;
-  --radius: 4px;
+  /* Raster */
+  --breite-seite: 1240px;
+  --rand: clamp(16px, 4vw, 48px);
+  --abschnitt: clamp(72px, 10vw, 152px);
+  --breite-text: 38rem;
+
+  /* Bewegung */
+  --kurve: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 *,
@@ -34,89 +49,367 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 96px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   margin: 0;
-  background: var(--farbe-grund);
-  color: var(--farbe-text);
+  background: var(--papier);
+  color: var(--tinte);
   font-family: var(--schrift-text);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: clamp(17px, 0.3vw + 16px, 18px);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--schrift-titel);
-  font-weight: 400;
-  line-height: 1.2;
-  margin: 0 0 var(--abstand-m);
+  font-weight: 500;
+  margin: 0;
+  text-wrap: balance;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
-h3 { font-size: 1.25rem; }
+h1 {
+  font-size: clamp(54px, 7.6vw, 108px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
 
-p { margin: 0 0 var(--abstand-m); }
+h2 {
+  font-size: clamp(40px, 5.2vw, 72px);
+  line-height: 1;
+}
 
-a { color: inherit; text-underline-offset: 0.2em; }
+h3 {
+  font-size: clamp(32px, 3.2vw, 44px);
+  line-height: 1.05;
+}
 
-img { max-width: 100%; height: auto; display: block; }
+/* Pivotwort: trägt den inhaltlichen Fokus eines Titels */
+.pivot {
+  font-style: italic;
+  color: var(--terrakotta);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--terrakotta-tief);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--tinte);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 :focus-visible {
-  outline: 3px solid var(--farbe-text);
-  outline-offset: 3px;
+  outline: 2px solid var(--terrakotta-tief);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--rose);
+  color: var(--tinte);
+}
+
+/* ---------- Hilfsklassen ---------- */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--breite-seite) + 2 * var(--rand));
+  margin: 0 auto;
+  padding: 0 var(--rand);
+}
+
+.abschnitt {
+  padding: var(--abschnitt) 0;
+}
+
+.abschnitt--rose {
+  background: var(--rose);
+}
+
+.abschnitt--sand {
+  background: var(--sand);
+}
+
+.abschnitt--tinte {
+  background: var(--tinte);
+  color: var(--papier);
+}
+
+.text {
+  max-width: var(--breite-text);
+}
+
+.fliesstext > * + * {
+  margin-top: 1em;
+}
+
+.label {
+  font-family: var(--schrift-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terrakotta-tief);
+  margin: 0;
+}
+
+.abschnitt--tinte .pivot {
+  color: var(--terrakotta-hell);
+}
+
+.abschnitt--tinte .label {
+  color: var(--terrakotta-hell);
+}
+
+.unterzeile {
+  font-family: var(--schrift-titel);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 27px);
+  line-height: 1.3;
+  color: var(--terrakotta-tief);
+}
+
+.einleitung {
+  font-size: clamp(18px, 0.5vw + 16px, 20px);
+  line-height: 1.6;
+}
+
+.gedaempft {
+  color: var(--text-gedaempft);
+}
+
+.kopfblock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.zwei-spalten {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(40px, 6vw, 96px);
+}
+
+.zwei-spalten > * {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.nur-screenreader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .skip-link {
   position: absolute;
-  left: var(--abstand-s);
-  top: -3rem;
-  padding: var(--abstand-s);
-  background: var(--farbe-akzent);
-  color: var(--farbe-akzent-text);
-  z-index: 10;
-}
-.skip-link:focus { top: var(--abstand-s); }
-
-.container {
-  width: 100%;
-  max-width: var(--breite-seite);
-  margin: 0 auto;
-  padding: 0 1rem;
+  left: var(--rand);
+  top: -4rem;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--tinte);
+  color: var(--papier);
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.text { max-width: var(--breite-text); }
-
-.section { padding: var(--abstand-xl) 0; }
-.section--flaeche { background: var(--farbe-flaeche); }
-
-.platzhalter {
-  border: 1px dashed var(--farbe-text-leise);
-  border-radius: var(--radius);
-  padding: var(--abstand-m);
-  color: var(--farbe-text-leise);
-  font-style: italic;
+.skip-link:focus {
+  top: 12px;
+  color: var(--papier);
 }
+
+/* ---------- Buttons und Links ---------- */
 
 .button {
-  display: inline-block;
-  padding: 0.8rem 1.4rem;
-  min-height: 44px;
-  background: var(--farbe-akzent);
-  color: var(--farbe-akzent-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 26px;
+  background: var(--tinte);
+  color: var(--papier);
+  border: 0;
+  border-radius: 0;
+  font-family: var(--schrift-text);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
   text-decoration: none;
-  border-radius: var(--radius);
-  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 250ms var(--kurve), color 250ms var(--kurve);
 }
-.button:hover { opacity: 0.88; }
-.button--zweitrangig {
-  background: transparent;
-  color: var(--farbe-text);
-  border: 1px solid var(--farbe-text);
+
+.button:hover,
+.button:focus-visible {
+  background: var(--terrakotta-tief);
+  color: var(--papier);
+}
+
+.button__pfeil {
+  display: inline-block;
+  transition: transform 300ms var(--kurve);
+}
+
+.button:hover .button__pfeil,
+.button:focus-visible .button__pfeil {
+  transform: translateX(6px);
+}
+
+.button--hell {
+  background: var(--papier);
+  color: var(--tinte);
+}
+
+.button--hell:hover,
+.button--hell:focus-visible {
+  background: var(--sand);
+  color: var(--tinte);
+}
+
+.button--klein {
+  min-height: 44px;
+  padding: 0 20px;
+}
+
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--schrift-text);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tinte);
+  text-decoration: underline;
+  text-decoration-color: var(--terrakotta);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 250ms var(--kurve);
+}
+
+.textlink:hover,
+.textlink:focus-visible {
+  color: var(--terrakotta-tief);
+}
+
+.abschnitt--tinte .textlink {
+  color: var(--papier);
+  text-decoration-color: var(--terrakotta-hell);
+}
+
+.abschnitt--tinte .textlink:hover,
+.abschnitt--tinte .textlink:focus-visible {
+  color: var(--terrakotta-hell);
+}
+
+.aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+/* ---------- Platzhalter für noch offene Inhalte ---------- */
+
+.platzhalter {
+  border: 1px dashed var(--text-gedaempft);
+  padding: 20px 24px;
+  color: var(--text-gedaempft);
+  font-size: 15px;
+  background: color-mix(in srgb, var(--sand) 60%, transparent);
+}
+
+.platzhalter > * + * {
+  margin-top: 0.6em;
+}
+
+/* ---------- Bewegung beim Erscheinen ---------- */
+/*
+ * Nur aktiv, wenn JavaScript läuft (Klasse "js" am <html>) und keine reduzierte Bewegung gewünscht ist.
+ * Ohne JavaScript ist alles sofort sichtbar.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .zeile {
+    display: block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition: opacity 800ms var(--kurve), transform 800ms var(--kurve);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  .js .on .zeile,
+  .js .zeile.on {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js [data-erscheinen] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 700ms var(--kurve), transform 700ms var(--kurve);
+  }
+
+  .js [data-erscheinen].on {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Seitenwechsel ---------- */
+/* Native Übergänge zwischen Seiten, ohne zusätzliches JavaScript. Browser ohne Unterstützung wechseln sofort. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 300ms;
+    animation-timing-function: var(--kurve);
+  }
 }

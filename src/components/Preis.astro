@@ -1,0 +1,64 @@
+---
+/**
+ * Zeigt den aktuell gültigen Preis eines Angebots, nie einen späteren.
+ * Bis zum Ende der Einführungsphase mit dem Hinweis „Einführungspreis bis …“.
+ */
+import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
+import { preisZusatz } from '../config/site';
+
+interface Props {
+  id: string;
+  /** groß: Preis als große Ziffer, inline: in einer Zeile */
+  form?: 'gross' | 'inline';
+}
+
+const { id, form = 'gross' } = Astro.props;
+const preis = aktuellerPreis(angebotNachId(id));
+---
+
+{
+  preis && (
+    <p class:list={['preis', `preis--${form}`]}>
+      <span class="preis__betrag">{formatEuro(preis.betrag)}</span>
+      {preis.einfuehrung && <span class="preis__hinweis">Einführungspreis bis {formatDatum(STICHTAGE.einfuehrungBis)}</span>}
+      {preisZusatz && <span class="preis__zusatz">{preisZusatz}</span>}
+    </p>
+  )
+}
+
+<style>
+  .preis {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin: 0;
+  }
+  .preis__betrag {
+    font-family: var(--schrift-titel);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1;
+  }
+  .preis__hinweis,
+  .preis__zusatz {
+    font-size: 14px;
+    color: var(--text-gedaempft);
+  }
+  .preis__zusatz {
+    flex-basis: 100%;
+  }
+  :global(.abschnitt--tinte) .preis__hinweis,
+  :global(.abschnitt--tinte) .preis__zusatz {
+    color: var(--sand);
+  }
+  .preis--inline .preis__betrag {
+    font-family: var(--schrift-text);
+    font-weight: 700;
+    font-size: inherit;
+  }
+  .preis--inline .preis__hinweis {
+    font-size: inherit;
+    color: inherit;
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+/**
+ * Ein Format von Modul 1 (Kursbuch, Club, Einzel-Track, VIP-Track) mit Passung, Leistungen,
+ * Terminen, aktuellem Preis und Button. Alle Angaben kommen aus src/config/angebote.ts.
+ */
+import AngebotButton from './AngebotButton.astro';
+import Preis from './Preis.astro';
+import { angebotNachId, istPausiert, formatDatum, bestellHinweis } from '../config/angebote';
+
+interface Props {
+  id: string;
+  /** Anker für Direktlinks, z. B. „kursbuch“ für /buch */
+  anker?: string;
+}
+
+const { id, anker } = Astro.props;
+const a = angebotNachId(id);
+const pausiert = istPausiert(a);
+const hinweis = pausiert ? null : bestellHinweis(a);
+const fakten: { label: string; text: string }[] = [];
+if (!pausiert) {
+  if (a.start) fakten.push({ label: 'Start', text: a.start });
+  if (a.buchbarBis) fakten.push({ label: 'Anmeldung bis', text: formatDatum(a.buchbarBis) });
+  if (a.plaetze) fakten.push({ label: 'Plätze', text: a.hinweis ? `${a.plaetze}. ${a.hinweis}` : String(a.plaetze) });
+}
+---
+
+<article class:list={['format', { 'format--pausiert': pausiert }]} id={anker} data-erscheinen>
+  <p class="label">{a.art}</p>
+  <h3>{a.name}</h3>
+  <p><strong>Für dich, wenn</strong> {a.fuerDich}</p>
+  <p><strong>Du erhältst</strong> {a.enthaelt}</p>
+  {
+    fakten.length > 0 && (
+      <dl class="format__fakten">
+        {fakten.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.text}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+  <div class="format__abschluss">
+    {pausiert ? <p class="format__pause">{a.textPausiert ?? 'Dieses Angebot pausiert gerade.'}</p> : <Preis id={id} />}
+    <AngebotButton id={id} />
+    {hinweis && <p class="format__hinweis">{hinweis}</p>}
+  </div>
+</article>
+
+<style>
+  .format {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--papier-hell);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(28px, 3.5vw, 44px);
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 300ms var(--kurve);
+    scroll-margin-top: 120px;
+  }
+
+  .format:hover {
+    background: #fdfcf9;
+  }
+
+  .format:target {
+    outline: 2px solid var(--terrakotta);
+    outline-offset: 6px;
+  }
+
+  .format--pausiert {
+    border-top-style: dashed;
+  }
+
+  .format__fakten {
+    margin: 4px 0 0;
+  }
+
+  .format__fakten div {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--linie);
+  }
+
+  dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gedaempft);
+    padding-top: 4px;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .format__abschluss {
+    margin-top: auto;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .format__hinweis {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-gedaempft);
+    margin-top: -6px;
+  }
+
+  .format__pause {
+    color: var(--text-gedaempft);
+  }
+
+  @media (max-width: 520px) {
+    .format__fakten div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>

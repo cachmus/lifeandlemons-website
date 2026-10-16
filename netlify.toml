@@ -12,10 +12,45 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
 
-# Weiterleitungen bei späteren URL-Änderungen hier eintragen, zum Beispiel:
-# [[redirects]]
-#   from = "/alte-url"
-#   to = "/neue-url"
-#   status = 301
+# Bilder und Schriften mit Hash im Dateinamen dürfen lange zwischengespeichert werden
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ---------------------------------------------------------------------------
+# Kurzlinks (für Broschüre, Instagram und Gespräche)
+# ---------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/buch"
+  to = "/programme/entwirf-dein-zukunfts-ich/#kursbuch"
+  status = 302
+
+[[redirects]]
+  from = "/club"
+  to = "/programme/entwirf-dein-zukunfts-ich/#club"
+  status = 302
+
+# ---------------------------------------------------------------------------
+# Weiterleitungen alter oder naheliegender Adressen
+# ---------------------------------------------------------------------------
+
+# Adressen aus dem ersten Code-Gerüst (nie öffentlich, zur Sicherheit weitergeleitet)
+[[redirects]]
+  from = "/entwirf-dein-zukunfts-ich"
+  to = "/programme/entwirf-dein-zukunfts-ich/"
+  status = 301
+
+[[redirects]]
+  from = "/angebote"
+  to = "/programme/entwirf-dein-zukunfts-ich/#formate"
+  status = 301
+
+# Übersicht der Programme gibt es (noch) nicht als eigene Seite
+[[redirects]]
+  from = "/programme"
+  to = "/#programme"
+  status = 302

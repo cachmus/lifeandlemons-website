@@ -1,0 +1,91 @@
+---
+/** Karte für ein Modul auf der Startseite: Label, Name, Zeilen „Label | Text“, Textlink. */
+interface Props {
+  label: string;
+  titel: string;
+  pivot: string;
+  zeilen: { label: string; text: string }[];
+  link: { href: string; label: string };
+  /** Modul in Vorbereitung: Linie oben gestrichelt */
+  inVorbereitung?: boolean;
+}
+
+const { label, titel, pivot, zeilen, link, inVorbereitung = false } = Astro.props;
+---
+
+<article class:list={['modulkarte', { 'modulkarte--vorbereitung': inVorbereitung }]} data-erscheinen>
+  <p class="label">{label}</p>
+  <h3>{titel} <span class="pivot">{pivot}</span></h3>
+  <dl class="modulkarte__zeilen">
+    {
+      zeilen.map((z) => (
+        <div class="modulkarte__zeile">
+          <dt>{z.label}</dt>
+          <dd>{z.text}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <a class="textlink" href={link.href}>{link.label} <span aria-hidden="true">→</span></a>
+</article>
+
+<style>
+  .modulkarte {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--papier-hell);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(28px, 3.5vw, 44px);
+    transition: background-color 300ms var(--kurve);
+  }
+
+  .modulkarte:hover {
+    background: #fdfcf9;
+  }
+
+  .modulkarte--vorbereitung {
+    border-top-style: dashed;
+  }
+
+  .modulkarte__zeilen {
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modulkarte__zeile {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--linie);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gedaempft);
+    padding-top: 4px;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .textlink {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 520px) {
+    .modulkarte__zeile {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

@@ -1,38 +1,226 @@
 ---
+/**
+ * Über mich: persönliches Vertrauen über den eigenen Weg mit der Methode und belegte Kompetenz.
+ * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Kursbuch Band 1 S. 12–13 und 181, Broschüre S. 6, Umschlag V5).
+ * Regel: Sehr Persönliches (Elternzeit, frühere Stelle, Arbeitgeber) erscheint nicht auf der Website.
+ */
 import Base from '../layouts/Base.astro';
-import Platzhalter from '../components/Platzhalter.astro';
-import { site } from '../config/site';
+import Polaroid from '../components/Polaroid.astro';
+import { site, seiten } from '../config/site';
+import portraet from '../assets/portraet-christine-4x5.jpg';
+
+const weg = [
+  {
+    titel: 'Meine innere Bremse erkannt',
+    text: [
+      'Den Wunsch, andere mit Mentoring, Coaching und Beratung zu unterstützen, trage ich seit dem Studium in mir. Lange galt für mich aber: Sicherheit hat Vorrang.',
+      'Meinen eigenen Kurs habe ich zuallererst selbst durchlaufen. Dabei habe ich die alte Geschichte gefunden, die mich gebremst hat: dass sich niemand für meine Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe.',
+    ],
+  },
+  {
+    titel: 'Im Kleinen getestet',
+    text: [
+      'Die erste Fassung des Kursbuchs habe ich im echten Leben mit einem wichtigen Menschen erprobt. Danach war klar, dass noch viel Arbeit vor mir liegt. Das hat mich einen Tag lang frustriert. Aufgeben kam nicht infrage, weil sich diese Arbeit für mich erfüllend anfühlt. Also habe ich das Buch Stück für Stück überarbeitet.',
+      'In meiner eigenen Probezeit habe ich mir frühere Schlafenszeiten und eine Morgenroutine mit kleinen Workouts angewöhnt.',
+    ],
+  },
+  {
+    titel: 'Meine Arbeit öffentlich gezeigt',
+    text: [
+      'Auf Instagram zu zeigen, woran ich arbeite, widerspricht meiner alten Geschichte. Ich höre diese Stimme noch, weiß, woher sie kommt, und handle trotzdem.',
+      'Ich erprobe gerade selbst meinen nächsten Lebensentwurf. Life&Lemons ist ein Teil davon.',
+    ],
+  },
+];
 ---
 
 <Base
   title="Über mich"
-  description={`${site.inhaberin}, ${site.rolle}: mein eigener Weg, meine Arbeitsweise und worauf sich das Programm stützt.`}
+  description={`${site.inhaberin}, ${site.rolle}: mein eigener Weg mit der Methode und was ich in die Begleitung mitbringe.`}
 >
-  <section class="section">
-    <div class="container text">
-      <h1>Über mich</h1>
-      <Platzhalter quelle="Foto aus Instagram-Posts/01_Fotos_SocialMedia, Auswahl offen">
-        <p>Porträtfoto</p>
-      </Platzhalter>
+  <section class="kopf-abschnitt">
+    <div class="container zwei-spalten kopf-abschnitt__innen">
+      <div class="kopf-abschnitt__text">
+        <p class="label">Über mich</p>
+        <h1>Christine Achmus</h1>
+        <p class="unterzeile">Mentorin für Lebensentwürfe</p>
+        <div class="fliesstext einleitung">
+          <p>
+            Ich begleite Menschen dabei, ihr Leben bewusst zu entwerfen und neue Richtungen mutig im Alltag zu testen. Die Methode, mit
+            der du arbeitest, habe ich zuerst an mir selbst erprobt.
+          </p>
+          <p>
+            Ich nehme deine Fragen ernst und arbeite mit einem klaren Vorgehen. Wie dein Leben aussehen soll, entscheidest du.
+          </p>
+        </div>
+      </div>
+      <div class="kopf-abschnitt__foto">
+        <Polaroid bild={portraet} alt="Christine Achmus" name="Christine" />
+      </div>
     </div>
   </section>
 
-  <section class="section section--flaeche">
-    <div class="container text">
-      <h2>Mein Weg</h2>
-      <Platzhalter quelle="Broschüre V14, S. 6">
-        <p>Eigene Geschichte, eigener Durchlauf, ehrlicher Test.</p>
-      </Platzhalter>
+  <section class="abschnitt abschnitt--rose" aria-labelledby="weg-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · Mein Weg</p>
+        <h2 id="weg-titel" class="zeile">Mein Weg mit der <span class="pivot">Methode</span></h2>
+        <p class="einleitung text">So weit bin ich bisher gekommen.</p>
+      </div>
+      <ol class="weg">
+        {
+          weg.map((schritt, i) => (
+            <li class="weg__schritt" data-erscheinen>
+              <p class="weg__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+              <h3 class="weg__titel">{schritt.titel}</h3>
+              <div class="fliesstext">
+                {schritt.text.map((absatz) => <p>{absatz}</p>)}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container text">
-      <h2>Worauf sich das Programm stützt</h2>
-      <Platzhalter quelle="Broschüre V14, S. 6">
-        <p>Die Forschung mit Namen und die Grenzen des Kurses.</p>
-      </Platzhalter>
-      <a class="button" href="/angebote/">Zu den Angeboten</a>
+  <section class="abschnitt" aria-labelledby="mitbringe-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">02 · Kompetenz</p>
+        <h2 id="mitbringe-titel" class="zeile">Was ich <span class="pivot">mitbringe</span></h2>
+      </div>
+      <dl class="mitbringe" data-erscheinen>
+        <div>
+          <dt>Studium</dt>
+          <dd>Master in Bildungswissenschaften mit Schwerpunkt Pädagogische Psychologie</dd>
+        </div>
+        <div>
+          <dt>Projekte</dt>
+          <dd>Im Projektmanagement habe ich große technische Vorhaben, vielfältige Teams und Veränderungsprozesse gesteuert.</dd>
+        </div>
+        <div>
+          <dt>Gespräche</dt>
+          <dd>
+            Menschen erzählen mir oft von ihren Schwierigkeiten im Berufsleben oder in Beziehungen. Häufig gelingt es uns gemeinsam,
+            die Außenperspektive einzunehmen und ein Problem als Teil eines Systems zu betrachten. Daraus entstehen oft Erleichterung und neue
+            Handlungsmöglichkeiten.
+          </dd>
+        </div>
+        <div>
+          <dt>Kursbuch</dt>
+          <dd>
+            Das Kursbuch verbindet Forschung zu Selbstregulation und Gewohnheiten mit Methoden der Lebensgestaltung und legt seine
+            Quellen offen. <a href={`${seiten.modul1}#grundlagen`}>Worauf der Kurs sich stützt</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--sand" aria-labelledby="einstieg-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">03 · Zusammenarbeit</p>
+        <h2 id="einstieg-titel" class="zeile">Finde deinen <span class="pivot">Einstieg</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Mit dem Kursbuch arbeitest du allein. Wenn du dir Begleitung wünschst, findest du Club, Einzel-Track und VIP-Track auf der
+          Seite zu Modul 1.
+        </p>
+        <div class="aktionen">
+          <a class="button" href={`${seiten.modul1}#formate`}>Zu den Formaten <span class="button__pfeil" aria-hidden="true">→</span></a>
+        </div>
+        <p class="gedaempft">
+          Persönliches aus meinem Alltag teile ich auf Instagram unter
+          <a href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>.
+        </p>
+      </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(48px, 7vw, 112px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf-abschnitt__innen {
+    align-items: center;
+  }
+
+  .kopf-abschnitt__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .kopf-abschnitt__foto {
+    display: flex;
+    justify-content: center;
+    flex: 0 1 380px !important;
+    padding-top: 24px;
+  }
+
+  .weg {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(28px, 4vw, 56px);
+  }
+
+  .weg__schritt {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 1px solid var(--linie-rose);
+    padding-top: 20px;
+    font-size: 16px;
+  }
+
+  .weg__nr {
+    font-family: var(--schrift-titel);
+    font-size: 44px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .weg__titel {
+    font-size: clamp(26px, 2.4vw, 32px);
+  }
+
+  .mitbringe {
+    margin: 0;
+  }
+
+  .mitbringe div {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px 0;
+    border-top: 1px solid var(--linie);
+    font-size: 16px;
+  }
+
+  .mitbringe dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gedaempft);
+    padding-top: 4px;
+  }
+
+  .mitbringe dd {
+    margin: 0;
+  }
+
+  @media (max-width: 520px) {
+    .mitbringe div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>
