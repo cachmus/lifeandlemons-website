@@ -50,6 +50,7 @@ const orientierung = anfrageLink(
 ---
 
 <Base
+  dunklerSchluss
   title="Modul 1: Entwirf dein Zukunfts-Ich"
   description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, löst deine innere Bremse und testest deine neue Richtung am echten Leben aus. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
 >
@@ -93,7 +94,7 @@ const orientierung = anfrageLink(
   </section>
 
   <!-- 01 Ausgangslage -->
-  <section class="abschnitt abschnitt--rose" aria-labelledby="ausgangslage-titel">
+  <section class="abschnitt" aria-labelledby="ausgangslage-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">01 · Ausgangslage</p>
@@ -153,7 +154,7 @@ const orientierung = anfrageLink(
   </section>
 
   <!-- 03 Ergebnis -->
-  <section class="abschnitt abschnitt--sand" aria-labelledby="ergebnis-titel">
+  <section class="abschnitt" aria-labelledby="ergebnis-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">03 · Ergebnis</p>
@@ -199,7 +200,7 @@ const orientierung = anfrageLink(
   </section>
 
   <!-- Orientierung -->
-  <section class="abschnitt abschnitt--rose" aria-labelledby="orientierung-titel">
+  <section class="abschnitt" aria-labelledby="orientierung-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">Orientierungsgespräch</p>
@@ -240,7 +241,7 @@ const orientierung = anfrageLink(
   </section>
 
   <!-- 06 Weiter mit Modul 2 -->
-  <section class="abschnitt abschnitt--sand" aria-labelledby="weiter-titel">
+  <section class="abschnitt abschnitt--ende" aria-labelledby="weiter-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">06 · Danach</p>
@@ -280,7 +281,7 @@ const orientierung = anfrageLink(
   .kopf-abschnitt__bild {
     flex: 0 1 400px;
     margin: 0 auto;
-    background: var(--rose);
+    background: var(--salbei);
     padding: clamp(20px, 3vw, 40px);
   }
 

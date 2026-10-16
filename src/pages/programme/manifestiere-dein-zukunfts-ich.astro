@@ -11,6 +11,7 @@ import { seiten } from '../../config/site';
 ---
 
 <Base
+  dunklerSchluss
   title="Modul 2: Manifestiere dein Zukunfts-Ich"
   description="Modul 2 von Life&Lemons ist in Vorbereitung: Du übersetzt deine erprobte Richtung in 90 Tage mit Meilensteinen und neuen Gewohnheiten."
 >
@@ -28,7 +29,7 @@ import { seiten } from '../../config/site';
     </div>
   </section>
 
-  <section class="abschnitt abschnitt--sand" aria-labelledby="inhalt-titel">
+  <section class="abschnitt" aria-labelledby="inhalt-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">01 · Worum es geht</p>
@@ -113,7 +114,8 @@ import { seiten } from '../../config/site';
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: var(--papier-hell);
+    background: transparent;
+    border: 1px solid var(--linie);
     border-top: 2px dashed var(--terrakotta);
     padding: clamp(28px, 3.5vw, 44px);
     font-size: 16px;

@@ -34,14 +34,15 @@ const { label, titel, pivot, zeilen, link, inVorbereitung = false } = Astro.prop
     display: flex;
     flex-direction: column;
     gap: 18px;
-    background: var(--papier-hell);
+    background: transparent;
+    border: 1px solid var(--linie);
     border-top: 2px solid var(--terrakotta);
     padding: clamp(28px, 3.5vw, 44px);
     transition: background-color 300ms var(--kurve);
   }
 
   .modulkarte:hover {
-    background: #fdfcf9;
+    background: var(--papier-hell);
   }
 
   .modulkarte--vorbereitung {

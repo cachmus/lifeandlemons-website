@@ -32,6 +32,7 @@ const fragen = [
 ---
 
 <Base
+  dunklerSchluss
   title="Life&Lemons · Christine Achmus, Mentorin für Lebensentwürfe"
   description="Life&Lemons unterstützt dich dabei, herauszufinden, wie du wirklich leben möchtest, und deine Vorstellungen Schritt für Schritt umzusetzen. Kursbuch und Begleitung von Christine Achmus."
 >
@@ -81,7 +82,7 @@ const fragen = [
   </section>
 
   <!-- 2. Ausgangslage -->
-  <section class="abschnitt abschnitt--rose" aria-labelledby="ausgangslage-titel">
+  <section class="abschnitt" aria-labelledby="ausgangslage-titel">
     <div class="container">
       <div class="kopfblock">
         <p class="label">01 · Ausgangslage</p>
@@ -161,8 +162,9 @@ const fragen = [
   </section>
 
   <!-- 4. Kursbuch -->
-  <section class="abschnitt abschnitt--tinte kursbuch" id="kursbuch" aria-labelledby="kursbuch-titel">
-    <div class="container kursbuch__innen">
+  <section class="abschnitt kursbuch" id="kursbuch" aria-labelledby="kursbuch-titel">
+    <div class="container">
+    <div class="dunkel kursbuch__innen">
       <div class="kursbuch__bild" data-erscheinen>
         <Image
           src={umschlag}
@@ -190,6 +192,7 @@ const fragen = [
           {kursbuchHinweis && `${kursbuchHinweis} `}Club, Einzel-Track und VIP-Track findest du auf der <a href={seiten.modul1}>Seite zu Modul 1</a>.
         </p>
       </div>
+    </div>
     </div>
   </section>
 
@@ -251,7 +254,7 @@ const fragen = [
 
   {
     stimmenZeigen && (
-      <section class="abschnitt abschnitt--sand" aria-labelledby="stimmen-titel">
+      <section class="abschnitt" aria-labelledby="stimmen-titel">
         <div class="container">
           <div class="kopfblock">
             <p class="label">Stimmen</p>
@@ -320,7 +323,7 @@ const fragen = [
     right: 0;
     top: 24%;
     bottom: 0;
-    background: var(--rose);
+    background: var(--salbei);
   }
 
   .hero__bild :global(img) {
@@ -390,7 +393,7 @@ const fragen = [
   }
 
   .fragen li {
-    border-top: 1px solid var(--linie-rose);
+    border-top: 1px solid var(--linie);
     padding: 28px 0 32px;
   }
 
@@ -420,6 +423,7 @@ const fragen = [
 
   /* Kursbuch */
   .kursbuch__innen {
+    padding: clamp(28px, 5vw, 72px);
     display: flex;
     flex-wrap: wrap;
     gap: clamp(40px, 6vw, 96px);
@@ -446,19 +450,16 @@ const fragen = [
     min-width: 0;
   }
 
-  .kursbuch__text .pivot {
-    color: var(--terrakotta-hell);
-  }
 
   .kursbuch__hinweis {
     font-size: 12.5px;
     line-height: 1.6;
-    color: var(--sand);
+    color: var(--leinen);
     max-width: 46ch;
   }
 
   .kursbuch__hinweis a {
-    color: var(--papier);
+    color: var(--kalk);
     text-decoration-color: var(--terrakotta-hell);
   }
 

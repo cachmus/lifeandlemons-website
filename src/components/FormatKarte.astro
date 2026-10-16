@@ -54,7 +54,8 @@ if (!pausiert) {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: var(--papier-hell);
+    background: transparent;
+    border: 1px solid var(--linie);
     border-top: 2px solid var(--terrakotta);
     padding: clamp(28px, 3.5vw, 44px);
     font-size: 16px;
@@ -64,7 +65,7 @@ if (!pausiert) {
   }
 
   .format:hover {
-    background: #fdfcf9;
+    background: var(--papier-hell);
   }
 
   .format:target {

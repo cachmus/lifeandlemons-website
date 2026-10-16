@@ -1,7 +1,11 @@
 /*
  * Erscheinungsbild von Life&Lemons.
  * Verbindliche Vorgabe: claude/Gestaltung_Website.md (Projekt in claude.ai).
- * Grundregeln: Ecken 0 px, keine Schatten, keine Verläufe. Terrakotta ist der einzige Akzent.
+ * Farbwelt „Kalk & Tinte“ (Fassung 2, Vorschlag 16.10.2026): eine durchgehende helle Fläche,
+ * dunkle Tinte für Text, Terrakotta sparsam für kleine Akzente, Zitrone nur als Punkt am Ende des Weges.
+ * Keine abwechselnd farbigen Abschnitte. Die Seite endet in einer dunklen Fläche, in die sie über
+ * einen weichen Verlauf hineinfließt (.abschnitt--ende). Ein feiner Faden am linken Rand verbindet alles.
+ * Grundregeln: Ecken 0 px, keine Schatten.
  * Schriften werden lokal ausgeliefert (Fontsource), nicht über das Google-CDN.
  */
 
@@ -13,18 +17,19 @@
 @import '@fontsource/caveat/latin-400.css';
 
 :root {
-  /* Farben */
-  --papier: #f1eee7;
-  --papier-hell: #faf8f4;
-  --sand: #ede3db;
-  --rose: #f2dddb;
-  --tinte: #3a2f2b;
-  --terrakotta: #c86a4a; /* als Text nur ab 24px oder 19px fett */
-  --terrakotta-tief: #9e4a2c;
-  --terrakotta-hell: #dba08b; /* Akzent auf tinte */
-  --text-gedaempft: #6b6250;
-  --linie: #cfc6bb;
-  --linie-rose: #c9b3ae;
+  /* Farben: helle Töne in der Reihenfolge, in der eine Seite nach unten dunkler wird */
+  --kalk: #f5f2eb; /* Seitengrund */
+  --leinen: #ede7db;
+  --stein: #e4e2d7;
+  --salbei: #d7dcce; /* tiefster heller Ton, Seitenende und Footer */
+  --papier-hell: #fbf9f5; /* Karten, Eingabefelder, Polaroid */
+  --tinte: #22302c; /* Text, Buttons, dunkle Fläche des Kursbuchs */
+  --terrakotta: #bb5e3a; /* Pivotwort, Ziffern, Treppe; als Text nur ab 24px oder 19px fett */
+  --terrakotta-tief: #93452a; /* Labels, Links, Hover, Fokus */
+  --terrakotta-hell: #e0a487; /* Akzent auf tinte */
+  --zitrone: #d8b443; /* nur als Punkt (Ziel), nie als Fläche oder Text */
+  --text-gedaempft: #545c55;
+  --linie: #c8c8bb;
 
   /* Schriften */
   --schrift-titel: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -60,7 +65,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--papier);
+  background: var(--kalk);
   color: var(--tinte);
   font-family: var(--schrift-text);
   font-size: clamp(17px, 0.3vw + 16px, 18px);
@@ -94,10 +99,9 @@ h3 {
   line-height: 1.05;
 }
 
-/* Pivotwort: trägt den inhaltlichen Fokus eines Titels */
+/* Pivotwort: trägt den inhaltlichen Fokus eines Titels. Kursiv, in derselben Farbe wie der Titel. */
 .pivot {
   font-style: italic;
-  color: var(--terrakotta);
 }
 
 p {
@@ -128,7 +132,7 @@ svg {
 }
 
 ::selection {
-  background: var(--rose);
+  background: var(--salbei);
   color: var(--tinte);
 }
 
@@ -141,21 +145,79 @@ svg {
   padding: 0 var(--rand);
 }
 
+/* Weicher Übergang von Kalk in Tinte (Seitenschluss und Footer), Stufen im OKLab-Farbraum gemischt,
+   damit kein grauer Streifen entsteht. Die Höhe kommt von --uebergang am jeweiligen Element. */
+.abschnitt--ende,
+.fuss--uebergang {
+  --verlauf-ende: linear-gradient(
+    to bottom,
+    var(--kalk) 0,
+    color-mix(in oklab, var(--kalk) 94%, var(--tinte)) calc(var(--uebergang) * 0.2),
+    color-mix(in oklab, var(--kalk) 78%, var(--tinte)) calc(var(--uebergang) * 0.4),
+    color-mix(in oklab, var(--kalk) 50%, var(--tinte)) calc(var(--uebergang) * 0.6),
+    color-mix(in oklab, var(--kalk) 20%, var(--tinte)) calc(var(--uebergang) * 0.8),
+    var(--tinte) var(--uebergang)
+  );
+}
+
+/* Abschnitte haben keine eigenen Farbflächen. Getrennt wird durch Weißraum und den Faden. */
 .abschnitt {
+  position: relative;
   padding: var(--abschnitt) 0;
 }
 
-.abschnitt--rose {
-  background: var(--rose);
+/*
+ * Schluss einer Seite: Die helle Fläche fließt über einen weichen Verlauf in die dunkle Tinte,
+ * die nahtlos in den Footer übergeht. Pro Seite höchstens einmal, immer direkt vor dem Footer.
+ */
+.abschnitt--ende {
+  --uebergang: clamp(140px, 16vw, 240px);
+  padding-top: calc(var(--uebergang) + var(--abschnitt) * 0.6);
+  background: var(--verlauf-ende);
+  color: var(--kalk);
 }
 
-.abschnitt--sand {
-  background: var(--sand);
+/* Der Faden: eine feine Linie am linken Rand, die alle Abschnitte verbindet */
+.abschnitt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--faden-x);
+  width: 1px;
+  background: var(--linie);
+  pointer-events: none;
 }
 
-.abschnitt--tinte {
+.abschnitt--ende::before {
+  background: color-mix(in srgb, var(--linie) 70%, transparent);
+}
+
+:root {
+  --faden-abstand: min(28px, calc(var(--rand) / 2));
+  --faden-x: calc(max(var(--rand), (100% - var(--breite-seite)) / 2) - var(--faden-abstand));
+}
+
+/* Jede Abschnitts-Überschrift sitzt mit einem Punkt auf dem Faden */
+.abschnitt .kopfblock > .label {
+  position: relative;
+}
+
+.abschnitt .kopfblock > .label::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--faden-abstand) - 3.5px);
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terrakotta);
+}
+
+/* Dunkle Fläche als Objekt auf der Seite (Kursbuch), nicht über die ganze Breite */
+.dunkel {
   background: var(--tinte);
-  color: var(--papier);
+  color: var(--kalk);
 }
 
 .text {
@@ -177,12 +239,13 @@ svg {
   margin: 0;
 }
 
-.abschnitt--tinte .pivot {
+.dunkel .label,
+.abschnitt--ende .label {
   color: var(--terrakotta-hell);
 }
 
-.abschnitt--tinte .label {
-  color: var(--terrakotta-hell);
+.abschnitt--ende .gedaempft {
+  color: #c9cfc2;
 }
 
 .unterzeile {
@@ -191,7 +254,7 @@ svg {
   font-weight: 500;
   font-size: clamp(22px, 2vw, 27px);
   line-height: 1.3;
-  color: var(--terrakotta-tief);
+  color: var(--text-gedaempft);
 }
 
 .einleitung {
@@ -238,14 +301,14 @@ svg {
   z-index: 100;
   padding: 12px 18px;
   background: var(--tinte);
-  color: var(--papier);
+  color: var(--kalk);
   font-weight: 700;
   text-decoration: none;
 }
 
 .skip-link:focus {
   top: 12px;
-  color: var(--papier);
+  color: var(--kalk);
 }
 
 /* ---------- Buttons und Links ---------- */
@@ -258,7 +321,7 @@ svg {
   min-height: 48px;
   padding: 0 26px;
   background: var(--tinte);
-  color: var(--papier);
+  color: var(--kalk);
   border: 0;
   border-radius: 0;
   font-family: var(--schrift-text);
@@ -274,7 +337,7 @@ svg {
 .button:hover,
 .button:focus-visible {
   background: var(--terrakotta-tief);
-  color: var(--papier);
+  color: var(--kalk);
 }
 
 .button__pfeil {
@@ -288,13 +351,13 @@ svg {
 }
 
 .button--hell {
-  background: var(--papier);
+  background: var(--kalk);
   color: var(--tinte);
 }
 
 .button--hell:hover,
 .button--hell:focus-visible {
-  background: var(--sand);
+  background: var(--leinen);
   color: var(--tinte);
 }
 
@@ -324,14 +387,43 @@ svg {
   color: var(--terrakotta-tief);
 }
 
-.abschnitt--tinte .textlink {
-  color: var(--papier);
+.dunkel .textlink,
+.abschnitt--ende .textlink {
+  color: var(--kalk);
   text-decoration-color: var(--terrakotta-hell);
 }
 
-.abschnitt--tinte .textlink:hover,
-.abschnitt--tinte .textlink:focus-visible {
+.dunkel .textlink:hover,
+.dunkel .textlink:focus-visible,
+.abschnitt--ende .textlink:hover,
+.abschnitt--ende .textlink:focus-visible {
   color: var(--terrakotta-hell);
+}
+
+/* Auf dunklem Grund ist jeder Button hell */
+.dunkel .button,
+.abschnitt--ende .button {
+  background: var(--kalk);
+  color: var(--tinte);
+}
+
+.dunkel .button:hover,
+.dunkel .button:focus-visible,
+.abschnitt--ende .button:hover,
+.abschnitt--ende .button:focus-visible {
+  background: var(--terrakotta-hell);
+  color: var(--tinte);
+}
+
+.dunkel a:not(.button):not(.textlink),
+.abschnitt--ende a:not(.button):not(.textlink) {
+  color: var(--kalk);
+  text-decoration-color: var(--terrakotta-hell);
+}
+
+.dunkel :focus-visible,
+.abschnitt--ende :focus-visible {
+  outline-color: var(--terrakotta-hell);
 }
 
 .aktionen {
@@ -348,7 +440,7 @@ svg {
   padding: 20px 24px;
   color: var(--text-gedaempft);
   font-size: 15px;
-  background: color-mix(in srgb, var(--sand) 60%, transparent);
+  background: color-mix(in srgb, var(--leinen) 60%, transparent);
 }
 
 .platzhalter > * + * {

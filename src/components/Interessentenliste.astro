@@ -1,6 +1,7 @@
 ---
 /**
  * Interessentenliste (Brevo, Double-Opt-in). Integrationspunkt: `newsletter` in src/config/site.ts.
+ * Steht immer als letzter Abschnitt einer Seite (dunkler Schluss, Base mit dunklerSchluss).
  *
  * Ist dort eine Brevo-Formularadresse eingetragen, gehen die Angaben direkt an Brevo.
  * Solange sie fehlt, öffnet das Formular eine vorbefüllte E-Mail an Christine.
@@ -23,7 +24,7 @@ const angebunden = newsletter.formularAdresse.length > 0;
 const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktEmail}?subject=Interessentenliste`;
 ---
 
-<section class="abschnitt abschnitt--rose liste" id="liste" aria-labelledby="liste-titel">
+<section class="abschnitt abschnitt--ende liste" id="liste" aria-labelledby="liste-titel">
   <div class="container zwei-spalten">
     <div class="kopfblock">
       <p class="label">{label}</p>
@@ -202,7 +203,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
     width: 20px;
     height: 20px;
     margin: 0;
-    accent-color: var(--terrakotta-tief);
+    accent-color: var(--terrakotta-hell);
   }
 
   .liste__feld {
@@ -224,7 +225,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
     font: inherit;
     font-size: 16px;
     color: var(--tinte);
-    background: var(--sand);
+    background: var(--leinen);
     border: 0;
     border-bottom: 1px solid var(--tinte);
     border-radius: 0;
@@ -244,12 +245,12 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
   }
 
   input[type='email']:focus-visible {
-    outline: 2px solid var(--terrakotta-tief);
+    outline: 2px solid var(--terrakotta-hell);
     outline-offset: 4px;
   }
 
   .liste__fehler {
-    color: var(--terrakotta-tief);
+    color: var(--terrakotta-hell);
     font-size: 15px;
     font-weight: 700;
   }
@@ -257,7 +258,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
   .liste__einwilligung {
     font-size: 13.5px;
     line-height: 1.55;
-    color: var(--text-gedaempft);
+    color: #c9cfc2;
     max-width: 52ch;
   }
 

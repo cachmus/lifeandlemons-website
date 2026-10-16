@@ -10,9 +10,14 @@ interface Props {
   description: string;
   /** Einzelne Seiten können unabhängig vom globalen Schalter ausgeschlossen werden */
   noindex?: boolean;
+  /**
+   * true, wenn der letzte Abschnitt der Seite bereits in die dunkle Fläche übergeht (.abschnitt--ende).
+   * Sonst bekommt der Footer selbst einen weichen Übergang.
+   */
+  dunklerSchluss?: boolean;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false } = Astro.props;
 const istStart = Astro.url.pathname === '/';
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
@@ -37,7 +42,7 @@ if (!g.__angeboteGeprueft) {
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#f1eee7" />
+    <meta name="theme-color" content="#f5f2eb" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
@@ -84,7 +89,7 @@ if (!g.__angeboteGeprueft) {
       <slot />
     </main>
 
-    <footer class="fuss">
+    <footer class:list={['fuss', { 'fuss--uebergang': !dunklerSchluss }]}>
       <div class="container fuss__innen">
         <div class="fuss__marke">
           <Wortmarke hell />
@@ -111,7 +116,7 @@ if (!g.__angeboteGeprueft) {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--papier) 92%, transparent);
+    background: color-mix(in srgb, var(--kalk) 92%, transparent);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--linie);
@@ -190,9 +195,48 @@ if (!g.__angeboteGeprueft) {
   }
 
   .fuss {
+    position: relative;
     background: var(--tinte);
-    color: var(--papier);
+    color: var(--kalk);
     padding: clamp(56px, 7vw, 96px) 0 clamp(40px, 5vw, 64px);
+  }
+
+  /* Ohne dunklen Schlussabschnitt fließt die Seite im Footer selbst in die Tinte */
+  .fuss--uebergang {
+    --uebergang: clamp(120px, 16vw, 220px);
+    padding-top: calc(var(--uebergang) + 48px);
+    background: var(--verlauf-ende);
+  }
+
+  .fuss {
+    overflow: hidden;
+  }
+
+  /* Der Faden läuft durch den Footer und endet beim Slogan in einem Punkt: dem Ziel */
+  .fuss__slogan {
+    position: relative;
+  }
+
+  .fuss__slogan::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--faden-abstand));
+    bottom: 50%;
+    height: 2000px;
+    width: 1px;
+    background: color-mix(in srgb, var(--linie) 70%, transparent);
+  }
+
+  .fuss__slogan::after {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--faden-abstand) - 4.5px);
+    top: 50%;
+    margin-top: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--zitrone);
   }
 
   .fuss__innen {
@@ -212,7 +256,7 @@ if (!g.__angeboteGeprueft) {
     font-family: var(--schrift-titel);
     font-style: italic;
     font-size: 18px;
-    color: var(--papier);
+    color: var(--kalk);
   }
 
   .fuss__links {
@@ -229,7 +273,7 @@ if (!g.__angeboteGeprueft) {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    color: var(--papier);
+    color: var(--kalk);
     text-decoration-color: var(--terrakotta-hell);
   }
 
