@@ -12,14 +12,18 @@ import { newsletter, site, seiten, type InteresseId } from '../config/site';
 
 interface Props {
   label: string;
+  /** Titel vor dem Pivotwort */
   titel: string;
+  /** Wort mit dem Satzakzent, wird kursiv gesetzt */
   pivot: string;
+  /** Titel nach dem Pivotwort */
+  nach?: string;
   text: string;
   /** Interessen, die beim Laden schon angehakt sind */
   vorauswahl?: InteresseId[];
 }
 
-const { label, titel, pivot, text, vorauswahl = [] } = Astro.props;
+const { label, titel, pivot, nach, text, vorauswahl = [] } = Astro.props;
 const angebunden = newsletter.formularAdresse.length > 0;
 const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktEmail}?subject=Interessentenliste`;
 ---
@@ -28,7 +32,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
   <div class="container zwei-spalten">
     <div class="kopfblock">
       <p class="label">{label}</p>
-      <h2 id="liste-titel" class="zeile">{titel} <span class="pivot">{pivot}</span></h2>
+      <h2 id="liste-titel" class="zeile">{titel} <span class="pivot">{pivot}</span>{nach && ` ${nach}`}</h2>
       <p class="einleitung text">{text}</p>
     </div>
 

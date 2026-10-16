@@ -17,13 +17,13 @@ const teile = [
   {
     nr: 'I',
     titel: 'Heute',
-    text: 'Du schaust auf dein heutiges Leben, auf das, worauf du wartest, und auf den Menschen, der du in fünf Jahren wärst, wenn du nichts änderst. Schon nach diesem ersten Teil hast du deine innere Bremse benannt und ausgerechnet, was dich das Warten kostet.',
+    text: 'Du schaust auf dein heutiges Leben, auf das, worauf du wartest, und auf den Menschen, der du in fünf Jahren wärst, wenn du nichts änderst. Schon nach diesem ersten Teil kennst du deine innere Bremse, also die Gedanken und Gewohnheiten, mit denen du dich selbst ausbremst, und hast ausgerechnet, was dich das Warten kostet.',
     danach: 'Praxiswoche 1: ein kleiner Schritt, den du sonst aufschiebst',
   },
   {
     nr: 'II',
     titel: 'Drei mögliche Leben',
-    text: 'Du findest heraus, was dir liegt und wonach du dich sehnst. Daraus entwirfst du drei mögliche Versionen deines Zukunfts-Ichs. Aus ihnen leitest du deine Werte ab und prüfst einen Entwurf im echten Leben.',
+    text: 'Du findest heraus, was dir liegt und wonach du dich sehnst. Daraus entwirfst du drei mögliche Versionen deines Zukunfts-Ichs, also des Menschen, der du in einigen Jahren sein könntest. Aus ihnen leitest du deine Werte ab und prüfst einen Entwurf im echten Leben.',
     danach: 'Praxiswoche 2: ein Gespräch mit einem Menschen, der so ähnlich schon lebt, oder ein Selbstversuch',
   },
   {
@@ -37,8 +37,8 @@ const teile = [
 const ergebnisse = [
   'Einen ausgearbeiteten und getesteten Entwurf als klare Richtung für deine nähere Zukunft',
   'Drei Handlungen, die du getan und nicht nur geplant hast',
-  'Eine Gewohnheit deines Zukunfts-Ichs, die du 14 Tage lang eingeübt hast, und eine ungünstige, die du in dieser Zeit vermieden hast',
-  'Deine inneren Mechanismen, die dich bremsen und von deinen Zielen abbringen',
+  'Eine neue Gewohnheit, die du 14 Tage lang eingeübt hast, und eine ungünstige, die du in dieser Zeit vermieden hast',
+  'Die Muster, mit denen du dich selbst ausbremst und von deinen Zielen abbringst',
   'Eine Rechnung darüber, was dich fünf weitere Jahre Warten kosten',
   'Klarheit darüber, wohin dich dein nächster Lebensabschnitt führen soll und wie du anfängst',
 ];
@@ -52,7 +52,7 @@ const orientierung = anfrageLink(
 <Base
   dunklerSchluss
   title="Modul 1: Entwirf dein Zukunfts-Ich"
-  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, löst deine innere Bremse und testest deine neue Richtung am echten Leben aus. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
+  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, welche Zweifel und alten Muster dich bremsen, und testest deine neue Richtung im echten Leben. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
 >
   <!-- Einstieg -->
   <section class="kopf-abschnitt">
@@ -99,7 +99,7 @@ const orientierung = anfrageLink(
       <div class="kopfblock">
         <p class="label">01 · Ausgangslage</p>
         <h2 id="ausgangslage-titel" class="zeile">
-          Was wäre, wenn wir es selbst in der Hand hätten, welcher <span class="pivot">Mensch</span> wir werden?
+          Was wäre, wenn wir es <span class="pivot">selbst</span> in der Hand hätten, welcher Mensch wir werden?
         </h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
@@ -110,7 +110,7 @@ const orientierung = anfrageLink(
           haben.
         </p>
         <p>
-          Vielleicht steckt seit Jahren eine Idee in dir, die dein innerer Realist zuverlässig zurückhält. Vielleicht glaubst du, du
+          Vielleicht steckt seit Jahren eine Idee in dir, die du dir aus Vernunftgründen immer wieder ausredest. Vielleicht glaubst du, du
           müsstest erst noch mehr wissen, mehr Geld haben, mehr Erfahrung sammeln oder den richtigen Zeitpunkt abwarten.
         </p>
         <p>
@@ -148,7 +148,7 @@ const orientierung = anfrageLink(
         }
       </ol>
       <p class="aufbau__summe gedaempft">
-        Insgesamt arbeitest du rund 10 Stunden aktiv an deinem Zukunfts-Ich, verteilt über bis zu 6 Wochen.
+        Insgesamt arbeitest du rund 10 Stunden aktiv an deiner Zukunft, verteilt über bis zu 6 Wochen.
       </p>
     </div>
   </section>
@@ -158,7 +158,7 @@ const orientierung = anfrageLink(
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">03 · Ergebnis</p>
-        <h2 id="ergebnis-titel" class="zeile">Das hast du am <span class="pivot">Ende</span></h2>
+        <h2 id="ergebnis-titel" class="zeile"><span class="pivot">Das</span> hast du am Ende</h2>
       </div>
       <ul class="ergebnisse" data-erscheinen>
         {ergebnisse.map((e) => <li>{e}</li>)}
@@ -204,7 +204,7 @@ const orientierung = anfrageLink(
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">Orientierungsgespräch</p>
-        <h2 id="orientierung-titel" class="zeile">Noch unsicher, welcher Weg zu dir <span class="pivot">passt</span>?</h2>
+        <h2 id="orientierung-titel" class="zeile">Noch unsicher, welcher Weg zu <span class="pivot">dir</span> passt?</h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>
@@ -223,12 +223,12 @@ const orientierung = anfrageLink(
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">05 · Grundlagen</p>
-        <h2 id="grundlagen-titel" class="zeile">Worauf der Kurs sich <span class="pivot">stützt</span></h2>
+        <h2 id="grundlagen-titel" class="zeile"><span class="pivot">Worauf</span> der Kurs sich stützt</h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>
           Die Übungen stützen sich auf psychologische Forschung zur Zielerreichung (Gabriele Oettingen, Peter Gollwitzer), zur Bildung
-          von Gewohnheiten (Wendy Wood) und zu den „möglichen Selbst“. Methodische Impulse stammen aus „Designing Your Life“ von Bill
+          von Gewohnheiten (Wendy Wood) und zu den sogenannten „möglichen Selbst“, also unseren Vorstellungen davon, wer wir werden könnten und wer wir auf keinen Fall werden möchten. Methodische Impulse stammen aus „Designing Your Life“ von Bill
           Burnett und Dave Evans sowie aus „The Big Leap“ von Gay Hendricks.
         </p>
         <p>
@@ -245,7 +245,7 @@ const orientierung = anfrageLink(
     <div class="container zwei-spalten">
       <div class="kopfblock">
         <p class="label">06 · Danach</p>
-        <h2 id="weiter-titel" class="zeile">Wie es danach <span class="pivot">weitergeht</span></h2>
+        <h2 id="weiter-titel" class="zeile">Wie es <span class="pivot">danach</span> weitergeht</h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>

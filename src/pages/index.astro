@@ -86,7 +86,7 @@ const fragen = [
     <div class="container">
       <div class="kopfblock">
         <p class="label">01 · Ausgangslage</p>
-        <h2 id="ausgangslage-titel" class="zeile">Fragen, mit denen Menschen zu mir <span class="pivot">kommen</span></h2>
+        <h2 id="ausgangslage-titel" class="zeile"><span class="pivot">Fragen</span>, mit denen Menschen zu mir kommen</h2>
         <p class="einleitung text">
           An diesen Fragen arbeitest du bei Life&amp;Lemons in einem Programm mit zwei Modulen, die aufeinander aufbauen.
         </p>
@@ -180,10 +180,10 @@ const fragen = [
         <h2 id="kursbuch-titel" class="zeile">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h2>
         <p class="einleitung">
           Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und Notizen. Es führt dich ganz intuitiv durch
-          jede Übung, ohne dass du lange Texte verfassen musst. Der Weg besteht aus neun Einheiten, zwei Praxiswochen und einer
-          Probezeit von 14 Tagen, in der du deine neue Richtung ausprobierst.
+          jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im Alltag aus.
         </p>
         <Preis id="kursbuch" />
+        {kursbuch.lieferhinweis && <p class="kursbuch__liefer">{kursbuch.lieferhinweis}</p>}
         <div class="aktionen">
           <AngebotButton id="kursbuch" variante="hell" />
           <a class="textlink" href={`${seiten.modul1}#formate`}>Lieber begleitet arbeiten</a>
@@ -201,7 +201,7 @@ const fragen = [
     <div class="container">
       <div class="kopfblock">
         <p class="label">03 · Über mich</p>
-        <h2 id="ueber-titel" class="zeile">Wer dich <span class="pivot">begleitet</span></h2>
+        <h2 id="ueber-titel" class="zeile"><span class="pivot">Wer</span> dich begleitet</h2>
         <p class="einleitung text">
           Ich bin Christine Achmus, Mentorin für Lebensentwürfe. Die Methode, mit der du arbeitest, habe ich zuerst an mir selbst
           erprobt.
@@ -214,8 +214,7 @@ const fragen = [
           <ol class="weg">
             <li>
               <span>
-                Zuerst habe ich meine <strong>innere Bremse</strong> erkannt. Meine alte Geschichte lautete, dass sich niemand für meine
-                Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe.
+                Zuerst habe ich meinen <strong>negativen Glaubenssatz</strong> erkannt: dass sich niemand für meine Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe.
               </span>
             </li>
             <li>
@@ -226,8 +225,7 @@ const fragen = [
             </li>
             <li>
               <span>
-                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und erprobe dabei meinen eigenen nächsten Lebensentwurf. Die alte
-                Stimme höre ich noch, und ich handle trotzdem.
+                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und erprobe dabei meinen eigenen nächsten Lebensentwurf. Ich höre die Zweifel noch und handle trotzdem.
               </span>
             </li>
           </ol>
@@ -238,8 +236,8 @@ const fragen = [
           <ul class="mitbringe">
             <li>Master in Bildungswissenschaften mit Schwerpunkt Pädagogische Psychologie</li>
             <li>Erfahrung im Projektmanagement großer technischer Vorhaben, mit vielfältigen Teams und in Veränderungsprozessen</li>
-            <li>Ein Kursbuch, das Forschung zu Selbstregulation und Gewohnheiten mit Methoden der Lebensgestaltung verbindet und seine Quellen offenlegt</li>
-            <li>Erfahrung aus Gesprächen, in denen wir ein Problem gemeinsam als Teil eines Systems betrachten und neue Handlungsmöglichkeiten finden</li>
+            <li>Ein Kursbuch, das Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung verbindet und seine Quellen offenlegt</li>
+            <li>Erfahrung aus Gesprächen, in denen wir mit etwas Abstand auf ein Problem schauen und neue Handlungsmöglichkeiten finden</li>
           </ul>
           <a class="textlink" href={seiten.ueberMich}>Mehr über mich <span aria-hidden="true">→</span></a>
         </div>
@@ -259,7 +257,7 @@ const fragen = [
           <div class="kopfblock">
             <p class="label">Stimmen</p>
             <h2 id="stimmen-titel">
-              Erfahrungen aus der <span class="pivot">ersten Gruppe</span>
+              Erfahrungen aus der <span class="pivot">ersten</span> Gruppe
             </h2>
           </div>
           {/* Hier zwei bis drei echte Stimmen mit schriftlicher Einwilligung einfügen */}
@@ -271,8 +269,9 @@ const fragen = [
   <!-- 7. Interessentenliste -->
   <Interessentenliste
     label="04 · Was als Nächstes startet"
-    titel="Sag mir, wofür du dich"
-    pivot="interessierst"
+    titel="Sag mir,"
+    pivot="wofür"
+    nach="du dich interessierst"
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
   />
 </Base>
@@ -450,6 +449,11 @@ const fragen = [
     min-width: 0;
   }
 
+
+  .kursbuch__liefer {
+    font-weight: 700;
+    margin-top: -8px;
+  }
 
   .kursbuch__hinweis {
     font-size: 12.5px;

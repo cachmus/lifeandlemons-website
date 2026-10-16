@@ -42,8 +42,10 @@ if (!pausiert) {
       </dl>
     )
   }
+  {!pausiert && a.startHinweis && <p class="format__start">{a.startHinweis}</p>}
   <div class="format__abschluss">
     {pausiert ? <p class="format__pause">{a.textPausiert ?? 'Dieses Angebot pausiert gerade.'}</p> : <Preis id={id} />}
+    {!pausiert && a.lieferhinweis && <p class="format__liefer">{a.lieferhinweis}</p>}
     <AngebotButton id={id} />
     {hinweis && <p class="format__hinweis">{hinweis}</p>}
   </div>
@@ -115,6 +117,18 @@ if (!pausiert) {
     font-size: 13px;
     line-height: 1.5;
     color: var(--text-gedaempft);
+    margin-top: -6px;
+  }
+
+  .format__start {
+    font-size: 15px;
+    padding-left: 14px;
+    border-left: 2px solid var(--linie);
+  }
+
+  .format__liefer {
+    font-size: 15px;
+    font-weight: 700;
     margin-top: -6px;
   }
 

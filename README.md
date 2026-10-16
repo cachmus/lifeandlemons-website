@@ -34,9 +34,11 @@ Veröffentlichte URLs bleiben stabil. Muss eine URL sich ändern, kommt eine Wei
 
 ## Häufige Änderungen
 
-**Kaufbutton auf Digistore24 umstellen:** In `src/config/angebote.ts` beim Angebot die `aktion` durch eine `checkout`-Aktion mit der Bestell-URL ersetzen. Ein Beispiel steht als Kommentar beim Kursbuch. Der Hinweis unter dem Button passt sich automatisch an.
+**Digistore24-Bestellformulare eintragen:** In `src/config/angebote.ts` bei `DIGISTORE24` die Bestelladressen für Kursbuch, Club, Einzel-Track und VIP-Track eintragen. Solange eine Adresse fehlt, zeigt die Vorschau eine Bestellung per E-Mail. Sobald `indexierbar` auf `true` steht, bricht der Build ohne vollständige Adressen ab, damit keine E-Mail-Bestellung online geht.
 
-**Plattformwechsel zu ablefy:** Nur `url` und `anbieter` der `checkout`-Aktionen ändern.
+**Vorbestellung und Lieferzeit:** Der Hinweis beim Kursbuch steht in `lieferhinweis` („Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.“). Mit Lagerbestand dort ändern. Die Hinweise zum Kursstart der begleiteten Formate stehen in `startHinweis`.
+
+**Plattformwechsel zu ablefy:** Die Adressen in `DIGISTORE24` austauschen und in `checkoutOderAnfrage` den Anbieter ändern.
 
 **Preise und Fristen:** Bis `STICHTAGE.einfuehrungBis` erscheinen die Einführungspreise. Danach erscheint der reguläre Preis nur, wenn `preisRegulaerBestaetigt: true` gesetzt ist, sonst gar kein Preis (das Build-Protokoll weist darauf hin). Nach `buchbarBis` oder mit `ausgebucht: true` pausiert ein Angebot und der Button führt zur Interessentenliste.
 

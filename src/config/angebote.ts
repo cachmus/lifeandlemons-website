@@ -62,6 +62,10 @@ export type Angebot = {
   plaetze?: number;
   /** Hinweis zur Durchführung, z. B. Mindestteilnahme */
   hinweis?: string;
+  /** Liefer- oder Vorbestellhinweis, erscheint direkt beim Kaufbutton */
+  lieferhinweis?: string;
+  /** Hinweis zum Kursstart nach der Buchung, erscheint in der Karte */
+  startHinweis?: string;
   /** Von Hand auf true setzen, wenn alle Plätze vergeben sind */
   ausgebucht: boolean;
   status: 'verfuegbar' | 'in-vorbereitung';
@@ -71,6 +75,27 @@ export type Angebot = {
   /** Satz, der bei pausiertem Angebot erscheint */
   textPausiert?: string;
 };
+
+/**
+ * Bestell-Adressen bei Digistore24. Nach der Produktfreigabe hier eintragen
+ * (Digistore24 → Produkt → Bestellformular-Link, beginnt mit https://www.checkout-ds24.com/product/…).
+ * Für einen Wechsel zu ablefy nur diese Adressen und den Anbieter in checkoutOderAnfrage austauschen.
+ */
+export const DIGISTORE24 = {
+  kursbuch: '',
+  club: '',
+  einzel: '',
+  vip: '',
+} as const;
+
+export type DigistoreId = keyof typeof DIGISTORE24;
+
+/** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung per E-Mail (nur für die Vorschau). */
+function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {
+  return url
+    ? { typ: 'checkout', anbieter: 'digistore24', url, label }
+    : { typ: 'anfrage', url: ersatz, label: ersatzLabel };
+}
 
 const zurListe = (label = 'Benachrichtige mich zum Start'): Aktion => ({ typ: 'liste', url: seiten.liste, label });
 
@@ -92,10 +117,14 @@ export const angebote: Angebot[] = [
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
     status: 'verfuegbar',
-    // Bis zur Digistore24-Freigabe läuft die Bestellung per E-Mail.
-    // Nach der Freigabe ersetzen durch:
-    // aktion: { typ: 'checkout', anbieter: 'digistore24', url: 'https://www.checkout-ds24.com/product/XXXXX', label: 'Kursbuch bestellen' },
-    aktion: { typ: 'anfrage', url: anfrageLink('Bestellung Kursbuch', 'Hallo Christine,\n\nich möchte das Kursbuch „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'), label: 'Kursbuch bestellen' },
+    // Solange keine Exemplare auf Lager sind, wird vorbestellt. Mit Lagerbestand den Hinweis ändern,
+    // z. B. „Versandfertig innerhalb von 2 Tagen“. Die Lieferzeit auch im Digistore24-Produkt eintragen.
+    lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
+    aktion: checkoutOderAnfrage(
+      DIGISTORE24.kursbuch,
+      'Kursbuch vorbestellen',
+      anfrageLink('Bestellung Kursbuch', 'Hallo Christine,\n\nich möchte das Kursbuch „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
+    ),
   },
   {
     id: 'club',
@@ -108,13 +137,15 @@ export const angebote: Angebot[] = [
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 890,
     preisRegulaerBestaetigt: false,
-    buchbarBis: '2026-12-22',
+    // 14 Tage Vorlauf für den Versand des Kursbuchs, Versand vor der Winterpause (entschieden 16.10.2026)
+    buchbarBis: '2026-12-15',
     start: 'am 06.01.2027, Treffen am 06., 13. und 20.01.2027',
     plaetze: 6,
     hinweis: 'Die Gruppe findet ab zwei Anmeldungen statt.',
+    startHinweis: 'Nach deiner Buchung schicke ich dir zuerst das Kursbuch, damit es vor dem ersten Treffen bei dir ist.',
     ausgebucht: false,
     status: 'verfuegbar',
-    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung Life&Lemons Club'), label: 'Per E-Mail anmelden' },
+    aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club'), 'Per E-Mail anmelden'),
     aktionPausiert: zurListe('Für die nächste Gruppe vormerken'),
     textPausiert: 'Die nächste Gruppe ist in Planung.',
   },
@@ -124,17 +155,19 @@ export const angebote: Angebot[] = [
     name: 'Einzel-Track',
     art: 'Persönlich begleitet',
     fuerDich: 'du in deinem Tempo arbeiten, die Reflexion und den Wandel aber lieber in Begleitung durchlaufen möchtest.',
-    enthaelt: 'das Kursbuch, Begleitung per E-Mail und WhatsApp und zwei Telefonate mit mir. Ich unterstütze dich, wenn deine innere Bremse greift oder die Umsetzung deiner Pläne stockt.',
+    enthaelt: 'das Kursbuch, Begleitung per E-Mail und WhatsApp und zwei Telefonate mit mir. Ich unterstütze dich, wenn dich Zweifel oder alte Muster bremsen oder die Umsetzung deiner Pläne stockt.',
     preisEinfuehrung: 249,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 790,
     preisRegulaerBestaetigt: false,
-    buchbarBis: '2026-12-06',
+    // 14 Tage Vorlauf für den Versand des Kursbuchs (entschieden 16.10.2026)
+    buchbarBis: '2026-11-29',
     start: 'spätestens am 13.12.2026',
     plaetze: 10,
     ausgebucht: false,
     status: 'verfuegbar',
-    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung Einzel-Track'), label: 'Per E-Mail anmelden' },
+    startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
+    aktion: checkoutOderAnfrage(DIGISTORE24.einzel, 'Platz buchen', anfrageLink('Anmeldung Einzel-Track'), 'Per E-Mail anmelden'),
     aktionPausiert: zurListe('Für Sommer 2027 vormerken'),
     textPausiert: 'Der Einzel-Track startet voraussichtlich ab Juli 2027 wieder.',
   },
@@ -143,20 +176,22 @@ export const angebote: Angebot[] = [
     modul: 1,
     name: 'VIP-Track',
     art: 'Intensiv mit Christine',
-    fuerDich: 'du den Kurs persönlich mit mir im 1on1 durcharbeiten und deine Erkenntnisse mit gezieltem Feedback direkt auf deine Lebenssituation übertragen möchtest.',
+    fuerDich: 'du den Kurs persönlich mit mir zu zweit durcharbeiten und deine Erkenntnisse mit gezieltem Feedback direkt auf deine Lebenssituation übertragen möchtest.',
     enthaelt: 'das Kursbuch, fünf Termine von je 2 Stunden in Hannover, einen WhatsApp- oder Signal-Zugang, über den ich täglich für dich erreichbar bin, einen gemeinsamen Plan für deine nächsten 90 Tage und ein Nachgespräch von 60 Minuten nach 3 Monaten.',
     preisEinfuehrung: 1900,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 5900,
     preisRegulaerBestaetigt: false,
-    // OFFEN: Variante Kursbuch-Tempo (Buchung bis 06.12., Start 13.12.) oder
-    // Club-Rhythmus (Buchung bis 22.12., Start 05.01.2027). Eingetragen ist die frühere Variante.
-    buchbarBis: '2026-12-06',
+    // OFFEN: Variante Kursbuch-Tempo (Start 13.12.) oder Club-Rhythmus (Start 05.01.2027).
+    // Eingetragen ist die frühere Variante.
+    // 14 Tage Vorlauf für den Versand des Kursbuchs (entschieden 16.10.2026)
+    buchbarBis: '2026-11-29',
     start: 'spätestens am 13.12.2026',
     plaetze: 3,
     ausgebucht: false,
     status: 'verfuegbar',
-    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung VIP-Track'), label: 'Per E-Mail anmelden' },
+    startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
+    aktion: checkoutOderAnfrage(DIGISTORE24.vip, 'Platz buchen', anfrageLink('Anmeldung VIP-Track'), 'Per E-Mail anmelden'),
     aktionPausiert: zurListe('Benachrichtige mich'),
     textPausiert: 'Der VIP-Track pausiert. Ich melde mich, sobald es neue Termine gibt.',
   },
@@ -251,9 +286,17 @@ export function formatDatum(iso: string): string {
   return `${tag}.${monat}.${jahr}`;
 }
 
+/** Buchbare Angebote, für die noch keine Digistore24-Adresse eingetragen ist. */
+export function fehlendeBestelladressen(): DigistoreId[] {
+  return (Object.keys(DIGISTORE24) as DigistoreId[]).filter((id) => !DIGISTORE24[id] && istBuchbar(angebotNachId(id)));
+}
+
 /** Hinweise beim Bauen, wenn eine Entscheidung fehlt. Erscheinen im Netlify-Protokoll. */
 export function pruefeAngebote(): string[] {
   const hinweise: string[] = [];
+  for (const id of fehlendeBestelladressen()) {
+    hinweise.push(`Keine Digistore24-Adresse für „${angebotNachId(id).name}“ (DIGISTORE24.${id}). Vorerst per E-Mail.`);
+  }
   if (!einfuehrungAktiv()) {
     for (const a of angebote) {
       if (a.status === 'verfuegbar' && !istPausiert(a) && aktuellerPreis(a) === null) {
@@ -267,13 +310,13 @@ export function pruefeAngebote(): string[] {
 /** Kurzer Hinweis unter einem Kauf- oder Anmeldebutton, passend zur Art der Aktion. */
 export function bestellHinweis(angebot: Angebot): string | null {
   const aktion = aktuelleAktion(angebot);
-  const vorgang = angebot.id.startsWith('kursbuch') ? 'Bestellung' : 'Anmeldung';
+  const kursbuch = angebot.id.startsWith('kursbuch');
   if (aktion.typ === 'checkout') {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
-    return `Die ${vorgang} läuft über ${anbieter}.`;
+    return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
   if (aktion.typ === 'anfrage') {
-    return `Die ${vorgang} läuft per E-Mail. Danach erhältst du die Rechnung und alle nächsten Schritte.`;
+    return `Die ${kursbuch ? 'Bestellung' : 'Anmeldung'} läuft per E-Mail. Danach erhältst du die Rechnung und alle nächsten Schritte.`;
   }
   return null;
 }

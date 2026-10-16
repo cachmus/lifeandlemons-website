@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { site, seiten, hauptnavigation, fussnavigation } from '../config/site';
-import { pruefeAngebote } from '../config/angebote';
+import { pruefeAngebote, fehlendeBestelladressen } from '../config/angebote';
 import Wortmarke from '../components/Wortmarke.astro';
 
 interface Props {
@@ -23,6 +23,12 @@ const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const robots = !site.indexierbar || noindex ? 'noindex, nofollow' : 'index, follow';
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+
+// Livegang nur mit Bestellformularen: Sobald die Seite indexierbar ist, braucht jedes buchbare Angebot
+// seine Digistore24-Adresse. Sonst bricht der Build ab, damit keine E-Mail-Bestellung online geht.
+if (site.indexierbar && fehlendeBestelladressen().length > 0) {
+  throw new Error(`Livegang blockiert: In src/config/angebote.ts fehlen Digistore24-Adressen (${fehlendeBestelladressen().join(', ')}).`);
+}
 
 // Hinweise auf fehlende Entscheidungen im Build-Protokoll (einmal je Build)
 const g = globalThis as { __angeboteGeprueft?: boolean };
