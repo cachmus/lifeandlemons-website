@@ -1,0 +1,31 @@
+# Baut die Website jede Nacht neu, damit Preise und Fristen aus src/config/angebote.ts
+# pünktlich umspringen (z. B. Ende der Einführungspreise am 07.12.2026).
+#
+# Einrichtung (einmalig):
+# 1. Netlify → Site configuration → Build & deploy → Build hooks → „Add build hook“,
+#    Name „Nächtlicher Build“, Branch „main“. Die angezeigte Adresse kopieren.
+# 2. GitHub → Repository → Settings → Secrets and variables → Actions → „New repository secret“,
+#    Name NETLIFY_BUILD_HOOK, Wert = kopierte Adresse.
+# Die Adresse ist ein Geheimnis und gehört nie in den Code.
+
+name: Nächtlicher Build
+
+on:
+  schedule:
+    # 00:20 Uhr UTC = 01:20 Uhr (Winter) bzw. 02:20 Uhr (Sommer) in Berlin
+    - cron: '20 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-ausloesen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Netlify-Build auslösen
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Kein Secret NETLIFY_BUILD_HOOK hinterlegt. Siehe Kommentar oben in dieser Datei."
+            exit 1
+          fi
+          curl -fsS -X POST -d '{}' "$HOOK"

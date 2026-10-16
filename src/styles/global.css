@@ -1,29 +1,49 @@
 /*
- * VORLÄUFIGES Erscheinungsbild bis zur Designentscheidung.
- * Farben, Schriften und Abstände sind als Variablen angelegt, damit das finale Design
- * an dieser einen Stelle eingesetzt werden kann. Schriften werden später lokal eingebunden,
- * nicht über Google Fonts.
+ * Erscheinungsbild von Life&Lemons.
+ * Verbindliche Vorgabe: claude/Gestaltung_Website.md (Projekt in claude.ai).
+ * Farbwelt „Kalk & Tinte“ (Fassung 2, Vorschlag 16.10.2026): eine durchgehende helle Fläche,
+ * dunkle Tinte für Text, Terrakotta sparsam für kleine Akzente, Zitrone nur als Punkt am Ende des Weges.
+ * Keine abwechselnd farbigen Abschnitte. Die Seite endet in einer dunklen Fläche, in die sie über
+ * einen weichen Verlauf hineinfließt (.abschnitt--ende). Ein feiner Faden am linken Rand verbindet alles.
+ * Grundregeln: Ecken 0 px, keine Schatten.
+ * Schriften werden lokal ausgeliefert (Fontsource), nicht über das Google-CDN.
  */
 
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource/arimo/latin-400.css';
+@import '@fontsource/arimo/latin-400-italic.css';
+@import '@fontsource/arimo/latin-700.css';
+@import '@fontsource/caveat/latin-400.css';
+
 :root {
-  --farbe-grund: #ffffff;
-  --farbe-flaeche: #f4f4f2;
-  --farbe-text: #1f1f1f;
-  --farbe-text-leise: #555555;
-  --farbe-akzent: #1f1f1f;
-  --farbe-akzent-text: #ffffff;
-  --farbe-linie: #d9d9d6;
+  /* Farben: helle Töne in der Reihenfolge, in der eine Seite nach unten dunkler wird */
+  --kalk: #f5f2eb; /* Seitengrund */
+  --leinen: #ede7db;
+  --stein: #e4e2d7;
+  --salbei: #d7dcce; /* tiefster heller Ton, Seitenende und Footer */
+  --papier-hell: #fbf9f5; /* Karten, Eingabefelder, Polaroid */
+  --tinte: #22302c; /* Text, Buttons, dunkle Fläche des Kursbuchs */
+  --terrakotta: #bb5e3a; /* Pivotwort, Ziffern, Treppe; als Text nur ab 24px oder 19px fett */
+  --terrakotta-tief: #93452a; /* Labels, Links, Hover, Fokus */
+  --terrakotta-hell: #e0a487; /* Akzent auf tinte */
+  --zitrone: #d8b443; /* nur als Punkt (Ziel), nie als Fläche oder Text */
+  --text-gedaempft: #545c55;
+  --linie: #c8c8bb;
 
-  --schrift-text: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --schrift-titel: Georgia, 'Times New Roman', serif;
+  /* Schriften */
+  --schrift-titel: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --schrift-text: Arimo, Arial, 'Helvetica Neue', sans-serif;
+  --schrift-hand: Caveat, 'Segoe Print', cursive;
 
-  --breite-text: 40rem;
-  --breite-seite: 72rem;
-  --abstand-s: 0.75rem;
-  --abstand-m: 1.5rem;
-  --abstand-l: 3rem;
-  --abstand-xl: 5rem;
-  --radius: 4px;
+  /* Raster */
+  --breite-seite: 1240px;
+  --rand: clamp(16px, 4vw, 48px);
+  --abschnitt: clamp(72px, 10vw, 152px);
+  --breite-text: 38rem;
+
+  /* Bewegung */
+  --kurve: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 *,
@@ -34,89 +54,454 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 96px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   margin: 0;
-  background: var(--farbe-grund);
-  color: var(--farbe-text);
+  background: var(--kalk);
+  color: var(--tinte);
   font-family: var(--schrift-text);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: clamp(17px, 0.3vw + 16px, 18px);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--schrift-titel);
-  font-weight: 400;
-  line-height: 1.2;
-  margin: 0 0 var(--abstand-m);
+  font-weight: 500;
+  margin: 0;
+  text-wrap: balance;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
-h3 { font-size: 1.25rem; }
+h1 {
+  font-size: clamp(54px, 7.6vw, 108px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
 
-p { margin: 0 0 var(--abstand-m); }
+h2 {
+  font-size: clamp(40px, 5.2vw, 72px);
+  line-height: 1;
+}
 
-a { color: inherit; text-underline-offset: 0.2em; }
+h3 {
+  font-size: clamp(32px, 3.2vw, 44px);
+  line-height: 1.05;
+}
 
-img { max-width: 100%; height: auto; display: block; }
+/* Pivotwort: trägt den inhaltlichen Fokus eines Titels. Kursiv, in derselben Farbe wie der Titel. */
+.pivot {
+  font-style: italic;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--terrakotta-tief);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--tinte);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 :focus-visible {
-  outline: 3px solid var(--farbe-text);
-  outline-offset: 3px;
+  outline: 2px solid var(--terrakotta-tief);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--salbei);
+  color: var(--tinte);
+}
+
+/* ---------- Hilfsklassen ---------- */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--breite-seite) + 2 * var(--rand));
+  margin: 0 auto;
+  padding: 0 var(--rand);
+}
+
+/* Weicher Übergang von Kalk in Tinte (Seitenschluss und Footer), Stufen im OKLab-Farbraum gemischt,
+   damit kein grauer Streifen entsteht. Die Höhe kommt von --uebergang am jeweiligen Element. */
+.abschnitt--ende,
+.fuss--uebergang {
+  --verlauf-ende: linear-gradient(
+    to bottom,
+    var(--kalk) 0,
+    color-mix(in oklab, var(--kalk) 94%, var(--tinte)) calc(var(--uebergang) * 0.2),
+    color-mix(in oklab, var(--kalk) 78%, var(--tinte)) calc(var(--uebergang) * 0.4),
+    color-mix(in oklab, var(--kalk) 50%, var(--tinte)) calc(var(--uebergang) * 0.6),
+    color-mix(in oklab, var(--kalk) 20%, var(--tinte)) calc(var(--uebergang) * 0.8),
+    var(--tinte) var(--uebergang)
+  );
+}
+
+/* Abschnitte haben keine eigenen Farbflächen. Getrennt wird durch Weißraum und den Faden. */
+.abschnitt {
+  position: relative;
+  padding: var(--abschnitt) 0;
+}
+
+/*
+ * Schluss einer Seite: Die helle Fläche fließt über einen weichen Verlauf in die dunkle Tinte,
+ * die nahtlos in den Footer übergeht. Pro Seite höchstens einmal, immer direkt vor dem Footer.
+ */
+.abschnitt--ende {
+  --uebergang: clamp(140px, 16vw, 240px);
+  padding-top: calc(var(--uebergang) + var(--abschnitt) * 0.6);
+  background: var(--verlauf-ende);
+  color: var(--kalk);
+}
+
+/* Der Faden: eine feine Linie am linken Rand, die alle Abschnitte verbindet */
+.abschnitt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--faden-x);
+  width: 1px;
+  background: var(--linie);
+  pointer-events: none;
+}
+
+.abschnitt--ende::before {
+  background: color-mix(in srgb, var(--linie) 70%, transparent);
+}
+
+:root {
+  --faden-abstand: min(28px, calc(var(--rand) / 2));
+  --faden-x: calc(max(var(--rand), (100% - var(--breite-seite)) / 2) - var(--faden-abstand));
+}
+
+/* Jede Abschnitts-Überschrift sitzt mit einem Punkt auf dem Faden */
+.abschnitt .kopfblock > .label {
+  position: relative;
+}
+
+.abschnitt .kopfblock > .label::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--faden-abstand) - 3.5px);
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terrakotta);
+}
+
+/* Dunkle Fläche als Objekt auf der Seite (Kursbuch), nicht über die ganze Breite */
+.dunkel {
+  background: var(--tinte);
+  color: var(--kalk);
+}
+
+.text {
+  max-width: var(--breite-text);
+}
+
+.fliesstext > * + * {
+  margin-top: 1em;
+}
+
+.label {
+  font-family: var(--schrift-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terrakotta-tief);
+  margin: 0;
+}
+
+.dunkel .label,
+.abschnitt--ende .label {
+  color: var(--terrakotta-hell);
+}
+
+.abschnitt--ende .gedaempft {
+  color: #c9cfc2;
+}
+
+.unterzeile {
+  font-family: var(--schrift-titel);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 27px);
+  line-height: 1.3;
+  color: var(--text-gedaempft);
+}
+
+.einleitung {
+  font-size: clamp(18px, 0.5vw + 16px, 20px);
+  line-height: 1.6;
+}
+
+.gedaempft {
+  color: var(--text-gedaempft);
+}
+
+.kopfblock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.zwei-spalten {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(40px, 6vw, 96px);
+}
+
+.zwei-spalten > * {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.nur-screenreader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .skip-link {
   position: absolute;
-  left: var(--abstand-s);
-  top: -3rem;
-  padding: var(--abstand-s);
-  background: var(--farbe-akzent);
-  color: var(--farbe-akzent-text);
-  z-index: 10;
-}
-.skip-link:focus { top: var(--abstand-s); }
-
-.container {
-  width: 100%;
-  max-width: var(--breite-seite);
-  margin: 0 auto;
-  padding: 0 1rem;
+  left: var(--rand);
+  top: -4rem;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--tinte);
+  color: var(--kalk);
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.text { max-width: var(--breite-text); }
-
-.section { padding: var(--abstand-xl) 0; }
-.section--flaeche { background: var(--farbe-flaeche); }
-
-.platzhalter {
-  border: 1px dashed var(--farbe-text-leise);
-  border-radius: var(--radius);
-  padding: var(--abstand-m);
-  color: var(--farbe-text-leise);
-  font-style: italic;
+.skip-link:focus {
+  top: 12px;
+  color: var(--kalk);
 }
+
+/* ---------- Buttons und Links ---------- */
 
 .button {
-  display: inline-block;
-  padding: 0.8rem 1.4rem;
-  min-height: 44px;
-  background: var(--farbe-akzent);
-  color: var(--farbe-akzent-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 26px;
+  background: var(--tinte);
+  color: var(--kalk);
+  border: 0;
+  border-radius: 0;
+  font-family: var(--schrift-text);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
   text-decoration: none;
-  border-radius: var(--radius);
-  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 250ms var(--kurve), color 250ms var(--kurve);
 }
-.button:hover { opacity: 0.88; }
-.button--zweitrangig {
-  background: transparent;
-  color: var(--farbe-text);
-  border: 1px solid var(--farbe-text);
+
+.button:hover,
+.button:focus-visible {
+  background: var(--terrakotta-tief);
+  color: var(--kalk);
+}
+
+.button__pfeil {
+  display: inline-block;
+  transition: transform 300ms var(--kurve);
+}
+
+.button:hover .button__pfeil,
+.button:focus-visible .button__pfeil {
+  transform: translateX(6px);
+}
+
+.button--hell {
+  background: var(--kalk);
+  color: var(--tinte);
+}
+
+.button--hell:hover,
+.button--hell:focus-visible {
+  background: var(--leinen);
+  color: var(--tinte);
+}
+
+.button--klein {
+  min-height: 44px;
+  padding: 0 20px;
+}
+
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--schrift-text);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tinte);
+  text-decoration: underline;
+  text-decoration-color: var(--terrakotta);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 250ms var(--kurve);
+}
+
+.textlink:hover,
+.textlink:focus-visible {
+  color: var(--terrakotta-tief);
+}
+
+.dunkel .textlink,
+.abschnitt--ende .textlink {
+  color: var(--kalk);
+  text-decoration-color: var(--terrakotta-hell);
+}
+
+.dunkel .textlink:hover,
+.dunkel .textlink:focus-visible,
+.abschnitt--ende .textlink:hover,
+.abschnitt--ende .textlink:focus-visible {
+  color: var(--terrakotta-hell);
+}
+
+/* Auf dunklem Grund ist jeder Button hell */
+.dunkel .button,
+.abschnitt--ende .button {
+  background: var(--kalk);
+  color: var(--tinte);
+}
+
+.dunkel .button:hover,
+.dunkel .button:focus-visible,
+.abschnitt--ende .button:hover,
+.abschnitt--ende .button:focus-visible {
+  background: var(--terrakotta-hell);
+  color: var(--tinte);
+}
+
+.dunkel a:not(.button):not(.textlink),
+.abschnitt--ende a:not(.button):not(.textlink) {
+  color: var(--kalk);
+  text-decoration-color: var(--terrakotta-hell);
+}
+
+.dunkel :focus-visible,
+.abschnitt--ende :focus-visible {
+  outline-color: var(--terrakotta-hell);
+}
+
+.aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+/* ---------- Platzhalter für noch offene Inhalte ---------- */
+
+.platzhalter {
+  border: 1px dashed var(--text-gedaempft);
+  padding: 20px 24px;
+  color: var(--text-gedaempft);
+  font-size: 15px;
+  background: color-mix(in srgb, var(--leinen) 60%, transparent);
+}
+
+.platzhalter > * + * {
+  margin-top: 0.6em;
+}
+
+/* ---------- Bewegung beim Erscheinen ---------- */
+/*
+ * Nur aktiv, wenn JavaScript läuft (Klasse "js" am <html>) und keine reduzierte Bewegung gewünscht ist.
+ * Ohne JavaScript ist alles sofort sichtbar.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .zeile {
+    display: block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition: opacity 800ms var(--kurve), transform 800ms var(--kurve);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  .js .on .zeile,
+  .js .zeile.on {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js [data-erscheinen] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 700ms var(--kurve), transform 700ms var(--kurve);
+  }
+
+  .js [data-erscheinen].on {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Seitenwechsel ---------- */
+/* Native Übergänge zwischen Seiten, ohne zusätzliches JavaScript. Browser ohne Unterstützung wechseln sofort. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 300ms;
+    animation-timing-function: var(--kurve);
+  }
 }

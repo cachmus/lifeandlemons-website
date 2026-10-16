@@ -1,18 +1,57 @@
 ---
+/**
+ * Impressum. ENTWURF: vor dem Livegang fachlich prüfen lassen. Eckige Klammern sind Platzhalter.
+ */
 import Base from '../layouts/Base.astro';
-import Platzhalter from '../components/Platzhalter.astro';
 import { site } from '../config/site';
 ---
 
-<Base title="Impressum" description="Impressum von Life&Lemons.">
-  <section class="section">
-    <div class="container text">
+<Base title="Impressum" description="Impressum von Life&Lemons, Christine Achmus.">
+  <section class="abschnitt recht">
+    <div class="container text fliesstext">
+      <p class="label">Rechtliches</p>
       <h1>Impressum</h1>
-      <Platzhalter>
-        <p>ENTWURF FOLGT. Vor dem Livegang fachlich prüfen lassen.</p>
-        <p>Benötigt: Name, ladungsfähige Anschrift, E-Mail, ggf. Telefon, ggf. Umsatzsteuer-ID oder Hinweis zur Kleinunternehmerregelung, verantwortliche Person für journalistisch-redaktionelle Inhalte.</p>
-      </Platzhalter>
-      <p>{site.inhaberin}<br />{site.name}<br />E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></p>
+
+      <div class="platzhalter" role="note">
+        <p>ENTWURF, fachlich zu prüfen. Eckige Klammern vor dem Livegang ausfüllen.</p>
+      </div>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {site.inhaberin}<br />
+        {site.name}<br />
+        [Straße und Hausnummer]<br />
+        [Postleitzahl und Ort]
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a><br />
+        [Telefon, falls angegeben]
+      </p>
+
+      <h2>Umsatzsteuer</h2>
+      <p>[Umsatzsteuer-Identifikationsnummer nach § 27a UStG oder Hinweis auf die Kleinunternehmerregelung nach § 19 UStG]</p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>{site.inhaberin}, Anschrift wie oben</p>
+
+      <h2>Verbraucherstreitbeilegung</h2>
+      <p>
+        Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+        teilzunehmen.
+      </p>
     </div>
   </section>
 </Base>
+
+<style>
+  .recht h1 {
+    font-size: clamp(44px, 6vw, 72px);
+    margin-bottom: 0.4em;
+  }
+  .recht h2 {
+    font-size: clamp(26px, 2.6vw, 34px);
+    margin-top: 1.6em;
+  }
+</style>
