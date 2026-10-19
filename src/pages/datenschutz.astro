@@ -2,7 +2,8 @@
 /**
  * Datenschutzerklärung. ENTWURF, fachlich zu prüfen (nur hier im Code vermerkt, nicht auf der Seite): vor dem Livegang von einer Fachperson prüfen lassen.
  * Abgestimmt auf den tatsächlichen technischen Aufbau, Stand 19.10.2026:
- * statische Seite bei Netlify, lokale Schriften, keine Cookies, kein Web-Speicher, keine Analyse,
+ * statische Seite bei Netlify, lokale Schriften, keine Cookies, keine Analyse, Leistungsmessung von Netlify nur mit Einwilligung
+ * (Entscheidung im Web-Speicher des Browsers, siehe `messung` in src/config/site.ts),
  * E-Mail über IONOS, Interessentenliste über Brevo (Double-Opt-in, ohne Öffnungs- und Klickmessung),
  * Bestellung über Digistore24 als Wiederverkäufer, Instagram nur als Link.
  *
@@ -36,8 +37,8 @@ import { site } from '../config/site';
 
       <h2>Kurz zusammengefasst</h2>
       <p>
-        Diese Website setzt keine Cookies, speichert nichts in deinem Browser und verwendet keine Analyse- oder Werbedienste. Schriften und
-        Bilder liegen auf dem eigenen Server. Personenbezogene Daten verarbeite ich nur, soweit das für die Auslieferung der Website nötig ist,
+        Diese Website setzt keine Cookies und verwendet keine Analyse- oder Werbedienste. Nur wenn du zustimmst, misst mein Hoster Netlify,
+        wie schnell die Seiten laden. Schriften und Bilder liegen auf dem eigenen Server. Personenbezogene Daten verarbeite ich nur, soweit das für die Auslieferung der Website nötig ist,
         oder wenn du mir schreibst, dich in die Interessentenliste einträgst oder etwas bestellst.
       </p>
 
@@ -53,6 +54,28 @@ import { site } from '../config/site';
         können dabei in die USA übermittelt werden. Netlify ist nach dem EU-US Data Privacy Framework zertifiziert, auf dessen Grundlage die
         EU-Kommission ein angemessenes Datenschutzniveau festgestellt hat (Art. 45 DSGVO). Die Protokolle speichert Netlify nur so lange, wie
         es für Betrieb und Sicherheit erforderlich ist.
+      </p>
+
+      <h2 id="messung">Messung der Ladezeiten durch Netlify</h2>
+      <p>
+        Netlify bietet eine Messung an, die zeigt, wie schnell die Seiten bei Besucherinnen laden. Diese Messung läuft nur, wenn du im Hinweis
+        am unteren Bildschirmrand „Zulassen“ wählst. Ohne deine Zustimmung schickt dein Browser keine Messdaten.
+      </p>
+      <p>
+        Mit deiner Zustimmung übermittelt dein Browser bei jedem Seitenaufruf die aufgerufene Adresse, dein Betriebssystem, die Größe deines
+        Bildschirms und technische Ladezeiten an Netlify, Inc. Dabei wird auch deine IP-Adresse übertragen. Cookies werden nicht gesetzt.
+        Ich sehe nur zusammengefasste Werte und kann sie keiner Person zuordnen. Rechtsgrundlage ist deine Einwilligung (§ 25 Abs. 1 TDDDG,
+        Art. 6 Abs. 1 lit. a DSGVO). Für die Übermittlung in die USA gilt das oben zum Hosting Gesagte.
+      </p>
+      <p>
+        Damit die Website deine Entscheidung nicht bei jedem Aufruf neu erfragt, speichert sie im Speicher deines Browsers einen Eintrag mit
+        „ja“ oder „nein“ und dem Zeitpunkt. Dieser Eintrag bleibt auf deinem Gerät und wird nicht übertragen. Er ist für die Verwaltung deiner
+        Einwilligung erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Nach einem Jahr fragt die Website erneut.
+      </p>
+      <p>
+        Du kannst deine Einwilligung jederzeit für die Zukunft widerrufen:
+        <button class="recht__knopf" type="button" data-einwilligung-oeffnen>Messung zulassen oder ablehnen</button>.
+        Den Eintrag kannst du auch löschen, indem du die Websitedaten in deinem Browser entfernst.
       </p>
 
       <h2>Kontakt per E-Mail</h2>
@@ -133,6 +156,15 @@ import { site } from '../config/site';
     font-size: clamp(44px, 6vw, 72px);
     margin-bottom: 0.4em;
     hyphens: manual;
+  }
+  .recht__knopf {
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: var(--terrakotta-tief);
+    text-decoration: underline;
+    cursor: pointer;
   }
   .recht h2 {
     font-size: clamp(26px, 2.6vw, 34px);

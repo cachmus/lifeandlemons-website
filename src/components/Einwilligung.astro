@@ -1,0 +1,118 @@
+---
+/**
+ * Hinweis zur Einwilligung in die Leistungsmessung von Netlify. Einstellungen: `messung` in src/config/site.ts.
+ * Die eigentliche Sperre steht im <head> von Base.astro; dieser Baustein fragt nur und speichert die Entscheidung.
+ * Erneut öffnen lässt sich der Hinweis über jedes Element mit `data-einwilligung-oeffnen` (Footer, Datenschutz).
+ */
+import { seiten } from '../config/site';
+---
+
+<section class="einwilligung" aria-labelledby="einwilligung-titel" data-einwilligung hidden>
+  <div class="container einwilligung__innen">
+    <div class="einwilligung__text">
+      <p id="einwilligung-titel" class="einwilligung__titel">Darf Netlify messen, wie schnell diese Seite lädt?</p>
+      <p>
+        Dann schickt dein Browser Ladezeiten, die aufgerufene Seite, Betriebssystem und Bildschirmgröße an meinen Hoster Netlify. Cookies werden
+        dabei nicht gesetzt. Du kannst deine Wahl jederzeit im Fußbereich ändern. Mehr dazu in der
+        <a href={`${seiten.datenschutz}#messung`}>Datenschutzerklärung</a>.
+      </p>
+    </div>
+    <div class="einwilligung__knoepfe">
+      <button class="button button--hell button--klein" type="button" data-wahl="nein">Ablehnen</button>
+      <button class="button button--hell button--klein" type="button" data-wahl="ja">Zulassen</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { messung } from '../config/site';
+
+  const banner = document.querySelector<HTMLElement>('[data-einwilligung]');
+
+  function gespeicherteWahl(): 'ja' | 'nein' | null {
+    try {
+      const [wahl, zeit] = (localStorage.getItem(messung.speicherSchluessel) ?? '').split(':');
+      if ((wahl === 'ja' || wahl === 'nein') && Date.now() - Number(zeit) < messung.gueltigTage * 86_400_000) return wahl;
+    } catch {
+      // Speicher gesperrt: dann gilt keine Einwilligung
+    }
+    return null;
+  }
+
+  function zeigen(fokus: boolean) {
+    if (!banner) return;
+    banner.hidden = false;
+    if (fokus) banner.querySelector<HTMLButtonElement>('[data-wahl="nein"]')?.focus();
+  }
+
+  if (banner) {
+    banner.querySelectorAll<HTMLButtonElement>('[data-wahl]').forEach((knopf) =>
+      knopf.addEventListener('click', () => {
+        try {
+          localStorage.setItem(messung.speicherSchluessel, `${knopf.dataset.wahl}:${Date.now()}`);
+        } catch {
+          // Ohne Speicher wird beim nächsten Seitenaufruf erneut gefragt
+        }
+        banner.hidden = true;
+      }),
+    );
+
+    // Nur fragen, wenn Netlify das Messskript tatsächlich eingefügt hat (in der Vorschau immer)
+    const messskript = document.getElementById('netlify-rum-container') !== null;
+    if ((messskript || import.meta.env.DEV) && gespeicherteWahl() === null) zeigen(false);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-einwilligung-oeffnen]').forEach((element) =>
+    element.addEventListener('click', () => zeigen(true)),
+  );
+</script>
+
+<style>
+  .einwilligung {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 60;
+    background: var(--tinte);
+    color: var(--kalk);
+    border-top: 1px solid var(--terrakotta-hell);
+    padding: 20px 0;
+  }
+
+  .einwilligung[hidden] {
+    display: none;
+  }
+
+  .einwilligung__innen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 40px;
+  }
+
+  .einwilligung__text {
+    flex: 1 1 32rem;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .einwilligung__text p {
+    margin: 0;
+  }
+
+  .einwilligung__titel {
+    font-weight: 700;
+    margin-bottom: 4px !important;
+  }
+
+  .einwilligung a {
+    color: var(--kalk);
+    text-decoration-color: var(--terrakotta-hell);
+  }
+
+  .einwilligung__knoepfe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
