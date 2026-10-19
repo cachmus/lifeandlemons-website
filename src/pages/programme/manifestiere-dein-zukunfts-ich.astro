@@ -1,0 +1,129 @@
+---
+/**
+ * Seite Modul 2 „Manifestiere dein Zukunfts-Ich“, zunächst in Vorbereitung.
+ * Texte: claude/Texte_Unterseiten.md (Entwurf, Quelle: Kursbuch Band 1, S. 21 und S. 183).
+ * Hinweis aus den Entscheidungen: „Manifestieren“ ist online esoterisch besetzt. Die Seite nennt
+ * konkrete Methoden und Arbeitsergebnisse, ohne Wirkungsversprechen.
+ */
+import Base from '../../layouts/Base.astro';
+import Interessentenliste from '../../components/Interessentenliste.astro';
+import { seiten } from '../../config/site';
+---
+
+<Base
+  dunklerSchluss
+  title="Modul 2: Manifestiere dein Zukunfts-Ich"
+  description="Modul 2 von Life&Lemons ist in Vorbereitung: Du übersetzt deine erprobte Richtung in 90 Tage mit Meilensteinen und neuen Gewohnheiten."
+>
+  <section class="kopf-abschnitt">
+    <div class="container kopf-abschnitt__text">
+      <p class="label">Modul 2 · in Vorbereitung</p>
+      <h1>Manifestiere dein <span class="pivot">Zukunfts-Ich</span></h1>
+      <p class="einleitung">
+        Für dich, wenn du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest.
+      </p>
+      <div class="aktionen">
+        <a class="button" href="#liste">Benachrichtige mich zum Start <span class="button__pfeil" aria-hidden="true">→</span></a>
+        <a class="textlink" href={seiten.modul1}>Zuerst zu Modul 1</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="inhalt-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">01 · Worum es geht</p>
+        <h2 id="inhalt-titel" class="zeile">Aus deiner Richtung wird <span class="pivot">Alltag</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <!-- Wortlaut nach Christine, 19.10.2026 -->
+        <p>
+          Manifestieren heißt bei mir mehr, als dir schöne Gedanken zu machen und auf das Beste zu hoffen. Du trainierst dein
+          Unterbewusstsein darauf, schon heute so zu denken wie der Mensch, der du sein willst, damit du auch so handeln kannst. Das kann
+          jeden Bereich deines Lebens betreffen: beruflichen und finanziellen Erfolg, stärkere Beziehungen oder einen besseren Umgang mit
+          dir selbst.
+        </p>
+        <p>
+          In Modul 1 hast du eine Richtung für dein Zukunfts-Ich erarbeitet, also für den Menschen, der du in einigen Jahren sein möchtest.
+          In Modul 2 entwickeln wir Techniken und alltagstaugliche Strategien, mit denen du Schritt für Schritt zu diesem Menschen wirst.
+          Du baust deine Richtung im Einzelnen aus, prüfst deine Annahmen und übersetzt deinen Weg in 90 Tage mit Meilensteinen und neuen
+          Gewohnheiten.
+        </p>
+        <p>Sei, wer du werden willst!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="einstieg-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Einstieg</p>
+        <h2 id="einstieg-titel" class="zeile">So kannst du <span class="pivot">einsteigen</span></h2>
+      </div>
+      <div class="wege">
+        <article class="weg-karte" data-erscheinen>
+          <p class="label">Selbstständig</p>
+          <h3>Kursbuch Band 2</h3>
+          <p>Das Kursbuch ist einzeln erhältlich, sobald es erscheint.</p>
+        </article>
+        <article class="weg-karte" data-erscheinen>
+          <p class="label">Mit Begleitung</p>
+          <h3>Orientierungsgespräch</h3>
+          <p>
+            Persönliche Begleitung beginnt mit einem Orientierungsgespräch. Darin klären wir, wo du gerade stehst und ob Modul 1 vorher
+            sinnvoll ist.
+          </p>
+        </article>
+      </div>
+      <p class="hinweis gedaempft">
+        Wenn du noch keine Richtung erprobt hast, beginnst du mit <a href={seiten.modul1}>Modul 1 „Entwirf dein Zukunfts-Ich“</a>.
+      </p>
+    </div>
+  </section>
+
+  <Interessentenliste
+    label="Start von Modul 2"
+    titel="Ich melde mich, sobald es"
+    pivot="losgeht"
+    text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
+    vorauswahl={['modul2']}
+  />
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(48px, 7vw, 112px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf-abschnitt__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .kopf-abschnitt .einleitung {
+    max-width: 40rem;
+  }
+
+  .wege {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .weg-karte {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: transparent;
+    border: 1px solid var(--linie);
+    border-top: 2px dashed var(--terrakotta);
+    padding: clamp(28px, 3.5vw, 44px);
+    font-size: 16px;
+  }
+
+  .hinweis {
+    margin-top: clamp(28px, 4vw, 48px);
+    font-size: 16px;
+  }
+</style>

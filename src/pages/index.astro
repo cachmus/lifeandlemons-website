@@ -1,79 +1,555 @@
 ---
+/**
+ * Startseite. Wortlaut: claude/Texte_Startseite.md (Projekt in claude.ai). Texte nicht stillschweigend ändern.
+ * Preise und Fristen kommen aus src/config/angebote.ts.
+ */
+import { Picture, Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Platzhalter from '../components/Platzhalter.astro';
 import AngebotButton from '../components/AngebotButton.astro';
-import { site } from '../config/site';
+import Preis from '../components/Preis.astro';
+import Treppe from '../components/Treppe.astro';
+import ModulKarte from '../components/ModulKarte.astro';
+import Polaroid from '../components/Polaroid.astro';
+import Interessentenliste from '../components/Interessentenliste.astro';
+import { site, seiten } from '../config/site';
+import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
+import portraet from '../assets/portraet-christine-mauer.jpg';
+import umschlag from '../assets/kursbuch-umschlag.png';
+import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
+
+const kursbuch = angebotNachId('kursbuch');
+const kursbuchPreis = aktuellerPreis(kursbuch);
+const kursbuchHinweis = bestellHinweis(kursbuch);
+
+/** Stimmen erst einblenden, wenn echte Stimmen mit schriftlicher Einwilligung vorliegen */
+const stimmenZeigen = false;
+
+const fragen = [
+  'Mein Leben funktioniert, aber es fühlt sich nicht ganz nach meinem Leben an.',
+  'Ich weiß, dass ich etwas verändern möchte, aber noch nicht genau, was.',
+  'Ich habe Wünsche und Ideen, werde aber durch Zweifel oder alte Muster gebremst.',
+  'Ich möchte herausfinden, welche Richtung wirklich zu mir passt.',
+];
 ---
 
 <Base
-  title={site.rolle}
-  description="Entwirf drei mögliche Versionen deines Zukunfts-Ichs, löse deine innere Bremse und teste deine neue Richtung am echten Leben aus."
+  dunklerSchluss
+  title="Life&Lemons · Christine Achmus, Mentorin für Lebensentwürfe"
+  description="Life&Lemons unterstützt dich dabei, herauszufinden, wie du wirklich leben möchtest, und deine Vorstellungen Schritt für Schritt umzusetzen. Kursbuch und Begleitung von Christine Achmus."
 >
-  <section class="section">
-    <div class="container text">
-      <h1>Entwirf dein Zukunfts-Ich</h1>
-      <!-- Kernbotschaft aus dem Kampagnenplan V8 -->
-      <p class="einleitung">
-        Entwirf drei mögliche Versionen deines Zukunfts-Ichs, löse deine innere Bremse und teste deine neue Richtung am
-        echten Leben aus.
-      </p>
-      <div class="aktionen">
-        <a class="button" href="/angebote/">Angebote ansehen</a>
-        <a class="button button--zweitrangig" href="/entwirf-dein-zukunfts-ich/">So arbeitet das Programm</a>
+  <!-- 1. Erster Bildschirm -->
+  <section class="hero">
+    <div class="container hero__innen">
+      <div class="hero__text">
+        <p class="label">Mentoring für Lebensentwürfe · {site.inhaberin}</p>
+        <h1>Sei, wer du werden <span class="pivot">willst</span>.</h1>
+        <p class="unterzeile">Persönliche Entwicklung. Ein selbst entworfenes Leben. Veränderung, die im Alltag ankommt.</p>
+        <p class="einleitung">
+          Life&amp;Lemons unterstützt dich dabei, herauszufinden, wie du wirklich leben möchtest, eigene Vorstellungen von deiner
+          Zukunft zu entwickeln und sie Schritt für Schritt in deinem Leben umzusetzen.
+        </p>
+        <div class="aktionen">
+          <a class="button" href="#programme">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="textlink" href="#ueber">Lerne mich kennen</a>
+        </div>
+        <a class="neu" href="#kursbuch">
+          <span class="neu__label">Neu</span>
+          <span class="neu__text">
+            Das Kursbuch „Entwirf dein Zukunfts-Ich“
+            {kursbuchPreis && (
+              <span class="neu__preis">
+                {` · ${formatEuro(kursbuchPreis.betrag)}${kursbuchPreis.einfuehrung ? ` Einführungspreis bis ${formatDatum(STICHTAGE.einfuehrungBis)}` : ''}`}
+              </span>
+            )}
+          </span>
+        </a>
+      </div>
+
+      <div class="hero__bild">
+        <Picture
+          src={portraet}
+          alt="Christine Achmus, Mentorin für Lebensentwürfe, lächelnd vor einer alten Backsteinwand"
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[420, 640, 860, 1024]}
+          sizes="(max-width: 860px) 92vw, 46vw"
+          loading="eager"
+          fetchpriority="high"
+          quality={80}
+        />
       </div>
     </div>
   </section>
 
-  <section class="section section--flaeche">
-    <div class="container text">
-      <h2>Wiedererkennen</h2>
-      <Platzhalter quelle="Broschüre V14, S. 2">
-        <p>Einstieg für Menschen, die spüren, dass etwas nicht mehr passt, und noch nicht sagen können, was es ist.</p>
-      </Platzhalter>
+  <!-- 2. Ausgangslage -->
+  <section class="abschnitt" aria-labelledby="ausgangslage-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · Ausgangslage</p>
+        <h2 id="ausgangslage-titel" class="zeile">Fragen, mit denen Menschen zu <span class="pivot">mir</span> kommen</h2>
+        <p class="einleitung text">
+          An diesen Fragen arbeitest du bei Life&amp;Lemons in einem Programm mit zwei Modulen, die aufeinander aufbauen.
+        </p>
+      </div>
+      <ul class="fragen">
+        {
+          fragen.map((frage) => (
+            <li data-erscheinen>
+              <blockquote>
+                <p>
+                  <span class="fragen__auf" aria-hidden="true">„</span>
+                  {frage}“
+                </p>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container text">
-      <h2>Der Weg durch das Programm</h2>
-      <Platzhalter quelle="Broschüre V14, S. 4 und 5">
-        <p>Die drei Teile des Kurses in Kurzform, mit Verweis auf die Programmseite.</p>
-      </Platzhalter>
-    </div>
-  </section>
+  <!-- 3. Ein Programm, zwei Module -->
+  <section class="abschnitt" id="programme" aria-labelledby="programme-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Ein Programm, zwei Module</p>
+        <h2 id="programme-titel" class="zeile">Erst entwerfen, dann <span class="pivot">verwirklichen</span></h2>
+      </div>
 
-  <section class="section section--flaeche">
-    <div class="container text">
-      <h2>Über Christine</h2>
-      <Platzhalter quelle="Broschüre V14, S. 6">
-        <p>Zwei bis drei Sätze und Foto, mit Verweis auf „Über mich“.</p>
-      </Platzhalter>
-    </div>
-  </section>
+      <Treppe />
 
-  <section class="section">
-    <div class="container text">
-      <h2>Dein nächster Schritt</h2>
-      <Platzhalter quelle="Broschüre V14, S. 7">
-        <p>Kurzer Überblick über die Wege und den Einführungszeitraum.</p>
-      </Platzhalter>
-      <div class="aktionen">
-        <a class="button" href="/angebote/">Alle Angebote</a>
-        <AngebotButton id="kursbuch" variante="zweitrangig" />
+      <div class="module">
+        <ModulKarte
+          label="Modul 1 · verfügbar"
+          titel="Entwirf dein"
+          pivot="Zukunfts-Ich"
+          zeilen={[
+            {
+              label: 'Für dich, wenn',
+              text: 'du spürst, dass sich etwas verändern soll, aber noch nicht genau sagen kannst, was es ist und wie dein erster Schritt aussehen könnte.',
+            },
+            {
+              label: 'Am Ende',
+              text: 'weißt du, worauf du gewartet hast und welche Muster dich zurückhalten. Du hast drei mögliche Leben entworfen, deine Werte daraus abgeleitet, eine Richtung gewählt und sie 14 Tage lang im Alltag erprobt.',
+            },
+            {
+              label: 'So arbeitest du',
+              text: 'allein mit dem Kursbuch, oder wir gehen den Weg gemeinsam, in der Gruppe oder zu zweit. Der Kurs hat neun Einheiten und braucht rund 10 Stunden, verteilt über bis zu 6 Wochen.',
+            },
+          ]}
+          link={{ href: seiten.modul1, label: 'Mehr zu Modul 1' }}
+        />
+        <ModulKarte
+          label="Modul 2 · in Vorbereitung"
+          titel="Manifestiere dein"
+          pivot="Zukunfts-Ich"
+          inVorbereitung
+          zeilen={[
+            { label: 'Für dich, wenn', text: 'du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest.' },
+            {
+              label: 'Darin',
+              text: 'baust du deine Richtung im Einzelnen aus, prüfst deine Annahmen und übersetzt deinen Weg in 90 Tage mit Meilensteinen und neuen Gewohnheiten.',
+            },
+            {
+              label: 'Einstieg',
+              text: 'Das Kursbuch ist einzeln erhältlich, sobald es erscheint. Persönliche Begleitung beginnt mit einem Orientierungsgespräch, in dem wir klären, ob Modul 1 vorher sinnvoll ist.',
+            },
+          ]}
+          link={{ href: '#liste', label: 'Benachrichtige mich zum Start' }}
+        />
       </div>
     </div>
   </section>
+
+  <!-- 4. Kursbuch -->
+  <section class="abschnitt kursbuch" id="kursbuch" aria-labelledby="kursbuch-titel">
+    <div class="container">
+    <div class="dunkel kursbuch__innen">
+      <div class="kursbuch__bild" data-erscheinen>
+        <Image
+          src={umschlag}
+          alt="Umschlag des Kursbuchs Entwirf dein Zukunfts-Ich"
+          widths={[400, 670]}
+          sizes="(max-width: 860px) 92vw, 40vw"
+          format="webp"
+          quality={85}
+        />
+      </div>
+      <div class="kursbuch__text">
+        <p class="label">Aktuell · Kursbuch zu Modul 1</p>
+        <h2 id="kursbuch-titel" class="zeile">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h2>
+        <p class="einleitung">
+          Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und Notizen. Es führt dich ganz intuitiv durch
+          jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im Alltag aus.
+        </p>
+        <Preis id="kursbuch" />
+        {kursbuch.lieferhinweis && <p class="kursbuch__liefer">{kursbuch.lieferhinweis}</p>}
+        <div class="aktionen">
+          <AngebotButton id="kursbuch" variante="hell" />
+          <a class="textlink" href={`${seiten.modul1}#formate`}>Lieber begleitet arbeiten</a>
+        </div>
+        <p class="kursbuch__hinweis">
+          {kursbuchHinweis && `${kursbuchHinweis} `}Club, Einzel-Track und VIP-Track findest du auf der <a href={seiten.modul1}>Seite zu Modul 1</a>.
+        </p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- 5. Über mich -->
+  <section class="abschnitt" id="ueber" aria-labelledby="ueber-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">03 · Über mich</p>
+        <h2 id="ueber-titel" class="zeile">Wer dich <span class="pivot">begleitet</span></h2>
+        <p class="einleitung text">
+          Ich bin Christine Achmus, Mentorin für Lebensentwürfe. Die Methode, mit der du arbeitest, habe ich zuerst an mir selbst
+          erprobt.
+        </p>
+      </div>
+
+      <div class="ueber">
+        <div class="ueber__spalte" data-erscheinen>
+          <h3 class="ueber__titel">Mein Weg mit der Methode</h3>
+          <ol class="weg">
+            <li>
+              <span>
+                Zuerst habe ich meine <strong>negativen Glaubenssätze</strong> herausgearbeitet und mithilfe meiner Methoden gelernt, sie durch eine positive Story über mich auszutauschen. Jetzt stehen sie mir und meinen Zielen nicht länger im Weg.
+              </span>
+            </li>
+            <li>
+              <span>
+                Dann habe ich aus drei unterschiedlich inspirierten Lebensentwürfen <strong>eine Richtung herausgearbeitet</strong>, die zu mir passt, und erkannt, welche Werte mich dabei leiten.
+              </span>
+            </li>
+            <li>
+              <span>
+                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und komme meinem eigenen Zukunftsbild immer näher. Auch an Tagen der Zweifel handle ich weiter bewusst, so wie es mein Zukunfts-Ich von mir erwarten würde.
+              </span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="ueber__spalte" data-erscheinen>
+          <h3 class="ueber__titel">Was ich mitbringe</h3>
+          <ul class="mitbringe">
+            <li>Master in Bildungswissenschaften mit Schwerpunkt Pädagogische Psychologie</li>
+            <li>Erfahrung im Projektmanagement großer technischer Vorhaben, mit vielfältigen Teams und in Veränderungsprozessen</li>
+            <li>Ein Kursbuch, das Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung verbindet und seine Quellen offenlegt</li>
+            <li>Erfahrung aus Gesprächen, in denen wir mit etwas Abstand auf ein Problem schauen und neue Handlungsmöglichkeiten finden</li>
+          </ul>
+          <a class="textlink" href={seiten.ueberMich}>Mehr über mich <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="ueber__foto">
+          <Polaroid bild={zweitesFoto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    stimmenZeigen && (
+      <section class="abschnitt" aria-labelledby="stimmen-titel">
+        <div class="container">
+          <div class="kopfblock">
+            <p class="label">Stimmen</p>
+            <h2 id="stimmen-titel">
+              Erfahrungen aus der <span class="pivot">ersten</span> Gruppe
+            </h2>
+          </div>
+          {/* Hier zwei bis drei echte Stimmen mit schriftlicher Einwilligung einfügen */}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 7. Interessentenliste -->
+  <Interessentenliste
+    label="04 · Was als Nächstes startet"
+    titel="Welcher"
+    pivot="Weg"
+    nach="weckt dein Interesse?"
+    text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
+  />
 </Base>
 
 <style>
-  .einleitung {
-    font-size: 1.25rem;
-    color: var(--farbe-text-leise);
+  /* Erster Bildschirm */
+  .hero {
+    padding: clamp(40px, 6vw, 88px) 0 0;
+    overflow: hidden;
   }
-  .aktionen {
+
+  .hero__innen {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-s);
-    margin-top: var(--abstand-m);
+    align-items: flex-end;
+    gap: clamp(32px, 5vw, 80px);
+  }
+
+  .hero__text {
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: clamp(40px, 6vw, 96px);
+    min-width: 0;
+  }
+
+  .hero__text .einleitung {
+    max-width: 34rem;
+  }
+
+  .hero__text .aktionen {
+    margin-top: 8px;
+  }
+
+  .hero__bild {
+    position: relative;
+    flex: 1 1 380px;
+    max-width: 560px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    margin-left: auto;
+    margin-bottom: clamp(40px, 6vw, 96px);
+    background: var(--leinen);
+  }
+
+  /* Hauptfoto füllt den Rahmen; der Ausschnitt hält das Gesicht im oberen Drittel */
+  .hero__bild :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+  }
+
+  @media (max-width: 860px) {
+    .hero__bild {
+      margin: 0 auto clamp(40px, 6vw, 96px);
+      max-width: 460px;
+      width: 100%;
+    }
+  }
+
+  /* „Neu“-Hinweis */
+  .neu {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 14px;
+    align-self: flex-start;
+    margin-top: 12px;
+    padding: 14px 20px 14px 18px;
+    background: var(--papier-hell);
+    border-left: 2px solid var(--terrakotta);
+    color: var(--tinte);
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1.45;
+    transition: background-color 300ms var(--kurve);
+  }
+
+  .neu:hover,
+  .neu:focus-visible {
+    background: #fdfcf9;
+    color: var(--tinte);
+  }
+
+  .neu__label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .neu__text {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 250ms var(--kurve);
+  }
+
+  .neu:hover .neu__text {
+    text-decoration-color: var(--terrakotta);
+  }
+
+  /* Fragen */
+  .fragen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+    gap: 0 clamp(32px, 5vw, 72px);
+  }
+
+  .fragen li {
+    border-top: 1px solid var(--linie);
+    padding: 28px 0 32px;
+  }
+
+  .fragen blockquote {
+    margin: 0;
+  }
+
+  .fragen p {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(24px, 2.3vw, 30px);
+    line-height: 1.25;
+  }
+
+  .fragen__auf {
+    color: var(--terrakotta-tief);
+  }
+
+  /* Module */
+  .module {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin-top: clamp(48px, 6vw, 88px);
+  }
+
+  /* Kursbuch */
+  .kursbuch__innen {
+    padding: clamp(28px, 5vw, 72px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .kursbuch__bild {
+    flex: 1 1 340px;
+    max-width: 480px;
+    min-height: 320px;
+  }
+
+  .kursbuch__bild :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .kursbuch__text {
+    flex: 1 1 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+
+  .kursbuch__liefer {
+    font-weight: 700;
+    margin-top: -8px;
+  }
+
+  .kursbuch__hinweis {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--leinen);
+    max-width: 46ch;
+  }
+
+  .kursbuch__hinweis a {
+    color: var(--kalk);
+    text-decoration-color: var(--terrakotta-hell);
+  }
+
+  .kursbuch__hinweis a:hover {
+    color: var(--terrakotta-hell);
+  }
+
+  /* Über mich */
+  .ueber {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .ueber__spalte {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .ueber__titel {
+    font-family: var(--schrift-text);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--terrakotta-tief);
+  }
+
+  .weg {
+    list-style: none;
+    counter-reset: weg;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    font-size: 16px;
+  }
+
+  .weg li {
+    counter-increment: weg;
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .weg li::before {
+    content: counter(weg, decimal-leading-zero);
+    font-family: var(--schrift-titel);
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--terrakotta);
+  }
+
+  .mitbringe {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .mitbringe li {
+    padding: 12px 0;
+    border-top: 1px solid var(--linie);
+  }
+
+  .mitbringe li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .ueber__foto {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+  }
+
+  @media (max-width: 1020px) {
+    .ueber {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ueber__foto {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .ueber {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

@@ -1,0 +1,160 @@
+---
+/**
+ * Die Treppe mit sechs Stufen: vier in Modul 1 (durchgezogen), zwei in Modul 2 (gestrichelt).
+ * Zeichnet sich einmalig, sobald sie ins Bild kommt. Ohne JavaScript ist sie sofort vollständig.
+ */
+const stufen = [
+  'Verstehen, wo du stehst',
+  'Klären, was du willst',
+  'Mögliche Zukünfte entwerfen',
+  'Eine Richtung ausprobieren',
+  'Nachjustieren',
+  'Im Alltag leben',
+];
+
+// Raster: sechs Trittflächen à 200 Einheiten, Steigung 44 Einheiten
+const breite = 1200;
+const hoehe = 260;
+const tritt = 200;
+const steigung = 44;
+const y = (i: number) => hoehe - 16 - i * steigung;
+
+let durchgezogen = `M 2 ${y(0)} H ${tritt}`;
+for (let i = 1; i < 4; i++) durchgezogen += ` V ${y(i)} H ${tritt * (i + 1)}`;
+let gestrichelt = `M ${tritt * 4} ${y(3)}`;
+for (let i = 4; i < 6; i++) gestrichelt += ` V ${y(i)} H ${i === 5 ? breite - 14 : tritt * (i + 1)}`;
+const endpunkt = { x: breite - 9, y: y(5) };
+---
+
+<figure class="treppe" data-treppe>
+  <div class="treppe__module" aria-hidden="true">
+    <span class="treppe__modul">Modul 1</span>
+    <span class="treppe__modul treppe__modul--2">Modul 2</span>
+  </div>
+  <svg
+    viewBox={`0 0 ${breite} ${hoehe}`}
+    role="img"
+    aria-labelledby="treppe-titel"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <title id="treppe-titel">Eine Treppe mit sechs Stufen: vier Stufen in Modul 1, zwei Stufen in Modul 2</title>
+    <path class="treppe__linie" d={durchgezogen} pathLength="1" />
+    <path class="treppe__strich" d={gestrichelt} />
+    <circle class="treppe__punkt" cx={endpunkt.x} cy={endpunkt.y} r="5" />
+  </svg>
+  <ol class="treppe__stufen">
+    {
+      stufen.map((text, i) => (
+        <li class:list={{ 'treppe__stufe--2': i >= 4 }}>
+          <span class="treppe__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          {text}
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .treppe {
+    margin: 0;
+  }
+
+  .treppe__module {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gedaempft);
+    margin-bottom: 8px;
+  }
+
+  .treppe__modul--2 {
+    color: var(--terrakotta-tief);
+    padding-left: 4px;
+  }
+
+  svg {
+    width: 100%;
+    overflow: visible;
+  }
+
+  path,
+  circle {
+    vector-effect: non-scaling-stroke;
+    fill: none;
+  }
+
+  .treppe__linie {
+    stroke: var(--tinte);
+    stroke-width: 1.8;
+  }
+
+  .treppe__strich {
+    stroke: var(--terrakotta);
+    stroke-width: 1.8;
+    stroke-dasharray: 6 7;
+  }
+
+  .treppe__punkt {
+    fill: var(--terrakotta);
+    stroke: none;
+  }
+
+  .treppe__stufen {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+
+  .treppe__stufen li {
+    padding-right: 8px;
+  }
+
+  .treppe__nr {
+    display: block;
+    font-family: var(--schrift-titel);
+    font-size: 20px;
+    color: var(--terrakotta);
+    margin-bottom: 2px;
+  }
+
+  .treppe__stufe--2 {
+    color: var(--terrakotta-tief);
+  }
+
+  @media (max-width: 700px) {
+    .treppe__stufen {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 20px;
+      font-size: 15px;
+    }
+  }
+
+  /* Zeichnen beim Erscheinen: durchgezogener Teil 1,8 s, danach der gestrichelte Teil */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .treppe__linie {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1800ms var(--kurve);
+    }
+    :global(.js) .treppe__strich,
+    :global(.js) .treppe__punkt {
+      opacity: 0;
+      transition: opacity 600ms var(--kurve) 1500ms;
+    }
+    :global(.js) .treppe.on .treppe__linie {
+      stroke-dashoffset: 0;
+    }
+    :global(.js) .treppe.on .treppe__strich,
+    :global(.js) .treppe.on .treppe__punkt {
+      opacity: 1;
+    }
+  }
+</style>

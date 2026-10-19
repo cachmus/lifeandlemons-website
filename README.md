@@ -6,33 +6,45 @@ Website von Life&Lemons, gebaut mit [Astro](https://astro.build) als statische S
 
 | Was | Datei |
 | --- | --- |
-| Preise, Plätze, Fristen, Ziel jedes Kauf- oder Anfragebuttons | `src/config/angebote.ts` |
-| Name, Kontakt-E-Mail, Navigation, Schalter für Suchmaschinen | `src/config/site.ts` |
-| Farben, Schriften, Abstände (vorläufig) | `src/styles/global.css` |
-| Grundlayout mit Kopf- und Fußbereich | `src/layouts/Base.astro` |
+| Preise, Fristen, Plätze, Ziel jedes Kauf- oder Anmeldebuttons | `src/config/angebote.ts` |
+| Name, Kontakt, Navigation, Interessentenliste (Brevo), Schalter für Suchmaschinen | `src/config/site.ts` |
+| Farben, Schriften, Abstände, Buttons | `src/styles/global.css` |
+| Kopfzeile, Footer, Seitenrahmen | `src/layouts/Base.astro` |
+| Bausteine (Treppe, Modulkarte, Formatkarte, Polaroid, Interessentenliste, Preis) | `src/components/` |
+| Bewegung (Erscheinen beim Scrollen, Kopfzeile) | `src/scripts/bewegung.ts` |
+| Bilder (werden beim Bauen als WebP/AVIF ausgegeben) | `src/assets/` |
 | Seiten | `src/pages/` |
-| Weiterleitungen und Sicherheits-Header | `netlify.toml` |
+| Kurzlinks, Weiterleitungen, Sicherheits-Header | `netlify.toml` |
+| Nächtlicher Neuaufbau für Datumsumstellungen | `.github/workflows/naechtlicher-build.yml` |
+
+Inhaltliche Grundlage sind vier Dokumente im claude.ai-Projekt „Life&Lemons Website“: `Leitplanken_Website.md`, `Website_Entscheidungen.md`, `Gestaltung_Website.md`, `Texte_Startseite.md`, dazu `Texte_Unterseiten.md` für die übrigen Seiten.
 
 ## Seiten und URLs
 
 | URL | Datei |
 | --- | --- |
 | `/` | `src/pages/index.astro` |
-| `/entwirf-dein-zukunfts-ich/` | `src/pages/entwirf-dein-zukunfts-ich.astro` |
-| `/angebote/` | `src/pages/angebote.astro` |
+| `/programme/entwirf-dein-zukunfts-ich/` (Anker `#kursbuch`, `#club`, `#formate`) | `src/pages/programme/entwirf-dein-zukunfts-ich.astro` |
+| `/programme/manifestiere-dein-zukunfts-ich/` | `src/pages/programme/manifestiere-dein-zukunfts-ich.astro` |
 | `/ueber-mich/` | `src/pages/ueber-mich.astro` |
-| `/impressum/` | `src/pages/impressum.astro` |
-| `/datenschutz/` | `src/pages/datenschutz.astro` |
+| `/impressum/`, `/datenschutz/` | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
+| `/buch` → Kursbuch, `/club` → Club | Kurzlinks in `netlify.toml` |
 
 Veröffentlichte URLs bleiben stabil. Muss eine URL sich ändern, kommt eine Weiterleitung in `netlify.toml`.
 
 ## Häufige Änderungen
 
-**Kaufbutton auf Digistore24 umstellen:** In `src/config/angebote.ts` beim Angebot die `aktion` durch eine `checkout`-Aktion mit der Bestell-URL ersetzen. Ein Beispiel steht als Kommentar beim Kursbuch.
+**Digistore24-Bestellformulare eintragen:** In `src/config/angebote.ts` bei `DIGISTORE24` die Bestelladressen für Kursbuch, Club, Einzel-Track und VIP-Track eintragen. Solange eine Adresse fehlt, zeigt die Vorschau eine Bestellung per E-Mail. Sobald `indexierbar` auf `true` steht, bricht der Build ohne vollständige Adressen ab, damit keine E-Mail-Bestellung online geht.
 
-**Plattformwechsel zu ablefy:** Nur die `url` und den `anbieter` der `checkout`-Aktionen ändern.
+**Vorbestellung und Lieferzeit:** Der Hinweis beim Kursbuch steht in `lieferhinweis` („Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.“). Mit Lagerbestand dort ändern. Die Hinweise zum Kursstart der begleiteten Formate stehen in `startHinweis`.
 
-**Einführungspreise:** Sie werden bis einschließlich `EINFUEHRUNG_BIS` angezeigt. Die Website ist statisch, deshalb muss sie nach diesem Datum einmal neu gebaut werden (in Netlify: „Trigger deploy“), damit die regulären Preise erscheinen.
+**Plattformwechsel zu ablefy:** Die Adressen in `DIGISTORE24` austauschen und in `checkoutOderAnfrage` den Anbieter ändern.
+
+**Preise und Fristen:** Bis `STICHTAGE.einfuehrungBis` erscheinen die Einführungspreise. Danach erscheint der reguläre Preis nur, wenn `preisRegulaerBestaetigt: true` gesetzt ist, sonst gar kein Preis (das Build-Protokoll weist darauf hin). Nach `buchbarBis` oder mit `ausgebucht: true` pausiert ein Angebot und der Button führt zur Interessentenliste.
+
+**Datumsumstellungen pünktlich:** Die Seite ist statisch und rechnet Daten beim Bauen aus. Der GitHub-Ablauf `naechtlicher-build.yml` löst jede Nacht einen Netlify-Build aus. Einrichtung steht oben in der Datei. Testen lässt sich ein Stichtag lokal mit `STICHTAG_TEST=2026-12-08 npm run build`.
+
+**Interessentenliste (Brevo):** Anleitung in `src/config/site.ts` bei `newsletter`. Solange keine Formularadresse eingetragen ist, öffnet das Formular eine vorbereitete E-Mail.
 
 **Livegang:** In `src/config/site.ts` `indexierbar` auf `true` setzen, sobald Impressum und Datenschutz geprüft sind.
 
@@ -49,6 +61,6 @@ npm run build    # Typprüfung und Produktions-Build nach dist/
 ## Grundsätze
 
 - Keine API-Schlüssel oder Zugangsdaten im Repository. Das Repository ist öffentlich.
-- Kein Tracking, keine Cookies, Schriften lokal eingebunden.
+- Kein Tracking, keine Cookies, Schriften lokal eingebunden (Fontsource).
 - Keine eigene Zahlungsabwicklung. Bestellungen laufen über externe Anbieter.
 - Preise, Leistungen und Termine nur aus bestätigten Angaben.

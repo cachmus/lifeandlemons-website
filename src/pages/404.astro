@@ -1,13 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
+import { seiten } from '../config/site';
 ---
 
 <Base title="Seite nicht gefunden" description="Diese Seite gibt es nicht." noindex>
-  <section class="section">
-    <div class="container text">
-      <h1>Diese Seite gibt es nicht</h1>
-      <p>Vielleicht hat sich die Adresse geändert. Von der Startseite aus findest du alle Inhalte.</p>
-      <a class="button" href="/">Zur Startseite</a>
+  <section class="abschnitt">
+    <div class="container text fliesstext">
+      <p class="label">Fehler 404</p>
+      <h1>Diese Seite gibt es <span class="pivot">nicht</span></h1>
+      <p class="einleitung">Vielleicht hat sich die Adresse geändert. Von der Startseite aus findest du alle Inhalte.</p>
+      <div class="aktionen">
+        <a class="button" href={seiten.start}>Zur Startseite <span class="button__pfeil" aria-hidden="true">→</span></a>
+        <a class="textlink" href={seiten.modul1}>Zu Modul 1</a>
+      </div>
     </div>
   </section>
 </Base>

@@ -1,18 +1,56 @@
 ---
+/**
+ * Impressum. ENTWURF, fachlich zu prüfen (nur hier im Code vermerkt, nicht auf der Seite): vor dem Livegang von einer Fachperson prüfen lassen.
+ * Stand der Angaben: 19.10.2026 (Christine).
+ * - Anschrift: Privatadresse, bewusst gewählt (zentral in src/config/site.ts)
+ * - Keine Telefonnummer; zweiter Kontaktweg neben E-Mail ist Instagram (Eignung fachlich zu prüfen)
+ * - Noch kein Gewerbe angemeldet, keine USt-IdNr. und keine Wirtschafts-Identifikationsnummer.
+ *   Sobald eine dieser Nummern vergeben ist, muss sie hier ergänzt werden (§ 5 Abs. 1 Nr. 6 DDG).
+ * - Die EU-Plattform zur Online-Streitbeilegung ist seit 20.07.2025 abgeschaltet, deshalb kein Link darauf.
+ */
 import Base from '../layouts/Base.astro';
-import Platzhalter from '../components/Platzhalter.astro';
 import { site } from '../config/site';
 ---
 
-<Base title="Impressum" description="Impressum von Life&Lemons.">
-  <section class="section">
-    <div class="container text">
+<Base title="Impressum" description="Impressum von Life&Lemons, Christine Achmus.">
+  <section class="abschnitt recht">
+    <div class="container text fliesstext">
+      <p class="label">Rechtliches</p>
       <h1>Impressum</h1>
-      <Platzhalter>
-        <p>ENTWURF FOLGT. Vor dem Livegang fachlich prüfen lassen.</p>
-        <p>Benötigt: Name, ladungsfähige Anschrift, E-Mail, ggf. Telefon, ggf. Umsatzsteuer-ID oder Hinweis zur Kleinunternehmerregelung, verantwortliche Person für journalistisch-redaktionelle Inhalte.</p>
-      </Platzhalter>
-      <p>{site.inhaberin}<br />{site.name}<br />E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></p>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {site.inhaberin}<br />
+        {site.name}<br />
+        {site.anschrift.strasse}<br />
+        {site.anschrift.plzOrt}
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a><br />
+        Instagram: <a href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>
+      </p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>{site.inhaberin}, Anschrift wie oben</p>
+
+      <h2>Verbraucherstreitbeilegung</h2>
+      <p>
+        Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+        teilzunehmen.
+      </p>
     </div>
   </section>
 </Base>
+
+<style>
+  .recht h1 {
+    font-size: clamp(44px, 6vw, 72px);
+    margin-bottom: 0.4em;
+  }
+  .recht h2 {
+    font-size: clamp(26px, 2.6vw, 34px);
+    margin-top: 1.6em;
+  }
+</style>
