@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
-import { site, seiten, hauptnavigation, fussnavigation } from '../config/site';
+import { site, seiten, hauptnavigation, fussnavigation, messung } from '../config/site';
 import { pruefeAngebote, fehlendeBestelladressen } from '../config/angebote';
 import Logo from '../components/Logo.astro';
+import Einwilligung from '../components/Einwilligung.astro';
 
 interface Props {
   /** Seitentitel ohne Markenname; auf der Startseite der vollständige Titel */
@@ -63,6 +64,41 @@ if (!g.__angeboteGeprueft) {
     <meta property="og:image:alt" content="Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“" />
     <meta name="twitter:card" content="summary_large_image" />
     <!--
+      Sperre für die Leistungsmessung von Netlify (siehe `messung` in src/config/site.ts).
+      Muss vor allen anderen Skripten laufen: Übertragungen an den Messdienst werden verworfen,
+      solange keine gültige Einwilligung gespeichert ist.
+    -->
+    <script is:inline define:vars={{ messung }}>
+      (function () {
+        function erlaubt() {
+          try {
+            var teile = (localStorage.getItem(messung.speicherSchluessel) || '').split(':');
+            return teile[0] === 'ja' && Date.now() - Number(teile[1]) < messung.gueltigTage * 86400000;
+          } catch (e) {
+            return false;
+          }
+        }
+        function gesperrt(ziel) {
+          var adresse = ziel && ziel.url ? ziel.url : String(ziel);
+          return adresse.indexOf(messung.host) !== -1 && !erlaubt();
+        }
+        var holen = window.fetch;
+        if (holen) {
+          window.fetch = function (ziel) {
+            if (gesperrt(ziel)) return Promise.resolve(new Response(null, { status: 204 }));
+            return holen.apply(this, arguments);
+          };
+        }
+        var senden = navigator.sendBeacon;
+        if (senden) {
+          navigator.sendBeacon = function (ziel) {
+            if (gesperrt(ziel)) return true;
+            return senden.apply(navigator, arguments);
+          };
+        }
+      })();
+    </script>
+    <!--
       Bewegung erscheint nur mit JavaScript. Läuft das Hauptskript nicht innerhalb von 2,5 s,
       wird die Klasse wieder entfernt, damit nie Inhalte unsichtbar bleiben.
     -->
@@ -112,10 +148,13 @@ if (!g.__angeboteGeprueft) {
           <ul class="fuss__links">
             <li><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></li>
             {fussnavigation.map((punkt) => <li><a href={punkt.href}>{punkt.label}</a></li>)}
+            <li><button class="fuss__knopf" type="button" data-einwilligung-oeffnen>Messung zulassen oder ablehnen</button></li>
           </ul>
         </nav>
       </div>
     </footer>
+
+    <Einwilligung />
 
     <script>
       import { starteBewegung } from '../scripts/bewegung';
@@ -289,6 +328,22 @@ if (!g.__angeboteGeprueft) {
     text-decoration-color: var(--terrakotta-hell);
   }
 
+  .fuss__knopf {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: var(--kalk);
+    text-decoration: underline;
+    text-decoration-color: var(--terrakotta-hell);
+    cursor: pointer;
+  }
+
+  .fuss__knopf:hover,
+  .fuss__knopf:focus-visible,
   .fuss__links a:hover,
   .fuss__links a:focus-visible {
     color: var(--terrakotta-hell);
