@@ -62,6 +62,9 @@ export const fussnavigation: NavPunkt[] = [
  * 3. Unter „Teilen“ den HTML-Code anzeigen und daraus die Adresse im Attribut `action` des
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
  * 4. Die Listen-IDs unten bei `brevoListe` eintragen.
+ * 5. Einstellungen → Kontakte → „Per-contact pixel tracking consent“: „Track contacts whose consent is unknown“ auf „No“
+ *    stellen und kein Zustimmungsfeld für Tracking ins Formular aufnehmen. Die Datenschutzerklärung sagt zu, dass
+ *    Öffnungen und Klicks nicht ausgewertet werden (entschieden 19.10.2026).
  *
  * Die Formular-Adresse ist öffentlich und kein geheimer Schlüssel. Ein API-Schlüssel gehört nie hierher.
  * Solange `formularAdresse` leer ist, zeigt die Website statt des Formulars einen Hinweis mit E-Mail-Link.

@@ -1,8 +1,21 @@
 ---
 /**
- * Datenschutzerklärung. ENTWURF, abgestimmt auf den tatsächlichen technischen Aufbau
- * (statische Seite bei Netlify, lokale Schriften, keine Cookies, kein Tracking, Brevo, Digistore24).
- * Vor dem Livegang fachlich prüfen lassen. Eckige Klammern sind Platzhalter.
+ * Datenschutzerklärung. ENTWURF, fachlich zu prüfen: vor dem Livegang von einer Fachperson prüfen lassen.
+ * Abgestimmt auf den tatsächlichen technischen Aufbau, Stand 19.10.2026:
+ * statische Seite bei Netlify, lokale Schriften, keine Cookies, kein Web-Speicher, keine Analyse,
+ * E-Mail über IONOS, Interessentenliste über Brevo (Double-Opt-in, ohne Öffnungs- und Klickmessung),
+ * Bestellung über Digistore24 als Wiederverkäufer, Instagram nur als Link.
+ *
+ * Ändert sich der Aufbau (z. B. eingebettetes Bestellformular, Kontaktformular, Analysewerkzeug,
+ * Tracking in Brevo), muss dieser Text angepasst werden.
+ *
+ * Recherchequellen (19.10.2026):
+ * - Netlify Trust Center: Teilnahme am EU-US Data Privacy Framework, DPA verfügbar; Speicherdauer der Protokolle nicht veröffentlicht
+ * - Brevo Impressum und Datenschutzübersicht: Brevo GmbH, Köpenicker Str. 126, 10179 Berlin; AVV Teil der Nutzungsbedingungen; Server-Standort EU
+ * - Brevo Hilfe „Über E-Mail-Tracking-Pixel“: Tracking pro Kontakt nur mit Zustimmung einstellbar
+ * - Digistore24 Datenschutzerklärung: Digistore24 GmbH, St.-Godehard-Straße 32, 31139 Hildesheim; Vertragspartner der Kundinnen;
+ *   übermittelt Bestelldaten an den Anbieter, soweit für die Vertragsdurchführung erforderlich
+ * - LfD Niedersachsen: Prinzenstraße 5, 30159 Hannover
  */
 import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
@@ -15,71 +28,106 @@ import { site } from '../config/site';
       <h1>Datenschutz&shy;erklärung</h1>
 
       <div class="platzhalter" role="note">
-        <p>
-          ENTWURF, fachlich zu prüfen. Die Abschnitte beschreiben den technischen Aufbau der Website (Stand Oktober 2026). Ändert sich
-          etwas, etwa durch ein eingebettetes Bestellformular oder ein Analysewerkzeug, muss dieser Text angepasst werden.
-        </p>
+        <p>ENTWURF, fachlich zu prüfen.</p>
       </div>
 
       <h2>Verantwortliche</h2>
       <p>
-        {site.inhaberin}, {site.name}, {site.anschrift.strasse}, {site.anschrift.plzOrt}<br />
+        {site.inhaberin}, {site.name}<br />
+        {site.anschrift.strasse}, {site.anschrift.plzOrt}<br />
         E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a>
       </p>
 
       <h2>Kurz zusammengefasst</h2>
       <p>
-        Diese Website setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und lädt keine Inhalte von fremden Servern. Die
-        Schriften liegen auf dem eigenen Server. Personenbezogene Daten verarbeite ich nur, wenn du mir schreibst, dich für die
-        Interessentenliste einträgst oder etwas bestellst.
+        Diese Website setzt keine Cookies, speichert nichts in deinem Browser und verwendet keine Analyse- oder Werbedienste. Schriften und
+        Bilder liegen auf dem eigenen Server. Personenbezogene Daten verarbeite ich nur, soweit das für die Auslieferung der Website nötig ist,
+        oder wenn du mir schreibst, dich in die Interessentenliste einträgst oder etwas bestellst.
       </p>
 
       <h2>Hosting und Server-Protokolle</h2>
       <p>
-        Die Website liegt bei Netlify, Inc., San Francisco, USA. Beim Aufruf einer Seite verarbeitet Netlify technisch notwendige Daten
-        wie IP-Adresse, Datum und Uhrzeit, aufgerufene Adresse und Browserkennung, um die Seite auszuliefern und vor Missbrauch zu
-        schützen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. [Prüfen: Auftragsverarbeitungsvertrag mit Netlify, Übermittlung in
-        die USA auf Grundlage des EU-US Data Privacy Framework bzw. Standardvertragsklauseln, Speicherdauer der Protokolle.]
+        Die Website liegt bei Netlify, Inc., San Francisco, USA. Beim Aufruf einer Seite verarbeitet Netlify technisch notwendige Daten:
+        deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse, die Adresse der zuvor besuchten Seite und die Kennung deines Browsers.
+        Ohne diese Daten kann die Seite nicht ausgeliefert und nicht vor Missbrauch geschützt werden. Rechtsgrundlage ist mein berechtigtes
+        Interesse an einer sicheren und funktionsfähigen Website (Art. 6 Abs. 1 lit. f DSGVO).
+      </p>
+      <p>
+        Netlify verarbeitet die Daten in meinem Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung (Art. 28 DSGVO). Die Daten
+        können dabei in die USA übermittelt werden. Netlify ist nach dem EU-US Data Privacy Framework zertifiziert, auf dessen Grundlage die
+        EU-Kommission ein angemessenes Datenschutzniveau festgestellt hat (Art. 45 DSGVO). Die Protokolle speichert Netlify nur so lange, wie
+        es für Betrieb und Sicherheit erforderlich ist.
       </p>
 
       <h2>Kontakt per E-Mail</h2>
       <p>
-        Wenn du mir eine E-Mail schreibst, etwa für eine Anmeldung, eine Bestellung oder ein Orientierungsgespräch, verarbeite ich deine
-        Angaben, um deine Anfrage zu beantworten und einen Vertrag anzubahnen oder zu erfüllen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b
-        DSGVO, bei allgemeinen Anfragen Art. 6 Abs. 1 lit. f DSGVO. [Prüfen: E-Mail-Anbieter und Speicherdauer.]
+        Wenn du mir eine E-Mail schreibst, zum Beispiel für ein Orientierungsgespräch, verarbeite ich deine E-Mail-Adresse, deinen Namen und
+        die Angaben in deiner Nachricht, um dir zu antworten. Geht es um eine Buchung oder einen Vertrag, ist die Rechtsgrundlage Art. 6 Abs.
+        1 lit. b DSGVO, bei allen anderen Anfragen mein berechtigtes Interesse, Anfragen zu beantworten (Art. 6 Abs. 1 lit. f DSGVO).
+      </p>
+      <p>
+        Mein E-Mail-Postfach liegt bei der IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, die als Auftragsverarbeiterin für mich tätig ist.
+        Ich lösche deine Nachrichten, wenn deine Anfrage erledigt ist, außer gesetzliche Aufbewahrungspflichten verlangen eine längere
+        Speicherung.
       </p>
 
       <h2>Interessentenliste über Brevo</h2>
       <p>
-        Wenn du dich in die Interessentenliste einträgst, speichere ich deine E-Mail-Adresse und die Themen, die du ausgewählt hast. Ich
-        nutze dafür Brevo [Prüfen: genaue Firma und Anschrift des Anbieters, Auftragsverarbeitungsvertrag]. Nach dem Eintragen bekommst
-        du eine E-Mail, mit der du deine Anmeldung bestätigst (Double-Opt-in). Rechtsgrundlage ist deine Einwilligung nach Art. 6 Abs.
-        1 lit. a DSGVO. Du kannst sie jederzeit über den Abmeldelink in jeder E-Mail oder per E-Mail an mich widerrufen. Deine Daten
-        lösche ich, sobald du dich abmeldest. [Prüfen: Protokollierung der Einwilligung, Auswertung von Öffnungen und Klicks in Brevo.]
+        Wenn du dich in die Interessentenliste einträgst, verarbeite ich deine E-Mail-Adresse und die Themen, die du ausgewählt hast. Ich
+        schreibe dir nur, wenn eines dieser Themen startet. Beim Absenden übermittelt dein Browser die Angaben direkt an Brevo, die
+        Brevo GmbH, Köpenicker Str. 126, 10179 Berlin. Brevo verwaltet die Liste und verschickt die E-Mails in meinem Auftrag; der Vertrag zur
+        Auftragsverarbeitung ist Teil der Nutzungsbedingungen von Brevo. Brevo speichert die Daten auf Servern in der EU.
       </p>
+      <p>
+        Nach dem Eintragen bekommst du eine E-Mail mit einem Bestätigungslink. Erst wenn du ihn anklickst, wirst du in die Liste aufgenommen
+        (Double-Opt-in). So kann niemand eine fremde Adresse eintragen. Um deine Einwilligung nachweisen zu können, werden der Zeitpunkt der
+        Anmeldung und der Bestätigung sowie die dabei verwendete IP-Adresse gespeichert.
+      </p>
+      <p>
+        Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst sie jederzeit für die Zukunft widerrufen, über den
+        Abmeldelink in jeder E-Mail oder mit einer kurzen Nachricht an mich. Nach der Abmeldung wird deine Adresse aus der Liste gelöscht. Damit
+        du keine weiteren E-Mails bekommst und ich die frühere Einwilligung nachweisen kann, bleibt sie in einer Sperrliste gespeichert
+        (Art. 6 Abs. 1 lit. f DSGVO).
+      </p>
+      <p>Ich werte nicht aus, ob und wann du meine E-Mails öffnest oder auf Links darin klickst.</p>
 
       <h2>Bestellungen über Digistore24</h2>
       <p>
-        Für Bestellungen leite ich dich zum Bestellformular von Digistore24 weiter (Digistore24 GmbH, Hildesheim). Erst mit dem Klick
-        auf den Bestellbutton verlässt du diese Website. Für die Verarbeitung im Bestellformular gilt die Datenschutzerklärung von
-        Digistore24. [Prüfen: Rolle von Digistore24 als Wiederverkäufer, Daten, die ich von Digistore24 für Versand und Begleitung
-        erhalte.]
+        Kursbuch und Begleitung verkaufe ich über Digistore24, die Digistore24 GmbH, St.-Godehard-Straße 32, 31139 Hildesheim. Wenn du auf
+        einen Bestell- oder Buchungsbutton klickst, gelangst du zum Bestellformular von Digistore24. Digistore24 wird dein Vertragspartner und
+        ist für die Daten im Bestellformular und die Zahlungsabwicklung verantwortlich. Dafür gilt die Datenschutzerklärung von Digistore24.
+      </p>
+      <p>
+        Von Digistore24 erhalte ich die Angaben, die ich brauche, um meine Leistung zu erbringen: deinen Namen, deine E-Mail-Adresse, deine
+        Lieferanschrift und was du bestellt hast. Ich nutze sie, um dir das Kursbuch zu schicken und die gebuchte Begleitung mit dir zu
+        vereinbaren und durchzuführen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ich speichere diese Daten, solange die steuer- und
+        handelsrechtlichen Aufbewahrungspflichten es verlangen.
       </p>
 
       <h2>Links zu Instagram</h2>
       <p>
-        Auf der Website stehen einfache Links zu Instagram. Erst wenn du einen Link anklickst, verarbeitet Instagram (Meta Platforms
-        Ireland Ltd.) Daten über deinen Besuch.
+        Auf der Website stehen einfache Links zu meinem Instagram-Profil. Es werden keine Inhalte von Instagram eingebunden. Erst wenn du
+        einen Link anklickst, verarbeitet Instagram (Meta Platforms Ireland Ltd.) Daten über deinen Besuch. Dafür gilt die
+        Datenschutzerklärung von Instagram.
       </p>
 
       <h2>Deine Rechte</h2>
       <p>
-        Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch
-        (Art. 15 bis 21 DSGVO). Eine Einwilligung kannst du jederzeit für die Zukunft widerrufen. Außerdem kannst du dich bei einer
-        Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für den Datenschutz Niedersachsen.
+        Du hast das Recht auf Auskunft über deine Daten, auf Berichtigung, Löschung und Einschränkung der Verarbeitung sowie auf
+        Datenübertragbarkeit (Art. 15 bis 20 DSGVO). Eine Einwilligung kannst du jederzeit für die Zukunft widerrufen. Schreib mir dafür
+        einfach eine E-Mail.
       </p>
+      <p>
+        <strong>Widerspruchsrecht:</strong> Soweit ich Daten auf Grundlage meines berechtigten Interesses verarbeite (Art. 6 Abs. 1 lit. f
+        DSGVO), kannst du aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen (Art. 21 DSGVO).
+      </p>
+      <p>
+        Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren. Für mich zuständig ist der Landesbeauftragte für den
+        Datenschutz Niedersachsen, Prinzenstraße 5, 30159 Hannover.
+      </p>
+      <p>Eine automatisierte Entscheidungsfindung oder ein Profiling findet nicht statt.</p>
 
-      <p class="gedaempft">Stand: [Datum]</p>
+      <p class="gedaempft">Stand: 19.10.2026</p>
     </div>
   </section>
 </Base>
