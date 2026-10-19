@@ -5,7 +5,7 @@
  * Vor dem Livegang fachlich prüfen lassen. Eckige Klammern sind Platzhalter.
  */
 import Base from '../layouts/Base.astro';
-import { site, seiten } from '../config/site';
+import { site } from '../config/site';
 ---
 
 <Base title="Datenschutzerklärung" description="Datenschutzerklärung von Life&Lemons.">
@@ -23,7 +23,7 @@ import { site, seiten } from '../config/site';
 
       <h2>Verantwortliche</h2>
       <p>
-        {site.inhaberin}, {site.name}, [Anschrift wie im <a href={seiten.impressum}>Impressum</a>]<br />
+        {site.inhaberin}, {site.name}, {site.anschrift.strasse}, {site.anschrift.plzOrt}<br />
         E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a>
       </p>
 

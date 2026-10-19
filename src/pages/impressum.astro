@@ -1,6 +1,12 @@
 ---
 /**
- * Impressum. ENTWURF: vor dem Livegang fachlich prüfen lassen. Eckige Klammern sind Platzhalter.
+ * Impressum. ENTWURF, fachlich zu prüfen: vor dem Livegang von einer Fachperson prüfen lassen.
+ * Stand der Angaben: 19.10.2026 (Christine).
+ * - Anschrift: Privatadresse, bewusst gewählt (zentral in src/config/site.ts)
+ * - Keine Telefonnummer; zweiter Kontaktweg neben E-Mail ist Instagram (Eignung fachlich zu prüfen)
+ * - Noch kein Gewerbe angemeldet, keine USt-IdNr. und keine Wirtschafts-Identifikationsnummer.
+ *   Sobald eine dieser Nummern vergeben ist, muss sie hier ergänzt werden (§ 5 Abs. 1 Nr. 6 DDG).
+ * - Die EU-Plattform zur Online-Streitbeilegung ist seit 20.07.2025 abgeschaltet, deshalb kein Link darauf.
  */
 import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
@@ -13,25 +19,22 @@ import { site } from '../config/site';
       <h1>Impressum</h1>
 
       <div class="platzhalter" role="note">
-        <p>ENTWURF, fachlich zu prüfen. Eckige Klammern vor dem Livegang ausfüllen.</p>
+        <p>ENTWURF, fachlich zu prüfen.</p>
       </div>
 
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
         {site.inhaberin}<br />
         {site.name}<br />
-        [Straße und Hausnummer]<br />
-        [Postleitzahl und Ort]
+        {site.anschrift.strasse}<br />
+        {site.anschrift.plzOrt}
       </p>
 
       <h2>Kontakt</h2>
       <p>
         E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a><br />
-        [Telefon, falls angegeben]
+        Instagram: <a href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>
       </p>
-
-      <h2>Umsatzsteuer</h2>
-      <p>[Umsatzsteuer-Identifikationsnummer nach § 27a UStG oder Hinweis auf die Kleinunternehmerregelung nach § 19 UStG]</p>
 
       <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
       <p>{site.inhaberin}, Anschrift wie oben</p>

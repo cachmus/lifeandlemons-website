@@ -10,6 +10,8 @@ export const site = {
   rolle: 'Mentorin für Lebensentwürfe',
   slogan: 'Sei, wer du werden willst.',
   kontaktEmail: 'christine@lifeandlemons.de',
+  /** Ladungsfähige Anschrift für Impressum, Datenschutz und später den Newsletter-Fuß (entschieden 19.10.2026: Privatadresse) */
+  anschrift: { strasse: 'Hesemannstr. 13', plzOrt: '30655 Hannover' },
   /** Handle laut Kursbuch-Umschlag und Broschüre */
   instagram: { handle: '@christineachmus', url: 'https://www.instagram.com/christineachmus/' },
   /**
