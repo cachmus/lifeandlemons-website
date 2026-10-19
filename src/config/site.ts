@@ -5,7 +5,8 @@
 
 export const site = {
   name: 'Life&Lemons',
-  url: 'https://lifeandlemons.de',
+  /** Hauptadresse mit www (entschieden 19.10.2026); muss mit `site` in astro.config.mjs übereinstimmen */
+  url: 'https://www.lifeandlemons.de',
   inhaberin: 'Christine Achmus',
   rolle: 'Mentorin für Lebensentwürfe',
   slogan: 'Sei, wer du werden willst.',
