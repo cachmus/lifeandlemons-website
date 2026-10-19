@@ -13,9 +13,9 @@ import Polaroid from '../components/Polaroid.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
 import { site, seiten } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
-import portraet from '../assets/portraet-christine-freigestellt.png';
+import portraet from '../assets/portraet-christine-mauer.jpg';
 import umschlag from '../assets/kursbuch-umschlag.png';
-import zweitesFoto from '../assets/portraet-christine-mauer.jpg';
+import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
 const kursbuch = angebotNachId('kursbuch');
 const kursbuchPreis = aktuellerPreis(kursbuch);
@@ -66,13 +66,12 @@ const fragen = [
       </div>
 
       <div class="hero__bild">
-        <div class="hero__flaeche" aria-hidden="true"></div>
         <Picture
           src={portraet}
-          alt="Christine Achmus, Mentorin für Lebensentwürfe"
+          alt="Christine Achmus, Mentorin für Lebensentwürfe, lächelnd vor einer alten Backsteinwand"
           formats={['avif', 'webp']}
-          fallbackFormat="png"
-          widths={[420, 640, 860, 1100]}
+          fallbackFormat="jpg"
+          widths={[420, 640, 860, 1024]}
           sizes="(max-width: 860px) 92vw, 46vw"
           loading="eager"
           fetchpriority="high"
@@ -243,7 +242,7 @@ const fragen = [
         </div>
 
         <div class="ueber__foto">
-          <Polaroid bild={zweitesFoto} alt="Christine Achmus, lächelnd vor einer alten Backsteinwand" name="Christine" bildposition="50% 22%" />
+          <Polaroid bild={zweitesFoto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
         </div>
       </div>
     </div>
@@ -310,29 +309,25 @@ const fragen = [
     position: relative;
     flex: 1 1 380px;
     max-width: 560px;
-    aspect-ratio: 25 / 29;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     margin-left: auto;
+    margin-bottom: clamp(40px, 6vw, 96px);
+    background: var(--leinen);
   }
 
-  .hero__flaeche {
-    position: absolute;
-    left: 7%;
-    right: 0;
-    top: 24%;
-    bottom: 0;
-    background: var(--salbei);
-  }
-
+  /* Hauptfoto füllt den Rahmen; der Ausschnitt hält das Gesicht im oberen Drittel */
   .hero__bild :global(img) {
-    position: relative;
+    display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
   }
 
   @media (max-width: 860px) {
     .hero__bild {
-      margin: 0 auto;
+      margin: 0 auto clamp(40px, 6vw, 96px);
       max-width: 460px;
       width: 100%;
     }
