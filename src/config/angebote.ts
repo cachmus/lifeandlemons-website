@@ -145,7 +145,7 @@ export const angebote: Angebot[] = [
     startHinweis: 'Nach deiner Buchung schicke ich dir zuerst das Kursbuch, damit es vor dem ersten Treffen bei dir ist.',
     ausgebucht: false,
     status: 'verfuegbar',
-    aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club'), 'Per E-Mail anmelden'),
+    aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club')),
     aktionPausiert: zurListe('Für die nächste Gruppe vormerken'),
     textPausiert: 'Die nächste Gruppe ist in Planung.',
   },
@@ -167,7 +167,7 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
-    aktion: checkoutOderAnfrage(DIGISTORE24.einzel, 'Platz buchen', anfrageLink('Anmeldung Einzel-Track'), 'Per E-Mail anmelden'),
+    aktion: checkoutOderAnfrage(DIGISTORE24.einzel, 'Platz buchen', anfrageLink('Anmeldung Einzel-Track')),
     aktionPausiert: zurListe('Für Sommer 2027 vormerken'),
     textPausiert: 'Der Einzel-Track startet voraussichtlich ab Juli 2027 wieder.',
   },
@@ -191,7 +191,7 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
-    aktion: checkoutOderAnfrage(DIGISTORE24.vip, 'Platz buchen', anfrageLink('Anmeldung VIP-Track'), 'Per E-Mail anmelden'),
+    aktion: checkoutOderAnfrage(DIGISTORE24.vip, 'Platz buchen', anfrageLink('Anmeldung VIP-Track')),
     aktionPausiert: zurListe('Benachrichtige mich'),
     textPausiert: 'Der VIP-Track pausiert. Ich melde mich, sobald es neue Termine gibt.',
   },
@@ -315,8 +315,6 @@ export function bestellHinweis(angebot: Angebot): string | null {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
     return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
-  if (aktion.typ === 'anfrage') {
-    return `Die ${kursbuch ? 'Bestellung' : 'Anmeldung'} läuft per E-Mail. Danach erhältst du die Rechnung und alle nächsten Schritte.`;
-  }
+  // Bestellung per E-Mail gibt es nur in der Vorschau, solange Digistore24-Adressen fehlen: kein Hinweis
   return null;
 }

@@ -15,6 +15,7 @@ import { site, seiten } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-freigestellt.png';
 import umschlag from '../assets/kursbuch-umschlag.png';
+import zweitesFoto from '../assets/portraet-christine-mauer.jpg';
 
 const kursbuch = angebotNachId('kursbuch');
 const kursbuchPreis = aktuellerPreis(kursbuch);
@@ -214,18 +215,17 @@ const fragen = [
           <ol class="weg">
             <li>
               <span>
-                Zuerst habe ich meinen <strong>negativen Glaubenssatz</strong> erkannt: dass sich niemand für meine Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe.
+                Zuerst habe ich meine <strong>negativen Glaubenssätze</strong> herausgearbeitet und mithilfe meiner Methoden gelernt, sie durch eine positive Story über mich auszutauschen. Jetzt stehen sie mir und meinen Zielen nicht länger im Weg.
               </span>
             </li>
             <li>
               <span>
-                Dann habe ich <strong>im Kleinen getestet</strong>: Die erste Fassung des Kursbuchs habe ich mit einem Menschen im echten
-                Leben erprobt und danach gründlich überarbeitet.
+                Dann habe ich aus drei unterschiedlich inspirierten Lebensentwürfen <strong>eine Richtung herausgearbeitet</strong>, die zu mir passt, und erkannt, welche Werte mich dabei leiten.
               </span>
             </li>
             <li>
               <span>
-                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und erprobe dabei meinen eigenen nächsten Lebensentwurf. Ich höre die Zweifel noch und handle trotzdem.
+                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und komme meinem eigenen Zukunftsbild immer näher. Auch an Tagen der Zweifel handle ich weiter bewusst, so wie es mein Zukunfts-Ich von mir erwarten würde.
               </span>
             </li>
           </ol>
@@ -243,8 +243,7 @@ const fragen = [
         </div>
 
         <div class="ueber__foto">
-          <!-- OFFEN: zweites Foto, z. B. bei der Arbeit am Kursbuch -->
-          <Polaroid name="Christine" platzhalter="Zweites Foto folgt" />
+          <Polaroid bild={zweitesFoto} alt="Christine Achmus, lächelnd vor einer alten Backsteinwand" name="Christine" bildposition="50% 22%" />
         </div>
       </div>
     </div>
@@ -269,8 +268,9 @@ const fragen = [
   <!-- 7. Interessentenliste -->
   <Interessentenliste
     label="04 · Was als Nächstes startet"
-    titel="Sag mir, wofür du dich"
-    pivot="interessierst"
+    titel="Welcher"
+    pivot="Weg"
+    nach="weckt dein Interesse?"
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
   />
 </Base>

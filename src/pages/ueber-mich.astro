@@ -7,28 +7,27 @@
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import { site, seiten } from '../config/site';
-import portraet from '../assets/portraet-christine-4x5.jpg';
+import zweitesFoto from '../assets/portraet-christine-mauer.jpg';
 
 const weg = [
   {
-    titel: 'Meinen negativen Glaubenssatz erkannt',
+    titel: 'Negative Glaubenssätze ausgetauscht',
     text: [
       'Den Wunsch, andere mit Mentoring, Coaching und Beratung zu unterstützen, trage ich seit dem Studium in mir. Lange galt für mich aber: Sicherheit hat Vorrang.',
-      'Meinen eigenen Kurs habe ich zuallererst selbst durchlaufen. Dabei habe ich den negativen Glaubenssatz gefunden, der mich gebremst hat: dass sich niemand für meine Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe.',
+      'Meinen eigenen Kurs habe ich zuallererst selbst durchlaufen. Dabei habe ich meine negativen Glaubenssätze herausgearbeitet, etwa dass sich niemand für meine Arbeit interessiert und ich sie ohnehin nicht zu Ende bringe. Mithilfe meiner Methoden habe ich gelernt, sie durch eine positive Story über mich auszutauschen. Jetzt stehen sie mir und meinen Zielen nicht länger im Weg.',
     ],
   },
   {
-    titel: 'Im Kleinen getestet',
+    titel: 'Eine Richtung herausgearbeitet',
     text: [
-      'Die erste Fassung des Kursbuchs habe ich im echten Leben mit einem wichtigen Menschen erprobt. Danach war klar, dass noch viel Arbeit vor mir liegt. Das hat mich einen Tag lang frustriert. Aufgeben kam nicht infrage, weil sich diese Arbeit für mich erfüllend anfühlt. Also habe ich das Buch Stück für Stück überarbeitet.',
+      'Aus drei unterschiedlich inspirierten Lebensentwürfen habe ich eine Richtung herausgearbeitet, die zu mir passt, und erkannt, welche Werte mich dabei leiten.',
       'In den 14 Tagen, in denen ich meine neue Richtung im Alltag erprobt habe, habe ich mir frühere Schlafenszeiten und eine Morgenroutine mit kleinen Workouts angewöhnt.',
     ],
   },
   {
     titel: 'Meine Arbeit öffentlich gezeigt',
     text: [
-      'Auf Instagram zu zeigen, woran ich arbeite, widerspricht diesem Glaubenssatz. Ich höre die Zweifel noch, weiß, woher sie kommen, und handle trotzdem.',
-      'Ich erprobe gerade selbst meinen nächsten Lebensentwurf. Life&Lemons ist ein Teil davon.',
+      'Heute zeige ich meine Arbeit öffentlich und komme meinem eigenen Zukunftsbild immer näher. Auch an Tagen der Zweifel handle ich weiter bewusst, so wie es mein Zukunfts-Ich von mir erwarten würde.',
     ],
   },
 ];
@@ -56,7 +55,7 @@ const weg = [
         </div>
       </div>
       <div class="kopf-abschnitt__foto">
-        <Polaroid bild={portraet} alt="Christine Achmus" name="Christine" />
+        <Polaroid bild={zweitesFoto} alt="Christine Achmus, lächelnd vor einer alten Backsteinwand" name="Christine" bildposition="50% 22%" />
       </div>
     </div>
   </section>
@@ -109,7 +108,8 @@ const weg = [
         <div>
           <dt>Kursbuch</dt>
           <dd>
-            Das Kursbuch verbindet Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung und legt seine Quellen offen. <a href={`${seiten.modul1}#grundlagen`}>Worauf der Kurs sich stützt</a>
+            Das Kursbuch verbindet Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung und legt seine Quellen offen.
+            Die erste Fassung habe ich mit einem Menschen im echten Leben erprobt und danach gründlich überarbeitet. <a href={`${seiten.modul1}#grundlagen`}>Worauf der Kurs sich stützt</a>
           </dd>
         </div>
       </dl>

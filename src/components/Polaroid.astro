@@ -11,9 +11,11 @@ interface Props {
   alt?: string;
   name: string;
   platzhalter?: string;
+  /** Bildausschnitt innerhalb des 4:5-Rahmens, z. B. „50% 20%“ */
+  bildposition?: string;
 }
 
-const { bild, alt = '', name, platzhalter = 'Foto folgt' } = Astro.props;
+const { bild, alt = '', name, platzhalter = 'Foto folgt', bildposition = '50% 50%' } = Astro.props;
 ---
 
 <figure class="polaroid">
@@ -23,7 +25,7 @@ const { bild, alt = '', name, platzhalter = 'Foto folgt' } = Astro.props;
   <div class="polaroid__bild">
     {
       bild ? (
-        <Image src={bild} alt={alt} widths={[360, 560, 720]} sizes="(max-width: 600px) 80vw, 360px" format="webp" quality={78} />
+        <Image src={bild} alt={alt} widths={[360, 560, 720]} sizes="(max-width: 600px) 80vw, 360px" format="webp" quality={78} style={`object-position: ${bildposition}`} />
       ) : (
         <div class="polaroid__leer" role="img" aria-label={platzhalter}>
           <span>{platzhalter}</span>
