@@ -8,6 +8,12 @@ export const site = {
   /** Hauptadresse mit www (entschieden 19.10.2026); muss mit `site` in astro.config.mjs übereinstimmen */
   url: 'https://www.lifeandlemons.de',
   inhaberin: 'Christine Achmus',
+  /**
+   * Geschäftsbezeichnung für Impressum und Rechtstexte (entschieden 27.10.2026, Christine).
+   * Ohne Handelsregistereintrag ist das keine Firma im Sinne des HGB; der vollständige Name der Inhaberin
+   * muss deshalb zusätzlich genannt werden. Fachlich zu prüfen.
+   */
+  firmierung: 'Life&Lemons | Mentoring by Christine Achmus',
   rolle: 'Mentorin für Lebensentwürfe',
   slogan: 'Sei, wer du werden willst.',
   kontaktEmail: 'christine@lifeandlemons.de',

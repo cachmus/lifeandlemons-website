@@ -30,7 +30,8 @@ import { site } from '../config/site';
 
       <h2>Verantwortliche</h2>
       <p>
-        {site.inhaberin}, {site.name}<br />
+        {site.firmierung}<br />
+        Inhaberin: {site.inhaberin}<br />
         {site.anschrift.strasse}, {site.anschrift.plzOrt}<br />
         E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a>
       </p>
