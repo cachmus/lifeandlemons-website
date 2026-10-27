@@ -1,7 +1,7 @@
 ---
 /**
  * Impressum. ENTWURF, fachlich zu prüfen (nur hier im Code vermerkt, nicht auf der Seite): vor dem Livegang von einer Fachperson prüfen lassen.
- * Stand der Angaben: 19.10.2026 (Christine).
+ * Stand der Angaben: 19.10.2026, Geschäftsbezeichnung 27.10.2026 (Christine).
  * - Anschrift: Privatadresse, bewusst gewählt (zentral in src/config/site.ts)
  * - Keine Telefonnummer; zweiter Kontaktweg neben E-Mail ist Instagram (Eignung fachlich zu prüfen)
  * - Noch kein Gewerbe angemeldet, keine USt-IdNr. und keine Wirtschafts-Identifikationsnummer.
@@ -12,7 +12,7 @@ import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
 ---
 
-<Base title="Impressum" description="Impressum von Life&Lemons, Christine Achmus.">
+<Base title="Impressum" description={`Impressum von ${site.firmierung}.`}>
   <section class="abschnitt recht">
     <div class="container text fliesstext">
       <p class="label">Rechtliches</p>
@@ -20,8 +20,8 @@ import { site } from '../config/site';
 
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
-        {site.inhaberin}<br />
-        {site.name}<br />
+        {site.firmierung}<br />
+        Inhaberin: {site.inhaberin}<br />
         {site.anschrift.strasse}<br />
         {site.anschrift.plzOrt}
       </p>
