@@ -82,7 +82,8 @@ export type Angebot = {
  * Für einen Wechsel zu ablefy nur diese Adressen und den Anbieter in checkoutOderAnfrage austauschen.
  */
 export const DIGISTORE24 = {
-  kursbuch: '',
+  /** Produkt 749110 „Gedrucktes Workbook“, eingetragen 29.10.2026 (Freigabe durch Digistore24 stand da noch aus) */
+  kursbuch: 'https://www.checkout-ds24.com/product/749110',
   club: '',
   einzel: '',
   vip: '',
@@ -117,12 +118,12 @@ export const angebote: Angebot[] = [
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
     status: 'verfuegbar',
-    // Solange keine Exemplare auf Lager sind, wird vorbestellt. Mit Lagerbestand den Hinweis ändern,
-    // z. B. „Versandfertig innerhalb von 2 Tagen“. Die Lieferzeit auch im Digistore24-Produkt eintragen.
-    lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
+    // Bestellung über Digistore24 statt Vorbestellung (29.10.2026). Lieferzeit wie auf /danke/kursbuch/ und im
+    // Digistore24-Produkt; bei Änderung alle drei Stellen anpassen.
+    lieferhinweis: 'Normalerweise versandfertig innerhalb von 7 Tagen.',
     aktion: checkoutOderAnfrage(
       DIGISTORE24.kursbuch,
-      'Kursbuch vorbestellen',
+      'Kursbuch bestellen',
       anfrageLink('Bestellung Kursbuch', 'Hallo Christine,\n\nich möchte das Kursbuch „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
     ),
   },
