@@ -1,0 +1,373 @@
+---
+/**
+ * Danke-Seite nach dem Kauf des Kursbuchs. Wortlaut: claude/Texte_Unterseiten.md, Abschnitt „Danke-Seite Kursbuch“
+ * (Projekt in claude.ai, freigegeben am 29.10.2026). Texte nicht stillschweigend ändern.
+ *
+ * - Immer noindex, nicht im Menü und nicht verlinkt. Digistore24 leitet nach dem Kauf hierher
+ *   (Produkt → Dankeseite: https://www.lifeandlemons.de/danke/kursbuch/).
+ * - Zeigt keine Bestelldaten; die Seite kann gefahrlos direkt aufgerufen werden.
+ * - Keine Kaufbuttons: Kopfzeile ohne „Zum Kursbuch“, einziger Hauptbutton ist „Christine schreiben“.
+ * - Die Karte „Lieber mit Begleitung?“ erscheint nur, solange Club oder Einzel-Track buchbar sind.
+ */
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Polaroid from '../../components/Polaroid.astro';
+import { site, seiten, anfrageLink } from '../../config/site';
+import { angebotNachId, istBuchbar } from '../../config/angebote';
+import zweitesFoto from '../../assets/portraet-christine-4x5.jpg';
+import kursbuchFoto from '../../assets/kursbuch-vorder-und-rueckseite.jpg';
+
+const begleitung = ['club', 'einzel'].map(angebotNachId).filter(istBuchbar);
+const begleitungNamen = begleitung.map((a) => (a.id === 'club' ? 'im Club' : 'im Einzel-Track')).join(' und ');
+
+const schreibenLink = anfrageLink('Mein Weg mit dem Kursbuch');
+
+const schritte = [
+  {
+    titel: 'Bestätigung per E-Mail',
+    text: 'In den nächsten Minuten bekommst du von Digistore24 eine Bestellbestätigung mit Rechnung. Digistore24 wickelt für mich die Zahlung ab und beantwortet dir auch Fragen zu Zahlung oder Rechnung. Falls nichts ankommt, schau bitte im Spam-Ordner nach.',
+  },
+  {
+    titel: 'Ich verschicke dein Kursbuch',
+    // Lieferzeit wie `lieferhinweis` des Kursbuchs in src/config/angebote.ts; bei Änderung beide anpassen
+    text: 'Ich packe es selbst ein und verschicke es. Normalerweise ist es innerhalb von 7 Tagen versandfertig. Sobald es unterwegs ist, sage ich dir per E-Mail Bescheid.',
+  },
+  {
+    titel: 'Du legst los',
+    text: 'Sobald das Buch bei dir ist, beginnst du mit „Bevor du anfängst“: Du liest die Einleitung und hältst im Lebensrad fest, wo du gerade stehst. Das Lebensrad dauert rund 15 Minuten. Danach führt dich das Buch Schritt für Schritt durch die neun Einheiten.',
+  },
+];
+
+const vorbereitung = [
+  {
+    titel: 'Plane feste Zeiten ein.',
+    text: 'Die neun Einheiten dauern im Schnitt etwa eine Stunde. Dazwischen liegen zwei Praxiswochen, am Ende 14 Tage Probezeit. Rechne je nach Tempo mit etwa sechs Wochen.',
+  },
+  {
+    titel: 'Leg dir einen Kugelschreiber zurecht.',
+    text: 'Du schreibst direkt ins Buch.',
+  },
+  {
+    titel: 'Überleg dir, wem du von deinem Vorhaben erzählst.',
+    text: 'Das Buch bittet dich, einen Menschen einzuweihen, der zuhört, ohne gleich Ratschläge zu geben.',
+  },
+];
+---
+
+<Base
+  dunklerSchluss
+  noindex
+  ohneKaufbutton
+  title="Danke für deine Bestellung"
+  description="Deine Bestellung des Kursbuchs „Entwirf dein Zukunfts-Ich“ ist eingegangen. So geht es weiter."
+>
+  <!-- 1. Dank -->
+  <section class="danke-kopf">
+    <div class="container danke-kopf__innen">
+      <div class="danke-kopf__text">
+        <p class="label">Bestellung eingegangen</p>
+        <h1>Danke für dein <span class="pivot">Vertrauen</span>.</h1>
+        <p class="einleitung">
+          Schön, dass du dich für das Kursbuch entschieden hast. Du nimmst dir damit Zeit für eine Frage, die im Alltag oft zu kurz
+          kommt: wie du eigentlich leben möchtest. Dass du mir dafür dein Vertrauen schenkst, bedeutet mir viel.
+        </p>
+      </div>
+      <div class="danke-kopf__foto">
+        <Polaroid bild={zweitesFoto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. So geht es weiter -->
+  <section class="abschnitt" aria-labelledby="weiter-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · So geht es weiter</p>
+        <h2 id="weiter-titel" class="zeile">Die nächsten <span class="pivot">Schritte</span></h2>
+      </div>
+      <ol class="schritte">
+        {
+          schritte.map((s, i) => (
+            <li class="schritt" data-erscheinen>
+              <span class="schritt__ziffer" aria-hidden="true">{i + 1}</span>
+              <h3 class="schritt__titel">{s.titel}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3. Bis dein Kursbuch da ist -->
+  <section class="abschnitt" aria-labelledby="vorbereitung-titel">
+    <div class="container vorbereitung">
+      <div class="vorbereitung__text">
+        <div class="kopfblock">
+          <p class="label">02 · Vorbereitung</p>
+          <h2 id="vorbereitung-titel" class="zeile">Bis dein Kursbuch <span class="pivot">da</span> ist</h2>
+          <p class="einleitung text">Mit ein paar kleinen Vorbereitungen fällt dir der Start leichter.</p>
+        </div>
+        <ul class="liste-ruhig">
+          {
+            vorbereitung.map((v) => (
+              <li data-erscheinen>
+                <strong>{v.titel}</strong> {v.text}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="vorbereitung__bild" data-erscheinen>
+        <Image
+          src={kursbuchFoto}
+          alt="Das Kursbuch Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 860px) 92vw, 44vw"
+          format="webp"
+          quality={80}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Wie es weitergehen kann -->
+  <section class="abschnitt" aria-labelledby="mehr-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">03 · Mit Life&amp;Lemons</p>
+        <h2 id="mehr-titel" class="zeile">Wie es <span class="pivot">weitergehen</span> kann</h2>
+      </div>
+      <div class="karten">
+        <article class="karte" data-erscheinen>
+          <p class="label">Instagram</p>
+          <p>Auf Instagram teile ich Übungen und Einblicke in meine Arbeit.</p>
+          <a class="textlink" href={site.instagram.url} rel="noopener">{site.instagram.handle} <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="karte karte--vorbereitung" data-erscheinen>
+          <p class="label">Kursbuch Band 2</p>
+          <p>
+            „Manifestiere dein Zukunfts-Ich“ ist in Arbeit. Trag dich ein, dann sage ich dir Bescheid, sobald es erscheint.
+          </p>
+          <a class="textlink" href={seiten.liste}>Zur Interessentenliste <span aria-hidden="true">→</span></a>
+        </article>
+        {
+          begleitung.length > 0 && (
+            <article class="karte" data-erscheinen>
+              <p class="label">Lieber mit Begleitung?</p>
+              <p>
+                {begleitungNamen.charAt(0).toUpperCase() + begleitungNamen.slice(1)} gehe ich den Weg durch das Kursbuch persönlich
+                mit dir. Den Preis deines Kursbuchs rechne ich dabei an. Schreib mir vor der Buchung, dann bekommst du einen
+                persönlichen Gutscheincode.
+              </p>
+              <a class="textlink" href={`${seiten.modul1}#formate`}>Formate ansehen <span aria-hidden="true">→</span></a>
+            </article>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Schreib mir (Seitenschluss) -->
+  <section class="abschnitt abschnitt--ende" aria-labelledby="schreib-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">04 · Persönlich</p>
+        <h2 id="schreib-titel" class="zeile">Schreib mir, wenn du <span class="pivot">magst</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Wenn du eine Frage hast oder merkst, dass es schwer wird, am Ball zu bleiben, schreib mir an{' '}
+          <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a>. Sag mir gern, wo es hakt, damit ich dich gezielt
+          unterstützen kann. Ich lese jede Nachricht selbst und antworte dir persönlich.
+        </p>
+        <p>
+          Genauso gern höre ich, was sich bei dir bewegt: eine Erkenntnis, ein Schritt, den du lange aufgeschoben hast, oder eine
+          neue Gewohnheit, die sich gut anfühlt. Mir ist wichtig, dass sich in deinem Leben tatsächlich etwas verändert. Wenn ich
+          dazu beitragen kann, bin ich auch meinem eigenen Ziel ein Stück näher.
+        </p>
+        <div class="aktionen">
+          <a class="button" href={schreibenLink}>Christine schreiben <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="textlink" href={seiten.start}>Zur Startseite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* 1. Dank */
+  .danke-kopf {
+    padding: clamp(40px, 6vw, 96px) 0 clamp(24px, 4vw, 56px);
+  }
+
+  .danke-kopf__innen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
+
+  .danke-kopf__text {
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .danke-kopf__text .einleitung {
+    max-width: 34rem;
+  }
+
+  .danke-kopf__foto {
+    flex: 0 1 320px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 860px) {
+    .danke-kopf__foto {
+      flex-basis: 240px;
+      max-width: 240px;
+    }
+  }
+
+  /* 2. Zeitstrahl: Ziffern auf einer Haarlinie, auf dem Handy untereinander */
+  .schritte {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 56px);
+    position: relative;
+  }
+
+  .schritte::before {
+    content: '';
+    position: absolute;
+    top: 0.62em;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--linie);
+    font-size: clamp(44px, 4.4vw, 60px);
+  }
+
+  .schritt {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .schritt__ziffer {
+    align-self: flex-start;
+    font-family: var(--schrift-titel);
+    font-weight: 500;
+    font-size: clamp(44px, 4.4vw, 60px);
+    line-height: 1.1;
+    color: var(--terrakotta);
+    background: var(--kalk);
+    padding-right: 16px;
+    position: relative;
+  }
+
+  .schritt__titel {
+    font-family: var(--schrift-text);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .schritte {
+      grid-template-columns: 1fr;
+    }
+
+    .schritte::before {
+      display: none;
+    }
+
+    .schritt {
+      padding-left: 0;
+      border-top: 1px solid var(--linie);
+      padding-top: 20px;
+    }
+
+    .schritt__ziffer {
+      font-size: 44px;
+    }
+  }
+
+  /* 3. Vorbereitung mit Foto */
+  .vorbereitung {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+  }
+
+  .vorbereitung__text {
+    flex: 1 1 460px;
+    min-width: 0;
+  }
+
+  .vorbereitung__bild {
+    flex: 1 1 380px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .vorbereitung__bild :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .liste-ruhig {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: var(--breite-text);
+  }
+
+  .liste-ruhig li {
+    padding: 18px 0;
+    border-top: 1px solid var(--linie);
+  }
+
+  .liste-ruhig li:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  /* 4. Karten wie Modulkarten: Rahmen, Strich oben; gestrichelt = in Vorbereitung */
+  .karten {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+
+  .karte {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(24px, 3vw, 36px);
+    transition: background-color 300ms var(--kurve);
+  }
+
+  .karte:hover {
+    background: var(--papier-hell);
+  }
+
+  .karte--vorbereitung {
+    border-top-style: dashed;
+  }
+
+  .karte .textlink {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+</style>
