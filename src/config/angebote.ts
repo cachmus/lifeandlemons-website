@@ -142,7 +142,9 @@ export const angebote: Angebot[] = [
     start: 'am 06.01.2027, Treffen am 06., 13. und 20.01.2027',
     plaetze: 6,
     hinweis: 'Die Gruppe findet ab zwei Anmeldungen statt.',
-    startHinweis: 'Nach deiner Buchung schicke ich dir zuerst das Kursbuch, damit es vor dem ersten Treffen bei dir ist.',
+    // Entschieden 29.10.2026 (Christine): Versand erst ab zwei Anmeldungen; sonst Erstattung oder Wechsel in den Einzel-Track
+    startHinweis:
+      'Sobald mindestens zwei Anmeldungen da sind, schicke ich dir das Kursbuch, damit es vor dem ersten Treffen bei dir ist. Kommt die Gruppe nicht zustande, kannst du dir den Preis erstatten lassen oder in den Einzel-Track wechseln.',
     ausgebucht: false,
     status: 'verfuegbar',
     aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club')),

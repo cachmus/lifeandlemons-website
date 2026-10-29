@@ -36,6 +36,8 @@ export const seiten = {
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
+  /** Danke-Seite nach dem Kauf des Kursbuchs; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
+  dankeKursbuch: '/danke/kursbuch/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;
