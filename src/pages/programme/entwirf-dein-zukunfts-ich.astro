@@ -14,6 +14,7 @@ import FormatKarte from '../../components/FormatKarte.astro';
 import AngebotButton from '../../components/AngebotButton.astro';
 import { seiten, anfrageLink } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
+import { kursbuchDaten } from '../../config/strukturierteDaten';
 
 const teile = [
   {
@@ -93,8 +94,9 @@ const orientierung = anfrageLink(
 
 <Base
   dunklerSchluss
-  title="Modul 1: Entwirf dein Zukunfts-Ich"
-  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, welche Zweifel und alten Muster dich bremsen, und testest deine neue Richtung im echten Leben. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
+  title="Entwirf dein Zukunfts-Ich: Kursbuch und Begleitung"
+  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, was dich bremst, und testest deine Richtung im Alltag. Als Kursbuch, in einer Gruppe in Hannover oder mit persönlicher Begleitung."
+  daten={[kursbuchDaten(umschlag.src)]}
 >
   <!-- Einstieg -->
   <section class="kopf-abschnitt">

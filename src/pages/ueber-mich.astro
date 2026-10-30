@@ -34,15 +34,15 @@ const weg = [
 
 <Base
   dunklerSchluss
-  title="Über mich"
-  description={`${site.inhaberin}, ${site.rolle}: mein eigener Weg mit der Methode und was ich in die Begleitung mitbringe.`}
+  title={`${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}`}
+  description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich in die Begleitung mitbringe.`}
 >
   <section class="kopf-abschnitt">
     <div class="container zwei-spalten kopf-abschnitt__innen">
       <div class="kopf-abschnitt__text">
         <p class="label">Über mich</p>
         <h1>Christine Achmus</h1>
-        <p class="unterzeile">Mentorin für Lebensentwürfe</p>
+        <p class="unterzeile">{site.rolle} in {site.ort.stadt}</p>
         <div class="fliesstext einleitung">
           <p>
             Ich bin Mentorin für Lebensentwürfe. Ich begleite Menschen dabei, ihr Leben bewusst zu entwerfen und neue Richtungen im

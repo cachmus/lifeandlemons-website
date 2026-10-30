@@ -93,7 +93,7 @@ export const DIGISTORE24 = {
 
 export type DigistoreId = keyof typeof DIGISTORE24;
 
-/** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung per E-Mail (nur für die Vorschau). */
+/** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung oder Anmeldung per E-Mail. */
 function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {
   return url
     ? { typ: 'checkout', anbieter: 'digistore24', url, label }
@@ -329,6 +329,6 @@ export function bestellHinweis(angebot: Angebot): string | null {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
     return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
-  // Bestellung per E-Mail gibt es nur in der Vorschau, solange Digistore24-Adressen fehlen: kein Hinweis
+  // Bestellung per E-Mail, solange die Digistore24-Adresse fehlt: kein Hinweis
   return null;
 }

@@ -22,11 +22,27 @@ export const site = {
   /** Handle laut Kursbuch-Umschlag und Broschüre */
   instagram: { handle: '@christineachmus', url: 'https://www.instagram.com/christineachmus/' },
   /**
-   * Solange false, tragen alle Seiten "noindex". Vor dem Livegang auf true setzen,
-   * sobald Impressum und Datenschutz geprüft sind.
+   * Ort für Suchmaschinen und strukturierte Daten. Öffentlich erscheint nur die Stadt, keine Straße
+   * (Unternehmensprofil mit Einzugsgebiet, entschieden 30.10.2026).
    */
-  indexierbar: false,
+  ort: { stadt: 'Hannover', region: 'Niedersachsen', land: 'DE' },
+  /**
+   * Suchmaschinen dürfen die Seite aufnehmen (entschieden 30.10.2026, Christine), auch bevor alle
+   * Digistore24-Produkte freigegeben sind. Mit false tragen alle Seiten wieder "noindex".
+   * Impressum und Datenschutz sind weiterhin fachlich zu prüfen.
+   */
+  indexierbar: true,
 } as const;
+
+/**
+ * Adressen, die nie in der Suche erscheinen sollen (Anfang des Pfads).
+ * Gilt für das robots-Meta-Tag in Base.astro und für die Sitemap.
+ */
+export const ohneSuche = ['/danke/', '/404'] as const;
+
+export function inDerSuche(pfad: string): boolean {
+  return !ohneSuche.some((anfang) => pfad.startsWith(anfang));
+}
 
 /** Feste Adressen der Seiten. Veröffentlichte URLs nicht ändern, sonst Weiterleitung in netlify.toml eintragen. */
 export const seiten = {
