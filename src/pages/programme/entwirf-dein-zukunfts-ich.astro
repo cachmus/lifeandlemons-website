@@ -1,7 +1,9 @@
 ---
 /**
  * Seite Modul 1 „Entwirf dein Zukunfts-Ich“.
- * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Broschüre mobil 02, Kursbuch Band 1, Umschlag V5).
+ * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Broschüre mobil 02, Kursbuch Band 1, Umschlag V5);
+ * seit 30.10.2026 ergänzt um Positionierungspapier V4, § 11 und § 17 (Wege, häufige Fragen).
+ * Die Grundlagen stehen seit 30.10.2026 auf der Seite „Wie ich arbeite“ (#grundlagen).
  * Preise, Fristen und Buttons: src/config/angebote.ts.
  * Anker: #kursbuch (Kurzlink /buch), #club (Kurzlink /club), #formate
  */
@@ -12,6 +14,7 @@ import FormatKarte from '../../components/FormatKarte.astro';
 import AngebotButton from '../../components/AngebotButton.astro';
 import { seiten, anfrageLink } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
+import { kursbuchDaten } from '../../config/strukturierteDaten';
 
 const teile = [
   {
@@ -43,6 +46,46 @@ const ergebnisse = [
   'Klarheit darüber, wohin dich dein nächster Lebensabschnitt führen soll und wie du anfängst',
 ];
 
+/** Positionierungspapier V4, § 17 „Häufige Fragen“ */
+const fragen = [
+  {
+    frage: 'Muss ich schon wissen, was ich will?',
+    antwort: 'Nein. Genau dafür entwirfst du drei völlig unterschiedliche Leben. Was du willst, zeigt sich beim Vergleichen und Ausprobieren.',
+  },
+  {
+    frage: 'Muss ich mein Leben komplett umkrempeln?',
+    antwort: 'Nein. Einer deiner drei Entwürfe heißt Weitergehen. Darin baust du deinen bisherigen Weg bewusster aus. Dein Weg darf auch dort liegen, ergänzt um Teile aus den anderen beiden Entwürfen.',
+  },
+  {
+    frage: 'Wie viel Zeit brauche ich?',
+    antwort: 'Rund zehn Stunden, verteilt über bis zu sechs Wochen. Eine Einheit dauert im Schnitt eine Stunde. In den beiden Praxiswochen setzt du kleine Schritte in deinem Alltag um.',
+  },
+  {
+    frage: 'Was ist, wenn ich allein nicht dranbleibe?',
+    antwort: 'Dafür ist das Kursbuch gebaut: Du beginnst mit sehr kleinen Schritten und benennst einen Zeugen, der weiß, was du dir vorgenommen hast. Wenn du mehr Unterstützung möchtest, wählst du einen begleiteten Weg.',
+  },
+  {
+    frage: 'Ist das eine Therapie?',
+    antwort: 'Nein. Wir schauen darauf, wie deine inneren Muster heute wirken, und setzen ihnen neue Erfahrungen entgegen. Mein Angebot ersetzt keine Psychotherapie. Mehr dazu steht auf der Seite „Wie ich arbeite“.',
+  },
+  {
+    frage: 'Für wen ist das Angebot gedacht?',
+    antwort: 'Für alle, die spüren, dass ihr Leben nicht mehr ganz zu ihnen passt, und die bereit sind, Neues im Alltag auszuprobieren.',
+  },
+  {
+    frage: 'Was ist der Unterschied zwischen Mentoring und Coaching?',
+    antwort: 'Als Mentorin gebe ich dir eine Methode an die Hand, die ich zuerst an mir selbst erprobt habe, und gehe meinen eigenen Weg damit ein Stück voraus. Im VIP-Track arbeiten wir zusätzlich im 1:1-Coaching an deiner persönlichen Situation.',
+  },
+  {
+    frage: 'Was passiert, wenn mein Entwurf im Test nicht passt?',
+    antwort: 'Dann weißt du es, bevor du viel investiert hast. Du justierst nach und prüfst, ob ein anderer Entwurf oder ein Teil davon besser zu dir passt.',
+  },
+  {
+    frage: 'Wie geht es nach dem Kurs weiter?',
+    antwort: 'Im Folgemodul „Manifestiere dein Zukunfts-Ich“ verankerst du deinen Weg mit Meilensteinen und Gewohnheiten im Alltag. Es ist in Vorbereitung. Trag dich ein, wenn du zum Start benachrichtigt werden möchtest.',
+  },
+];
+
 const orientierung = anfrageLink(
   'Orientierung',
   'Hallo Christine,\n\nich möchte gern ein Orientierungsgespräch führen.\n\nName:\nTelefonnummer:\nZwei Zeitfenster, die mir passen:\n',
@@ -51,8 +94,9 @@ const orientierung = anfrageLink(
 
 <Base
   dunklerSchluss
-  title="Modul 1: Entwirf dein Zukunfts-Ich"
-  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, welche Zweifel und alten Muster dich bremsen, und testest deine neue Richtung im echten Leben. Als Kursbuch, in der Gruppe oder mit persönlicher Begleitung."
+  title="Entwirf dein Zukunfts-Ich: Kursbuch und Begleitung"
+  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, was dich bremst, und testest deine Richtung im Alltag. Als Kursbuch, in einer Gruppe in Hannover oder mit persönlicher Begleitung."
+  daten={[kursbuchDaten(umschlag.src)]}
 >
   <!-- Einstieg -->
   <section class="kopf-abschnitt">
@@ -170,10 +214,11 @@ const orientierung = anfrageLink(
   <section class="abschnitt" id="formate" aria-labelledby="formate-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">04 · Formate und Preise</p>
+        <p class="label">04 · Angebot und Preise</p>
         <h2 id="formate-titel" class="zeile">Wähle deinen <span class="pivot">Weg</span></h2>
         <p class="einleitung text">
-          Alle vier Wege führen durch dieselben neun Einheiten. Sie unterscheiden sich darin, wie viel Begleitung du dir wünschst.
+          Alle Wege führen durch dieselben neun Einheiten und dieselbe Methode. Sie unterscheiden sich darin, wie viel Begleitung du
+          dir wünschst. Auf jedem Weg arbeitest du rund zehn Stunden aktiv an deinem Zukunfts-Ich, verteilt über bis zu sechs Wochen.
           {
             einfuehrungAktiv() && (
               <>
@@ -218,24 +263,22 @@ const orientierung = anfrageLink(
     </div>
   </section>
 
-  <!-- 05 Grundlagen -->
-  <section class="abschnitt" id="grundlagen" aria-labelledby="grundlagen-titel">
+  <!-- 05 Häufige Fragen -->
+  <section class="abschnitt" id="fragen" aria-labelledby="fragen-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">05 · Grundlagen</p>
-        <h2 id="grundlagen-titel" class="zeile">Worauf der Kurs sich <span class="pivot">stützt</span></h2>
+        <p class="label">05 · Häufige Fragen</p>
+        <h2 id="fragen-titel" class="zeile">Was du vielleicht noch <span class="pivot">wissen</span> möchtest</h2>
       </div>
-      <div class="fliesstext text" data-erscheinen>
-        <p>
-          Die Übungen stützen sich auf psychologische Forschung zur Zielerreichung (Gabriele Oettingen, Peter Gollwitzer), zur Bildung
-          von Gewohnheiten (Wendy Wood) und zu den sogenannten „möglichen Selbst“, also unseren Vorstellungen davon, wer wir werden könnten und wer wir auf keinen Fall werden möchten. Methodische Impulse stammen aus „Designing Your Life“ von Bill
-          Burnett und Dave Evans sowie aus „The Big Leap“ von Gay Hendricks.
-        </p>
-        <p>
-          Den Aufbau des Kurses und die Reihenfolge der Übungen habe ich selbst entwickelt und getestet. Im Kursbuch steht getrennt, was
-          Forschungsergebnis ist, was mich methodisch angeregt hat und was meine eigene Konstruktion ist.
-        </p>
-        <p class="gedaempft">Der Kurs ersetzt keine Psychotherapie, keine Suchtberatung und keine medizinische Behandlung.</p>
+      <div class="faq text">
+        {
+          fragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -404,5 +447,52 @@ const orientierung = anfrageLink(
 
   .demnaechst .label {
     margin-right: 12px;
+  }
+
+  /* Häufige Fragen */
+  .faq {
+    flex: 1 1 520px;
+    min-width: 0;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--linie);
+  }
+
+  .faq details:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    min-height: 44px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .faq details[open] summary::after {
+    content: '−';
+  }
+
+  .faq details p {
+    padding: 0 0 20px;
+    color: var(--text-gedaempft);
   }
 </style>

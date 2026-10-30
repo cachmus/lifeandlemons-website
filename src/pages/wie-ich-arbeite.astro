@@ -1,0 +1,451 @@
+---
+/**
+ * Wie ich arbeite: die Methode, ihr Fundament und ihre Grenzen (Stufen Methode und Vertrauen).
+ * Texte: Positionierungspapier V4 (30.10.2026), § 1, § 3, § 4, § 6, § 7 und § 17, in die Du-Form gebracht
+ * und in Alltagssprache. Entscheidungen: claude/Website_V2_Umbau.md (Projekt in claude.ai).
+ * Anker: #phasen, #grundlagen (früher auf der Seite Modul 1)
+ */
+import Base from '../layouts/Base.astro';
+import { seiten } from '../config/site';
+
+const phasen = [
+  {
+    titel: 'Verstehen, wo du stehst',
+    text: 'Ein Lebensrad mit neun Feldern zeigt dir, was fehlt und was dich schon trägt: Familie, Freundschaft, Liebe, Innenleben, Körper, Entwicklung, Geld, Beitrag und Freude. Dazu kommen deine Stärken, deine Ressourcen, Tätigkeiten, die du abgeben oder reduzieren möchtest, und dein Element. Dort kommen Stärken, Interessen und Sinn zusammen, und du gehst ganz in einer Tätigkeit auf.',
+    frage: 'Was fehlt mir, und was trägt mich schon?',
+  },
+  {
+    titel: 'Erkennen, was dich bremst',
+    text: 'Du findest heraus, welche inneren Muster dich bislang gebremst haben, und untersuchst, wie sie heute wirken. Ihre Entstehung arbeiten wir nicht auf.',
+    frage: 'Welche Muster haben mich bisher zurückgehalten?',
+  },
+  {
+    titel: 'Drei mögliche Leben entwerfen',
+    text: 'Mit gelöster Bremse entstehen drei völlig unterschiedliche Entwürfe. Weitergehen fragt, was sich ändert, wenn du deinen Weg mutiger gehst. Umsteigen fragt, was du aufbaust, wenn dein bisheriger Weg wegfällt. Wagen fragt, was du tust, wenn ein Scheitern dich nicht aus der Bahn werfen kann.',
+    frage: 'Welche Leben wären für mich möglich?',
+  },
+  {
+    titel: 'Spüren, welcher Entwurf dich anzieht',
+    text: 'Du vergleichst deine Entwürfe danach, wie sehr sie emotional und persönlich zu dir passen.',
+    frage: 'Welchen Menschen, der ich in fünf Jahren in diesem Entwurf wäre, würde ich gern kennenlernen?',
+  },
+  {
+    titel: 'Klären, was dir wichtig ist',
+    text: 'Aus deinen drei Entwürfen arbeitest du heraus, welche Werte und Bedürfnisse immer wieder auftauchen und wer dein gewünschtes Zukunfts-Ich ist. Daran orientieren sich deine Tests.',
+    frage: 'Was taucht in allen meinen Entwürfen wieder auf?',
+  },
+  {
+    titel: 'Ausprobieren und nachjustieren',
+    text: 'Du sprichst mit Menschen, die ein ähnliches Leben führen, und probierst einzelne Bestandteile deines gewünschten Alltags aus. Deine Erfahrungen gleichst du mit deinen Werten ab und setzt daraus deinen eigenen Weg zusammen. Er darf Elemente aus allen drei Entwürfen enthalten.',
+    frage: 'Stimmen meine Annahmen über dieses Leben?',
+  },
+  {
+    titel: 'Im Alltag verankern',
+    text: 'Du übersetzt deinen Weg in Meilensteine, Gewohnheiten, Wenn-dann-Pläne und einen Alltag, der es dir leicht macht. Deine Werte geben dir die Richtung, ein bewusst gewähltes Lebensgefühl ist dein Maßstab.',
+    frage: 'Was tue ich regelmäßig als der Mensch, der ich werden will?',
+  },
+];
+
+const schritte = [
+  'Du wählst eine kleine Aufgabe, die du bisher aufgeschoben hast, etwa einen Termin vereinbaren, eine Reklamation schreiben oder ein Gespräch führen.',
+  'Mit einem Wenn-dann-Plan legst du fest, wann und wo du sie erledigst.',
+  'Du setzt die Aufgabe um und nimmst bewusst wahr: Ich habe getan, was ich mir vorgenommen habe.',
+  'Den nächsten Schritt wählst du etwas größer, bis hin zum Gespräch mit einem fremden Menschen, der so lebt, wie du es dir vorstellst.',
+  'Wenn eine neue Herausforderung ansteht, nutzt du deine früheren Erfolge als Beleg.',
+];
+
+const ursachen = [
+  { titel: 'Innere Bremse', frage: 'Welche Überzeugung oder welcher Widerstand hat die Umsetzung verhindert?' },
+  { titel: 'Passung', frage: 'Spiegelt das Vorhaben deinen gewünschten Lebensentwurf und deine Werte noch wider?' },
+  { titel: 'Größe des Schritts', frage: 'Kann der Schritt noch kleiner und leichter werden?' },
+  { titel: 'Frühere Erfolge', frage: 'Gibt es eine Erfahrung, in der der bremsende Gedanke schon einmal widerlegt wurde, und lässt sie sich wiederholen?' },
+  { titel: 'Umstände', frage: 'Haben sich die Umstände verändert, etwa durch Schulferien oder Urlaub, sodass eine andere Routine nötig ist?' },
+];
+
+/** Positionierungspapier V4, § 6 und § 17. „The Big Leap“ ist keine Quelle mehr. */
+const grundlagen = [
+  {
+    titel: 'Life Design',
+    text: 'Bill Burnett und Dave Evans haben an der Stanford University Design Thinking auf das eigene Leben übertragen. Von ihnen stammen die Idee mehrerer Lebensentwürfe, das Gespräch mit Menschen, die ein Leben schon führen, und das Testen im Kleinen.',
+  },
+  {
+    titel: 'Mögliche Selbst',
+    text: 'Die Forscherinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten und wer wir auf keinen Fall werden wollen, unser Handeln lenken. Daphna Oyserman hat untersucht, wann solche Bilder tatsächlich ins Handeln bringen.',
+  },
+  {
+    titel: 'Selbstwirksamkeit',
+    text: 'Albert Bandura hat gezeigt, dass das Vertrauen in die eigene Handlungsfähigkeit vor allem aus eigenen Erfolgserfahrungen wächst.',
+  },
+  {
+    titel: 'Mentales Kontrastieren',
+    text: 'Gabriele Oettingen hat untersucht, warum positives Träumen allein eher bremst. Wer den Wunsch mit dem inneren Hindernis zusammen denkt, kommt eher ins Handeln.',
+  },
+  {
+    titel: 'Wenn-dann-Pläne',
+    text: 'Peter Gollwitzer hat gezeigt, dass Vorhaben häufiger umgesetzt werden, wenn sie mit einer konkreten Situation verknüpft sind.',
+  },
+  {
+    titel: 'Gewohnheiten',
+    text: 'Wendy Wood beschreibt, wie stark unser Alltag von Gewohnheiten gesteuert wird und wie sehr die Umgebung sie auslöst. Phillippa Lally und ihr Forschungsteam am University College London haben untersucht, wie lange es dauert, bis eine neue Gewohnheit sitzt.',
+  },
+  {
+    titel: 'Selbstbestimmung',
+    text: 'Edward Deci und Richard Ryan beschreiben drei psychologische Grundbedürfnisse: Autonomie, Kompetenz und Verbundenheit.',
+  },
+];
+---
+
+<Base
+  dunklerSchluss
+  title="Wie ich arbeite: Life Design in sieben Phasen"
+  description="Die Methode von Life&Lemons in sieben Phasen: drei völlig unterschiedliche Lebensentwürfe, Tests im Alltag und neue Gewohnheiten. Worauf sie beruht und wo ihre Grenzen liegen."
+>
+  <section class="kopf-abschnitt">
+    <div class="container kopf-abschnitt__text">
+      <p class="label">Wie ich arbeite</p>
+      <h1>Vom heutigen Leben zu deinem eigenen <span class="pivot">Weg</span></h1>
+      <p class="einleitung">
+        Am Ende steht dein eigener Weg, zusammengesetzt aus dem, was sich in Entwürfen und Tests bewährt hat. Dazu kommt eine Methode,
+        mit der du dein Leben auch in späteren Phasen selbst neu ausrichten kannst. Sie ist auf jedem Weg dieselbe, ob du allein mit
+        dem Kursbuch arbeitest oder ich dich begleite.
+      </p>
+      <div class="aktionen">
+        <a class="button" href="#phasen">Die sieben Phasen <span class="button__pfeil" aria-hidden="true">→</span></a>
+        <a class="textlink" href={`${seiten.modul1}#formate`}>Zum Angebot</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 Sieben Phasen -->
+  <section class="abschnitt" id="phasen" aria-labelledby="phasen-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · Die Methode</p>
+        <h2 id="phasen-titel" class="zeile">In sieben <span class="pivot">Phasen</span></h2>
+      </div>
+      <ol class="phasen">
+        {
+          phasen.map((p, i) => (
+            <li class:list={['phase', { 'phase--modul2': i === 6 }]} data-erscheinen>
+              <span class="phase__nr" aria-hidden="true">{i + 1}</span>
+              <div class="phase__inhalt">
+                <h3>{p.titel}</h3>
+                <p>{p.text}</p>
+                <p class="phase__frage">{p.frage}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="phasen__hinweise text">
+        <p>
+          Das Kursbuch „Entwirf dein Zukunfts-Ich“ führt dich durch die Phasen 1 bis 6. Mit der Probezeit am Ende des Kursbuchs beginnt
+          Phase 7: Du prüfst deine Richtung 14 Tage lang im Alltag und übst eine erste Gewohnheit ein. Phase 7 ist der Schwerpunkt von{' '}
+          <a href={seiten.modul2}>Modul 2 „Manifestiere dein Zukunfts-Ich“</a>, das gerade entsteht.
+        </p>
+        <p class="gedaempft">
+          Im Entwurf Wagen setzen wir die Folgen eines Scheiterns gedanklich außer Kraft. Das dient dem Erkunden. Vor einer echten
+          Entscheidung kommen finanzielle, soziale und persönliche Risiken wieder auf den Tisch.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Selbstbild -->
+  <section class="abschnitt" aria-labelledby="selbstbild-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">02 · Veränderung</p>
+        <h2 id="selbstbild-titel" class="zeile">Wie sich dein <span class="pivot">Selbstbild</span> verändert</h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Motivation ist flüchtig, und ein schönes Zukunftsbild allein bleibt eine Wunschvorstellung. Unser Bild von uns selbst ändert
+          sich selten durch Einsicht oder positive Selbstgespräche. Wer glaubt, undiszipliniert zu sein, braucht neue Erfahrungen, die
+          diese Annahme infrage stellen. Deshalb wächst dein Vertrauen, dass du umsetzt, was du dir vornimmst, Schritt für Schritt:
+        </p>
+        <ol class="schritte">
+          {schritte.map((s) => <li>{s}</li>)}
+        </ol>
+        <p>
+          Ein Zeuge verstärkt die Verbindlichkeit. Das ist ein Mensch, der weiß, was du dir vorgenommen hast, ohne zu kritisieren, zu
+          fordern oder zu bewerten. Es fühlt sich an wie eine kleine Verabredung. Bleibt ein Schritt aus, behandeln wir das als Lektion,
+          aus der du lernst.
+        </p>
+        <p>
+          Angst, Scham oder Zweifel nehme ich ernst. Zuerst nimmst du sie wahr. Dann schauen wir auf die Gedanken dahinter: Welche
+          Annahme steckt in diesem Gefühl? Ist sie realistisch? Welche Erfahrungen sprechen dafür oder dagegen, und welche neue Erfahrung
+          könnte sie infrage stellen? Manchmal ist es auch richtig, ein unangenehmes Gefühl auszuhalten und trotzdem nach deinen Werten
+          zu handeln.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Wenn etwas nicht klappt -->
+  <section class="abschnitt" aria-labelledby="klappt-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">03 · Dranbleiben</p>
+        <h2 id="klappt-titel" class="zeile">Wenn etwas nicht <span class="pivot">klappt</span></h2>
+        <p class="einleitung text">Bleibt ein Schritt aus, suchen wir die Ursache in dieser Reihenfolge.</p>
+      </div>
+      <ol class="ursachen">
+        {
+          ursachen.map((u) => (
+            <li data-erscheinen>
+              <h3>{u.titel}</h3>
+              <p>{u.frage}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="ursachen__schluss text gedaempft">
+        Die innere Bremse ist dabei die erste Vermutung. Manchmal fehlen aber schlicht Zeit, Ressourcen oder eine realistische Planung.
+      </p>
+    </div>
+  </section>
+
+  <!-- 04 Meine Rolle -->
+  <section class="abschnitt" aria-labelledby="rolle-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">04 · Meine Rolle</p>
+        <h2 id="rolle-titel" class="zeile">Was ich als Mentorin <span class="pivot">tue</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Ich verbinde zwei Rollen. Als Reflexionsbegleiterin stelle ich Fragen und helfe dir, eigene Erkenntnisse zu gewinnen. Als
+          Entwicklungsarchitektin strukturiere ich den Prozess und baue mit dir Experimente, Ziele, Gewohnheiten und konkrete Schritte.
+          Ich erkläre psychologische Zusammenhänge, gebe Impulse und teile meine Beobachtungen.
+        </p>
+        <p>Wie du dein Leben führst, entscheidest du. Meine Begleitung soll deine Selbstbestimmung stärken.</p>
+        <p>
+          Ich spreche aus meinem eigenen Weg, und der ist nicht fertig. Die Methode habe ich zuerst an mir selbst erprobt. Damit bin ich
+          den Menschen, die ich begleite, zwei Schritte voraus.
+        </p>
+        <p><a class="textlink" href={seiten.ueberMich}>Mehr über mich <span aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Grundlagen -->
+  <section class="abschnitt" id="grundlagen" aria-labelledby="grundlagen-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">05 · Grundlagen</p>
+        <h2 id="grundlagen-titel" class="zeile">Worauf meine Arbeit <span class="pivot">beruht</span></h2>
+        <p class="einleitung text">
+          Meine Methode stützt sich auf psychologische Forschung und auf erprobte Ansätze der Lebensgestaltung. Den Aufbau und die
+          Reihenfolge der Übungen habe ich selbst entwickelt und zuerst an mir getestet.
+        </p>
+      </div>
+      <dl class="grundlagen">
+        {
+          grundlagen.map((g) => (
+            <div data-erscheinen>
+              <dt>{g.titel}</dt>
+              <dd>{g.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="grenze text" data-erscheinen>
+        <h3>Was meine Arbeit nicht ist</h3>
+        <p>
+          Ich schaue mit dir darauf, wie deine inneren Muster heute wirken. Ihre Entstehung arbeiten wir nicht auf. Mein Angebot ersetzt
+          keine Psychotherapie, keine Suchtberatung und keine medizinische Behandlung. Wenn du dich seit Wochen niedergeschlagen oder
+          hoffnungslos fühlst, wende dich bitte an deine Hausärztin oder deinen Hausarzt oder an eine Psychotherapeutin oder einen
+          Psychotherapeuten. In akuten Krisen erreichst du die Telefonseelsorge rund um die Uhr unter{' '}
+          <a href="tel:08001110111">0800 111 0 111</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Einstieg (dunkler Seitenschluss) -->
+  <section class="abschnitt abschnitt--ende" aria-labelledby="einstieg-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">06 · Dein Einstieg</p>
+        <h2 id="einstieg-titel" class="zeile">Finde deinen <span class="pivot">Weg</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Du kannst allein mit dem Kursbuch arbeiten oder dich begleiten lassen, in einer kleinen Gruppe in Hannover, einzeln mit mir
+          vor Ort oder online oder intensiv im 1:1.
+        </p>
+        <div class="aktionen">
+          <a class="button" href={`${seiten.modul1}#formate`}>Zum Angebot <span class="button__pfeil" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(48px, 7vw, 112px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf-abschnitt__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .kopf-abschnitt .einleitung {
+    max-width: 40rem;
+  }
+
+  /* Sieben Phasen */
+  .phasen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .phase {
+    display: grid;
+    grid-template-columns: clamp(48px, 6vw, 88px) minmax(0, 1fr);
+    gap: 0 clamp(16px, 3vw, 40px);
+    border-top: 1px solid var(--linie);
+    padding: clamp(22px, 3vw, 32px) 0;
+  }
+
+  .phase:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .phase__nr {
+    font-family: var(--schrift-titel);
+    font-size: clamp(40px, 4.4vw, 60px);
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .phase__inhalt {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 10px clamp(24px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .phase__inhalt h3 {
+    grid-column: 1 / -1;
+    font-size: clamp(28px, 2.6vw, 36px);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .phase__frage {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(21px, 1.9vw, 25px);
+    line-height: 1.3;
+    border-left: 2px solid var(--terrakotta);
+    padding-left: 16px;
+  }
+
+  .phase--modul2 .phase__frage {
+    border-left-style: dashed;
+  }
+
+  .phasen__hinweise {
+    margin-top: clamp(28px, 3vw, 44px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Selbstbild */
+  .schritte {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Wenn etwas nicht klappt */
+  .ursachen {
+    list-style: none;
+    counter-reset: ursache;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: clamp(16px, 2vw, 28px);
+  }
+
+  .ursachen li {
+    counter-increment: ursache;
+    border-top: 2px solid var(--terrakotta);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ursachen h3 {
+    font-family: var(--schrift-text);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .ursachen h3::before {
+    content: counter(ursache) ' · ';
+    color: var(--terrakotta-tief);
+  }
+
+  .ursachen p {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .ursachen__schluss {
+    margin-top: clamp(24px, 3vw, 36px);
+  }
+
+  /* Grundlagen */
+  .grundlagen {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 0 clamp(28px, 4vw, 56px);
+  }
+
+  .grundlagen > div {
+    border-top: 1px solid var(--linie);
+    padding: 20px 0 24px;
+  }
+
+  .grundlagen dt {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .grundlagen dd {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .grenze {
+    margin-top: clamp(32px, 4vw, 56px);
+    background: var(--leinen);
+    padding: clamp(22px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grenze h3 {
+    font-family: var(--schrift-text);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+  }
+</style>

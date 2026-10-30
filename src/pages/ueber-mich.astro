@@ -1,8 +1,9 @@
 ---
 /**
  * Über mich: persönliches Vertrauen über den eigenen Weg mit der Methode und belegte Kompetenz.
- * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Kursbuch Band 1 S. 12–13 und 181, Broschüre S. 6, Umschlag V5).
- * Regel: Sehr Persönliches (Elternzeit, frühere Stelle, Arbeitgeber) erscheint nicht auf der Website.
+ * Texte: Positionierungspapier V4 (30.10.2026), § 17 „Über mich“; davor claude/Texte_Unterseiten.md.
+ * Regel: Elternzeit, frühere Stelle und Arbeitgeber erscheinen nicht auf der Website (bestätigt 30.10.2026).
+ * Der Glaubenssatz in „Meine innere Bremse entdeckt“ steht seit 30.10.2026 bewusst auf der Seite.
  */
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
@@ -11,23 +12,21 @@ import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
 const weg = [
   {
-    titel: 'Negative Glaubenssätze ausgetauscht',
+    titel: 'Meine innere Bremse entdeckt',
     text: [
-      'Den Wunsch, andere mit Mentoring, Coaching und Beratung zu unterstützen, trage ich seit dem Studium in mir. Lange galt für mich aber: Sicherheit hat Vorrang. Heute arbeite ich mutig und mit Begeisterung an meinen eigenen Zielen.',
-      'Meinen eigenen Kurs habe ich zuallererst selbst durchlaufen. Dabei habe ich meine negativen Glaubenssätze herausgearbeitet, die meine Verhaltensmuster beeinflussen. Mithilfe meiner Methoden habe ich gelernt, sie durch eine positive und passendere Story über mich auszutauschen. Jetzt stehen sie mir und meinen Zielen nicht länger im Weg.',
+      'Als ich meinen eigenen Kurs zum ersten Mal durchlaufen habe, bin ich auf einen Satz gestoßen, der mich lange begleitet hat: „Mir fehlt die innere Reife, um Verantwortung für mich und meine Entscheidungen zu tragen.“ Ich habe gemerkt, wie viele Gegenbeweise mein Alltag längst liefert. Seitdem verliert der Satz an Kraft.',
     ],
   },
   {
     titel: 'Eine Richtung herausgearbeitet',
     text: [
-      'Aus drei unterschiedlich inspirierten Lebensentwürfen habe ich eine Richtung herausgearbeitet, die zu mir passt, und erkannt, welche Werte mich dabei leiten.',
-      'In den 14 Tagen, in denen ich meine neue Richtung im Alltag erprobt habe, habe ich mir frühere Schlafenszeiten und eine Morgenroutine mit kleinen Workouts angewöhnt und erkannt: Wenn wir Versprechen einhalten, die wir uns selbst gemacht haben, stärkt das nicht nur unser Gefühl von Disziplin, sondern auch unsere Selbstachtung, und wir sind zufriedener.',
+      'Aus drei Lebensentwürfen habe ich meine Richtung und meine Werte abgeleitet. In meiner Probezeit habe ich sie 14 Tage lang im Alltag getestet, mit früheren Schlafenszeiten und einer Morgenroutine mit kleinen Workouts. Die Verbindlichkeit mir selbst gegenüber hat mir geholfen, diese Gewohnheiten viel schneller aufzubauen als früher.',
     ],
   },
   {
-    titel: 'Meine Arbeit öffentlich gezeigt',
+    titel: 'Meine Arbeit sichtbar gemacht',
     text: [
-      'Heute zeige ich meine Arbeit öffentlich und komme meinem eigenen Zukunftsbild immer näher. Auch an Tagen der Zweifel handle ich weiter bewusst, so wie es mein Zukunfts-Ich von mir erwarten würde.',
+      'Mich vor die Kamera zu stellen, ist mir lange schwergefallen. Heute zeige ich meine Arbeit auf Instagram, auch an Tagen, an denen ich zweifle, und gerade entsteht meine erste Videoreihe.',
     ],
   },
 ];
@@ -35,19 +34,20 @@ const weg = [
 
 <Base
   dunklerSchluss
-  title="Über mich"
-  description={`${site.inhaberin}, ${site.rolle}: mein eigener Weg mit der Methode und was ich in die Begleitung mitbringe.`}
+  title={`${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}`}
+  description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich in die Begleitung mitbringe.`}
 >
   <section class="kopf-abschnitt">
     <div class="container zwei-spalten kopf-abschnitt__innen">
       <div class="kopf-abschnitt__text">
         <p class="label">Über mich</p>
         <h1>Christine Achmus</h1>
-        <p class="unterzeile">Mentorin für Lebensentwürfe</p>
+        <p class="unterzeile">{site.rolle} in {site.ort.stadt}</p>
         <div class="fliesstext einleitung">
           <p>
-            Ich begleite Menschen dabei, ihr Leben bewusst zu entwerfen und neue Richtungen mutig im Alltag zu testen. Die Methode, mit
-            der du arbeitest, habe ich zuerst an mir selbst erprobt.
+            Ich bin Mentorin für Lebensentwürfe. Ich begleite Menschen dabei, ihr Leben bewusst zu entwerfen und neue Richtungen im
+            Alltag auszuprobieren. Den Wunsch, andere mit Mentoring, Coaching und Beratung zu unterstützen, trage ich seit dem Studium in
+            mir.
           </p>
           <p>
             Ich nehme deine Fragen ernst und arbeite mit einem klaren Vorgehen. Wie dein Leben aussehen soll, entscheidest du.
@@ -96,21 +96,20 @@ const weg = [
         </div>
         <div>
           <dt>Projekte</dt>
-          <dd>Im Projektmanagement habe ich große technische Vorhaben, vielfältige Teams und Veränderungsprozesse gesteuert.</dd>
+          <dd>Aus dem Projektmanagement bringe ich Erfahrung mit großen technischen Vorhaben, vielfältigen Teams und Veränderungsprozessen mit.</dd>
         </div>
         <div>
           <dt>Gespräche</dt>
           <dd>
-            Menschen kommen oft mit Schwierigkeiten im Berufsleben, mit dem Selbstbild oder in Beziehungen zu mir. Häufig gelingt es uns
-            gemeinsam, mit etwas Abstand auf ein Problem zu schauen und es aus verschiedenen Blickwinkeln zu betrachten. Daraus erwachsen
-            oft das Gefühl der Erleichterung und neue Handlungsperspektiven.
+            Menschen öffnen sich mir oft schnell mit beruflichen oder persönlichen Fragen. Ich schaue dann ganzheitlich auf ihre Lage und
+            erkläre, welche psychologischen Mechanismen dahinterstecken.
           </dd>
         </div>
         <div>
           <dt>Kursbuch</dt>
           <dd>
-            Das Kursbuch verbindet Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung und legt seine Quellen offen.
-            <a href={`${seiten.modul1}#grundlagen`}>Worauf der Kurs sich stützt</a>
+            Mein Kursbuch verbindet Forschung zu Zielen, Gewohnheiten und möglichen Selbst mit Methoden der Lebensgestaltung.{' '}
+            <a href={`${seiten.wieIchArbeite}#grundlagen`}>Worauf meine Arbeit beruht</a>
           </dd>
         </div>
       </dl>
@@ -132,7 +131,7 @@ const weg = [
           <a class="button" href={`${seiten.modul1}#formate`}>Zu den Formaten <span class="button__pfeil" aria-hidden="true">→</span></a>
         </div>
         <p class="gedaempft">
-          Persönliches aus meinem Alltag teile ich auf Instagram unter
+          Persönliches aus meinem Alltag teile ich auf Instagram unter{' '}
           <a href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>.
         </p>
       </div>

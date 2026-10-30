@@ -21,6 +21,18 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 # ---------------------------------------------------------------------------
+# Eine Adresse für Suchmaschinen: Die Netlify-Adresse leitet auf www weiter (entschieden 30.10.2026).
+# Vorschauen (deploy-preview-…--lifeandlemons.netlify.app) sind davon nicht betroffen.
+# lifeandlemons.de ohne www leitet Netlify selbst auf www weiter (Hauptdomain in den Domain-Einstellungen).
+# ---------------------------------------------------------------------------
+
+[[redirects]]
+  from = "https://lifeandlemons.netlify.app/*"
+  to = "https://www.lifeandlemons.de/:splat"
+  status = 301
+  force = true
+
+# ---------------------------------------------------------------------------
 # Kurzlinks (für Broschüre, Instagram und Gespräche)
 # ---------------------------------------------------------------------------
 

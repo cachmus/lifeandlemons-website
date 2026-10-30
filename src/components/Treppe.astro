@@ -1,33 +1,38 @@
 ---
 /**
- * Die Treppe mit sechs Stufen: vier in Modul 1 (durchgezogen), zwei in Modul 2 (gestrichelt).
+ * Die Treppe mit den sieben Phasen der Methode (Positionierungspapier V4, § 4):
+ * sechs in Modul 1 (durchgezogen), eine in Modul 2 (gestrichelt).
  * Zeichnet sich einmalig, sobald sie ins Bild kommt. Ohne JavaScript ist sie sofort vollständig.
  */
 const stufen = [
   'Verstehen, wo du stehst',
-  'Klären, was du willst',
-  'Mögliche Zukünfte entwerfen',
-  'Eine Richtung ausprobieren',
-  'Nachjustieren',
-  'Im Alltag leben',
+  'Erkennen, was dich bremst',
+  'Drei mögliche Leben entwerfen',
+  'Spüren, welcher Entwurf dich anzieht',
+  'Klären, was dir wichtig ist',
+  'Ausprobieren und nachjustieren',
+  'Im Alltag verankern',
 ];
+/** Anzahl der Phasen in Modul 1; die übrigen gehören zu Modul 2 */
+const modul1 = 6;
 
-// Raster: sechs Trittflächen à 200 Einheiten, Steigung 44 Einheiten
+// Raster: sieben gleich breite Trittflächen, Steigung 34 Einheiten
 const breite = 1200;
 const hoehe = 260;
-const tritt = 200;
-const steigung = 44;
+const tritt = breite / stufen.length;
+const steigung = 34;
 const y = (i: number) => hoehe - 16 - i * steigung;
+const letzte = stufen.length - 1;
 
 let durchgezogen = `M 2 ${y(0)} H ${tritt}`;
-for (let i = 1; i < 4; i++) durchgezogen += ` V ${y(i)} H ${tritt * (i + 1)}`;
-let gestrichelt = `M ${tritt * 4} ${y(3)}`;
-for (let i = 4; i < 6; i++) gestrichelt += ` V ${y(i)} H ${i === 5 ? breite - 14 : tritt * (i + 1)}`;
-const endpunkt = { x: breite - 9, y: y(5) };
+for (let i = 1; i < modul1; i++) durchgezogen += ` V ${y(i)} H ${tritt * (i + 1)}`;
+let gestrichelt = `M ${tritt * modul1} ${y(modul1 - 1)}`;
+for (let i = modul1; i < stufen.length; i++) gestrichelt += ` V ${y(i)} H ${i === letzte ? breite - 14 : tritt * (i + 1)}`;
+const endpunkt = { x: breite - 9, y: y(letzte) };
 ---
 
 <figure class="treppe" data-treppe>
-  <div class="treppe__module" aria-hidden="true">
+  <div class="treppe__module" aria-hidden="true" style={`grid-template-columns: ${modul1}fr ${stufen.length - modul1}fr`}>
     <span class="treppe__modul">Modul 1</span>
     <span class="treppe__modul treppe__modul--2">Modul 2</span>
   </div>
@@ -37,7 +42,7 @@ const endpunkt = { x: breite - 9, y: y(5) };
     aria-labelledby="treppe-titel"
     preserveAspectRatio="xMidYMid meet"
   >
-    <title id="treppe-titel">Eine Treppe mit sechs Stufen: vier Stufen in Modul 1, zwei Stufen in Modul 2</title>
+    <title id="treppe-titel">Eine Treppe mit sieben Phasen: sechs in Modul 1, eine in Modul 2</title>
     <path class="treppe__linie" d={durchgezogen} pathLength="1" />
     <path class="treppe__strich" d={gestrichelt} />
     <circle class="treppe__punkt" cx={endpunkt.x} cy={endpunkt.y} r="5" />
@@ -45,7 +50,7 @@ const endpunkt = { x: breite - 9, y: y(5) };
   <ol class="treppe__stufen">
     {
       stufen.map((text, i) => (
-        <li class:list={{ 'treppe__stufe--2': i >= 4 }}>
+        <li class:list={{ 'treppe__stufe--2': i >= modul1 }}>
           <span class="treppe__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           {text}
         </li>
@@ -61,7 +66,6 @@ const endpunkt = { x: breite - 9, y: y(5) };
 
   .treppe__module {
     display: grid;
-    grid-template-columns: 4fr 2fr;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.2em;
@@ -107,8 +111,8 @@ const endpunkt = { x: breite - 9, y: y(5) };
     margin: 18px 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
     font-size: 13.5px;
     line-height: 1.4;
   }

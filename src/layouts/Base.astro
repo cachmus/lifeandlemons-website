@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-import { site, seiten, hauptnavigation, fussnavigation, messung } from '../config/site';
-import { pruefeAngebote, fehlendeBestelladressen } from '../config/angebote';
+import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche } from '../config/site';
+import { pruefeAngebote } from '../config/angebote';
+import { grunddaten } from '../config/strukturierteDaten';
 import Logo from '../components/Logo.astro';
 import Einwilligung from '../components/Einwilligung.astro';
 
@@ -18,20 +19,22 @@ interface Props {
   dunklerSchluss?: boolean;
   /** Blendet „Zum Kursbuch“ in der Kopfzeile aus, z. B. auf Danke-Seiten nach einem Kauf */
   ohneKaufbutton?: boolean;
+  /** Zusätzliche strukturierte Daten dieser Seite (siehe src/config/strukturierteDaten.ts) */
+  daten?: Record<string, unknown>[];
 }
 
-const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [] } = Astro.props;
 const istStart = Astro.url.pathname === '/';
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
-const robots = !site.indexierbar || noindex ? 'noindex, nofollow' : 'index, follow';
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const indexieren = site.indexierbar && !noindex && inDerSuche(pfad);
+const robots = indexieren ? 'index, follow' : 'noindex, nofollow';
+// Strukturierte Daten nur auf Seiten, die in der Suche erscheinen sollen
+const jsonLd = indexieren ? JSON.stringify({ '@context': 'https://schema.org', '@graph': [...grunddaten(), ...daten] }) : null;
 
-// Livegang nur mit Bestellformularen: Sobald die Seite indexierbar ist, braucht jedes buchbare Angebot
-// seine Digistore24-Adresse. Sonst bricht der Build ab, damit keine E-Mail-Bestellung online geht.
-if (site.indexierbar && fehlendeBestelladressen().length > 0) {
-  throw new Error(`Livegang blockiert: In src/config/angebote.ts fehlen Digistore24-Adressen (${fehlendeBestelladressen().join(', ')}).`);
-}
+// Fehlende Digistore24-Adressen blockieren den Livegang nicht mehr (entschieden 30.10.2026).
+// Bis zur Freigabe führen die Buttons zur Bestellung oder Anfrage per E-Mail; pruefeAngebote() meldet das im Build-Protokoll.
 
 // Hinweise auf fehlende Entscheidungen im Build-Protokoll (einmal je Build)
 const g = globalThis as { __angeboteGeprueft?: boolean };
@@ -65,6 +68,7 @@ if (!g.__angeboteGeprueft) {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“" />
     <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
     <!--
       Sperre für die Leistungsmessung von Netlify (siehe `messung` in src/config/site.ts).
       Muss vor allen anderen Skripten laufen: Übertragungen an den Messdienst werden verworfen,
@@ -146,7 +150,7 @@ if (!g.__angeboteGeprueft) {
           <Logo variante="gestapelt" hell />
           <p class="fuss__slogan">{site.slogan}</p>
         </div>
-        <nav aria-label="Kontakt und Rechtliches">
+        <nav aria-label="Weitere Seiten, Kontakt und Rechtliches">
           <ul class="fuss__links">
             <li><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></li>
             {fussnavigation.map((punkt) => <li><a href={punkt.href}>{punkt.label}</a></li>)}

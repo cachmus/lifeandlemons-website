@@ -48,6 +48,9 @@ export type Angebot = {
   /** Kurzes Label über dem Namen, z. B. „Selbstständig“ */
   art: string;
   fuerDich: string;
+  /** Positionierungspapier V4, § 11: wann der Weg passt und wann weniger. Ersetzt in der Karte „Für dich, wenn“. */
+  passtWenn?: string;
+  passtWenigerWenn?: string;
   enthaelt: string;
   /** Einführungspreis in Euro, gilt bis STICHTAGE.einfuehrungBis */
   preisEinfuehrung?: number;
@@ -90,7 +93,7 @@ export const DIGISTORE24 = {
 
 export type DigistoreId = keyof typeof DIGISTORE24;
 
-/** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung per E-Mail (nur für die Vorschau). */
+/** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung oder Anmeldung per E-Mail. */
 function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {
   return url
     ? { typ: 'checkout', anbieter: 'digistore24', url, label }
@@ -110,6 +113,8 @@ export const angebote: Angebot[] = [
     name: 'Das Kursbuch',
     art: 'Selbstständig',
     fuerDich: 'du gern allein und in deinem eigenen Tempo arbeitest.',
+    passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
+    passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
     enthaelt: 'das gedruckte Kursbuch mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
     preisEinfuehrung: 49,
     // OFFEN: regulärer Preis ab 08.12.2026 (Projektstatus V2 nennt keinen Wert)
@@ -132,6 +137,8 @@ export const angebote: Angebot[] = [
     name: 'Life&Lemons Club',
     art: 'In der Gruppe',
     fuerDich: 'dir feste Termine in der Gruppe und der Austausch mit anderen helfen, dranzubleiben.',
+    passtWenn: 'dir feste Termine und der Austausch mit anderen helfen und du in Hannover bist.',
+    passtWenigerWenn: 'du lieber für dich arbeitest.',
     enthaelt: 'das Kursbuch, drei Treffen von 2 bis 3 Stunden in einer Kleingruppe in Hannover, Begleitung in der Probezeit und einen Abschluss-Call.',
     preisEinfuehrung: 299,
     // laut Projektstatus V2, noch nicht bestätigt
@@ -157,6 +164,8 @@ export const angebote: Angebot[] = [
     name: 'Einzel-Track',
     art: 'Persönlich begleitet',
     fuerDich: 'du in deinem Tempo arbeiten, die Reflexion und den Wandel aber lieber in Begleitung durchlaufen möchtest.',
+    passtWenn: 'du dein eigenes Tempo willst und eine Ansprechperson, wenn die Bremse greift.',
+    passtWenigerWenn: 'deine Lage sehr verzweigt ist und du eine intensive Anpassung brauchst.',
     enthaelt: 'das Kursbuch, Begleitung per E-Mail und WhatsApp und zwei Telefonate mit mir. Ich unterstütze dich, wenn dich Zweifel oder alte Muster bremsen oder die Umsetzung deiner Pläne stockt.',
     preisEinfuehrung: 249,
     // laut Projektstatus V2, noch nicht bestätigt
@@ -179,7 +188,10 @@ export const angebote: Angebot[] = [
     name: 'VIP-Track',
     art: 'Intensiv mit Christine',
     fuerDich: 'du den Kurs persönlich mit mir zu zweit durcharbeiten und deine Erkenntnisse mit gezieltem Feedback direkt auf deine Lebenssituation übertragen möchtest.',
-    enthaelt: 'das Kursbuch, fünf Termine von je 2 Stunden in Hannover, einen WhatsApp- oder Signal-Zugang, über den ich täglich für dich erreichbar bin, einen gemeinsamen Plan für deine nächsten 90 Tage und ein Nachgespräch von 60 Minuten nach 3 Monaten.',
+    passtWenn: 'deine Lebenslage komplex ist und du gezieltes Feedback auf deine Situation möchtest.',
+    passtWenigerWenn: 'du vor allem die Methode kennenlernen möchtest.',
+    // „Coaching“ als Suchbegriff beim VIP-Track (Positionierungspapier V4, § 7)
+    enthaelt: 'das Kursbuch, fünf Coaching-Termine im 1:1 von je 2 Stunden in Hannover, einen WhatsApp- oder Signal-Zugang, über den ich täglich für dich erreichbar bin, einen gemeinsamen Plan für deine nächsten 90 Tage und ein Nachgespräch von 60 Minuten nach 3 Monaten.',
     preisEinfuehrung: 1900,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 5900,
@@ -317,6 +329,6 @@ export function bestellHinweis(angebot: Angebot): string | null {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
     return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
-  // Bestellung per E-Mail gibt es nur in der Vorschau, solange Digistore24-Adressen fehlen: kein Hinweis
+  // Bestellung per E-Mail, solange die Digistore24-Adresse fehlt: kein Hinweis
   return null;
 }
