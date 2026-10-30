@@ -1,13 +1,17 @@
 ---
 /**
  * Seite Modul 2 „Manifestiere dein Zukunfts-Ich“, zunächst in Vorbereitung.
- * Texte: claude/Texte_Unterseiten.md (Entwurf, Quelle: Kursbuch Band 1, S. 21 und S. 183).
+ * Texte: claude/Texte_Unterseiten.md (Entwurf, Quelle: Kursbuch Band 1, S. 21 und S. 183);
+ * Abschnitt Phase 7 nach Positionierungspapier V4, § 4 (ergänzt 30.10.2026).
  * Hinweis aus den Entscheidungen: „Manifestieren“ ist online esoterisch besetzt. Die Seite nennt
  * konkrete Methoden und Arbeitsergebnisse, ohne Wirkungsversprechen.
  */
 import Base from '../../layouts/Base.astro';
 import Interessentenliste from '../../components/Interessentenliste.astro';
 import { seiten } from '../../config/site';
+
+/** Bausteine von Phase 7 „Im Alltag verankern“ (Positionierungspapier V4, § 4) */
+const bausteine = ['Meilensteine', 'Gewohnheiten', 'Wenn-dann-Pläne', 'Ein Alltag, der es dir leicht macht'];
 ---
 
 <Base
@@ -54,10 +58,26 @@ import { seiten } from '../../config/site';
     </div>
   </section>
 
+  <section class="abschnitt" aria-labelledby="phase-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Phase 7 der Methode</p>
+        <h2 id="phase-titel" class="zeile">Was tust du regelmäßig als der Mensch, der du werden <span class="pivot">willst</span>?</h2>
+        <p class="einleitung text">
+          Modul 2 vertieft die letzte der sieben Phasen: Im Alltag verankern. Du übersetzt deinen Weg in Meilensteine, Gewohnheiten,
+          Wenn-dann-Pläne und einen Alltag, der es dir leicht macht. Deine Werte aus Modul 1 geben dir dabei die Richtung.
+        </p>
+      </div>
+      <ul class="bausteine">
+        {bausteine.map((b) => <li data-erscheinen>{b}</li>)}
+      </ul>
+    </div>
+  </section>
+
   <section class="abschnitt" aria-labelledby="einstieg-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">02 · Einstieg</p>
+        <p class="label">03 · Einstieg</p>
         <h2 id="einstieg-titel" class="zeile">So kannst du <span class="pivot">einsteigen</span></h2>
       </div>
       <div class="wege">
@@ -120,6 +140,22 @@ import { seiten } from '../../config/site';
     border-top: 2px dashed var(--terrakotta);
     padding: clamp(28px, 3.5vw, 44px);
     font-size: 16px;
+  }
+
+  .bausteine {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: clamp(16px, 2vw, 28px);
+  }
+
+  .bausteine li {
+    border-top: 2px dashed var(--terrakotta);
+    padding-top: 14px;
+    font-weight: 700;
+    font-size: 17px;
   }
 
   .hinweis {

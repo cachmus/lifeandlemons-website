@@ -1,6 +1,8 @@
 ---
 /**
- * Startseite. Wortlaut: claude/Texte_Startseite.md (Projekt in claude.ai). Texte nicht stillschweigend ändern.
+ * Startseite. Wortlaut: Positionierungspapier V4 (30.10.2026), Teil C § 17, mit den Entscheidungen in
+ * claude/Website_V2_Umbau.md (Projekt in claude.ai). Texte nicht stillschweigend ändern.
+ * Reihenfolge der Abschnitte folgt den Stufen Wiedererkennen, Verstehen, Methode, Vertrauen, Entscheidung.
  * Preise und Fristen kommen aus src/config/angebote.ts.
  */
 import { Picture, Image } from 'astro:assets';
@@ -14,7 +16,7 @@ import Interessentenliste from '../components/Interessentenliste.astro';
 import { site, seiten } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-mauer.jpg';
-import umschlag from '../assets/kursbuch-umschlag.png';
+import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
 const kursbuch = angebotNachId('kursbuch');
@@ -27,29 +29,41 @@ const stimmenZeigen = false;
 const fragen = [
   'Mein Leben funktioniert, aber es fühlt sich nicht ganz nach meinem Leben an.',
   'Ich weiß, dass ich etwas verändern möchte, aber noch nicht genau, was.',
-  'Ich habe Wünsche und Ideen, werde aber durch Zweifel oder alte Muster gebremst.',
+  'Ich nehme mir viel vor und falle doch immer wieder in alte Muster zurück.',
   'Ich möchte herausfinden, welche Richtung wirklich zu mir passt.',
+];
+
+const leben = [
+  { titel: 'Weitergehen', frage: 'Was ändert sich, wenn du deinen Weg mutiger gehst?' },
+  { titel: 'Umsteigen', frage: 'Was baust du auf, wenn dein bisheriger Weg wegfällt?' },
+  { titel: 'Wagen', frage: 'Was tust du, wenn ein Scheitern dich nicht aus der Bahn werfen kann?' },
+];
+
+const hilft = [
+  'Du wählst eine kleine Aufgabe, die du bisher aufgeschoben hast.',
+  'Ein Wenn-dann-Plan legt fest, wann und wo du sie erledigst.',
+  'Ein Mensch, dem du davon erzählst, macht daraus eine kleine Verabredung.',
+  'Du merkst: Ich habe getan, was ich mir vorgenommen habe. Der nächste Schritt darf größer werden.',
 ];
 ---
 
 <Base
   dunklerSchluss
   title="Life&Lemons · Christine Achmus, Mentorin für Lebensentwürfe"
-  description="Life&Lemons unterstützt dich dabei, herauszufinden, wie du wirklich leben möchtest, und deine Vorstellungen Schritt für Schritt umzusetzen. Kursbuch und Begleitung von Christine Achmus."
+  description="Mentoring und Coaching für selbstbestimmte Lebensgestaltung: Mit drei völlig unterschiedlichen Lebensentwürfen und Tests im Alltag findest du heraus, welcher Weg deiner werden soll. Kursbuch und Begleitung von Christine Achmus."
 >
-  <!-- 1. Erster Bildschirm -->
+  <!-- 1. Erster Bildschirm · Wiedererkennen -->
   <section class="hero">
     <div class="container hero__innen">
       <div class="hero__text">
-        <p class="label">Mentoring für Lebensentwürfe · {site.inhaberin}</p>
+        <p class="label">Mentoring für selbstbestimmte Lebensgestaltung · {site.inhaberin}</p>
         <h1>Sei, wer du werden <span class="pivot">willst</span>.</h1>
-        <p class="unterzeile">Persönliche Entwicklung. Ein selbst entworfenes Leben. Veränderung, die im Alltag ankommt.</p>
-        <p class="einleitung">
-          Life&amp;Lemons unterstützt dich dabei, herauszufinden, wie du wirklich leben möchtest, eigene Vorstellungen von deiner
-          Zukunft zu entwickeln und sie Schritt für Schritt in deinem Leben umzusetzen.
+        <p class="unterzeile">
+          Mit drei völlig unterschiedlichen Lebensentwürfen und praktischen Tests im Alltag findest du heraus, welcher Weg deiner
+          werden soll.
         </p>
         <div class="aktionen">
-          <a class="button" href="#programme">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="button" href="#weg">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
           <a class="textlink" href="#ueber">Lerne mich kennen</a>
         </div>
         <a class="neu" href="#kursbuch">
@@ -81,15 +95,12 @@ const fragen = [
     </div>
   </section>
 
-  <!-- 2. Ausgangslage -->
+  <!-- 2. Ausgangslage · Wiedererkennen -->
   <section class="abschnitt" aria-labelledby="ausgangslage-titel">
     <div class="container">
       <div class="kopfblock">
         <p class="label">01 · Ausgangslage</p>
         <h2 id="ausgangslage-titel" class="zeile">Fragen, mit denen Menschen zu <span class="pivot">mir</span> kommen</h2>
-        <p class="einleitung text">
-          An diesen Fragen arbeitest du bei Life&amp;Lemons in einem Programm mit zwei Modulen, die aufeinander aufbauen.
-        </p>
       </div>
       <ul class="fragen">
         {
@@ -108,15 +119,83 @@ const fragen = [
     </div>
   </section>
 
-  <!-- 3. Ein Programm, zwei Module -->
+  <!-- 3. So entsteht dein Weg · Verstehen -->
+  <section class="abschnitt" id="weg" aria-labelledby="weg-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Dein Weg</p>
+        <h2 id="weg-titel" class="zeile">So entsteht dein <span class="pivot">Weg</span></h2>
+        <p class="einleitung text">
+          Zu mir kommen Menschen, die spüren, dass sich etwas ändern soll, und noch nicht wissen, wohin. Wenn du dich darin
+          wiedererkennst, findest du mithilfe meines Methodenwerks heraus, welche inneren Muster dich bislang gebremst haben. Du
+          entwirfst drei völlig unterschiedliche Leben und testest den Entwurf, der dich am meisten anzieht, im Alltag, bevor du
+          dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht ein Weg,
+          der zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
+        </p>
+      </div>
+      <div class="bremse">
+        <div class="bremse__spalte" data-erscheinen>
+          <h3 class="bremse__titel">Was dich bisher bremst</h3>
+          <p>
+            Motivation ist flüchtig. Spätestens nach den Weihnachtsferien holt uns der Alltag zurück, und die alten Gewohnheiten
+            klopfen wieder an.
+          </p>
+          <p class="bremse__satz">„Du schaffst es ja sowieso nicht.“</p>
+          <p>
+            Wer sich oft etwas versprochen und es wieder gebrochen hat, nimmt die eigenen Vorhaben weniger ernst als eine
+            Verabredung mit der besten Freundin.
+          </p>
+        </div>
+        <div class="bremse__spalte bremse__spalte--hilft" data-erscheinen>
+          <h3 class="bremse__titel">Was dir hier hilft</h3>
+          <ol class="bremse__schritte">
+            {hilft.map((schritt) => <li>{schritt}</li>)}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Drei mögliche Leben · Methode -->
+  <section class="abschnitt" aria-labelledby="leben-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">03 · Drei mögliche Leben</p>
+        <h2 id="leben-titel" class="zeile">Drei <span class="pivot">mögliche</span> Leben</h2>
+        <p class="einleitung text">Du entwirfst drei völlig unterschiedliche Versionen deines Zukunfts-Ichs. Jede beantwortet eine andere Frage.</p>
+      </div>
+      <ul class="leben">
+        {
+          leben.map((l) => (
+            <li class="leben__karte" data-erscheinen>
+              <h3>{l.titel}</h3>
+              <p>{l.frage}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="leben__danach text">
+        Danach fragst du dich, welchen dieser Menschen du in fünf Jahren am liebsten kennenlernen würdest. Diesen Entwurf testest du
+        im Alltag. Dein Weg darf am Ende Teile aus allen drei Entwürfen enthalten.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. Ein Programm, zwei Module · Methode -->
   <section class="abschnitt" id="programme" aria-labelledby="programme-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">02 · Ein Programm, zwei Module</p>
+        <p class="label">04 · Ein Programm, zwei Module</p>
         <h2 id="programme-titel" class="zeile">Erst entwerfen, dann <span class="pivot">verwirklichen</span></h2>
+        <p class="einleitung text">Meine Methode führt dich in sieben Phasen von deinem heutigen Leben zu deinem eigenen Weg.</p>
       </div>
 
       <Treppe />
+
+      <p class="programme__hinweis text">
+        „Entwirf dein Zukunfts-Ich“ führt dich durch die Phasen 1 bis 6. „Manifestiere dein Zukunfts-Ich“ vertieft Phase 7 und ist in
+        Vorbereitung.
+      </p>
 
       <div class="module">
         <ModulKarte
@@ -161,89 +240,23 @@ const fragen = [
     </div>
   </section>
 
-  <!-- 4. Kursbuch -->
-  <section class="abschnitt kursbuch" id="kursbuch" aria-labelledby="kursbuch-titel">
-    <div class="container">
-    <div class="dunkel kursbuch__innen">
-      <div class="kursbuch__bild" data-erscheinen>
-        <Image
-          src={umschlag}
-          alt="Umschlag des Kursbuchs Entwirf dein Zukunfts-Ich"
-          widths={[400, 670]}
-          sizes="(max-width: 860px) 92vw, 40vw"
-          format="webp"
-          quality={85}
-        />
-      </div>
-      <div class="kursbuch__text">
-        <p class="label">Aktuell · Kursbuch zu Modul 1</p>
-        <h2 id="kursbuch-titel" class="zeile">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h2>
-        <p class="einleitung">
-          Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und Notizen. Es führt dich ganz intuitiv durch
-          jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im Alltag aus.
-        </p>
-        <Preis id="kursbuch" />
-        {kursbuch.lieferhinweis && <p class="kursbuch__liefer">{kursbuch.lieferhinweis}</p>}
-        <div class="aktionen">
-          <AngebotButton id="kursbuch" variante="hell" />
-          <a class="textlink" href={`${seiten.modul1}#formate`}>Lieber begleitet arbeiten</a>
-        </div>
-        <p class="kursbuch__hinweis">
-          {kursbuchHinweis && `${kursbuchHinweis} `}Club, Einzel-Track und VIP-Track findest du auf der <a href={seiten.modul1}>Seite zu Modul 1</a>.
-        </p>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- 5. Über mich -->
+  <!-- 6. Wer dich begleitet · Vertrauen -->
   <section class="abschnitt" id="ueber" aria-labelledby="ueber-titel">
-    <div class="container">
-      <div class="kopfblock">
-        <p class="label">03 · Über mich</p>
-        <h2 id="ueber-titel" class="zeile">Wer dich <span class="pivot">begleitet</span></h2>
-        <p class="einleitung text">
-          Ich bin Christine Achmus, Mentorin für Lebensentwürfe. Die Methode, mit der du arbeitest, habe ich zuerst an mir selbst
-          erprobt.
+    <div class="container ueber">
+      <div class="ueber__text">
+        <div class="kopfblock">
+          <p class="label">05 · Über mich</p>
+          <h2 id="ueber-titel" class="zeile">Wer dich <span class="pivot">begleitet</span></h2>
+        </div>
+        <p class="einleitung" data-erscheinen>
+          Ich bin Christine Achmus, Mentorin für Lebensentwürfe. Ich habe Bildungswissenschaften mit Schwerpunkt Pädagogische
+          Psychologie studiert und bringe aus dem Projektmanagement viel Erfahrung mit Veränderungsprozessen mit. Meine Methode habe
+          ich zuerst an mir selbst ausprobiert. Daraus ist Life&amp;Lemons entstanden.
         </p>
+        <a class="textlink" href={seiten.ueberMich}>Mehr über mich <span aria-hidden="true">→</span></a>
       </div>
-
-      <div class="ueber">
-        <div class="ueber__spalte" data-erscheinen>
-          <h3 class="ueber__titel">Mein Weg mit der Methode</h3>
-          <ol class="weg">
-            <li>
-              <span>
-                Zuerst habe ich meine <strong>negativen Glaubenssätze</strong> herausgearbeitet und mithilfe meiner Methoden gelernt, sie durch eine positive Story über mich auszutauschen. Jetzt stehen sie mir und meinen Zielen nicht länger im Weg.
-              </span>
-            </li>
-            <li>
-              <span>
-                Dann habe ich aus drei unterschiedlich inspirierten Lebensentwürfen <strong>eine Richtung herausgearbeitet</strong>, die zu mir passt, und erkannt, welche Werte mich dabei leiten.
-              </span>
-            </li>
-            <li>
-              <span>
-                Heute <strong>zeige ich meine Arbeit öffentlich</strong> und komme meinem eigenen Zukunftsbild immer näher. Auch an Tagen der Zweifel handle ich weiter bewusst, so wie es mein Zukunfts-Ich von mir erwarten würde.
-              </span>
-            </li>
-          </ol>
-        </div>
-
-        <div class="ueber__spalte" data-erscheinen>
-          <h3 class="ueber__titel">Was ich mitbringe</h3>
-          <ul class="mitbringe">
-            <li>Master in Bildungswissenschaften mit Schwerpunkt Pädagogische Psychologie</li>
-            <li>Erfahrung im Projektmanagement großer technischer Vorhaben, mit vielfältigen Teams und in Veränderungsprozessen</li>
-            <li>Ein Kursbuch, das Forschung zu Zielen und Gewohnheiten mit Methoden der Lebensgestaltung verbindet und seine Quellen offenlegt</li>
-            <li>Erfahrung aus Gesprächen, in denen wir mit etwas Abstand auf ein Problem schauen und neue Handlungsmöglichkeiten finden</li>
-          </ul>
-          <a class="textlink" href={seiten.ueberMich}>Mehr über mich <span aria-hidden="true">→</span></a>
-        </div>
-
-        <div class="ueber__foto">
-          <Polaroid bild={zweitesFoto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
-        </div>
+      <div class="ueber__foto">
+        <Polaroid bild={zweitesFoto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
       </div>
     </div>
   </section>
@@ -264,12 +277,64 @@ const fragen = [
     )
   }
 
-  <!-- 7. Interessentenliste -->
+  <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Kursbuch) -->
+  <section class="abschnitt" id="kursbuch" aria-labelledby="einstieg-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">06 · Dein Einstieg</p>
+        <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
+        <p class="einleitung text">Alle Wege führen durch dieselbe Methode. Du entscheidest, wie viel Begleitung du dir wünschst.</p>
+      </div>
+
+      <div class="dunkel kursbuch__innen">
+        <div class="kursbuch__bild" data-erscheinen>
+          <Image
+            src={kursbuchFoto}
+            alt="Das Kursbuch Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
+            widths={[420, 640, 900]}
+            sizes="(max-width: 860px) 92vw, 40vw"
+            format="webp"
+            quality={80}
+          />
+        </div>
+        <div class="kursbuch__text">
+          <p class="label">Allein mit dem Kursbuch</p>
+          <h3 class="kursbuch__titel">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h3>
+          <p>
+            Du arbeitest in deinem eigenen Tempo. Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und
+            Notizen. Es führt dich ganz intuitiv durch jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun
+            Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im
+            Alltag aus.
+          </p>
+          <Preis id="kursbuch" />
+          {kursbuch.lieferhinweis && <p class="kursbuch__liefer">{kursbuch.lieferhinweis}</p>}
+          <div class="aktionen">
+            <AngebotButton id="kursbuch" variante="hell" />
+          </div>
+          {kursbuchHinweis && <p class="kursbuch__hinweis">{kursbuchHinweis}</p>}
+        </div>
+      </div>
+
+      <div class="wege">
+        <article class="wege__karte" data-erscheinen>
+          <p class="label">Begleitet</p>
+          <p>In einer kleinen Gruppe in Hannover oder einzeln mit mir.</p>
+          <a class="textlink" href={`${seiten.modul1}#formate`}>Club und Einzel-Track <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="wege__karte" data-erscheinen>
+          <p class="label">Intensiv im 1:1</p>
+          <p>Wir übertragen jede Erkenntnis direkt auf deine Lebenssituation.</p>
+          <a class="textlink" href={`${seiten.modul1}#formate`}>VIP-Track <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Interessentenliste · Danach -->
   <Interessentenliste
-    label="04 · Was als Nächstes startet"
-    titel="Welcher"
-    pivot="Weg"
-    nach="weckt dein Interesse?"
+    label="07 · Was als Nächstes startet"
+    titel="Ich melde mich, sobald es"
+    pivot="losgeht"
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
   />
 </Base>
@@ -465,22 +530,27 @@ const fragen = [
     color: var(--terrakotta-hell);
   }
 
-  /* Über mich */
-  .ueber {
+  /* Was bremst, was hilft */
+  .bremse {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(32px, 5vw, 72px);
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(28px, 4vw, 64px);
   }
 
-  .ueber__spalte {
+  .bremse__spalte {
+    border-top: 2px solid var(--tinte);
+    padding-top: 22px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 16px;
+    max-width: var(--breite-text);
   }
 
-  .ueber__titel {
+  .bremse__spalte--hilft {
+    border-top-color: var(--terrakotta);
+  }
+
+  .bremse__titel {
     font-family: var(--schrift-text);
     font-size: 12px;
     font-weight: 700;
@@ -488,68 +558,148 @@ const fragen = [
     text-transform: uppercase;
     line-height: 1.5;
     color: var(--terrakotta-tief);
+    margin: 0;
   }
 
-  .weg {
+  .bremse__satz {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(24px, 2.3vw, 30px);
+    line-height: 1.25;
+  }
+
+  .bremse__schritte {
     list-style: none;
-    counter-reset: weg;
+    counter-reset: schritt;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 22px;
-    font-size: 16px;
+    gap: 16px;
   }
 
-  .weg li {
-    counter-increment: weg;
+  .bremse__schritte li {
+    counter-increment: schritt;
     display: grid;
     grid-template-columns: 36px minmax(0, 1fr);
   }
 
-  .weg li::before {
-    content: counter(weg, decimal-leading-zero);
+  .bremse__schritte li::before {
+    content: counter(schritt, decimal-leading-zero);
     font-family: var(--schrift-titel);
     font-size: 22px;
     line-height: 1.2;
     color: var(--terrakotta);
   }
 
-  .mitbringe {
+  /* Drei mögliche Leben */
+  .leben {
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
   }
 
-  .mitbringe li {
-    padding: 12px 0;
-    border-top: 1px solid var(--linie);
+  .leben__karte {
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(24px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background-color 300ms var(--kurve);
   }
 
-  .mitbringe li:first-child {
-    border-top: 0;
-    padding-top: 0;
+  .leben__karte:hover {
+    background: var(--papier-hell);
+  }
+
+  .leben__karte h3 {
+    font-size: clamp(32px, 3vw, 42px);
+    line-height: 1;
+    margin: 0;
+  }
+
+  .leben__karte p {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .leben__danach {
+    margin-top: clamp(28px, 3vw, 44px);
+    color: var(--text-gedaempft);
+  }
+
+  .programme__hinweis {
+    margin-top: clamp(24px, 3vw, 36px);
+    color: var(--text-gedaempft);
+  }
+
+  /* Wer dich begleitet */
+  .ueber {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+  }
+
+  .ueber__text {
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .ueber__text .kopfblock {
+    margin-bottom: 0;
+  }
+
+  .ueber__text .einleitung {
+    max-width: var(--breite-text);
   }
 
   .ueber__foto {
+    flex: 0 1 340px;
     display: flex;
     justify-content: center;
-    padding-top: 24px;
+    margin: 0 auto;
   }
 
-  @media (max-width: 1020px) {
-    .ueber {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .ueber__foto {
-      grid-column: 1 / -1;
-    }
+  /* Weitere Wege neben dem Kursbuch */
+  .kursbuch__titel {
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    margin: 0;
   }
 
-  @media (max-width: 680px) {
-    .ueber {
-      grid-template-columns: 1fr;
-    }
+  .wege {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+    margin-top: clamp(20px, 2.5vw, 32px);
+  }
+
+  .wege__karte {
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(24px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+    transition: background-color 300ms var(--kurve);
+  }
+
+  .wege__karte:hover {
+    background: var(--papier-hell);
+  }
+
+  .wege__karte .textlink {
+    margin-top: auto;
   }
 </style>

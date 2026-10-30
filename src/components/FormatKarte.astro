@@ -28,7 +28,24 @@ if (!pausiert) {
 <article class:list={['format', { 'format--pausiert': pausiert }]} id={anker} data-erscheinen>
   <p class="label">{a.art}</p>
   <h3>{a.name}</h3>
-  <p><strong>Für dich, wenn</strong> {a.fuerDich}</p>
+  {
+    a.passtWenn ? (
+      <dl class="format__passung">
+        <div>
+          <dt>Passt, wenn</dt>
+          <dd>{a.passtWenn}</dd>
+        </div>
+        {a.passtWenigerWenn && (
+          <div class="format__passung--weniger">
+            <dt>Passt weniger, wenn</dt>
+            <dd>{a.passtWenigerWenn}</dd>
+          </div>
+        )}
+      </dl>
+    ) : (
+      <p><strong>Für dich, wenn</strong> {a.fuerDich}</p>
+    )
+  }
   <p><strong>Du erhältst</strong> {a.enthaelt}</p>
   {
     fakten.length > 0 && (
@@ -73,6 +90,34 @@ if (!pausiert) {
   .format:target {
     outline: 2px solid var(--terrakotta);
     outline-offset: 6px;
+  }
+
+  .format__passung {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .format__passung > div {
+    border-left: 2px solid var(--tinte);
+    padding-left: 14px;
+  }
+
+  .format__passung dt {
+    font-weight: 700;
+  }
+
+  .format__passung dd {
+    margin: 0;
+  }
+
+  .format__passung > .format__passung--weniger {
+    border-left: 2px dashed var(--text-gedaempft);
+  }
+
+  .format__passung--weniger dd {
+    color: var(--text-gedaempft);
   }
 
   .format--pausiert {
