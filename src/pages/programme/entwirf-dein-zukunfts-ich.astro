@@ -2,7 +2,8 @@
 /**
  * Seite Modul 1 „Entwirf dein Zukunfts-Ich“.
  * Texte: claude/Texte_Unterseiten.md (Entwurf, Quellen: Broschüre mobil 02, Kursbuch Band 1, Umschlag V5);
- * seit 30.10.2026 ergänzt um Positionierungspapier V4, § 11 und § 17 (Wege, Grundlagen, häufige Fragen).
+ * seit 30.10.2026 ergänzt um Positionierungspapier V4, § 11 und § 17 (Wege, häufige Fragen).
+ * Die Grundlagen stehen seit 30.10.2026 auf der Seite „Wie ich arbeite“ (#grundlagen).
  * Preise, Fristen und Buttons: src/config/angebote.ts.
  * Anker: #kursbuch (Kurzlink /buch), #club (Kurzlink /club), #formate
  */
@@ -44,38 +45,6 @@ const ergebnisse = [
   'Klarheit darüber, wohin dich dein nächster Lebensabschnitt führen soll und wie du anfängst',
 ];
 
-/** Positionierungspapier V4, § 6 und § 17 „Worauf meine Arbeit beruht“. „The Big Leap“ ist keine Quelle mehr. */
-const grundlagen = [
-  {
-    titel: 'Life Design',
-    text: 'Bill Burnett und Dave Evans haben an der Stanford University Design Thinking auf das eigene Leben übertragen. Von ihnen stammen die Idee mehrerer Lebensentwürfe, das Gespräch mit Menschen, die ein Leben schon führen, und das Testen im Kleinen.',
-  },
-  {
-    titel: 'Mögliche Selbst',
-    text: 'Die Forscherinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten und wer wir auf keinen Fall werden wollen, unser Handeln lenken. Daphna Oyserman hat untersucht, wann solche Bilder tatsächlich ins Handeln bringen.',
-  },
-  {
-    titel: 'Selbstwirksamkeit',
-    text: 'Albert Bandura hat gezeigt, dass das Vertrauen in die eigene Handlungsfähigkeit vor allem aus eigenen Erfolgserfahrungen wächst.',
-  },
-  {
-    titel: 'Mentales Kontrastieren',
-    text: 'Gabriele Oettingen hat untersucht, warum positives Träumen allein eher bremst. Wer den Wunsch mit dem inneren Hindernis zusammen denkt, kommt eher ins Handeln.',
-  },
-  {
-    titel: 'Wenn-dann-Pläne',
-    text: 'Peter Gollwitzer hat gezeigt, dass Vorhaben häufiger umgesetzt werden, wenn sie mit einer konkreten Situation verknüpft sind.',
-  },
-  {
-    titel: 'Gewohnheiten',
-    text: 'Wendy Wood beschreibt, wie stark unser Alltag von Gewohnheiten gesteuert wird und wie sehr die Umgebung sie auslöst. Phillippa Lally und ihr Forschungsteam am University College London haben untersucht, wie lange es dauert, bis eine neue Gewohnheit sitzt.',
-  },
-  {
-    titel: 'Selbstbestimmung',
-    text: 'Edward Deci und Richard Ryan beschreiben drei psychologische Grundbedürfnisse: Autonomie, Kompetenz und Verbundenheit.',
-  },
-];
-
 /** Positionierungspapier V4, § 17 „Häufige Fragen“ */
 const fragen = [
   {
@@ -96,7 +65,7 @@ const fragen = [
   },
   {
     frage: 'Ist das eine Therapie?',
-    antwort: 'Nein. Wir schauen darauf, wie deine inneren Muster heute wirken, und setzen ihnen neue Erfahrungen entgegen. Mein Angebot ersetzt keine Psychotherapie. Mehr dazu steht im Abschnitt „Worauf meine Arbeit beruht“.',
+    antwort: 'Nein. Wir schauen darauf, wie deine inneren Muster heute wirken, und setzen ihnen neue Erfahrungen entgegen. Mein Angebot ersetzt keine Psychotherapie. Mehr dazu steht auf der Seite „Wie ich arbeite“.',
   },
   {
     frage: 'Für wen ist das Angebot gedacht?',
@@ -243,7 +212,7 @@ const orientierung = anfrageLink(
   <section class="abschnitt" id="formate" aria-labelledby="formate-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">04 · Formate und Preise</p>
+        <p class="label">04 · Angebot und Preise</p>
         <h2 id="formate-titel" class="zeile">Wähle deinen <span class="pivot">Weg</span></h2>
         <p class="einleitung text">
           Alle Wege führen durch dieselben neun Einheiten und dieselbe Methode. Sie unterscheiden sich darin, wie viel Begleitung du
@@ -292,45 +261,11 @@ const orientierung = anfrageLink(
     </div>
   </section>
 
-  <!-- 05 Grundlagen (Anker #grundlagen bleibt, Seite Über mich verlinkt darauf) -->
-  <section class="abschnitt" id="grundlagen" aria-labelledby="grundlagen-titel">
-    <div class="container">
-      <div class="kopfblock">
-        <p class="label">05 · Grundlagen</p>
-        <h2 id="grundlagen-titel" class="zeile">Worauf meine Arbeit <span class="pivot">beruht</span></h2>
-        <p class="einleitung text">
-          Meine Methode stützt sich auf psychologische Forschung und auf erprobte Ansätze der Lebensgestaltung. Den Aufbau und die
-          Reihenfolge der Übungen habe ich selbst entwickelt und zuerst an mir getestet.
-        </p>
-      </div>
-      <dl class="grundlagen">
-        {
-          grundlagen.map((g) => (
-            <div data-erscheinen>
-              <dt>{g.titel}</dt>
-              <dd>{g.text}</dd>
-            </div>
-          ))
-        }
-      </dl>
-      <div class="grenze text" data-erscheinen>
-        <h3>Was meine Arbeit nicht ist</h3>
-        <p>
-          Ich schaue mit dir darauf, wie deine inneren Muster heute wirken. Ihre Entstehung arbeiten wir nicht auf. Mein Angebot ersetzt
-          keine Psychotherapie, keine Suchtberatung und keine medizinische Behandlung. Wenn du dich seit Wochen niedergeschlagen oder
-          hoffnungslos fühlst, wende dich bitte an deine Hausärztin oder deinen Hausarzt oder an eine Psychotherapeutin oder einen
-          Psychotherapeuten. In akuten Krisen erreichst du die Telefonseelsorge rund um die Uhr unter{' '}
-          <a href="tel:08001110111">0800 111 0 111</a>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 06 Häufige Fragen -->
+  <!-- 05 Häufige Fragen -->
   <section class="abschnitt" id="fragen" aria-labelledby="fragen-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">06 · Häufige Fragen</p>
+        <p class="label">05 · Häufige Fragen</p>
         <h2 id="fragen-titel" class="zeile">Was du vielleicht noch <span class="pivot">wissen</span> möchtest</h2>
       </div>
       <div class="faq text">
@@ -346,11 +281,11 @@ const orientierung = anfrageLink(
     </div>
   </section>
 
-  <!-- 07 Weiter mit Modul 2 -->
+  <!-- 06 Weiter mit Modul 2 -->
   <section class="abschnitt abschnitt--ende" aria-labelledby="weiter-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">07 · Danach</p>
+        <p class="label">06 · Danach</p>
         <h2 id="weiter-titel" class="zeile">Wie es danach <span class="pivot">weitergeht</span></h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
@@ -510,46 +445,6 @@ const orientierung = anfrageLink(
 
   .demnaechst .label {
     margin-right: 12px;
-  }
-
-  /* Grundlagen */
-  .grundlagen {
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 0 clamp(28px, 4vw, 56px);
-  }
-
-  .grundlagen > div {
-    border-top: 1px solid var(--linie);
-    padding: 20px 0 24px;
-  }
-
-  .grundlagen dt {
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-
-  .grundlagen dd {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  .grenze {
-    margin-top: clamp(32px, 4vw, 56px);
-    background: var(--leinen);
-    padding: clamp(22px, 3vw, 36px);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .grenze h3 {
-    font-family: var(--schrift-text);
-    font-size: 17px;
-    font-weight: 700;
-    margin: 0;
   }
 
   /* Häufige Fragen */

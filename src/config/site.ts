@@ -33,6 +33,8 @@ export const seiten = {
   start: '/',
   modul1: '/programme/entwirf-dein-zukunfts-ich/',
   modul2: '/programme/manifestiere-dein-zukunfts-ich/',
+  /** Methode, Rolle, Grundlagen und Grenzen (neu 30.10.2026) */
+  wieIchArbeite: '/wie-ich-arbeite/',
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
@@ -50,13 +52,19 @@ export const preisZusatz = '';
 
 export type NavPunkt = { label: string; href: string };
 
+/**
+ * Reiter in Alltagssprache (entschieden 30.10.2026, ersetzt „Entwerfen“ und „Manifestieren“).
+ * Modul 2 kommt erst ins Hauptmenü, wenn es buchbar ist; bis dahin über Startseite, „Wie ich arbeite“,
+ * die Seite zu Modul 1 und den Footer erreichbar.
+ */
 export const hauptnavigation: NavPunkt[] = [
-  { label: 'Entwerfen', href: seiten.modul1 },
-  { label: 'Manifestieren', href: seiten.modul2 },
+  { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
+  { label: 'Angebot', href: seiten.modul1 },
   { label: 'Über mich', href: seiten.ueberMich },
 ];
 
 export const fussnavigation: NavPunkt[] = [
+  { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },
   { label: 'Impressum', href: seiten.impressum },
   { label: 'Datenschutz', href: seiten.datenschutz },
 ];
