@@ -1,0 +1,153 @@
+---
+/**
+ * Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail.
+ * Gilt für beide Brevo-Formulare (Website-Interessentenliste und Jahresabschluss-Journal);
+ * in Brevo ist diese Adresse jeweils als Seite nach der Bestätigung eingetragen.
+ *
+ * Wortlaut: Entwurf vom 11.11.2026, Freigabe durch Christine offen.
+ * - Immer noindex (Pfad /danke/), nicht im Menü und nicht verlinkt.
+ * - Zeigt keine Kontaktdaten; die Seite kann gefahrlos direkt aufgerufen werden.
+ * - Keine Kaufbuttons.
+ */
+import Base from '../../layouts/Base.astro';
+import Polaroid from '../../components/Polaroid.astro';
+import { site, seiten } from '../../config/site';
+import foto from '../../assets/portraet-christine-4x5.jpg';
+
+const weiter = [
+  {
+    label: 'Jahresabschluss-Journal',
+    text: 'Du hast das Journal angefordert? Dann ist die E-Mail mit deinen Download-Links schon zu dir unterwegs. Darin findest du das Journal in drei Fassungen: für das Tablet, zum Ausdrucken und zum Ausfüllen am Bildschirm.',
+  },
+  {
+    label: 'Warteliste',
+    text: 'Du hast dich für „Try a Life“ oder Kursbuch Band 2 eingetragen? Dann sage ich dir per E-Mail Bescheid, sobald es losgeht.',
+  },
+];
+---
+
+<Base
+  dunklerSchluss
+  noindex
+  ohneKaufbutton
+  title="Anmeldung bestätigt"
+  description="Deine Anmeldung bei Life&Lemons ist bestätigt."
+>
+  <section class="danke-kopf">
+    <div class="container danke-kopf__innen">
+      <div class="danke-kopf__text">
+        <p class="label">Anmeldung bestätigt</p>
+        <h1>Schön, dass du <span class="pivot">da</span> bist.</h1>
+        <p class="einleitung">
+          Deine E-Mail-Adresse ist bestätigt. Ab jetzt bekommst du Post von mir zu den Themen, die du ausgewählt hast. Abmelden kannst du
+          dich jederzeit über den Link am Ende jeder E-Mail.
+        </p>
+      </div>
+      <div class="danke-kopf__foto">
+        <Polaroid bild={foto} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="weiter-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · So geht es weiter</p>
+        <h2 id="weiter-titel" class="zeile">Was jetzt <span class="pivot">kommt</span></h2>
+      </div>
+      <div class="karten">
+        {
+          weiter.map((w) => (
+            <article class="karte" data-erscheinen>
+              <p class="label">{w.label}</p>
+              <p>{w.text}</p>
+            </article>
+          ))
+        }
+        <article class="karte" data-erscheinen>
+          <p class="label">Kleiner Tipp</p>
+          <p>
+            Speichere <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a> in deinen Kontakten. Dann landen meine E-Mails
+            zuverlässig in deinem Posteingang. Findest du in ein paar Minuten nichts von mir, schau bitte im Spam- oder Werbeordner nach.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--ende" aria-labelledby="schluss-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">02 · Bis bald</p>
+        <h2 id="schluss-titel" class="zeile">Schau dich gern <span class="pivot">um</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Auf der Website erfährst du, wie ich arbeite und was hinter Life&amp;Lemons steckt. Auf Instagram teile ich Übungen und
+          Einblicke in meine Arbeit.
+        </p>
+        <div class="aktionen">
+          <a class="button" href={seiten.wieIchArbeite}>Wie ich arbeite <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="textlink" href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .danke-kopf {
+    padding: clamp(40px, 6vw, 96px) 0 clamp(24px, 4vw, 56px);
+  }
+
+  .danke-kopf__innen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
+
+  .danke-kopf__text {
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .danke-kopf__text .einleitung {
+    max-width: 34rem;
+  }
+
+  .danke-kopf__foto {
+    flex: 0 1 320px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 860px) {
+    .danke-kopf__foto {
+      flex-basis: 240px;
+      max-width: 240px;
+    }
+  }
+
+  .karten {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+
+  .karte {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(24px, 3vw, 36px);
+    transition: background-color 300ms var(--kurve);
+  }
+
+  .karte:hover {
+    background: var(--papier-hell);
+  }
+</style>

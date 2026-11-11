@@ -56,6 +56,8 @@ export const seiten = {
   datenschutz: '/datenschutz/',
   /** Danke-Seite nach dem Kauf des Kursbuchs; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
   dankeKursbuch: '/danke/kursbuch/',
+  /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
+  dankeAnmeldung: '/danke/anmeldung/',
   /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
   tryALife: '/try-a-life/',
   /** Anker der Interessentenliste auf der Startseite */
@@ -107,7 +109,11 @@ export const fussnavigation: NavPunkt[] = [
  * Solange `formularAdresse` leer ist, zeigt die Website statt des Formulars einen Hinweis mit E-Mail-Link.
  */
 export const newsletter = {
-  formularAdresse: '',
+  /** Formular „Life&Lemons · Website-Interessentenliste“ (DOI-Vorlage #35, Weiterleitung nach Bestätigung: /danke/anmeldung/) */
+  formularAdresse:
+    'https://4a5bfe6e.sibforms.com/serve/MUIFAID8cU88NfIJIc1KyqKZbQCte9MW0MRcEExD8IFaz26_RXidRSxtFutp0raFQ9bju3pZ8UncFAtIHALQlQz9d8xDMXcYO_3nH9Nivx0XWuK2SdD5ilEA9uo7o90ESd02wf9ObZEttSO3EtuRl7bA9SRiPPMGECyEGf5rYI-K_ukaAKVJKs7qhezECfHXQPwNiZVBs15X5519Dw==',
+  /** Name des Listenfelds laut HTML-Code des Brevo-Formulars (Feld „Mehrere Listen“); Werte sind die Listen-IDs */
+  listenFeld: 'lists_25[]',
   interessen: [
     { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '9' },
     { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
@@ -127,11 +133,12 @@ export const newsletter = {
  * Jahresabschluss-Journal (Freebie) über Brevo, Double-Opt-in.
  * Formular in Brevo: „Life&Lemons · Jahresabschluss-Journal“, Listen #11 (Journal) und #10 (Newsletter),
  * Bestätigungsvorlage #30, Begrüßungsstrecke mit den Vorlagen #31 bis #34.
- * `formularAdresse` wird eingetragen, sobald das Formular in Brevo fertig ist (Adresse aus dem HTML-Code, wie oben).
+ * Weiterleitung nach Bestätigung: /danke/anmeldung/. Felder: EMAIL, email_address_check (leer), locale=de.
  * Die PDFs liegen unter /downloads/ und sind nur über den Link in Mail 1 gedacht (noindex per netlify.toml).
  */
 export const journal = {
-  formularAdresse: '',
+  formularAdresse:
+    'https://4a5bfe6e.sibforms.com/serve/MUIFALvNua3a2SKheEJruF9UepLFsEZhRKQbIMwiMRK78ohXuj4H1hq5ty6Vdj_QHionxAxF1SJ2mtsUrq6mkw2z_LrAOCk5H2lByN_5cvk7jX_bXAUVB8SRmZz71doOTczobXlcKmuR8FlFEjYtMy-bVtq3jk_D-AFDK9wdTsUGtBVdu5cR4Gw7ncEilNUMzUFyWHBKlKOiNg1E5g==',
   downloads: {
     tablet: '/downloads/jahresabschluss-journal-tablet.pdf',
     druck: '/downloads/jahresabschluss-journal-druck.pdf',
