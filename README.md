@@ -26,6 +26,7 @@ Inhaltliche Grundlage sind vier Dokumente im claude.ai-Projekt „Life&Lemons We
 | `/` | `src/pages/index.astro` |
 | `/programme/entwirf-dein-zukunfts-ich/` (Anker `#kursbuch`, `#club`, `#formate`) | `src/pages/programme/entwirf-dein-zukunfts-ich.astro` |
 | `/programme/manifestiere-dein-zukunfts-ich/` | `src/pages/programme/manifestiere-dein-zukunfts-ich.astro` |
+| `/try-a-life/` (Landingpage der App, Ziel des QR-Codes im Jahresabschluss-Journal) | `src/pages/try-a-life.astro` |
 | `/ueber-mich/` | `src/pages/ueber-mich.astro` |
 | `/impressum/`, `/datenschutz/` | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
 | `/buch` → Kursbuch, `/club` → Club | Kurzlinks in `netlify.toml` |

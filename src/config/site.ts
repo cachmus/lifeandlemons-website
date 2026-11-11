@@ -56,6 +56,8 @@ export const seiten = {
   datenschutz: '/datenschutz/',
   /** Danke-Seite nach dem Kauf des Kursbuchs; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
   dankeKursbuch: '/danke/kursbuch/',
+  /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
+  tryALife: '/try-a-life/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;
@@ -91,7 +93,7 @@ export const fussnavigation: NavPunkt[] = [
  * Einrichtung in Brevo (Konto von Christine):
  * 1. Kontakte → Listen: eine Liste je Interesse anlegen (siehe `interessen`) und die Listen-IDs notieren.
  * 2. Kontakte → Formulare: ein Anmeldeformular mit Double-Opt-in anlegen, E-Mail-Feld und
- *    Listenauswahl („Liste vom Kontakt auswählen lassen“) mit den vier Listen.
+ *    Listenauswahl („Liste vom Kontakt auswählen lassen“) mit den fünf Listen.
  * 3. Unter „Teilen“ den HTML-Code anzeigen und daraus die Adresse im Attribut `action` des
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
  * 4. Die Listen-IDs unten bei `brevoListe` eintragen.
@@ -105,6 +107,7 @@ export const fussnavigation: NavPunkt[] = [
 export const newsletter = {
   formularAdresse: '',
   interessen: [
+    { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '' },
     { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '' },
     { id: 'selbstlernkurs', label: 'Selbstlernkurs mit Video', brevoListe: '' },
     { id: 'club', label: 'die nächste Gruppe im Life&Lemons Club', brevoListe: '' },
