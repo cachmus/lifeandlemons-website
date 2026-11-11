@@ -1,0 +1,283 @@
+---
+/**
+ * Landingpage der App „Try a Life“ (neu 11.11.2026).
+ * Ziel des Kurzlinks und QR-Codes im Jahresabschluss-Journal „Wer will ich in 12 Monaten sein?“.
+ *
+ * Quellen: Positionierungspapier V5 (Abschnitte 1, 4, 8, 11 und 17), Beschreibungstext aus der
+ * Sprachmuster-Recherche (Einordnung vom 10.11.2026), Angaben zur App bestätigt von Christine am 11.11.2026.
+ * Preis, Starttermin und Kaufweg sind offen und stehen deshalb nicht auf der Seite.
+ * Button-Ziel und Leistungsumfang kommen aus src/config/angebote.ts (id „try-a-life“).
+ */
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import AngebotButton from '../components/AngebotButton.astro';
+import Interessentenliste from '../components/Interessentenliste.astro';
+import { seiten } from '../config/site';
+import { angebotNachId } from '../config/angebote';
+import talBild from '../assets/try-a-life-tal.jpg';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
+
+const app = angebotNachId('try-a-life');
+
+/** Kernfragen des Rahmenwerks (Positionierungspapier V5, Abschnitt 1) */
+const fragen = ['Worauf warte ich?', 'Was hält mich zurück?', 'Wie will ich wirklich leben?', 'Wer will ich sein?', 'Wie komme ich dahin?'];
+
+const schritte = [
+  {
+    titel: 'Verstehen, was dich bisher gebremst hat',
+    text: 'Du beginnst mit deinem Lebensrad und schaust darauf, worauf du bisher gewartet hast und was dich zurückhält.',
+  },
+  {
+    titel: 'Drei mögliche Leben entwerfen',
+    text: 'Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen.',
+  },
+  {
+    titel: '14 Tage im Alltag ausprobieren',
+    text: 'Den Entwurf, der dich am meisten anzieht, testest du in deiner Probezeit im echten Alltag, bevor du dich festlegst.',
+  },
+];
+
+const umfang = [
+  'eine App zum Selbstlernen, die dich Schritt für Schritt führt und deinen Fortschritt zeigt',
+  'Einheiten für vier bis sechs Wochen',
+  'danach 14 Tage Probezeit in deinem Alltag',
+  'ein Jahr Zugang, in dem du in deinem eigenen Tempo arbeitest',
+];
+---
+
+<Base
+  dunklerSchluss
+  title="Try a Life: Wie willst du wirklich leben?"
+  description="Try a Life ist die App von Life&Lemons: Entwirf drei mögliche Leben und probiere im Alltag aus, welches zu dir passt, ohne alles umzuwerfen."
+>
+  <section class="kopf-abschnitt">
+    <div class="container kopf">
+      <div class="kopf__text">
+        <p class="label">{app.art}</p>
+        <h1>
+          <Image class="wortmarke" src={wortmarke} alt="Try a Life" width={420} loading="eager" />
+          <span class="untertitel">Wie willst du wirklich <span class="pivot">leben</span>?</span>
+        </h1>
+        <!-- Beschreibungstext laut Einordnung im Ideen-Labor, 10.11.2026 -->
+        <p class="einleitung">
+          Finde heraus, welche Wünsche du zurückgestellt hast und was dich bisher davon abhält. Entwirf drei mögliche Leben und probiere im
+          Alltag aus, welches zu dir passt, ohne alles umzuwerfen.
+        </p>
+        <div class="aktionen">
+          <AngebotButton id="try-a-life" />
+          <a class="textlink" href={seiten.wieIchArbeite}>So arbeite ich</a>
+        </div>
+      </div>
+      <Image
+        class="kopf__bild"
+        src={talBild}
+        alt="Aquarell eines sonnigen Tals mit Wegweiser, Rucksack, offenem Buch, Brücke und Dorf am Horizont"
+        widths={[480, 768, 1100, 1536]}
+        sizes="(min-width: 960px) 600px, 100vw"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="fragen-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">01 · Worum es geht</p>
+        <h2 id="fragen-titel" class="zeile">Fünf Fragen, die du dir selbst <span class="pivot">beantwortest</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Try a Life ist für Menschen, deren Leben funktioniert, sich aber nicht mehr ganz nach ihrem eigenen anfühlt. Die App führt dich
+          durch meine Methode, allein und in deinem eigenen Tempo.
+        </p>
+        <ul class="fragen">
+          {fragen.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="weg-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">02 · Dein Weg in der App</p>
+        <h2 id="weg-titel" class="zeile">Erst entwerfen, dann <span class="pivot">ausprobieren</span></h2>
+      </div>
+      <ol class="schritte">
+        {
+          schritte.map((s, i) => (
+            <li data-erscheinen>
+              <span class="schritte__ziffer" aria-hidden="true">{i + 1}</span>
+              <h3>{s.titel}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="umfang-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">03 · Was du bekommst</p>
+        <h2 id="umfang-titel" class="zeile">Der Umfang auf einen <span class="pivot">Blick</span></h2>
+      </div>
+      <div class="text" data-erscheinen>
+        <ul class="umfang">
+          {umfang.map((u) => <li>{u}</li>)}
+        </ul>
+        <p class="hinweis gedaempft">
+          Die App ist kostenpflichtig. Der Name meint, dass du ein mögliches Leben ausprobierst. Preis und Starttermin stehen hier, sobald
+          sie feststehen.
+        </p>
+        <p class="hinweis gedaempft">
+          Try a Life dient der Selbstreflexion und ersetzt keine Psychotherapie. Mehr zu Grundlagen und Grenzen steht unter{' '}
+          <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="journal-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">04 · Vom Journal zur App</p>
+        <h2 id="journal-titel" class="zeile">Du kommst vom Jahresabschluss-<span class="pivot">Journal</span>?</h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Dann hast du dein Jahr abgeschlossen und beschrieben, wer du in 12 Monaten sein willst. Dein Lebensrad kennst du schon. Mit ihm
+          beginnt auch Try a Life.
+        </p>
+        <p>
+          In der App gehst du einen Schritt weiter: Du entwirfst mehrere Möglichkeiten und erlebst eine davon im Alltag. So merkst du, ob
+          dein Bild zu dir passt.
+        </p>
+        <p>Lieber auf Papier? Dieselbe Methode gibt es als <a href={seiten.modul1}>Kursbuch „Entwirf dein Zukunfts-Ich“</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <Interessentenliste
+    label="Start von Try a Life"
+    titel="Ich melde mich, sobald es"
+    pivot="losgeht"
+    text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
+    vorauswahl={['tryalife']}
+  />
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(40px, 6vw, 96px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .kopf {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    }
+  }
+
+  .kopf__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+  }
+
+  .wortmarke {
+    width: min(100%, 340px);
+  }
+
+  .untertitel {
+    font-size: clamp(30px, 3.6vw, 46px);
+    line-height: 1.12;
+  }
+
+  .kopf__bild {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .fragen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--schrift-titel);
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.3;
+  }
+
+  .fragen li {
+    border-top: 1px solid var(--linie);
+    padding: 12px 0;
+  }
+
+  .schritte {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(24px, 3vw, 44px);
+  }
+
+  .schritte li {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 2px dashed var(--terrakotta);
+    padding-top: 18px;
+    font-size: 16px;
+  }
+
+  .schritte__ziffer {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .umfang {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .umfang li {
+    position: relative;
+    padding: 12px 0 12px 26px;
+    border-top: 1px solid var(--linie);
+  }
+
+  .umfang li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 21px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .hinweis {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+</style>

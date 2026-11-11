@@ -210,6 +210,23 @@ export const angebote: Angebot[] = [
     textPausiert: 'Der VIP-Track pausiert. Ich melde mich, sobald es neue Termine gibt.',
   },
   {
+    // App „Try a Life“ (Positionierungspapier V5, Angaben bestätigt von Christine am 11.11.2026).
+    // OFFEN: Preis, Starttermin und Kaufweg. Sobald die App kaufbar ist: status auf 'verfuegbar',
+    // Preis eintragen und `aktion` auf den Checkout umstellen. Die Landingpage /try-a-life/ liest alles von hier.
+    id: 'try-a-life',
+    modul: 1,
+    name: 'Try a Life',
+    art: 'Die App · in Vorbereitung',
+    fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
+    passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
+    passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
+    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, einer Probezeit von 14 Tagen und einem Jahr Zugang.',
+    preisRegulaerBestaetigt: false,
+    ausgebucht: false,
+    status: 'in-vorbereitung',
+    aktion: { typ: 'liste', url: `${seiten.tryALife}#liste`, label: 'Benachrichtige mich zum Start' },
+  },
+  {
     id: 'selbstlernkurs',
     modul: 1,
     name: 'Selbstlernkurs mit Video',
