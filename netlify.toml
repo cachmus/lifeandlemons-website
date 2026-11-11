@@ -20,6 +20,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Journal-Downloads: nur über den Link in der Begrüßungsmail, nicht in Suchmaschinen
+[[headers]]
+  for = "/downloads/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # ---------------------------------------------------------------------------
 # Eine Adresse für Suchmaschinen: Die Netlify-Adresse leitet auf www weiter (entschieden 30.10.2026).
 # Vorschauen (deploy-preview-…--lifeandlemons.netlify.app) sind davon nicht betroffen.

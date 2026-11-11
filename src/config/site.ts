@@ -96,7 +96,9 @@ export const fussnavigation: NavPunkt[] = [
  *    Listenauswahl („Liste vom Kontakt auswählen lassen“) mit den fünf Listen.
  * 3. Unter „Teilen“ den HTML-Code anzeigen und daraus die Adresse im Attribut `action` des
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
- * 4. Die Listen-IDs unten bei `brevoListe` eintragen.
+ * 4. Die Listen-IDs unten bei `brevoListe` eintragen. Stand 11.11.2026: #9 Try a Life · Warteliste, #10 Life&Lemons · Newsletter,
+ *    #11 Life&Lemons · Jahresabschluss-Journal, #12 Modul 2 · Warteliste. Interessen ohne Liste blendet das Formular aus,
+ *    sobald Brevo angebunden ist (betrifft derzeit Selbstlernkurs, Club und Einzel-Track).
  * 5. Einstellungen → Kontakte → „Per-contact pixel tracking consent“: „Track contacts whose consent is unknown“ auf „No“
  *    stellen und kein Zustimmungsfeld für Tracking ins Formular aufnehmen. Die Datenschutzerklärung sagt zu, dass
  *    Öffnungen und Klicks nicht ausgewertet werden (entschieden 19.10.2026).
@@ -107,8 +109,8 @@ export const fussnavigation: NavPunkt[] = [
 export const newsletter = {
   formularAdresse: '',
   interessen: [
-    { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '' },
-    { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '' },
+    { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '9' },
+    { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
     { id: 'selbstlernkurs', label: 'Selbstlernkurs mit Video', brevoListe: '' },
     { id: 'club', label: 'die nächste Gruppe im Life&Lemons Club', brevoListe: '' },
     { id: 'einzel', label: 'den Einzel-Track ab Sommer 2027', brevoListe: '' },
@@ -119,6 +121,22 @@ export const newsletter = {
    */
   einwilligung:
     'Mit dem Eintragen willigst du ein, dass ich dir zu den ausgewählten Themen E-Mails schicke. Du bekommst zuerst eine E-Mail, mit der du deine Anmeldung bestätigst. Der Versand läuft über Brevo. Abmelden kannst du dich jederzeit über den Link in jeder E-Mail.',
+} as const;
+
+/**
+ * Jahresabschluss-Journal (Freebie) über Brevo, Double-Opt-in.
+ * Formular in Brevo: „Life&Lemons · Jahresabschluss-Journal“, Listen #11 (Journal) und #10 (Newsletter),
+ * Bestätigungsvorlage #30, Begrüßungsstrecke mit den Vorlagen #31 bis #34.
+ * `formularAdresse` wird eingetragen, sobald das Formular in Brevo fertig ist (Adresse aus dem HTML-Code, wie oben).
+ * Die PDFs liegen unter /downloads/ und sind nur über den Link in Mail 1 gedacht (noindex per netlify.toml).
+ */
+export const journal = {
+  formularAdresse: '',
+  downloads: {
+    tablet: '/downloads/jahresabschluss-journal-tablet.pdf',
+    druck: '/downloads/jahresabschluss-journal-druck.pdf',
+    ausfuellbar: '/downloads/jahresabschluss-journal-ausfuellbar.pdf',
+  },
 } as const;
 
 export type InteresseId = (typeof newsletter.interessen)[number]['id'];
