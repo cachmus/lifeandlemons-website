@@ -5,8 +5,8 @@
  *
  * Ist dort eine Brevo-Formularadresse eingetragen, gehen die Angaben direkt an Brevo.
  * Solange sie fehlt, öffnet das Formular eine vorbefüllte E-Mail an Christine.
- * Die Felder heißen wie im Brevo-Formular (EMAIL, lists[], email_address_check, locale).
- * Beim Einrichten mit dem HTML-Code aus Brevo abgleichen.
+ * Die Felder heißen wie im Brevo-Formular (EMAIL, newsletter.listenFeld, email_address_check, locale).
+ * Abgeglichen mit dem HTML-Code aus Brevo am 11.11.2026.
  */
 import { newsletter, site, seiten, type InteresseId } from '../config/site';
 
@@ -55,7 +55,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
             <label class="liste__wahl">
               <input
                 type="checkbox"
-                name={angebunden ? 'lists[]' : 'Interesse'}
+                name={angebunden ? newsletter.listenFeld : 'Interesse'}
                 value={angebunden ? i.brevoListe : i.label}
                 data-label={i.label}
                 checked={vorauswahl.includes(i.id)}
