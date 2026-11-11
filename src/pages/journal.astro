@@ -1,0 +1,329 @@
+---
+/**
+ * Landingpage des kostenlosen Jahresabschluss-Journals „Wer will ich in 12 Monaten sein?“ (neu 11.11.2026).
+ * Ziel des Links in der Instagram-Bio und in Stories. Adresse nicht ändern.
+ *
+ * Quellen: Journal (public/downloads/jahresabschluss-journal-druck.pdf, Seiten 1 bis 3 und Teilüberschriften),
+ * freigegebene Begrüßungsstrecke in Brevo (Mail 2 zur Who-to-be-Liste), Angaben von Christine vom 11.11.2026.
+ * Wortlaut: Entwurf vom 11.11.2026, Freigabe durch Christine offen.
+ * Ohne Jahreszahlen, damit die Seite jedes Jahr gilt (entschieden 11.11.2026).
+ */
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+import JournalFormular from '../components/JournalFormular.astro';
+import { seiten } from '../config/site';
+import cover from '../assets/journal-cover.jpg';
+import portraet from '../assets/portraet-christine-4x5.jpg';
+
+/** „Was du am Ende in der Hand hast“, Seite 2 des Journals */
+const ergebnisse = [
+  'ein Bild davon, was dir in diesem Jahr Kraft gegeben und was dich Kraft gekostet hat',
+  'eine Beschreibung deines Lebens in 12 Monaten',
+  'drei Sätze, die sagen, wer du sein willst',
+  'einen Plan, der bei deinem Ziel beginnt und Hindernisse schon einrechnet',
+  'deine Kompass-Seite für das ganze Jahr',
+  'einen ersten Schritt für die nächsten 72 Stunden',
+];
+
+/** Die sechs Teile mit Zeitangaben laut Inhaltsverzeichnis des Journals */
+const teile = [
+  { titel: 'Rückblick auf dein Jahr', zeit: 'rund 20 Minuten', text: 'Mit Lebensrad und vier Feldern schaust du zurück und gibst deinem Jahr einen Titel.' },
+  { titel: 'Vision und Who-to-be-Liste', zeit: 'rund 25 Minuten', text: 'Du beschreibst dein Leben in 12 Monaten und hältst fest, wer du sein willst.' },
+  { titel: 'Rückwärtsplanung und Ressourcen', zeit: 'rund 15 Minuten', text: 'Du planst von deinem Ziel aus zurück und siehst, was du schon mitbringst.' },
+  { titel: 'Hindernisse und Wenn-dann-Pläne', zeit: 'rund 10 Minuten', text: 'Du legst vorher fest, was du tust, wenn es hakt.' },
+  { titel: 'Kompass-Seite', zeit: 'rund 10 Minuten', text: 'Alles Wichtige auf einer Seite, die dich durch das Jahr begleitet.' },
+  { titel: 'Erster Schritt und Selbstcheck', zeit: 'rund 10 Minuten', text: 'Ein Schritt für die nächsten 72 Stunden und ein ehrlicher Blick darauf, wie klar dein Bild schon ist.' },
+];
+---
+
+<Base
+  dunklerSchluss
+  title="Wer will ich in 12 Monaten sein? Das kostenlose Jahresabschluss-Journal"
+  description="Schließ dein Jahr ab, beschreib, wie du in 12 Monaten leben willst, und leg deinen ersten Schritt fest. Das Jahresabschluss-Journal von Life&Lemons mit Who-to-be-Liste statt Vorsätzen, kostenlos als PDF."
+>
+  <section class="kopf-abschnitt">
+    <div class="container kopf">
+      <div class="kopf__text">
+        <p class="label">Kostenlos · 17 Seiten als PDF</p>
+        <h1>Wer will ich in 12 Monaten <span class="pivot">sein</span>?</h1>
+        <p class="einleitung">
+          Das Jahresabschluss-Journal von Life&amp;Lemons. Du schließt dein Jahr ab, beschreibst, wie du in 12 Monaten leben willst, und
+          legst deinen ersten Schritt fest. Mit Who-to-be-Liste statt Vorsätzen. Und es gehört dir, ganz ohne Kosten.
+        </p>
+        <div class="aktionen">
+          <a class="button" href="#anfordern">Journal kostenlos anfordern <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="textlink" href="#inhalt">Was drinsteht</a>
+        </div>
+      </div>
+      <div class="kopf__bild">
+        <Image
+          src={cover}
+          alt="Titelseite des Journals „Wer will ich in 12 Monaten sein?“ mit Aquarell einer Landschaft mit Zitronenbaum, Wegweiser und Brücke"
+          widths={[360, 540, 820]}
+          sizes="(min-width: 960px) 420px, 80vw"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="kennst-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">01 · Kennst du das?</p>
+        <h2 id="kennst-titel" class="zeile">Vieles läuft, und trotzdem passt manches nicht mehr zu <span class="pivot">dir</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Im Alltag funktionierst du. Für die Frage, was du eigentlich wirklich willst, bleibt dabei kaum Zeit. Und die Vorsätze vom Januar
+          sind im Februar oft schon wieder versandet.
+        </p>
+        <p>
+          Zwischen den Jahren wird es für viele von uns ein paar Tage ruhiger. Genau dafür ist dieses Journal gemacht: Es gibt deiner Frage
+          Raum und führt dich in rund 90 Minuten zu einem Plan, der zu dir passt. Umwerfen musst du dafür nichts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="ergebnis-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">02 · Dein Ergebnis</p>
+        <h2 id="ergebnis-titel" class="zeile">Was du am Ende in der Hand <span class="pivot">hast</span></h2>
+      </div>
+      <div class="text" data-erscheinen>
+        <ul class="ergebnisse">
+          {ergebnisse.map((e) => <li>{e}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" id="inhalt" aria-labelledby="teile-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">03 · Dein Weg durch das Journal</p>
+        <h2 id="teile-titel" class="zeile">Sechs Teile, zwei oder drei ruhige <span class="pivot">Abende</span></h2>
+      </div>
+      <ol class="teile">
+        {
+          teile.map((t, i) => (
+            <li data-erscheinen>
+              <span class="teile__ziffer" aria-hidden="true">{i + 1}</span>
+              <h3>{t.titel}</h3>
+              <p class="teile__zeit">{t.zeit}</p>
+              <p>{t.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="karten" data-erscheinen>
+        <div class="karte">
+          <p class="label">Wenig Zeit?</p>
+          <p>Der Kurzweg führt dich mit vier Übungen in rund 35 Minuten von deinem Rückblick bis zu deinem ersten Schritt.</p>
+        </div>
+        <div class="karte">
+          <p class="label">Drei Fassungen</p>
+          <p>Du bekommst das Journal zum Ausfüllen auf dem Tablet, zum Ausdrucken und zum Tippen direkt am Bildschirm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="liste-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">04 · Who-to-be-Liste</p>
+        <h2 id="liste-titel" class="zeile">Wer du sein willst, trägt weiter als ein <span class="pivot">Vorsatz</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Eine Liste mit Vorsätzen sammelt Dinge, die du tun willst. Warum dir das wichtig ist und wer du damit sein willst, steht dort meist
+          nicht. Wenn der Alltag voll wird, fehlt dann der Grund, dranzubleiben.
+        </p>
+        <p>
+          Deine Who-to-be-Liste setzt eine Ebene früher an. Sie beschreibt, wer du sein willst, und zwar in Handlungen, die man sehen kann.
+          Zum Beispiel: „Ich bin jemand, der um 22 Uhr das Handy weglegt.“
+        </p>
+        <p>
+          Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser
+          Handeln lenken. Daphna Oyserman hat gezeigt, dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster
+          Schritt dazugehört. Deshalb endet dein Journal mit einem kleinen Schritt für die nächsten 72 Stunden.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="ich-titel">
+    <div class="container ich">
+      <div class="ich__foto" data-erscheinen>
+        <Polaroid bild={portraet} alt="Christine Achmus vor einer terrakottafarbenen Wand" name="Christine" bildposition="50% 30%" />
+      </div>
+      <div class="ich__text">
+        <div class="kopfblock">
+          <p class="label">05 · Von wem das Journal kommt</p>
+          <h2 id="ich-titel" class="zeile">Zuerst an mir selbst <span class="pivot">ausprobiert</span></h2>
+        </div>
+        <div class="fliesstext text" data-erscheinen>
+          <p>
+            Ich bin Christine Achmus und habe Life&amp;Lemons gegründet. Ich habe Bildungswissenschaften mit Schwerpunkt Pädagogische
+            Psychologie studiert. Die Übungen im Journal stützen sich auf psychologische Forschung, und ich habe sie zuerst an mir selbst
+            ausprobiert. Mein eigener Weg ist dabei noch nicht fertig.
+          </p>
+          <p class="hinweis gedaempft">
+            Das Journal dient der Selbstreflexion und ersetzt keine Psychotherapie oder medizinische Behandlung. Mehr zu Grundlagen und
+            Grenzen steht unter <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <JournalFormular
+    label="06 · Kostenlos anfordern"
+    titel="Hol dir dein"
+    pivot="Journal"
+    text="Trag deine E-Mail-Adresse ein und bestätige kurz deine Anmeldung. Direkt danach liegt dein Journal mit allen drei Fassungen in deinem Postfach, als Geschenk von mir."
+  />
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(40px, 6vw, 96px) 0 clamp(56px, 7vw, 112px);
+  }
+
+  .kopf {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .kopf {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    }
+  }
+
+  .kopf__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .kopf__text .einleitung {
+    max-width: 36rem;
+  }
+
+  .kopf__bild {
+    justify-self: center;
+    width: min(100%, 420px);
+  }
+
+  .kopf__bild :global(img) {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 18px 40px rgba(34, 48, 44, 0.18);
+  }
+
+  .ergebnisse {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ergebnisse li {
+    position: relative;
+    padding: 12px 0 12px 26px;
+    border-top: 1px solid var(--linie);
+  }
+
+  .ergebnisse li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 21px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .teile {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(24px, 3vw, 44px);
+  }
+
+  .teile li {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 2px dashed var(--terrakotta);
+    padding-top: 18px;
+    font-size: 16px;
+  }
+
+  .teile h3 {
+    margin: 0;
+  }
+
+  .teile__ziffer {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .teile__zeit {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .karten {
+    margin-top: clamp(32px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+
+  .karte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    padding: clamp(22px, 3vw, 32px);
+  }
+
+  .ich {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
+
+  .ich__foto {
+    flex: 0 1 300px;
+    margin: 0 auto;
+  }
+
+  .ich__text {
+    flex: 1 1 480px;
+    min-width: 0;
+  }
+
+  .hinweis {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+</style>
