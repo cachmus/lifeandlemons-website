@@ -60,6 +60,8 @@ export const seiten = {
   dankeAnmeldung: '/danke/anmeldung/',
   /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
   tryALife: '/try-a-life/',
+  /** Landingpage des kostenlosen Jahresabschluss-Journals (neu 11.11.2026). Ziel des Links in der Instagram-Bio, Adresse nicht ändern. */
+  journal: '/journal/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;
