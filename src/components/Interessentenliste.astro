@@ -154,7 +154,7 @@ const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktE
         const daten = await antwort.json().catch(() => ({}));
         if (antwort.ok && daten.success !== false) {
           form.reset();
-          meldung.textContent = 'Fast geschafft: Bitte bestätige deine Anmeldung über den Link in der E-Mail, die gerade an dich unterwegs ist.';
+          meldung.textContent = 'Fast geschafft: Bitte bestätige deine Anmeldung über den Link in der E-Mail, die gerade an dich unterwegs ist. Keine Mail da? Dann schau bitte im Spam-Ordner nach und verschieb sie in dein Postfach, erst dort funktioniert der Link.';
         } else {
           meldung.textContent = 'Das hat leider nicht geklappt. Bitte versuch es noch einmal oder schreib mir eine E-Mail.';
         }
