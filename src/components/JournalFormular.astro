@@ -7,7 +7,7 @@
  * EMAIL, email_address_check (leer, Schutz vor Bots), locale.
  * Brevo trägt nach der Bestätigung in die Listen #11 (Journal) und #10 (Newsletter) ein; die Strecke #14 verschickt Mail 1 mit den Links.
  */
-import { journal, seiten } from '../config/site';
+import { journal, seiten, site } from '../config/site';
 
 interface Props {
   label: string;
@@ -57,6 +57,10 @@ const { label, titel, pivot, nach, text } = Astro.props;
         <a href={seiten.datenschutz}>Datenschutzerklärung</a>.
       </p>
 
+      <p class="journal-form__einwilligung">
+        Meine Mails kommen von {site.kontaktEmail}. Falls die Bestätigung nicht im Postfach auftaucht, liegt sie oft im Spam-Ordner.
+      </p>
+
       <button class="button" type="submit">Journal kostenlos anfordern <span class="button__pfeil" aria-hidden="true">→</span></button>
       <p class="journal-form__meldung" role="status" aria-live="polite" data-meldung></p>
     </form>
@@ -91,7 +95,7 @@ const { label, titel, pivot, nach, text } = Astro.props;
         if (antwort.ok && daten.success !== false) {
           form.reset();
           meldung.textContent =
-            'Fast geschafft! Schau in dein Postfach und bestätige deine Anmeldung. Direkt danach schicke ich dir dein Journal.';
+            'Fast geschafft! Schau in dein Postfach und bestätige deine Anmeldung. Direkt danach schicke ich dir dein Journal. Keine Mail da? Dann schau bitte im Spam-Ordner nach und verschieb sie in dein Postfach, erst dort funktioniert der Bestätigungslink.';
         } else {
           meldung.textContent = 'Das hat leider nicht geklappt. Bitte versuch es noch einmal oder schreib mir eine E-Mail.';
         }
