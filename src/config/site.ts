@@ -54,6 +54,8 @@ export const seiten = {
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
+  /** Widerrufsbelehrung mit Muster-Widerrufsformular für das gedruckte Workbook (neu 16.11.2026, fachlich zu prüfen) */
+  widerruf: '/widerruf/',
   /** Danke-Seite nach dem Kauf des Workbooks; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
   dankeKursbuch: '/danke/kursbuch/',
   /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
@@ -128,6 +130,7 @@ export const fussnavigation: NavPunkt[] = [
   { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },
   { label: 'Impressum', href: seiten.impressum },
   { label: 'Datenschutz', href: seiten.datenschutz },
+  { label: 'Widerruf', href: seiten.widerruf },
 ];
 
 /**
