@@ -220,7 +220,7 @@ export const angebote: Angebot[] = [
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
-    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, einer Probezeit von 14 Tagen und einem Jahr Zugang.',
+    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen und einem Jahr Zugang.',
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
     status: 'in-vorbereitung',

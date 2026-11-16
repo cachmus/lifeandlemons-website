@@ -24,11 +24,11 @@ const sprungmarken = [
   { href: '#modul-2', label: 'Modul 2' },
 ];
 
-/** Umfang laut Seite /try-a-life/ (bestätigt 11.11.2026) */
+/** Umfang Try a Life (Probezeit im Spiel 10 Tage, Handlungen im echten Leben über die ganze Laufzeit; bestätigt 16.11.2026) */
 const tryUmfang = [
-  'deine eigenen Wünsche und Bremsen verstehen, mit dem Lebensrad als Start',
-  'drei mögliche Leben entwerfen und das passendste 14 Tage im Alltag ausprobieren',
-  'Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo',
+  'verstehen, was du dir wirklich wünschst und was dich bisher davon abhält',
+  'mögliche Wege für dein Leben entwerfen und im echten Alltag spüren, welcher sich richtig anfühlt',
+  'mit jedem kleinen Schritt merken, dass du deinem Leben selbst eine Richtung geben kannst',
 ];
 ---
 
@@ -70,13 +70,17 @@ const tryUmfang = [
           <span class="try__unter">Wie willst du wirklich <span class="pivot">leben</span>?</span>
         </h2>
         <p>
-          Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Für dich, wenn dein Leben funktioniert, sich aber
-          nicht mehr ganz nach deinem eigenen anfühlt.
+          Von außen läuft alles, und trotzdem fragst du dich immer öfter, ob das schon alles war? Du spürst, dass sich etwas ändern muss,
+          weißt aber nicht, in welche Richtung. Und alles hinzuschmeißen, kommt für dich nicht infrage.
+        </p>
+        <p>
+          Try a Life ist ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Damit kannst du:
         </p>
         <ul class="punkte">
           {tryUmfang.map((u) => <li>{u}</li>)}
         </ul>
-        <p class="try__aufruf">Trag dich ein, dann erfährst du als Erste, wenn es losgeht.</p>
+        <p class="try__meta">Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo</p>
+        <p class="try__aufruf">Trag dich ein, dann erfährst du zuerst, wenn es losgeht.</p>
         <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="try" />
         <a class="textlink" href={seiten.tryALife}>Mehr über Try a Life</a>
       </div>
@@ -225,6 +229,11 @@ const tryUmfang = [
   .angebot__bild {
     width: 100%;
     height: auto;
+  }
+
+  .try__meta {
+    font-size: 15px;
+    color: var(--text-gedaempft);
   }
 
   .punkte {
