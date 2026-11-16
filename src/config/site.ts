@@ -19,7 +19,7 @@ export const site = {
   kontaktEmail: 'christine@lifeandlemons.de',
   /** Ladungsfähige Anschrift für Impressum, Datenschutz und später den Newsletter-Fuß (entschieden 19.10.2026: Privatadresse) */
   anschrift: { strasse: 'Hesemannstr. 13', plzOrt: '30655 Hannover' },
-  /** Handle laut Kursbuch-Umschlag und Broschüre */
+  /** Handle laut Workbook-Umschlag und Broschüre */
   instagram: { handle: '@christineachmus', url: 'https://www.instagram.com/christineachmus/' },
   /**
    * Ort für Suchmaschinen und strukturierte Daten. Öffentlich erscheint nur die Stadt, keine Straße
@@ -54,7 +54,7 @@ export const seiten = {
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
-  /** Danke-Seite nach dem Kauf des Kursbuchs; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
+  /** Danke-Seite nach dem Kauf des Workbooks; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
   dankeKursbuch: '/danke/kursbuch/',
   /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
   dankeAnmeldung: '/danke/anmeldung/',
@@ -162,8 +162,8 @@ export const newsletter = {
   /** Name des Listenfelds laut HTML-Code des Brevo-Formulars (Feld „Mehrere Listen“); Werte sind die Listen-IDs */
   listenFeld: 'lists_25[]',
   interessen: [
-    { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '9' },
-    { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
+    { id: 'tryalife', label: 'die Life-Coaching-App „Try a Life“', brevoListe: '9' },
+    { id: 'modul2', label: 'Workbook Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
     { id: 'selbstlernkurs', label: 'Selbstlernkurs mit Video', brevoListe: '' },
     { id: 'club', label: 'die nächste Gruppe im Life&Lemons Club', brevoListe: '' },
     { id: 'einzel', label: 'den Einzel-Track ab Sommer 2027', brevoListe: '' },

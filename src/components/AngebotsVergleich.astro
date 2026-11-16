@@ -28,7 +28,7 @@ const tryPreis = aktuellerPreis(tryALife);
     <a class="weg__bild weg__bild--papier" href={seiten.journal} tabindex="-1" aria-hidden="true">
       <Image src={journalCover} alt="" widths={[220, 340]} sizes="200px" />
     </a>
-    <p class="weg__marke">Zum Reinschnuppern</p>
+    <p class="weg__marke">Kostenlos reinschnuppern</p>
     <h3 class="weg__name">Gratis-Journal</h3>
     <p class="weg__fuer">Für dich, wenn du dein Jahr abschließen und wissen willst, was du dir fürs nächste wirklich vornimmst.</p>
     <dl class="weg__fakten">
@@ -43,8 +43,8 @@ const tryPreis = aktuellerPreis(tryALife);
     <a class="weg__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
       <Image src={talBild} alt="" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
     </a>
-    <p class="weg__marke">Neu · Start {tryALifeAnkuendigung.start}</p>
-    <h3 class="weg__name">Try a Life</h3>
+    <p class="weg__marke">Try a Life · Start {tryALifeAnkuendigung.start}</p>
+    <h3 class="weg__name">Life-Coaching-App</h3>
     <p class="weg__fuer">Für dich, wenn {tryALife.fuerDich}</p>
     <dl class="weg__fakten">
       <div><dt>Preis</dt><dd>{tryPreis ? formatEuro(tryPreis.betrag) : `ab ${tryALifeAnkuendigung.start}`}</dd></div>
@@ -58,8 +58,8 @@ const tryPreis = aktuellerPreis(tryALife);
     <a class="weg__bild" href={seiten.modul1} tabindex="-1" aria-hidden="true">
       <Image src={kursbuchFoto} alt="" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
     </a>
-    <p class="weg__marke">Mit Stift und Papier</p>
-    <h3 class="weg__name">Kursbuch</h3>
+    <p class="weg__marke">Entwirf dein Zukunfts-Ich</p>
+    <h3 class="weg__name">Life-Coaching-Workbook</h3>
     <p class="weg__fuer">Für dich, wenn {kursbuch.fuerDich}</p>
     <dl class="weg__fakten">
       <div>
@@ -144,7 +144,7 @@ const tryPreis = aktuellerPreis(tryALife);
 
   .weg__name {
     font-family: var(--schrift-titel);
-    font-size: clamp(30px, 2.8vw, 38px);
+    font-size: clamp(28px, 2.4vw, 34px);
     line-height: 1.05;
     margin: 0;
   }

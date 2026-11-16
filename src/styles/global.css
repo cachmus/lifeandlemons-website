@@ -23,7 +23,7 @@
   --stein: #e4e2d7;
   --salbei: #d7dcce; /* tiefster heller Ton, Seitenende und Footer */
   --papier-hell: #fbf9f5; /* Karten, Eingabefelder, Polaroid */
-  --tinte: #22302c; /* Text, Buttons, dunkle Fläche des Kursbuchs */
+  --tinte: #22302c; /* Text, Buttons, dunkle Fläche des Workbooks */
   --terrakotta: #bb5e3a; /* Pivotwort, Ziffern, Treppe; als Text nur ab 24px oder 19px fett */
   --terrakotta-tief: #93452a; /* Labels, Links, Hover, Fokus */
   --terrakotta-hell: #e0a487; /* Akzent auf tinte */
@@ -214,7 +214,7 @@ svg {
   background: var(--terrakotta);
 }
 
-/* Dunkle Fläche als Objekt auf der Seite (Kursbuch), nicht über die ganze Breite */
+/* Dunkle Fläche als Objekt auf der Seite (Workbook), nicht über die ganze Breite */
 .dunkel {
   background: var(--tinte);
   color: var(--kalk);

@@ -84,7 +84,7 @@ const hilft = [
         <a class="neu" href="#kursbuch">
           <span class="neu__label">Neu</span>
           <span class="neu__text">
-            Das Kursbuch „Entwirf dein Zukunfts-Ich“
+            Life-Coaching-Workbook „Entwirf dein Zukunfts-Ich“
             {kursbuchPreis && (
               <span class="neu__preis">
                 {` · ${formatEuro(kursbuchPreis.betrag)}${kursbuchPreis.einfuehrung ? ` Einführungspreis bis ${formatDatum(STICHTAGE.einfuehrungBis)}` : ''}`}
@@ -251,7 +251,7 @@ const hilft = [
             },
             {
               label: 'So arbeitest du',
-              text: 'allein mit dem Kursbuch, oder wir gehen den Weg gemeinsam, in der Gruppe oder zu zweit. Der Kurs hat neun Einheiten und braucht rund 10 Stunden, verteilt über bis zu 6 Wochen.',
+              text: 'allein mit dem Workbook, oder wir gehen den Weg gemeinsam, in der Gruppe oder zu zweit. Der Kurs hat neun Einheiten und braucht rund 10 Stunden, verteilt über bis zu 6 Wochen.',
             },
           ]}
           link={{ href: seiten.modul1, label: 'Mehr zu Modul 1' }}
@@ -269,7 +269,7 @@ const hilft = [
             },
             {
               label: 'Einstieg',
-              text: 'Das Kursbuch ist einzeln erhältlich, sobald es erscheint. Persönliche Begleitung beginnt mit einem Orientierungsgespräch, in dem wir klären, ob Modul 1 vorher sinnvoll ist.',
+              text: 'Das Workbook ist einzeln erhältlich, sobald es erscheint. Persönliche Begleitung beginnt mit einem Orientierungsgespräch, in dem wir klären, ob Modul 1 vorher sinnvoll ist.',
             },
           ]}
           link={{ href: '#liste', label: 'Benachrichtige mich zum Start' }}
@@ -315,7 +315,7 @@ const hilft = [
     )
   }
 
-  <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Kursbuch) -->
+  <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Workbook) -->
   <section class="abschnitt" id="kursbuch" aria-labelledby="einstieg-titel">
     <div class="container">
       <div class="kopfblock">
@@ -323,7 +323,7 @@ const hilft = [
         <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
         <p class="einleitung text">
           Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn
-          du direkt tiefer einsteigen willst, ist das Kursbuch dein Weg.
+          du direkt tiefer einsteigen willst, ist das Workbook dein Weg.
         </p>
       </div>
 
@@ -356,7 +356,7 @@ const hilft = [
         <div class="kursbuch__bild" data-erscheinen>
           <Image
             src={kursbuchFoto}
-            alt="Das Kursbuch Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
+            alt="Das Workbook Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
             widths={[420, 640, 900]}
             sizes="(max-width: 860px) 92vw, 40vw"
             format="webp"
@@ -364,10 +364,10 @@ const hilft = [
           />
         </div>
         <div class="kursbuch__text">
-          <p class="label">Allein mit dem Kursbuch</p>
+          <p class="label">Allein mit dem Workbook</p>
           <h3 class="kursbuch__titel">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h3>
           <p>
-            Du arbeitest in deinem eigenen Tempo. Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und
+            Du arbeitest in deinem eigenen Tempo. Das Workbook verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und
             Notizen. Es führt dich ganz intuitiv durch jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun
             Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im
             Alltag aus.
@@ -595,7 +595,7 @@ const hilft = [
     margin-top: clamp(48px, 6vw, 88px);
   }
 
-  /* Kursbuch */
+  /* Workbook */
   .kursbuch__innen {
     padding: clamp(28px, 5vw, 72px);
     display: flex;
@@ -818,7 +818,7 @@ const hilft = [
     margin: 0 auto;
   }
 
-  /* Weitere Wege neben dem Kursbuch */
+  /* Weitere Wege neben dem Workbook */
   .kursbuch__titel {
     font-size: clamp(36px, 4vw, 56px);
     line-height: 1;

@@ -110,12 +110,12 @@ export const angebote: Angebot[] = [
   {
     id: 'kursbuch',
     modul: 1,
-    name: 'Das Kursbuch',
+    name: 'Das Workbook',
     art: 'Selbstständig',
     fuerDich: 'du gern allein und in deinem eigenen Tempo arbeitest.',
     passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
     passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
-    enthaelt: 'das gedruckte Kursbuch mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
+    enthaelt: 'das gedruckte Workbook mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
     preisEinfuehrung: 49,
     // OFFEN: regulärer Preis ab 08.12.2026 (Projektstatus V2 nennt keinen Wert)
     preisRegulaer: undefined,
@@ -127,8 +127,8 @@ export const angebote: Angebot[] = [
     lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
     aktion: checkoutOderAnfrage(
       DIGISTORE24.kursbuch,
-      'Kursbuch vorbestellen',
-      anfrageLink('Bestellung Kursbuch', 'Hallo Christine,\n\nich möchte das Kursbuch „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
+      'Workbook vorbestellen',
+      anfrageLink('Bestellung Workbook', 'Hallo Christine,\n\nich möchte das Workbook „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
     ),
   },
   {
@@ -139,19 +139,19 @@ export const angebote: Angebot[] = [
     fuerDich: 'dir feste Termine in der Gruppe und der Austausch mit anderen helfen, dranzubleiben.',
     passtWenn: 'dir feste Termine und der Austausch mit anderen helfen und du in Hannover bist.',
     passtWenigerWenn: 'du lieber für dich arbeitest.',
-    enthaelt: 'das Kursbuch, drei Treffen von 2 bis 3 Stunden in einer Kleingruppe in Hannover, Begleitung in der Probezeit und einen Abschluss-Call.',
+    enthaelt: 'das Workbook, drei Treffen von 2 bis 3 Stunden in einer Kleingruppe in Hannover, Begleitung in der Probezeit und einen Abschluss-Call.',
     preisEinfuehrung: 299,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 890,
     preisRegulaerBestaetigt: false,
-    // 14 Tage Vorlauf für den Versand des Kursbuchs, Versand vor der Winterpause (entschieden 16.10.2026)
+    // 14 Tage Vorlauf für den Versand des Workbooks, Versand vor der Winterpause (entschieden 16.10.2026)
     buchbarBis: '2026-12-15',
     start: 'am 06.01.2027, Treffen am 06., 13. und 20.01.2027',
     plaetze: 6,
     hinweis: 'Die Gruppe findet ab zwei Anmeldungen statt.',
     // Entschieden 29.10.2026 (Christine): Versand erst ab zwei Anmeldungen; sonst Erstattung oder Wechsel in den Einzel-Track
     startHinweis:
-      'Sobald mindestens zwei Anmeldungen da sind, schicke ich dir das Kursbuch, damit es vor dem ersten Treffen bei dir ist. Kommt die Gruppe nicht zustande, kannst du dir den Preis erstatten lassen oder in den Einzel-Track wechseln.',
+      'Sobald mindestens zwei Anmeldungen da sind, schicke ich dir das Workbook, damit es vor dem ersten Treffen bei dir ist. Kommt die Gruppe nicht zustande, kannst du dir den Preis erstatten lassen oder in den Einzel-Track wechseln.',
     ausgebucht: false,
     status: 'verfuegbar',
     aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club')),
@@ -166,18 +166,18 @@ export const angebote: Angebot[] = [
     fuerDich: 'du in deinem Tempo arbeiten, die Reflexion und den Wandel aber lieber in Begleitung durchlaufen möchtest.',
     passtWenn: 'du dein eigenes Tempo willst und eine Ansprechperson, wenn die Bremse greift.',
     passtWenigerWenn: 'deine Lage sehr verzweigt ist und du eine intensive Anpassung brauchst.',
-    enthaelt: 'das Kursbuch, Begleitung per E-Mail und WhatsApp und zwei Telefonate mit mir. Ich unterstütze dich, wenn dich Zweifel oder alte Muster bremsen oder die Umsetzung deiner Pläne stockt.',
+    enthaelt: 'das Workbook, Begleitung per E-Mail und WhatsApp und zwei Telefonate mit mir. Ich unterstütze dich, wenn dich Zweifel oder alte Muster bremsen oder die Umsetzung deiner Pläne stockt.',
     preisEinfuehrung: 249,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 790,
     preisRegulaerBestaetigt: false,
-    // 14 Tage Vorlauf für den Versand des Kursbuchs (entschieden 16.10.2026)
+    // 14 Tage Vorlauf für den Versand des Workbooks (entschieden 16.10.2026)
     buchbarBis: '2026-11-29',
     start: 'spätestens am 13.12.2026',
     plaetze: 10,
     ausgebucht: false,
     status: 'verfuegbar',
-    startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
+    startHinweis: 'Dein Kurs beginnt, sobald das Workbook bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
     aktion: checkoutOderAnfrage(DIGISTORE24.einzel, 'Platz buchen', anfrageLink('Anmeldung Einzel-Track')),
     aktionPausiert: zurListe('Für Sommer 2027 vormerken'),
     textPausiert: 'Der Einzel-Track startet voraussichtlich ab Juli 2027 wieder.',
@@ -191,20 +191,20 @@ export const angebote: Angebot[] = [
     passtWenn: 'deine Lebenslage komplex ist und du gezieltes Feedback auf deine Situation möchtest.',
     passtWenigerWenn: 'du vor allem die Methode kennenlernen möchtest.',
     // „Coaching“ als Suchbegriff beim VIP-Track (Positionierungspapier V4, § 7)
-    enthaelt: 'das Kursbuch, fünf Coaching-Termine im 1:1 von je 2 Stunden in Hannover, einen WhatsApp- oder Signal-Zugang, über den ich täglich für dich erreichbar bin, einen gemeinsamen Plan für deine nächsten 90 Tage und ein Nachgespräch von 60 Minuten nach 3 Monaten.',
+    enthaelt: 'das Workbook, fünf Coaching-Termine im 1:1 von je 2 Stunden in Hannover, einen WhatsApp- oder Signal-Zugang, über den ich täglich für dich erreichbar bin, einen gemeinsamen Plan für deine nächsten 90 Tage und ein Nachgespräch von 60 Minuten nach 3 Monaten.',
     preisEinfuehrung: 1900,
     // laut Projektstatus V2, noch nicht bestätigt
     preisRegulaer: 5900,
     preisRegulaerBestaetigt: false,
-    // OFFEN: Variante Kursbuch-Tempo (Start 13.12.) oder Club-Rhythmus (Start 05.01.2027).
+    // OFFEN: Variante Workbook-Tempo (Start 13.12.) oder Club-Rhythmus (Start 05.01.2027).
     // Eingetragen ist die frühere Variante.
-    // 14 Tage Vorlauf für den Versand des Kursbuchs (entschieden 16.10.2026)
+    // 14 Tage Vorlauf für den Versand des Workbooks (entschieden 16.10.2026)
     buchbarBis: '2026-11-29',
     start: 'spätestens am 13.12.2026',
     plaetze: 3,
     ausgebucht: false,
     status: 'verfuegbar',
-    startHinweis: 'Dein Kurs beginnt, sobald das Kursbuch bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
+    startHinweis: 'Dein Kurs beginnt, sobald das Workbook bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
     aktion: checkoutOderAnfrage(DIGISTORE24.vip, 'Platz buchen', anfrageLink('Anmeldung VIP-Track')),
     aktionPausiert: zurListe('Benachrichtige mich'),
     textPausiert: 'Der VIP-Track pausiert. Ich melde mich, sobald es neue Termine gibt.',
@@ -216,7 +216,7 @@ export const angebote: Angebot[] = [
     id: 'try-a-life',
     modul: 1,
     name: 'Try a Life',
-    art: 'Die App · in Vorbereitung',
+    art: 'Life-Coaching-App · in Vorbereitung',
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
@@ -231,7 +231,7 @@ export const angebote: Angebot[] = [
     modul: 1,
     name: 'Selbstlernkurs mit Video',
     art: 'In Vorbereitung',
-    fuerDich: 'du mit dem Kursbuch allein arbeitest und dir zu jeder Einheit eine Erklärung im Video wünschst.',
+    fuerDich: 'du mit dem Workbook allein arbeitest und dir zu jeder Einheit eine Erklärung im Video wünschst.',
     enthaelt: 'Videos zu den neun Einheiten.',
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
@@ -241,10 +241,10 @@ export const angebote: Angebot[] = [
   {
     id: 'kursbuch-band-2',
     modul: 2,
-    name: 'Kursbuch Band 2',
+    name: 'Workbook Band 2',
     art: 'In Vorbereitung',
     fuerDich: 'du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest.',
-    enthaelt: 'das Kursbuch zu Modul 2, einzeln erhältlich, sobald es erscheint.',
+    enthaelt: 'das Workbook zu Modul 2, einzeln erhältlich, sobald es erscheint.',
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
     status: 'in-vorbereitung',

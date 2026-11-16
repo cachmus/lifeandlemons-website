@@ -1,12 +1,12 @@
 ---
 /**
- * Danke-Seite nach dem Kauf des Kursbuchs. Wortlaut: claude/Texte_Unterseiten.md, Abschnitt „Danke-Seite Kursbuch“
+ * Danke-Seite nach dem Kauf des Workbooks. Wortlaut: claude/Texte_Unterseiten.md, Abschnitt „Danke-Seite Workbook“
  * (Projekt in claude.ai, freigegeben am 29.10.2026). Texte nicht stillschweigend ändern.
  *
  * - Immer noindex, nicht im Menü und nicht verlinkt. Digistore24 leitet nach dem Kauf hierher
  *   (Produkt → Dankeseite: https://www.lifeandlemons.de/danke/kursbuch/).
  * - Zeigt keine Bestelldaten; die Seite kann gefahrlos direkt aufgerufen werden.
- * - Keine Kaufbuttons: Kopfzeile ohne „Zum Kursbuch“, einziger Hauptbutton ist „Christine schreiben“.
+ * - Keine Kaufbuttons: Kopfzeile ohne „Zum Workbook“, einziger Hauptbutton ist „Christine schreiben“.
  * - Die Karte „Lieber mit Begleitung?“ erscheint nur, solange Club oder Einzel-Track buchbar sind.
  */
 import { Image } from 'astro:assets';
@@ -20,7 +20,7 @@ import kursbuchFoto from '../../assets/kursbuch-vorder-und-rueckseite.jpg';
 const begleitung = ['club', 'einzel'].map(angebotNachId).filter(istBuchbar);
 const begleitungNamen = begleitung.map((a) => (a.id === 'club' ? 'im Club' : 'im Einzel-Track')).join(' und ');
 
-const schreibenLink = anfrageLink('Mein Weg mit dem Kursbuch');
+const schreibenLink = anfrageLink('Mein Weg mit dem Workbook');
 
 const schritte = [
   {
@@ -28,8 +28,8 @@ const schritte = [
     text: 'In den nächsten Minuten bekommst du von Digistore24 eine Bestellbestätigung mit Rechnung. Digistore24 wickelt für mich die Zahlung ab und beantwortet dir auch Fragen zu Zahlung oder Rechnung. Falls nichts ankommt, schau bitte im Spam-Ordner nach.',
   },
   {
-    titel: 'Ich verschicke dein Kursbuch',
-    // Lieferzeit wie `lieferhinweis` des Kursbuchs in src/config/angebote.ts; bei Änderung beide anpassen
+    titel: 'Ich verschicke dein Workbook',
+    // Lieferzeit wie `lieferhinweis` des Workbooks in src/config/angebote.ts; bei Änderung beide anpassen
     text: 'Ich packe es selbst ein und verschicke es. Normalerweise ist es innerhalb von 7 Tagen versandfertig. Sobald es unterwegs ist, sage ich dir per E-Mail Bescheid.',
   },
   {
@@ -59,7 +59,7 @@ const vorbereitung = [
   noindex
   ohneKaufbutton
   title="Danke für deine Bestellung"
-  description="Deine Bestellung des Kursbuchs „Entwirf dein Zukunfts-Ich“ ist eingegangen. So geht es weiter."
+  description="Deine Bestellung des Workbooks „Entwirf dein Zukunfts-Ich“ ist eingegangen. So geht es weiter."
 >
   <!-- 1. Dank -->
   <section class="danke-kopf">
@@ -68,7 +68,7 @@ const vorbereitung = [
         <p class="label">Bestellung eingegangen</p>
         <h1>Danke für dein <span class="pivot">Vertrauen</span>.</h1>
         <p class="einleitung">
-          Schön, dass du dich für das Kursbuch entschieden hast. Du nimmst dir damit Zeit für eine Frage, die im Alltag oft zu kurz
+          Schön, dass du dich für das Workbook entschieden hast. Du nimmst dir damit Zeit für eine Frage, die im Alltag oft zu kurz
           kommt: wie du eigentlich leben möchtest. Dass du mir dafür dein Vertrauen schenkst, bedeutet mir viel.
         </p>
       </div>
@@ -99,13 +99,13 @@ const vorbereitung = [
     </div>
   </section>
 
-  <!-- 3. Bis dein Kursbuch da ist -->
+  <!-- 3. Bis dein Workbook da ist -->
   <section class="abschnitt" aria-labelledby="vorbereitung-titel">
     <div class="container vorbereitung">
       <div class="vorbereitung__text">
         <div class="kopfblock">
           <p class="label">02 · Vorbereitung</p>
-          <h2 id="vorbereitung-titel" class="zeile">Bis dein Kursbuch <span class="pivot">da</span> ist</h2>
+          <h2 id="vorbereitung-titel" class="zeile">Bis dein Workbook <span class="pivot">da</span> ist</h2>
           <p class="einleitung text">Mit ein paar kleinen Vorbereitungen fällt dir der Start leichter.</p>
         </div>
         <ul class="liste-ruhig">
@@ -121,7 +121,7 @@ const vorbereitung = [
       <div class="vorbereitung__bild" data-erscheinen>
         <Image
           src={kursbuchFoto}
-          alt="Das Kursbuch Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
+          alt="Das Workbook Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
           widths={[420, 640, 900]}
           sizes="(max-width: 860px) 92vw, 44vw"
           format="webp"
@@ -145,9 +145,9 @@ const vorbereitung = [
           <a class="textlink" href={site.instagram.url} rel="noopener">{site.instagram.handle} <span aria-hidden="true">→</span></a>
         </article>
         <article class="karte karte--vorbereitung" data-erscheinen>
-          <p class="label">Kursbuch Band 2</p>
+          <p class="label">Workbook Band 2</p>
           <p>
-            In „Manifestiere dein Zukunfts-Ich“ verankerst du deinen Weg mit Gewohnheiten und Meilensteinen im Alltag. Das Kursbuch ist
+            In „Manifestiere dein Zukunfts-Ich“ verankerst du deinen Weg mit Gewohnheiten und Meilensteinen im Alltag. Das Workbook ist
             in Arbeit. Trag dich ein, dann sage ich dir Bescheid, sobald es erscheint.
           </p>
           <a class="textlink" href={seiten.liste}>Zur Interessentenliste <span aria-hidden="true">→</span></a>
@@ -157,8 +157,8 @@ const vorbereitung = [
             <article class="karte" data-erscheinen>
               <p class="label">Lieber mit Begleitung?</p>
               <p>
-                {begleitungNamen.charAt(0).toUpperCase() + begleitungNamen.slice(1)} gehe ich den Weg durch das Kursbuch persönlich
-                mit dir. Den Preis deines Kursbuchs rechne ich dabei an. Schreib mir vor der Buchung, dann bekommst du einen
+                {begleitungNamen.charAt(0).toUpperCase() + begleitungNamen.slice(1)} gehe ich den Weg durch das Workbook persönlich
+                mit dir. Den Preis deines Workbooks rechne ich dabei an. Schreib mir vor der Buchung, dann bekommst du einen
                 persönlichen Gutscheincode.
               </p>
               <a class="textlink" href={`${seiten.modul1}#formate`}>Formate ansehen <span aria-hidden="true">→</span></a>
