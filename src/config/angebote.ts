@@ -88,10 +88,9 @@ export type Angebot = {
  * Für einen Wechsel zu ablefy nur diese Adressen und den Anbieter in checkoutOderAnfrage austauschen.
  */
 export const DIGISTORE24 = {
-  kursbuch: '',
-  club: '',
-  einzel: '',
-  vip: '',
+  // Entschieden 16.11.2026 (Christine): Über Digistore24 laufen nur noch digitale Produkte.
+  // Das gedruckte Workbook und die Begleitung bestellt man direkt bei Christine.
+  'try-a-life': '',
 } as const;
 
 export type DigistoreId = keyof typeof DIGISTORE24;
@@ -143,14 +142,15 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     // Solange keine Exemplare auf Lager sind, wird vorbestellt. Mit Lagerbestand den Hinweis ändern,
-    // z. B. „Versandfertig innerhalb von 2 Tagen“. Die Lieferzeit auch im Digistore24-Produkt eintragen.
+    // z. B. „Versandfertig innerhalb von 2 Tagen“.
     lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
     versandInklusive: true,
-    aktion: checkoutOderAnfrage(
-      DIGISTORE24.kursbuch,
-      'Workbook vorbestellen',
-      anfrageLink('Bestellung Workbook', 'Hallo Christine,\n\nich möchte das Workbook „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
-    ),
+    // Nur direkt bei Christine (16.11.2026), nicht über Digistore24
+    aktion: {
+      typ: 'anfrage',
+      url: anfrageLink('Bestellung Workbook', 'Hallo Christine,\n\nich möchte das Workbook „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
+      label: 'Workbook vorbestellen',
+    },
   },
   {
     id: 'club',
@@ -175,7 +175,7 @@ export const angebote: Angebot[] = [
       'Sobald mindestens zwei Anmeldungen da sind, schicke ich dir das Workbook, damit es vor dem ersten Treffen bei dir ist. Kommt die Gruppe nicht zustande, kannst du dir den Preis erstatten lassen oder in den Einzel-Track wechseln.',
     ausgebucht: false,
     status: 'verfuegbar',
-    aktion: checkoutOderAnfrage(DIGISTORE24.club, 'Platz buchen', anfrageLink('Anmeldung Life&Lemons Club')),
+    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung Life&Lemons Club'), label: 'Platz buchen' },
     aktionPausiert: zurListe('Für die nächste Gruppe vormerken'),
     textPausiert: 'Die nächste Gruppe ist in Planung.',
   },
@@ -199,7 +199,7 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     startHinweis: 'Dein Kurs beginnt, sobald das Workbook bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
-    aktion: checkoutOderAnfrage(DIGISTORE24.einzel, 'Platz buchen', anfrageLink('Anmeldung Einzel-Track')),
+    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung Einzel-Track'), label: 'Platz buchen' },
     aktionPausiert: zurListe('Für Sommer 2027 vormerken'),
     textPausiert: 'Der Einzel-Track startet voraussichtlich ab Juli 2027 wieder.',
   },
@@ -226,7 +226,7 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     startHinweis: 'Dein Kurs beginnt, sobald das Workbook bei dir ist. Den genauen Starttermin vereinbaren wir nach deiner Buchung.',
-    aktion: checkoutOderAnfrage(DIGISTORE24.vip, 'Platz buchen', anfrageLink('Anmeldung VIP-Track')),
+    aktion: { typ: 'anfrage', url: anfrageLink('Anmeldung VIP-Track'), label: 'Platz buchen' },
     aktionPausiert: zurListe('Benachrichtige mich'),
     textPausiert: 'Der VIP-Track pausiert. Ich melde mich, sobald es neue Termine gibt.',
   },
