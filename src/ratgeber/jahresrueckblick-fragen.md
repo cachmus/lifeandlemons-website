@@ -40,6 +40,10 @@ Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbaue
 
 **Wie zufrieden bist du gerade mit den einzelnen Bereichen deines Lebens?** Bewerte Bereiche wie Gesundheit, Beziehungen, Beruf, Finanzen und Freizeit jeweils von 1 bis 10. Schreib zu den zwei höchsten und den zwei niedrigsten Werten je einen Satz, was dahintersteht. Dieses Bild heißt Lebensrad, und es zeigt dir auf einen Blick, wo sich am meisten bewegen soll.
 
+![Journalseite „Was dein Jahr dir gezeigt hat“ mit einem leeren Lebensrad aus neun Bereichen](../assets/journal-seiten/01-rueckblick.jpg)
+
+*So sieht das Lebensrad im kostenlosen Journal aus.*
+
 **Was ist in welchem Monat passiert?** Geh Monat für Monat durch und notiere zu jedem ein Ereignis, das dir im Gedächtnis geblieben ist. So bekommen auch die Monate Platz, die schon weit weg wirken.
 
 **Was hat dir Kraft gegeben, und was hat dich Kraft gekostet?** Schreib je drei Menschen, Orte oder Tätigkeiten auf. Diese beiden Listen sind später Gold wert, wenn du entscheidest, wovon du im nächsten Jahr mehr und wovon du weniger willst.
@@ -70,11 +74,19 @@ Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag 
 
 Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat gezeigt, dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
 
+![Journalseite „Mein Kompass für das neue Jahr“ mit Feldern für Werte, Lebensgefühl und drei Sätze, wer du sein willst](../assets/journal-seiten/05-kompass.jpg)
+
+*Im Journal landet deine Who-to-be-Liste auf einer Kompass-Seite, die dich durch das Jahr begleitet.*
+
 ## Vom Bild zum ersten Schritt
 
 Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in ihrer Forschung gezeigt, dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
 
 **Plan rückwärts.** Dein Tag in zwölf Monaten ist das Ziel. Was muss in neun Monaten stehen, was in sechs, was in drei? Plane großzügiger, als es sich im ersten Moment anfühlt. Fast alles dauert länger als gedacht.
+
+![Journalseite „Vom Ziel zurück bis heute“ mit einer Zeitleiste von 12 Monaten bis zu den nächsten vier Wochen](../assets/journal-seiten/03-rueckwaerts.jpg)
+
+*Die Rückwärtsplanung im Journal: von deinem Bild in 12 Monaten bis zu den nächsten vier Wochen.*
 
 **Rechne mit Hindernissen.** Schreib zu jedem Bereich, in dem sich etwas bewegen soll, ein äußeres Hindernis auf, etwa volle Wochen oder Schulferien. Und ein inneres, etwa einen Gedanken oder eine Gewohnheit, die dich bremst. Formuliere dann einen Wenn-dann-Plan: „Wenn ich nach 21 Uhr noch Mails lese, dann lege ich das Handy in den Flur.“ Solche Pläne helfen nachweislich, Vorhaben umzusetzen, das zeigt eine Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran.
 

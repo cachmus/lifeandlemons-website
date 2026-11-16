@@ -368,6 +368,26 @@ const bild = aufmacher[slug!];
     scroll-margin-top: 110px;
   }
 
+  .prosa :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--lesen-linie);
+    background: #fff;
+    margin: 1.6em 0 0.5em;
+  }
+
+  .prosa :global(p:has(> img)) {
+    margin: 0;
+  }
+
+  .prosa :global(p:has(> img) + p > em:only-child) {
+    display: block;
+    font-size: 0.82em;
+    color: var(--text-gedaempft);
+    margin-bottom: 1.4em;
+  }
+
   .prosa :global(h3) {
     font-family: var(--schrift-magazin);
     font-weight: 500;

@@ -23,6 +23,11 @@ import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 import journalCover from '../assets/journal-cover.jpg';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
+// Aquarellbilder aus Try a Life (Rechte bei Christine): die drei Welten und das Tal mit dem Weg
+import weltHochland from '../assets/leben/hochland.jpg';
+import weltUfer from '../assets/leben/ufer.jpg';
+import weltSchwebeinseln from '../assets/leben/schwebeinseln.jpg';
+import wegTal from '../assets/leben/weg-tal.jpg';
 
 const kursbuch = angebotNachId('kursbuch');
 const kursbuchPreis = aktuellerPreis(kursbuch);
@@ -40,9 +45,9 @@ const fragen = [
 ];
 
 const leben = [
-  { titel: 'Weitergehen', frage: 'Was ändert sich, wenn du deinen Weg mutiger gehst?' },
-  { titel: 'Umsteigen', frage: 'Was baust du auf, wenn dein bisheriger Weg wegfällt?' },
-  { titel: 'Wagen', frage: 'Was tust du, wenn ein Scheitern dich nicht aus der Bahn werfen kann?' },
+  { titel: 'Weitergehen', frage: 'Was ändert sich, wenn du deinen Weg mutiger gehst?', bild: weltHochland, alt: 'Aquarell eines Hauses am Hang im Hochland mit Gondel und Garten' },
+  { titel: 'Umsteigen', frage: 'Was baust du auf, wenn dein bisheriger Weg wegfällt?', bild: weltUfer, alt: 'Aquarell eines Hausboots an einem Steg am anderen Ufer eines Sees' },
+  { titel: 'Wagen', frage: 'Was tust du, wenn ein Scheitern dich nicht aus der Bahn werfen kann?', bild: weltSchwebeinseln, alt: 'Aquarell eines kleinen Hauses auf einer schwebenden Insel über den Wolken' },
 ];
 
 const hilft = [
@@ -143,6 +148,7 @@ const hilft = [
   <!-- 3. So entsteht dein Weg · Verstehen -->
   <section class="abschnitt" id="weg" aria-labelledby="weg-titel">
     <div class="container">
+      <div class="weg-kopf">
       <div class="kopfblock">
         <p class="label">02 · Dein Weg</p>
         <h2 id="weg-titel" class="zeile">So entsteht dein <span class="pivot">Weg</span></h2>
@@ -154,6 +160,14 @@ const hilft = [
           bevor du dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht
           eine Perspektive, die zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
         </p>
+      </div>
+      <Image
+        class="weg-kopf__bild"
+        src={wegTal}
+        alt="Aquarell eines mediterranen Tals mit einem gewundenen Weg zwischen Olivenbäumen"
+        widths={[420, 640, 900]}
+        sizes="(min-width: 960px) 420px, 92vw"
+      />
       </div>
       <div class="bremse">
         <div class="bremse__spalte" data-erscheinen>
@@ -190,6 +204,7 @@ const hilft = [
         {
           leben.map((l) => (
             <li class="leben__karte" data-erscheinen>
+              <Image class="leben__bild" src={l.bild} alt={l.alt} widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
               <h3>{l.titel}</h3>
               <p>{l.frage}</p>
             </li>
@@ -695,6 +710,27 @@ const hilft = [
   }
 
   /* Drei mögliche Leben */
+  .weg-kopf {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: end;
+  }
+
+  @media (min-width: 960px) {
+    .weg-kopf {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+  }
+
+  .weg-kopf__bild {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
   .leben {
     list-style: none;
     margin: 0;
@@ -704,10 +740,21 @@ const hilft = [
     gap: clamp(20px, 2.5vw, 32px);
   }
 
+  .leben__bild {
+    display: block;
+    width: calc(100% + 2 * clamp(24px, 3vw, 40px));
+    max-width: none;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    margin: calc(-1 * clamp(24px, 3vw, 40px)) calc(-1 * clamp(24px, 3vw, 40px)) 8px;
+  }
+
   .leben__karte {
     border: 1px solid var(--linie);
     border-top: 2px solid var(--terrakotta);
     padding: clamp(24px, 3vw, 40px);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 14px;

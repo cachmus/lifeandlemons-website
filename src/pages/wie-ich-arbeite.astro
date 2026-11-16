@@ -5,6 +5,14 @@
  * und in Alltagssprache. Entscheidungen: claude/Website_V2_Umbau.md (Projekt in claude.ai).
  * Anker: #phasen, #grundlagen (früher auf der Seite Modul 1)
  */
+import { Image } from 'astro:assets';
+// Gegenstände aus Try a Life als Zeichen der Phasen (Rechte bei Christine, Neugestaltung 16.11.2026)
+import symSanduhr from '../assets/symbole/sanduhr.png';
+import symGondel from '../assets/symbole/gondel.png';
+import symWegweiser from '../assets/symbole/wegweiser.png';
+import symKompass from '../assets/symbole/kompass.png';
+import symTelefon from '../assets/symbole/telefon.png';
+import symMokkakanne from '../assets/symbole/mokkakanne.png';
 import Base from '../layouts/Base.astro';
 import { seiten } from '../config/site';
 
@@ -13,36 +21,43 @@ const phasen = [
     titel: 'Verstehen, wo du stehst',
     text: 'Ein Lebensrad mit neun Feldern zeigt dir, was fehlt und was dich schon trägt: Familie, Freundschaft, Liebe, Innenleben, Körper, Entwicklung, Geld, Beitrag und Freude. Dazu kommen deine Stärken, deine Ressourcen, Tätigkeiten, die du abgeben oder reduzieren möchtest, und dein Element. Dort kommen Stärken, Interessen und Sinn zusammen, und du gehst ganz in einer Tätigkeit auf.',
     frage: 'Was fehlt mir, und was trägt mich schon?',
+    symbol: null,
   },
   {
     titel: 'Erkennen, was dich bremst',
     text: 'Du findest heraus, welche inneren Muster dich bislang gebremst haben, und untersuchst, wie sie heute wirken. Ihre Entstehung arbeiten wir nicht auf.',
     frage: 'Welche Muster haben mich bisher zurückgehalten?',
+    symbol: symSanduhr,
   },
   {
     titel: 'Drei mögliche Leben entwerfen',
     text: 'Mit gelöster Bremse entstehen drei völlig unterschiedliche Entwürfe. Weitergehen fragt, was sich ändert, wenn du deinen Weg mutiger gehst. Umsteigen fragt, was du aufbaust, wenn dein bisheriger Weg wegfällt. Wagen fragt, was du tust, wenn ein Scheitern dich nicht aus der Bahn werfen kann.',
     frage: 'Welche Leben wären für mich möglich?',
+    symbol: symGondel,
   },
   {
     titel: 'Spüren, welcher Entwurf dich anzieht',
     text: 'Du vergleichst deine Entwürfe danach, wie sehr sie emotional und persönlich zu dir passen.',
     frage: 'Welchen Menschen, der ich in fünf Jahren in diesem Entwurf wäre, würde ich gern kennenlernen?',
+    symbol: symWegweiser,
   },
   {
     titel: 'Klären, was dir wichtig ist',
     text: 'Aus deinen drei Entwürfen arbeitest du heraus, welche Werte und Bedürfnisse immer wieder auftauchen und wer dein gewünschtes Zukunfts-Ich ist. Daran orientieren sich deine Tests.',
     frage: 'Was taucht in allen meinen Entwürfen wieder auf?',
+    symbol: symKompass,
   },
   {
     titel: 'Ausprobieren und nachjustieren',
     text: 'Du sprichst mit Menschen, die ein ähnliches Leben führen, und probierst einzelne Bestandteile deines gewünschten Alltags aus. Deine Erfahrungen gleichst du mit deinen Werten ab und setzt daraus deinen eigenen Weg zusammen. Er darf Elemente aus allen drei Entwürfen enthalten.',
     frage: 'Stimmen meine Annahmen über dieses Leben?',
+    symbol: symTelefon,
   },
   {
     titel: 'Im Alltag verankern',
     text: 'Du übersetzt deinen Weg in Meilensteine, Gewohnheiten, Wenn-dann-Pläne und einen Alltag, der es dir leicht macht. Deine Werte geben dir die Richtung, ein bewusst gewähltes Lebensgefühl ist dein Maßstab.',
     frage: 'Was tue ich regelmäßig als der Mensch, der ich werden will?',
+    symbol: symMokkakanne,
   },
 ];
 
@@ -127,7 +142,30 @@ const grundlagen = [
         {
           phasen.map((p, i) => (
             <li class:list={['phase', { 'phase--modul2': i === 6 }]} data-erscheinen>
-              <span class="phase__nr" aria-hidden="true">{i + 1}</span>
+              <div class="phase__zeichen" aria-hidden="true">
+                {p.symbol ? (
+                  <Image class="phase__bild" src={p.symbol} alt="" widths={[96, 192]} sizes="80px" />
+                ) : (
+                  <svg class="phase__rad" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" fill="#fbf9f5" stroke="#bb5e3a" stroke-width="1.5" />
+                    <path d="M50 50 L50 4 A46 46 0 0 1 79.6 14.8 Z" fill="#e0a487" />
+                    <path d="M50 50 L79.6 14.8 A46 46 0 0 1 95.3 42 Z" fill="#d7dcce" opacity="0.9" />
+                    <path d="M50 50 L95.3 42 A46 46 0 0 1 89.8 73 Z" fill="#e0a487" opacity="0.7" />
+                    <path d="M50 50 L89.8 73 A46 46 0 0 1 66 93.1 Z" fill="#d8b443" opacity="0.6" />
+                    <path d="M50 50 L66 93.1 A46 46 0 0 1 34 93.1 Z" fill="#d7dcce" />
+                    <path d="M50 50 L34 93.1 A46 46 0 0 1 10.2 73 Z" fill="#e0a487" opacity="0.5" />
+                    <path d="M50 50 L10.2 73 A46 46 0 0 1 4.7 42 Z" fill="#d8b443" opacity="0.4" />
+                    <path d="M50 50 L4.7 42 A46 46 0 0 1 20.4 14.8 Z" fill="#d7dcce" opacity="0.7" />
+                    <path d="M50 50 L20.4 14.8 A46 46 0 0 1 50 4 Z" fill="#e0a487" opacity="0.8" />
+                    <g stroke="#93452a" stroke-width="0.8" opacity="0.6">
+                      <line x1="50" y1="50" x2="50" y2="4" /><line x1="50" y1="50" x2="79.6" y2="14.8" /><line x1="50" y1="50" x2="95.3" y2="42" />
+                      <line x1="50" y1="50" x2="89.8" y2="73" /><line x1="50" y1="50" x2="66" y2="93.1" /><line x1="50" y1="50" x2="34" y2="93.1" />
+                      <line x1="50" y1="50" x2="10.2" y2="73" /><line x1="50" y1="50" x2="4.7" y2="42" /><line x1="50" y1="50" x2="20.4" y2="14.8" />
+                    </g>
+                  </svg>
+                )}
+                <span class="phase__nr">{i + 1}</span>
+              </div>
               <div class="phase__inhalt">
                 <h3>{p.titel}</h3>
                 <p>{p.text}</p>
@@ -307,7 +345,7 @@ const grundlagen = [
 
   .phase {
     display: grid;
-    grid-template-columns: clamp(48px, 6vw, 88px) minmax(0, 1fr);
+    grid-template-columns: clamp(64px, 8vw, 104px) minmax(0, 1fr);
     gap: 0 clamp(16px, 3vw, 40px);
     border-top: 1px solid var(--linie);
     padding: clamp(22px, 3vw, 32px) 0;
@@ -317,9 +355,24 @@ const grundlagen = [
     border-bottom: 1px solid var(--linie);
   }
 
+  .phase__zeichen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .phase__bild,
+  .phase__rad {
+    display: block;
+    width: clamp(56px, 6vw, 80px);
+    height: clamp(56px, 6vw, 80px);
+    object-fit: contain;
+  }
+
   .phase__nr {
     font-family: var(--schrift-titel);
-    font-size: clamp(40px, 4.4vw, 60px);
+    font-size: clamp(26px, 2.6vw, 34px);
     line-height: 1;
     color: var(--terrakotta);
   }
