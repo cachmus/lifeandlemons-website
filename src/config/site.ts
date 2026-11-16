@@ -62,6 +62,10 @@ export const seiten = {
   tryALife: '/try-a-life/',
   /** Landingpage des kostenlosen Jahresabschluss-Journals (neu 11.11.2026). Ziel des Links in der Instagram-Bio, Adresse nicht ändern. */
   journal: '/journal/',
+  /** Übersicht aller Angebote, Journal und Try a Life zuerst (neu 16.11.2026). Ziel des Menüpunkts „Angebote“. */
+  angebote: '/angebote/',
+  /** Ratgeber mit Artikeln; Artikel liegen unter /ratgeber/<slug>/ (Quelltexte in src/ratgeber/) */
+  ratgeber: '/ratgeber/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;
@@ -80,10 +84,37 @@ export type NavPunkt = { label: string; href: string };
  * die Seite zu Modul 1 und den Footer erreichbar.
  */
 export const hauptnavigation: NavPunkt[] = [
+  { label: 'Angebote', href: seiten.angebote },
+  { label: 'Ratgeber', href: seiten.ratgeber },
   { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
-  { label: 'Angebot', href: seiten.modul1 },
   { label: 'Über mich', href: seiten.ueberMich },
 ];
+
+/**
+ * Hinweisleiste über dem Kopf auf jeder Seite (entschieden 16.11.2026: schließen erlaubt).
+ * Geschlossen bleibt sie `wiederNachTagen` Tage aus. Für ein neues Thema `kennung` ändern, dann sehen alle sie wieder.
+ * Ab dem Start von Try a Life auf die Verkaufsseite umstellen (Text, Linktext, Ziel, Kennung).
+ */
+export const hinweisleiste = {
+  aktiv: true,
+  kennung: 'journal-2026-11',
+  marke: 'Gratis',
+  text: 'Journal für deinen Jahresrückblick: Wer will ich in 12 Monaten sein?',
+  linkText: 'Jetzt holen',
+  ziel: seiten.journal,
+  /** Auf diesen Seiten (Anfang des Pfads) erscheint die Leiste nicht */
+  ausblendenAuf: [seiten.journal, '/danke/'],
+  wiederNachTagen: 7,
+} as const;
+
+/**
+ * Try a Life auf der Angebotsseite, solange es noch nicht buchbar ist.
+ * `start` erscheint öffentlich (entschieden 16.11.2026: Start Anfang Januar). Bei Verschiebung nur hier ändern.
+ */
+export const tryALifeAnkuendigung = {
+  start: 'Anfang Januar',
+  brevoListe: '9',
+} as const;
 
 export const fussnavigation: NavPunkt[] = [
   { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },

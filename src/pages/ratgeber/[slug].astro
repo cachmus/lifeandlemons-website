@@ -1,0 +1,319 @@
+---
+/**
+ * Ratgeberartikel. Inhalte aus src/ratgeber/<slug>.md (Frontmatter siehe src/config/ratgeber.ts).
+ * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, weitere Artikel.
+ */
+import Base from '../../layouts/Base.astro';
+import JournalKarte from '../../components/JournalKarte.astro';
+import Polaroid from '../../components/Polaroid.astro';
+import { site, seiten } from '../../config/site';
+import { artikelModule, artikel, artikelPfad, themen } from '../../config/ratgeber';
+import { artikelDaten } from '../../config/strukturierteDaten';
+import portraet from '../../assets/portraet-christine-4x5.jpg';
+
+export function getStaticPaths() {
+  return artikelModule.map(({ slug }) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const eintrag = artikelModule.find((m) => m.slug === slug)!;
+const a = artikel.find((x) => x.slug === slug)!;
+const Inhalt = eintrag.modul.Content as any;
+const kapitel = eintrag.modul.getHeadings().filter((h) => h.depth === 2);
+const thema = themen.find((t) => t.id === a.thema)!;
+const weitere = artikel.filter((x) => x.slug !== slug && x.thema === a.thema).slice(0, 3);
+const datum = new Date(a.aktualisiert ?? a.veroeffentlicht).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+const pfad = artikelPfad(slug!);
+---
+
+<Base
+  title={a.titel}
+  description={a.beschreibung}
+  ogTyp="article"
+  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq })}
+>
+  <article class="artikel">
+    <header class="container artikel__kopf">
+      <nav class="krumen" aria-label="Brotkrumen">
+        <a href={seiten.ratgeber}>Ratgeber</a>
+        <span aria-hidden="true">/</span>
+        <span>{thema.label}</span>
+      </nav>
+      <h1>{a.titel}</h1>
+      <p class="artikel__meta">
+        Von <a href={seiten.ueberMich}>{site.inhaberin}</a>{` · ${a.aktualisiert ? 'Aktualisiert' : 'Veröffentlicht'} am ${datum} · ${a.lesezeit} Minuten Lesezeit`}
+      </p>
+    </header>
+
+    <div class="container artikel__raster">
+      <aside class="inhalt" aria-label="Inhalt dieses Artikels">
+        <p class="inhalt__titel">Inhalt</p>
+        <ol>
+          {
+            kapitel.map((k) => (
+              <li>
+                <a href={`#${k.slug}`}>{k.text}</a>
+              </li>
+            ))
+          }
+          {a.faq?.length && <li><a href="#fragen">Häufige Fragen</a></li>}
+        </ol>
+      </aside>
+
+      <div class="artikel__haupt">
+        <div class="kurz">
+          <p class="kurz__titel">Kurz gesagt</p>
+          <ul>{a.kurz.map((k) => <li>{k}</li>)}</ul>
+        </div>
+
+        <div class="prosa">
+          <Inhalt />
+        </div>
+
+        <div class="artikel__journal">
+          <JournalKarte
+            variante="kompakt"
+            ueberschriftEbene="h2"
+            titel="Alle Fragen in einem Journal"
+            text="Du willst die Fragen nicht abschreiben? Mein kostenloses Journal „Wer will ich in 12 Monaten sein?“ führt dich durch Rückblick, Who-to-be-Liste und deinen ersten Schritt."
+          />
+        </div>
+
+        <div class="autorin">
+          <div class="autorin__foto">
+            <Polaroid bild={portraet} alt="Christine Achmus" name="Christine" bildposition="50% 20%" />
+          </div>
+          <div>
+            <p class="label">Über die Autorin</p>
+            <p>
+              Ich bin Christine Achmus, {site.rolle} und Gründerin von Life&amp;Lemons. Ich habe Bildungswissenschaften mit Schwerpunkt
+              Pädagogische Psychologie studiert. Die Übungen, über die ich schreibe, stützen sich auf psychologische Forschung, und ich habe
+              sie zuerst an mir selbst ausprobiert.
+            </p>
+            <a class="textlink" href={seiten.ueberMich}>Mehr über mich</a>
+          </div>
+        </div>
+
+        {
+          a.faq?.length && (
+            <section class="fragen" id="fragen" aria-labelledby="fragen-titel">
+              <h2 id="fragen-titel">Häufige Fragen</h2>
+              {a.faq.map((f) => (
+                <details>
+                  <summary>{f.frage}</summary>
+                  <p>{f.antwort}</p>
+                </details>
+              ))}
+            </section>
+          )
+        }
+
+        {
+          weitere.length > 0 && (
+            <nav class="weitere" aria-label="Weitere Artikel zum Thema">
+              <p class="label">Weiterlesen</p>
+              <ul>
+                {weitere.map((w) => (
+                  <li>
+                    <a href={artikelPfad(w.slug)}>{w.kurztitel}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+
+        <p class="hinweis gedaempft">
+          Dieser Artikel dient der Selbstreflexion und ersetzt keine Psychotherapie oder medizinische Behandlung.
+        </p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .artikel__kopf {
+    padding-top: clamp(32px, 5vw, 72px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: calc(var(--breite-seite) - 2 * var(--rand));
+  }
+
+  .artikel__kopf h1 {
+    max-width: 22ch;
+  }
+
+  .krumen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-gedaempft);
+  }
+
+  .krumen a {
+    color: var(--terrakotta-tief);
+    font-weight: 700;
+  }
+
+  .artikel__meta {
+    font-size: 15px;
+    color: var(--text-gedaempft);
+  }
+
+  .artikel__raster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    padding-bottom: var(--abschnitt);
+  }
+
+  @media (min-width: 1040px) {
+    .artikel__raster {
+      grid-template-columns: 240px minmax(0, var(--breite-text));
+    }
+    .inhalt {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+    }
+  }
+
+  .inhalt {
+    font-size: 15px;
+    border-left: 2px solid var(--linie);
+    padding-left: 18px;
+  }
+
+  .inhalt__titel {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+    margin-bottom: 10px;
+  }
+
+  .inhalt ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .inhalt a {
+    color: var(--tinte);
+    text-decoration: none;
+  }
+
+  .inhalt a:hover,
+  .inhalt a:focus-visible {
+    color: var(--terrakotta-tief);
+    text-decoration: underline;
+  }
+
+  .artikel__haupt {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 48px);
+    min-width: 0;
+  }
+
+  .kurz {
+    background: var(--leinen);
+    border-left: 3px solid var(--terrakotta);
+    padding: clamp(20px, 3vw, 28px);
+  }
+
+  .kurz__titel {
+    font-family: var(--schrift-hand);
+    font-size: 28px;
+    color: var(--terrakotta-tief);
+    margin-bottom: 8px;
+  }
+
+  .kurz ul {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .prosa {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .prosa :global(h2) {
+    margin: 1.8em 0 0.6em;
+    scroll-margin-top: 110px;
+  }
+
+  .prosa :global(p) {
+    margin: 0 0 1em;
+  }
+
+  .prosa :global(strong) {
+    color: var(--tinte);
+  }
+
+  .autorin {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--linie);
+  }
+
+  @media (min-width: 640px) {
+    .autorin {
+      grid-template-columns: 170px minmax(0, 1fr);
+    }
+  }
+
+  .autorin__foto {
+    max-width: 170px;
+  }
+
+  .autorin p + p {
+    margin-top: 8px;
+  }
+
+  .fragen h2 {
+    margin-bottom: 16px;
+  }
+
+  .fragen details {
+    border-top: 1px solid var(--linie);
+    padding: 16px 0;
+  }
+
+  .fragen details:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .fragen summary {
+    cursor: pointer;
+    font-weight: 700;
+    list-style-position: outside;
+  }
+
+  .fragen details p {
+    margin-top: 10px;
+  }
+
+  .weitere ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+  }
+
+  .hinweis {
+    font-size: 14px;
+  }
+</style>

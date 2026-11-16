@@ -99,3 +99,67 @@ export function kursbuchDaten(umschlag?: string): Knoten {
     }),
   };
 }
+
+/** Ratgeberartikel mit Brotkrumen und, falls vorhanden, Fragen und Antworten (Seiten /ratgeber/<slug>/). */
+export function artikelDaten(a: {
+  titel: string;
+  beschreibung: string;
+  pfad: string;
+  veroeffentlicht: string;
+  aktualisiert?: string;
+  faq?: { frage: string; antwort: string }[];
+}): Knoten[] {
+  const url = adresse(a.pfad);
+  const knoten: Knoten[] = [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${url}#artikel`,
+      headline: a.titel,
+      description: a.beschreibung,
+      url,
+      mainEntityOfPage: url,
+      inLanguage: 'de-DE',
+      datePublished: a.veroeffentlicht,
+      dateModified: a.aktualisiert ?? a.veroeffentlicht,
+      author: { '@id': ids.person },
+      publisher: { '@id': ids.organisation },
+      image: adresse('/marke/og-bild.png'),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Ratgeber', item: adresse(seiten.ratgeber) },
+        { '@type': 'ListItem', position: 2, name: a.titel, item: url },
+      ],
+    },
+  ];
+  if (a.faq?.length) knoten.push(faqDaten(a.faq));
+  return knoten;
+}
+
+/** Fragen und Antworten, die sichtbar auf der Seite stehen. */
+export function faqDaten(faq: { frage: string; antwort: string }[]): Knoten {
+  return {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })),
+  };
+}
+
+/** Das kostenlose Journal als frei zugängliches Dokument (Seite /journal/). */
+export function journalDaten(cover: string): Knoten {
+  return {
+    '@type': 'DigitalDocument',
+    '@id': adresse(`${seiten.journal}#journal`),
+    name: 'Wer will ich in 12 Monaten sein? Das Jahresabschluss-Journal',
+    description:
+      'Journal für deinen persönlichen Jahresrückblick mit Ausblick: Rückblick, Who-to-be-Liste, Rückwärtsplanung, Wenn-dann-Pläne und ein erster Schritt. 17 Seiten als PDF.',
+    url: adresse(seiten.journal),
+    image: adresse(cover),
+    inLanguage: 'de-DE',
+    isAccessibleForFree: true,
+    numberOfPages: 17,
+    encodingFormat: 'application/pdf',
+    author: { '@id': ids.person },
+    publisher: { '@id': ids.organisation },
+  };
+}

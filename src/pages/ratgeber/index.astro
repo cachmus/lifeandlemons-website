@@ -1,0 +1,152 @@
+---
+/**
+ * Ratgeber-Übersicht (neu 16.11.2026). Artikel nach Themen, aus src/ratgeber/*.md (Konfiguration src/config/ratgeber.ts).
+ * Themen ohne Artikel erscheinen nicht. Wortlaut: Entwurf vom 16.11.2026, Freigabe durch Christine offen.
+ */
+import Base from '../../layouts/Base.astro';
+import JournalKarte from '../../components/JournalKarte.astro';
+import { themen, artikel, artikelPfad } from '../../config/ratgeber';
+
+const themenMitArtikeln = themen
+  .map((t) => ({ ...t, liste: artikel.filter((a) => a.thema === t.id) }))
+  .filter((t) => t.liste.length > 0);
+---
+
+<Base
+  title="Ratgeber: Jahresrückblick, Orientierung und Lebensziele"
+  description="Artikel mit Übungen für deinen Jahresrückblick, für mehr Orientierung und für Lebensziele, die im Alltag halten. Von Christine Achmus, Life&Lemons."
+>
+  <section class="kopf-abschnitt">
+    <div class="container">
+      <p class="label">Ratgeber</p>
+      <h1>Für die Fragen, die dich gerade wirklich <span class="pivot">beschäftigen</span></h1>
+      <p class="einleitung">
+        Was will ich eigentlich? Und warum halten meine Vorhaben im Alltag so selten lange? Hier schreibe ich über genau solche Fragen, mit
+        Übungen, die du sofort ausprobieren kannst.
+      </p>
+    </div>
+  </section>
+
+  {
+    themenMitArtikeln.map((t, i) => (
+      <section class="abschnitt abschnitt--eng" aria-labelledby={`thema-${t.id}`}>
+        <div class="container">
+          <div class="thema">
+            <p class="label">{String(i + 1).padStart(2, '0')} · Thema</p>
+            <h2 id={`thema-${t.id}`}>{t.label}</h2>
+            <p class="gedaempft">{t.beschreibung}</p>
+          </div>
+          <ul class="karten">
+            {t.liste.map((a) => (
+              <li>
+                <a class="karte" href={artikelPfad(a.slug)}>
+                  <span class="karte__meta">{a.lesezeit} Minuten Lesezeit</span>
+                  <span class="karte__titel">{a.titel}</span>
+                  <span class="karte__text">{a.beschreibung}</span>
+                  <span class="karte__mehr">
+                    Weiterlesen <span aria-hidden="true">→</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="abschnitt" aria-label="Kostenloses Journal">
+    <div class="container">
+      <JournalKarte
+        titel="Lieber gleich loslegen?"
+        text="Mein kostenloses Journal führt dich Schritt für Schritt durch deinen Jahresrückblick, bis zu einem ersten Schritt, der in deinen Alltag passt."
+      />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(40px, 6vw, 88px) 0 clamp(16px, 3vw, 32px);
+  }
+
+  .kopf-abschnitt .container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .kopf-abschnitt .einleitung {
+    max-width: 40rem;
+  }
+
+  .abschnitt--eng {
+    padding-block: clamp(32px, 5vw, 64px);
+  }
+
+  .thema {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: clamp(24px, 3vw, 36px);
+  }
+
+  .thema h2 {
+    margin: 0;
+  }
+
+  .karten {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+
+  .karte {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(24px, 3vw, 32px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+    color: var(--tinte);
+    text-decoration: none;
+    transition: transform 250ms var(--kurve), box-shadow 250ms var(--kurve);
+  }
+
+  .karte:hover,
+  .karte:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(34, 48, 44, 0.1);
+  }
+
+  .karte__meta {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .karte__titel {
+    font-family: var(--schrift-titel);
+    font-size: clamp(26px, 2.6vw, 32px);
+    line-height: 1.12;
+    font-weight: 600;
+  }
+
+  .karte__text {
+    color: var(--text-gedaempft);
+    font-size: 16px;
+  }
+
+  .karte__mehr {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--terrakotta-tief);
+  }
+</style>

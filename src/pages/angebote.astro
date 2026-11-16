@@ -1,0 +1,254 @@
+---
+/**
+ * Übersicht aller Angebote (neu 16.11.2026). Ziel des Menüpunkts „Angebote“.
+ * Reihenfolge nach Entscheidung vom 16.11.2026: kostenloses Journal zuerst, dann Try a Life (Ankündigung mit Warteliste),
+ * dann Kursbuch und Kurs 1, dann Modul 2. Schnelles Finden und Conversion haben Vorrang.
+ * Wortlaut: Entwurf vom 16.11.2026, Freigabe durch Christine offen. Preise und Buttons aus src/config/angebote.ts.
+ * Try a Life ohne Preis, solange es nicht buchbar ist; Starttermin aus `tryALifeAnkuendigung` (src/config/site.ts).
+ */
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import JournalKarte from '../components/JournalKarte.astro';
+import WartelisteKurz from '../components/WartelisteKurz.astro';
+import AngebotButton from '../components/AngebotButton.astro';
+import Preis from '../components/Preis.astro';
+import { seiten, tryALifeAnkuendigung } from '../config/site';
+import talBild from '../assets/try-a-life-tal.jpg';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
+import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
+
+const sprungmarken = [
+  { href: '#kostenlos', label: 'Kostenlos starten' },
+  { href: '#try-a-life', label: 'Try a Life' },
+  { href: '#kursbuch', label: 'Kursbuch' },
+  { href: '#modul-2', label: 'Modul 2' },
+];
+
+/** Umfang laut Seite /try-a-life/ (bestätigt 11.11.2026) */
+const tryUmfang = [
+  'deine eigenen Wünsche und Bremsen verstehen, mit dem Lebensrad als Start',
+  'drei mögliche Leben entwerfen und das passendste 14 Tage im Alltag ausprobieren',
+  'Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo',
+];
+---
+
+<Base
+  dunklerSchluss
+  title="Angebote: Journal, Try a Life und Kursbuch"
+  description="Alle Angebote von Life&Lemons auf einen Blick: das kostenlose Journal für deinen Jahresrückblick, die App Try a Life (Start Anfang Januar) und das Kursbuch „Entwirf dein Zukunfts-Ich“."
+>
+  <section class="kopf-abschnitt">
+    <div class="container">
+      <p class="label">Angebote</p>
+      <h1>Dein nächster Schritt, egal wo du gerade <span class="pivot">stehst</span></h1>
+      <p class="einleitung">
+        Vielleicht willst du erst einmal sortieren, was dieses Jahr mit dir gemacht hat. Oder du weißt längst, dass sich etwas ändern soll,
+        nur noch nicht genau was. Hier findest du den Einstieg, der dazu passt.
+      </p>
+      <nav class="sprung" aria-label="Zu den Angeboten springen">
+        {sprungmarken.map((s) => <a href={s.href}>{s.label}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--eng" id="kostenlos" aria-labelledby="kostenlos-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">01 · Kostenlos starten</p>
+        <h2 id="kostenlos-titel" class="zeile">Erst sortieren, dann <span class="pivot">entscheiden</span></h2>
+      </div>
+      <JournalKarte ueberschriftEbene="h3" />
+    </div>
+  </section>
+
+  <section class="abschnitt" id="try-a-life" aria-labelledby="try-titel">
+    <div class="container try">
+      <div class="try__text">
+        <p class="label">02 · Neu · Start {tryALifeAnkuendigung.start}</p>
+        <h2 id="try-titel">
+          <Image class="try__wortmarke" src={wortmarke} alt="Try a Life" width={360} />
+          <span class="try__unter">Wie willst du wirklich <span class="pivot">leben</span>?</span>
+        </h2>
+        <p>
+          Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Für dich, wenn dein Leben funktioniert, sich aber
+          nicht mehr ganz nach deinem eigenen anfühlt.
+        </p>
+        <ul class="punkte">
+          {tryUmfang.map((u) => <li>{u}</li>)}
+        </ul>
+        <p class="try__aufruf">Trag dich ein, dann erfährst du als Erste, wenn es losgeht.</p>
+        <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="try" />
+        <a class="textlink" href={seiten.tryALife}>Mehr über Try a Life</a>
+      </div>
+      <Image
+        class="try__bild"
+        src={talBild}
+        alt="Aquarell eines sonnigen Tals mit Wegweiser, Rucksack, offenem Buch, Brücke und Dorf am Horizont"
+        widths={[480, 768, 1100]}
+        sizes="(min-width: 960px) 520px, 100vw"
+      />
+    </div>
+  </section>
+
+  <section class="abschnitt" id="kursbuch" aria-labelledby="kursbuch-titel">
+    <div class="container angebot">
+      <Image
+        class="angebot__bild"
+        src={kursbuchFoto}
+        alt="Das Kursbuch „Entwirf dein Zukunfts-Ich“, Vorder- und Rückseite"
+        widths={[420, 680, 960]}
+        sizes="(min-width: 960px) 460px, 100vw"
+      />
+      <div class="angebot__text">
+        <p class="label">03 · Kursbuch und Kurs 1</p>
+        <h2 id="kursbuch-titel">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h2>
+        <p>
+          Für dich, wenn du spürst, dass sich etwas verändern soll, aber noch nicht genau sagen kannst, was es ist. Im gedruckten Kursbuch
+          entwirfst du in neun Einheiten drei mögliche Versionen deiner Zukunft und testest sie in einer Probezeit von 14 Tagen.
+        </p>
+        <Preis id="kursbuch" form="inline" />
+        <div class="aktionen">
+          <AngebotButton id="kursbuch" />
+          <a class="textlink" href={seiten.modul1}>Alles zu Kurs 1</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt abschnitt--ende" id="modul-2" aria-labelledby="modul2-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">04 · In Vorbereitung</p>
+        <h2 id="modul2-titel" class="zeile">Manifestiere dein <span class="pivot">Zukunfts-Ich</span></h2>
+      </div>
+      <div class="fliesstext text">
+        <p>
+          Für dich, wenn du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest: 90 Tage mit Meilensteinen und
+          neuen Gewohnheiten.
+        </p>
+        <WartelisteKurz liste="12" kennung="modul2" hell />
+        <a class="textlink" href={seiten.modul2}>Mehr über Modul 2</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kopf-abschnitt {
+    padding: clamp(40px, 6vw, 88px) 0 clamp(24px, 3vw, 40px);
+  }
+
+  .kopf-abschnitt .container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .kopf-abschnitt .einleitung {
+    max-width: 40rem;
+  }
+
+  .sprung {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .sprung a {
+    padding: 10px 16px;
+    border: 1px solid var(--linie);
+    background: var(--papier-hell);
+    color: var(--tinte);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color 200ms var(--kurve), background-color 200ms var(--kurve);
+  }
+
+  .sprung a:hover,
+  .sprung a:focus-visible {
+    border-color: var(--terrakotta);
+    background: #fff;
+  }
+
+  .abschnitt--eng {
+    padding-top: clamp(24px, 4vw, 48px);
+  }
+
+  .try,
+  .angebot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .try {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    }
+    .angebot {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+  }
+
+  .try__text,
+  .angebot__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .try__text h2 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .try__wortmarke {
+    width: min(100%, 320px);
+    height: auto;
+  }
+
+  .try__unter {
+    font-size: clamp(26px, 3vw, 34px);
+  }
+
+  .try__aufruf {
+    font-weight: 700;
+  }
+
+  .try__bild,
+  .angebot__bild {
+    width: 100%;
+    height: auto;
+  }
+
+  .punkte {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .punkte li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .punkte li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--terrakotta);
+  }
+</style>

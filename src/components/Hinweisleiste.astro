@@ -1,0 +1,156 @@
+---
+/**
+ * Schmale Hinweisleiste über dem Kopf auf jeder Seite. Inhalt und Schalter: `hinweisleiste` in src/config/site.ts.
+ * Echter Link im Quelltext (gut für Suchmaschinen), kein Pop-up. Schließen merkt sich der Browser
+ * für `wiederNachTagen` Tage (localStorage, nur diese eine Angabe, kein Tracking).
+ */
+import { hinweisleiste } from '../config/site';
+
+interface Props {
+  pfad: string;
+}
+
+const { pfad } = Astro.props;
+const zeigen = hinweisleiste.aktiv && !hinweisleiste.ausblendenAuf.some((anfang) => pfad.startsWith(anfang));
+const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
+---
+
+{
+  zeigen && (
+    <>
+      <script is:inline define:vars={{ schluessel, tage: hinweisleiste.wiederNachTagen }}>
+        try {
+          var zu = Number(localStorage.getItem(schluessel) || 0);
+          if (zu && Date.now() - zu < tage * 86400000) document.documentElement.setAttribute('data-hinweis-zu', '');
+        } catch (e) {}
+      </script>
+      <aside class="hinweis" aria-label="Hinweis" data-hinweis={schluessel}>
+        <div class="container hinweis__innen">
+          <a class="hinweis__link" href={hinweisleiste.ziel}>
+            <span class="hinweis__marke">{hinweisleiste.marke}</span>
+            <span class="hinweis__text">{hinweisleiste.text}</span>
+            <span class="hinweis__aktion">
+              {hinweisleiste.linkText} <span aria-hidden="true">→</span>
+            </span>
+          </a>
+          <button class="hinweis__zu" type="button" aria-label="Hinweis schließen" data-hinweis-schliessen>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+    </>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hinweis]').forEach((leiste) => {
+    leiste.querySelector('[data-hinweis-schliessen]')?.addEventListener('click', () => {
+      try {
+        localStorage.setItem(leiste.dataset.hinweis!, String(Date.now()));
+      } catch {
+        // Ohne Speicher bleibt die Leiste beim nächsten Seitenaufruf sichtbar
+      }
+      document.documentElement.setAttribute('data-hinweis-zu', '');
+    });
+  });
+</script>
+
+<style>
+  .hinweis {
+    background: var(--tinte);
+    color: var(--papier-hell);
+    font-size: 14.5px;
+    line-height: 1.4;
+  }
+
+  :global(html[data-hinweis-zu]) .hinweis {
+    display: none;
+  }
+
+  .hinweis__innen {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+  }
+
+  .hinweis__link {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 12px;
+    padding: 8px 0;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .hinweis__marke {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terrakotta-hell);
+  }
+
+  .hinweis__marke::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .hinweis__aktion {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--terrakotta-hell);
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  .hinweis__link:hover .hinweis__aktion,
+  .hinweis__link:focus-visible .hinweis__aktion {
+    text-decoration-color: var(--papier-hell);
+  }
+
+  .hinweis__link:focus-visible,
+  .hinweis__zu:focus-visible {
+    outline: 2px solid var(--terrakotta-hell);
+    outline-offset: 2px;
+  }
+
+  .hinweis__zu {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.75;
+  }
+
+  .hinweis__zu:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 560px) {
+    .hinweis__text {
+      flex-basis: 100%;
+      order: 2;
+    }
+    .hinweis__aktion {
+      order: 3;
+    }
+  }
+</style>

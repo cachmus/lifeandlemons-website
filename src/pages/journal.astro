@@ -13,6 +13,7 @@ import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import JournalFormular from '../components/JournalFormular.astro';
 import { seiten } from '../config/site';
+import { journalDaten, faqDaten } from '../config/strukturierteDaten';
 import cover from '../assets/journal-cover.jpg';
 import portraet from '../assets/portraet-christine-4x5.jpg';
 
@@ -24,6 +25,28 @@ const ergebnisse = [
   'einen Plan, der bei deinem Ziel beginnt und Hindernisse schon einrechnet',
   'deine Kompass-Seite für das ganze Jahr',
   'einen ersten Schritt für die nächsten 72 Stunden',
+];
+
+/** Häufige Fragen, sichtbar auf der Seite und als strukturierte Daten (Angaben laut Journal und Brevo-Einrichtung) */
+const fragen = [
+  {
+    frage: 'Kostet das Journal etwas?',
+    antwort:
+      'Nein. Du trägst deine E-Mail-Adresse ein und bestätigst die Anmeldung. Danach bekommst du das Journal per E-Mail und anschließend meinen Newsletter, den du jederzeit abbestellen kannst.',
+  },
+  {
+    frage: 'Wie lange brauche ich dafür?',
+    antwort: 'Rund 90 Minuten, am besten verteilt auf zwei oder drei ruhige Abende. Mit dem Kurzweg schaffst du die wichtigsten Übungen in rund 35 Minuten.',
+  },
+  {
+    frage: 'In welchem Format bekomme ich das Journal?',
+    antwort: 'Als PDF in drei Fassungen: zum Ausfüllen auf dem Tablet, zum Ausdrucken und zum Tippen direkt am Bildschirm.',
+  },
+  {
+    frage: 'Ich habe keine Bestätigungsmail bekommen. Was nun?',
+    antwort:
+      'Schau bitte im Spam-Ordner nach und verschieb die Mail in dein Postfach. Erst dort funktioniert der Bestätigungslink. Findest du sie gar nicht, schreib mir eine E-Mail.',
+  },
 ];
 
 /** Die sechs Teile mit Zeitangaben laut Inhaltsverzeichnis des Journals */
@@ -39,8 +62,9 @@ const teile = [
 
 <Base
   dunklerSchluss
-  title="Wer will ich in 12 Monaten sein? Das kostenlose Jahresabschluss-Journal"
-  description="Schließ dein Jahr ab, beschreib, wie du in 12 Monaten leben willst, und leg deinen ersten Schritt fest. Das Jahresabschluss-Journal von Life&Lemons mit Who-to-be-Liste statt Vorsätzen, kostenlos als PDF."
+  title="Persönlicher Jahresrückblick: kostenloses Journal als PDF"
+  description="Jahresrückblick mit Ausblick: Schließ dein Jahr ab, beschreib, wie du in 12 Monaten leben willst, und leg deinen ersten Schritt fest. Mit Who-to-be-Liste statt Vorsätzen, kostenlos als PDF."
+  daten={[journalDaten(cover.src), faqDaten(fragen)]}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
@@ -177,6 +201,25 @@ const teile = [
             Grenzen steht unter <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="fragen-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">Häufige Fragen</p>
+        <h2 id="fragen-titel" class="zeile">Kurz <span class="pivot">beantwortet</span></h2>
+      </div>
+      <div class="text faq">
+        {
+          fragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -325,5 +368,23 @@ const teile = [
   .hinweis {
     margin-top: 20px;
     font-size: 15px;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--linie);
+    padding: 16px 0;
+  }
+
+  .faq details:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .faq summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .faq details p {
+    margin-top: 10px;
   }
 </style>
