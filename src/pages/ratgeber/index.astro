@@ -12,6 +12,7 @@ import JournalKarte from '../../components/JournalKarte.astro';
 import { site } from '../../config/site';
 import { themen, artikel, artikelPfad, aufmacher } from '../../config/ratgeber';
 import kopfBild from '../../assets/ratgeber/magazin-kopf.jpg';
+import portraet from '../../assets/portraet-christine-aquarell.jpg';
 
 const neuester = artikel[0];
 const neuesterBild = neuester ? aufmacher[neuester.slug] : undefined;
@@ -36,7 +37,10 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
             Was will ich eigentlich? Und warum halten meine Vorhaben im Alltag so selten lange? Hier schreibe ich über genau solche Fragen,
             mit Übungen, die du sofort ausprobieren kannst.
           </p>
-          <p class="mkopf__von">Von {site.inhaberin}, {site.rolle}</p>
+          <p class="mkopf__von">
+            <Image class="mkopf__portraet" src={portraet} alt="" widths={[64, 128]} sizes="56px" />
+            <span>Von {site.inhaberin}, {site.rolle}</span>
+          </p>
         </div>
         <div class="mkopf__bild">
           <Image
@@ -169,10 +173,22 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
   }
 
   .mkopf__von {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     font-family: var(--schrift-magazin);
     font-style: italic;
     font-size: 18px;
     margin: 0;
+  }
+
+  .mkopf__portraet {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 18%;
+    flex: none;
   }
 
   .mkopf__bild :global(img) {

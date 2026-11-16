@@ -8,11 +8,11 @@ import '../../styles/magazin.css';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
-import Polaroid from '../../components/Polaroid.astro';
 import { site, seiten } from '../../config/site';
 import { artikelModule, artikel, artikelPfad, themen, aufmacher } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
-import portraet from '../../assets/portraet-christine-4x5.jpg';
+// Aquarell-Porträt nach Christines Foto (von Christine erstellt und freigegeben, 16.11.2026)
+import portraet from '../../assets/portraet-christine-aquarell.jpg';
 
 export function getStaticPaths() {
   return artikelModule.map(({ slug }) => ({ params: { slug } }));
@@ -99,7 +99,7 @@ const bild = aufmacher[slug!];
 
         <div class="autorin">
           <div class="autorin__foto">
-            <Polaroid bild={portraet} alt="Christine Achmus" name="Christine" bildposition="50% 20%" />
+            <Image src={portraet} alt="Christine Achmus als Aquarell-Porträt vor einer mediterranen Terrasse" widths={[200, 340]} sizes="170px" />
           </div>
           <div>
             <p class="label">Über die Autorin</p>
@@ -394,6 +394,12 @@ const bild = aufmacher[slug!];
     .autorin {
       grid-template-columns: 170px minmax(0, 1fr);
     }
+  }
+
+  .autorin__foto :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .autorin__foto {
