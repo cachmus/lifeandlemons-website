@@ -5,16 +5,15 @@
  * seit 30.10.2026 ergänzt um Positionierungspapier V4, § 11 und § 17 (Wege, häufige Fragen).
  * Die Grundlagen stehen seit 30.10.2026 auf der Seite „Wie ich arbeite“ (#grundlagen).
  * Preise, Fristen und Buttons: src/config/angebote.ts.
- * Anker: #kursbuch (Kurzlink /buch), #club (Kurzlink /club), #formate
+ * Anker: #kursbuch (Kurzlink /buch), #try-a-life, #formate. Club, Einzel- und VIP-Track seit 16.11.2026 entfernt (vorerst kein begleitetes Angebot).
  */
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import umschlag from '../../assets/kursbuch-umschlag.png';
 import FormatKarte from '../../components/FormatKarte.astro';
-import AngebotButton from '../../components/AngebotButton.astro';
 import FesterKnopf from '../../components/FesterKnopf.astro';
 import BlickInsBuch from '../../components/BlickInsBuch.astro';
-import { seiten, anfrageLink } from '../../config/site';
+import { seiten } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
 import { kursbuchDaten } from '../../config/strukturierteDaten';
 
@@ -64,7 +63,7 @@ const fragen = [
   },
   {
     frage: 'Was ist, wenn ich allein nicht dranbleibe?',
-    antwort: 'Dafür ist das Workbook gebaut: Du beginnst mit sehr kleinen Schritten und benennst einen Zeugen, der weiß, was du dir vorgenommen hast. Wenn du mehr Unterstützung möchtest, wählst du einen begleiteten Weg.',
+    antwort: 'Dafür ist das Workbook gebaut: Du beginnst mit sehr kleinen Schritten und benennst einen Zeugen, der weiß, was du dir vorgenommen hast.',
   },
   {
     frage: 'Ist das eine Therapie?',
@@ -76,7 +75,7 @@ const fragen = [
   },
   {
     frage: 'Was ist der Unterschied zwischen Mentoring und Coaching?',
-    antwort: 'Als Mentorin gebe ich dir eine Methode an die Hand, die ich zuerst an mir selbst erprobt habe, und gehe meinen eigenen Weg damit ein Stück voraus. Im VIP-Track arbeiten wir zusätzlich im 1:1-Coaching an deiner persönlichen Situation.',
+    antwort: 'Als Mentorin gebe ich dir eine Methode an die Hand, die ich zuerst an mir selbst erprobt habe, und gehe meinen eigenen Weg damit ein Stück voraus.',
   },
   {
     frage: 'Was passiert, wenn mein Entwurf im Test nicht passt?',
@@ -88,16 +87,12 @@ const fragen = [
   },
 ];
 
-const orientierung = anfrageLink(
-  'Orientierung',
-  'Hallo Christine,\n\nich möchte gern ein Orientierungsgespräch führen.\n\nName:\nTelefonnummer:\nZwei Zeitfenster, die mir passen:\n',
-);
 ---
 
 <Base
   dunklerSchluss
-  title="Entwirf dein Zukunfts-Ich: Workbook und Begleitung"
-  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, was dich bremst, und testest deine Richtung im Alltag. Als Workbook, in einer Gruppe in Hannover oder mit persönlicher Begleitung."
+  title="Entwirf dein Zukunfts-Ich: Workbook und App"
+  description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft, erkennst, was dich bremst, und testest deine Richtung im Alltag. Als gedrucktes Workbook oder als Life-Coaching-App Try a Life."
   daten={[kursbuchDaten(umschlag.src)]}
 >
   <!-- Einstieg -->
@@ -220,12 +215,12 @@ const orientierung = anfrageLink(
         <p class="label">04 · Angebot und Preise</p>
         <h2 id="formate-titel" class="zeile">Wähle deinen <span class="pivot">Weg</span></h2>
         <p class="einleitung text">
-          Alle Wege führen durch dieselben neun Einheiten und dieselbe Methode. Sie unterscheiden sich darin, wie viel Begleitung du
-          dir wünschst. Auf jedem Weg arbeitest du rund zehn Stunden aktiv an deinem Zukunfts-Ich, verteilt über bis zu sechs Wochen.
+          Beide Wege führen durch dieselben neun Einheiten und dieselbe Methode: auf Papier mit dem Workbook oder als App mit Try a
+          Life. Auf beiden Wegen arbeitest du rund zehn Stunden aktiv an deinem Zukunfts-Ich, verteilt über bis zu sechs Wochen.
           {
             einfuehrungAktiv() && (
               <>
-                {' '}Die Einführungspreise gelten für die ersten Durchläufe und bei Anmeldungen bis einschließlich{' '}
+                {' '}Der Einführungspreis für das Workbook gilt bei Bestellungen bis einschließlich{' '}
                 {formatDatum(STICHTAGE.einfuehrungBis)}.
               </>
             )
@@ -235,33 +230,7 @@ const orientierung = anfrageLink(
 
       <div class="formate">
         <FormatKarte id="kursbuch" anker="kursbuch" />
-        <FormatKarte id="club" anker="club" />
-        <FormatKarte id="einzel" anker="einzel-track" />
-        <FormatKarte id="vip" anker="vip-track" />
-      </div>
-
-      <div class="demnaechst" data-erscheinen>
-        <p><span class="label">In Vorbereitung</span> Ein Selbstlernkurs mit Videos zu den neun Einheiten.</p>
-        <AngebotButton id="selbstlernkurs" />
-      </div>
-    </div>
-  </section>
-
-  <!-- Orientierung -->
-  <section class="abschnitt" aria-labelledby="orientierung-titel">
-    <div class="container zwei-spalten">
-      <div class="kopfblock">
-        <p class="label">Orientierungsgespräch</p>
-        <h2 id="orientierung-titel" class="zeile">Noch unsicher, welcher <span class="pivot">Weg</span> zu dir passt?</h2>
-      </div>
-      <div class="fliesstext text" data-erscheinen>
-        <p>
-          Dann lass uns 15 Minuten telefonieren. Das Orientierungsgespräch ist kostenlos und unverbindlich. Schreib mir dafür eine
-          E-Mail mit deinem Namen, deiner Telefonnummer und zwei Zeitfenstern, die dir passen.
-        </p>
-        <p>
-          <a class="button" href={orientierung}>Orientierungsgespräch anfragen <span class="button__pfeil" aria-hidden="true">→</span></a>
-        </p>
+        <FormatKarte id="try-a-life" anker="try-a-life" />
       </div>
     </div>
   </section>

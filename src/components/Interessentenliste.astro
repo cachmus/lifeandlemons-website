@@ -26,7 +26,7 @@ interface Props {
 const { label, titel, pivot, nach, text, vorauswahl = [] } = Astro.props;
 const angebunden = newsletter.formularAdresse.length > 0;
 // Mit Brevo-Anbindung nur Interessen zeigen, für die es eine Liste gibt
-const interessen = angebunden ? newsletter.interessen.filter((i) => i.brevoListe !== '') : newsletter.interessen;
+const interessen = angebunden ? newsletter.interessen.filter((i) => (i.brevoListe as string) !== '') : newsletter.interessen;
 const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktEmail}?subject=Interessentenliste`;
 ---
 

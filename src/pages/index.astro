@@ -269,7 +269,7 @@ const hilft = [
             },
             {
               label: 'Einstieg',
-              text: 'Das Workbook ist einzeln erhältlich, sobald es erscheint. Persönliche Begleitung beginnt mit einem Orientierungsgespräch, in dem wir klären, ob Modul 1 vorher sinnvoll ist.',
+              text: 'Das Workbook ist einzeln erhältlich, sobald es erscheint.',
             },
           ]}
           link={{ href: '#liste', label: 'Benachrichtige mich zum Start' }}
@@ -344,7 +344,7 @@ const hilft = [
             <Image src={talBild} alt="" widths={[480, 720]} sizes="(min-width: 860px) 560px, 92vw" />
           </a>
           <div class="einstieg__text">
-            <p class="label">Neu · Start {tryALifeAnkuendigung.start}</p>
+            <p class="label">Neu · {tryALifeAnkuendigung.status}</p>
             <h3><Image class="einstieg__wortmarke" src={wortmarke} alt="Try a Life" width={260} /></h3>
             <p>Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Trag dich ein, dann erfährst du zuerst, wenn es losgeht.</p>
             <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="start-try" />

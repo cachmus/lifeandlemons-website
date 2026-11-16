@@ -113,7 +113,8 @@ export function preisHinweis(a: Angebot): string {
 }
 
 /** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung oder Anmeldung per E-Mail. */
-function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {
+// Für Try a Life ab dem Verkaufsstart (nur digitale Produkte über Digistore24, 16.11.2026).
+export function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {
   return url
     ? { typ: 'checkout', anbieter: 'digistore24', url, label }
     : { typ: 'anfrage', url: ersatz, label: ersatzLabel };
@@ -237,7 +238,7 @@ export const angebote: Angebot[] = [
     id: 'try-a-life',
     modul: 1,
     name: 'Try a Life',
-    art: 'Life-Coaching-App · in Vorbereitung',
+    art: 'Life-Coaching-App · bald verfügbar',
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
@@ -247,18 +248,7 @@ export const angebote: Angebot[] = [
     status: 'in-vorbereitung',
     aktion: { typ: 'liste', url: `${seiten.tryALife}#liste`, label: 'Benachrichtige mich zum Start' },
   },
-  {
-    id: 'selbstlernkurs',
-    modul: 1,
-    name: 'Selbstlernkurs mit Video',
-    art: 'In Vorbereitung',
-    fuerDich: 'du mit dem Workbook allein arbeitest und dir zu jeder Einheit eine Erklärung im Video wünschst.',
-    enthaelt: 'Videos zu den neun Einheiten.',
-    preisRegulaerBestaetigt: false,
-    ausgebucht: false,
-    status: 'in-vorbereitung',
-    aktion: zurListe(),
-  },
+
   {
     id: 'kursbuch-band-2',
     modul: 2,

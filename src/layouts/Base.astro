@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, aktuellerKopfKnopf } from '../config/site';
+import { angebotNachId } from '../config/angebote';
 import { pruefeAngebote } from '../config/angebote';
 import { grunddaten } from '../config/strukturierteDaten';
 import Logo from '../components/Logo.astro';
@@ -28,7 +29,7 @@ interface Props {
 
 const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website' } = Astro.props;
 const istStart = Astro.url.pathname === '/';
-const knopf = aktuellerKopfKnopf();
+const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;

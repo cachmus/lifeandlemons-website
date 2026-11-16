@@ -87,16 +87,16 @@ export const hauptnavigation: NavPunkt[] = [
 
 /**
  * Knopf rechts im Kopfbereich: immer das aktuelle Hauptangebot (Neugestaltung, entschieden 16.11.2026).
- * Der Wechsel greift beim ersten Build ab `wechselAm` (der Verkaufsstart bringt ohnehin einen Deploy).
+ * Der Wechsel greift mit dem Deploy, der Try a Life auf „verfuegbar“ stellt.
  */
+// Christine, 16.11.2026: Der Knopf wechselt, sobald Try a Life kaufbar ist (Status „verfuegbar“ in angebote.ts), nicht an einem Datum.
 export const kopfKnopf = {
-  wechselAm: '2027-01-04',
   vorher: { text: 'Gratis-Journal', ziel: seiten.journal },
   nachher: { text: 'Try a Life', ziel: seiten.tryALife },
 } as const;
 
-export function aktuellerKopfKnopf(heute = new Date()): { text: string; ziel: string } {
-  return heute >= new Date(`${kopfKnopf.wechselAm}T00:00:00+01:00`) ? kopfKnopf.nachher : kopfKnopf.vorher;
+export function aktuellerKopfKnopf(tryALifeVerfuegbar: boolean): { text: string; ziel: string } {
+  return tryALifeVerfuegbar ? kopfKnopf.nachher : kopfKnopf.vorher;
 }
 
 /**
@@ -121,7 +121,8 @@ export const hinweisleiste = {
  * `start` erscheint öffentlich (entschieden 16.11.2026: Start Anfang Januar). Bei Verschiebung nur hier ändern.
  */
 export const tryALifeAnkuendigung = {
-  start: 'Anfang Januar',
+  // Christine, 16.11.2026: kein Datum nennen, Start, sobald die Vollversion online ist.
+  status: 'Bald verfügbar',
   brevoListe: '9',
 } as const;
 
@@ -144,7 +145,7 @@ export const fussnavigation: NavPunkt[] = [
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
  * 4. Die Listen-IDs unten bei `brevoListe` eintragen. Stand 11.11.2026: #9 Try a Life · Warteliste, #10 Life&Lemons · Newsletter,
  *    #11 Life&Lemons · Jahresabschluss-Journal, #12 Modul 2 · Warteliste. Interessen ohne Liste blendet das Formular aus,
- *    sobald Brevo angebunden ist (betrifft derzeit Selbstlernkurs, Club und Einzel-Track).
+ *    sobald Brevo angebunden ist. Selbstlernkurs, Club und Einzel-Track seit 16.11.2026 entfernt.
  * 5. Einstellungen → Kontakte → „Per-contact pixel tracking consent“: „Track contacts whose consent is unknown“ auf „No“
  *    stellen und kein Zustimmungsfeld für Tracking ins Formular aufnehmen. Die Datenschutzerklärung sagt zu, dass
  *    Öffnungen und Klicks nicht ausgewertet werden (entschieden 19.10.2026).
@@ -161,9 +162,6 @@ export const newsletter = {
   interessen: [
     { id: 'tryalife', label: 'die Life-Coaching-App „Try a Life“', brevoListe: '9' },
     { id: 'modul2', label: 'Workbook Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
-    { id: 'selbstlernkurs', label: 'Selbstlernkurs mit Video', brevoListe: '' },
-    { id: 'club', label: 'die nächste Gruppe im Life&Lemons Club', brevoListe: '' },
-    { id: 'einzel', label: 'den Einzel-Track ab Sommer 2027', brevoListe: '' },
   ],
   /**
    * PLATZHALTER: Einwilligungstext. Vor dem Livegang durch den Text aus dem Brevo-Formular ersetzen
