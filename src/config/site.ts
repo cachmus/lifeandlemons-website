@@ -86,9 +86,22 @@ export type NavPunkt = { label: string; href: string };
 export const hauptnavigation: NavPunkt[] = [
   { label: 'Angebote', href: seiten.angebote },
   { label: 'Ratgeber', href: seiten.ratgeber },
-  { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
   { label: 'Über mich', href: seiten.ueberMich },
 ];
+
+/**
+ * Knopf rechts im Kopfbereich: immer das aktuelle Hauptangebot (Neugestaltung, entschieden 16.11.2026).
+ * Der Wechsel greift beim ersten Build ab `wechselAm` (der Verkaufsstart bringt ohnehin einen Deploy).
+ */
+export const kopfKnopf = {
+  wechselAm: '2027-01-04',
+  vorher: { text: 'Gratis-Journal', ziel: seiten.journal },
+  nachher: { text: 'Try a Life', ziel: seiten.tryALife },
+} as const;
+
+export function aktuellerKopfKnopf(heute = new Date()): { text: string; ziel: string } {
+  return heute >= new Date(`${kopfKnopf.wechselAm}T00:00:00+01:00`) ? kopfKnopf.nachher : kopfKnopf.vorher;
+}
 
 /**
  * Hinweisleiste über dem Kopf auf jeder Seite (entschieden 16.11.2026: schließen erlaubt).
@@ -117,6 +130,7 @@ export const tryALifeAnkuendigung = {
 } as const;
 
 export const fussnavigation: NavPunkt[] = [
+  { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
   { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },
   { label: 'Impressum', href: seiten.impressum },
   { label: 'Datenschutz', href: seiten.datenschutz },

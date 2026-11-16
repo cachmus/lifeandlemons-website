@@ -2,25 +2,46 @@
  * Ratgeber: Themen und Artikel.
  * Artikel liegen als Markdown in src/ratgeber/<slug>.md und erscheinen unter /ratgeber/<slug>/.
  * Neues Thema: hier in `themen` ergänzen. Themen ohne Artikel werden auf der Übersicht nicht angezeigt.
+ * Bilder: Aquarellmotive aus Christines Bestand (Game/Stil_Design_Bilder_Motive, Rechte bei Christine, bestätigt 16.11.2026).
+ * Neuer Artikel: Aufmacher in src/assets/ratgeber/ ablegen und unten in `aufmacher` eintragen.
  */
+import type { ImageMetadata } from 'astro';
+import bildJahresrueckblick from '../assets/ratgeber/thema-jahresrueckblick.png';
+import bildOrientierung from '../assets/ratgeber/thema-orientierung.jpg';
+import bildDranbleiben from '../assets/ratgeber/thema-dranbleiben.jpg';
+import aufmacherJahresrueckblick from '../assets/ratgeber/aufmacher-jahresrueckblick.jpg';
 
 export const themen = [
   {
     id: 'jahresrueckblick',
     label: 'Jahresrückblick und Neuanfang',
     beschreibung: 'Wenn du dein Jahr abschließen und mit einem klaren Bild ins nächste gehen willst.',
+    bild: bildJahresrueckblick,
+    bildAlt: 'Aquarell eines Wandkalenders aus Papier mit Zitronenblüte',
   },
   {
     id: 'orientierung',
     label: 'Orientierung und Lebensziele',
     beschreibung: 'Wenn dein Leben funktioniert, sich aber nicht mehr ganz nach deinem eigenen anfühlt.',
+    bild: bildOrientierung,
+    bildAlt: 'Aquarell einer Terrasse mit Kompass und Globus über einem See',
   },
   {
     id: 'dranbleiben',
     label: 'Dranbleiben und Gewohnheiten',
     beschreibung: 'Wenn deine Vorhaben im Alltag immer wieder versanden.',
+    bild: bildDranbleiben,
+    bildAlt: 'Aquarell einer sonnigen Steintreppe zwischen Häusern mit Blumen',
   },
 ] as const;
+
+/** Aufmacherbild je Artikel (Hochformat), Schlüssel = Dateiname des Artikels */
+export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
+  'jahresrueckblick-fragen': {
+    bild: aufmacherJahresrueckblick,
+    alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
+  },
+};
 
 export type ThemaId = (typeof themen)[number]['id'];
 

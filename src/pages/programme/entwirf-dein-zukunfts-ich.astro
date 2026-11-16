@@ -12,6 +12,7 @@ import Base from '../../layouts/Base.astro';
 import umschlag from '../../assets/kursbuch-umschlag.png';
 import FormatKarte from '../../components/FormatKarte.astro';
 import AngebotButton from '../../components/AngebotButton.astro';
+import FesterKnopf from '../../components/FesterKnopf.astro';
 import { seiten, anfrageLink } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
 import { kursbuchDaten } from '../../config/strukturierteDaten';
@@ -299,6 +300,7 @@ const orientierung = anfrageLink(
       </div>
     </div>
   </section>
+  <FesterKnopf zeile="Kursbuch „Entwirf dein Zukunfts-Ich“" angebot="kursbuch" ausblendenBei="#kursbuch" />
 </Base>
 
 <style>

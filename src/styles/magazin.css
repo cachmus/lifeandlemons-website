@@ -1,0 +1,69 @@
+/*
+ * Ratgeber als Magazin, Richtung B „Abendlicht“ (entschieden 16.11.2026, Christine).
+ * Dunkler, warmer Grund für Kopf, Rubriken und Aufmacher; lange Texte auf heller Lesefläche.
+ * Pittoresk, nicht verspielt: gedeckte Farben, viel Raum, Aquarellmotive aus Christines Bestand.
+ * Wird nur von den Ratgeber-Seiten geladen. Schrift lokal über Fontsource.
+ */
+@import '@fontsource/newsreader/latin-400.css';
+@import '@fontsource/newsreader/latin-400-italic.css';
+@import '@fontsource/newsreader/latin-500.css';
+@import '@fontsource/newsreader/latin-500-italic.css';
+
+:root {
+  --abend-grund: #221c19;
+  --abend-flaeche: #2c2420;
+  --abend-linie: #4a3d36;
+  --abend-text: #f2eadd; /* auf Grund 14,6 : 1 */
+  --abend-gedaempft: #c8b9a6; /* auf Grund 9,0 : 1 */
+  --abend-akzent: #e6ad7e; /* Kennzeilen und Links auf Grund, 8,7 : 1 */
+  --lesen-grund: #faf6ef;
+  --lesen-linie: #e2d8c9;
+  --schrift-magazin: 'Newsreader', Georgia, 'Times New Roman', serif;
+}
+
+.magazin {
+  background: var(--abend-grund);
+  color: var(--abend-text);
+}
+
+.magazin .m-kennzeile {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--abend-akzent);
+  margin: 0;
+}
+
+.magazin .m-titel {
+  font-family: var(--schrift-magazin);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+.magazin .m-titel em {
+  font-style: italic;
+  color: var(--abend-akzent);
+}
+
+.magazin .m-gedaempft {
+  color: var(--abend-gedaempft);
+}
+
+.magazin :focus-visible {
+  outline: 2px solid var(--abend-akzent);
+  outline-offset: 3px;
+}
+
+/* Helle Karten im Magazin (Journal-Karte) behalten die dunkle Schrift */
+.magazin .m-hell {
+  color: var(--tinte);
+}
+
+/* Auf Magazinseiten geht die Seite in denselben warmen Grund über, statt in das Grün des Fußes zu springen */
+body:has(.magazin) .fuss {
+  background: var(--abend-grund);
+  border-top: 1px solid var(--abend-linie);
+}

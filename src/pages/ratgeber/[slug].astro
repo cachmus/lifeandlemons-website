@@ -2,12 +2,15 @@
 /**
  * Ratgeberartikel. Inhalte aus src/ratgeber/<slug>.md (Frontmatter siehe src/config/ratgeber.ts).
  * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, weitere Artikel.
+ * Gestaltung als Magazin, Richtung B „Abendlicht“ (16.11.2026): dunkler Kopf mit Aufmacher, Text auf heller Lesefläche.
  */
+import '../../styles/magazin.css';
+import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import Polaroid from '../../components/Polaroid.astro';
 import { site, seiten } from '../../config/site';
-import { artikelModule, artikel, artikelPfad, themen } from '../../config/ratgeber';
+import { artikelModule, artikel, artikelPfad, themen, aufmacher } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
 import portraet from '../../assets/portraet-christine-4x5.jpg';
 
@@ -24,27 +27,42 @@ const thema = themen.find((t) => t.id === a.thema)!;
 const weitere = artikel.filter((x) => x.slug !== slug && x.thema === a.thema).slice(0, 3);
 const datum = new Date(a.aktualisiert ?? a.veroeffentlicht).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 const pfad = artikelPfad(slug!);
+const bild = aufmacher[slug!];
 ---
 
 <Base
   title={a.titel}
   description={a.beschreibung}
   ogTyp="article"
+  dunklerSchluss
   daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq })}
 >
-  <article class="artikel">
-    <header class="container artikel__kopf">
-      <nav class="krumen" aria-label="Brotkrumen">
-        <a href={seiten.ratgeber}>Ratgeber</a>
-        <span aria-hidden="true">/</span>
-        <span>{thema.label}</span>
-      </nav>
-      <h1>{a.titel}</h1>
-      <p class="artikel__meta">
-        Von <a href={seiten.ueberMich}>{site.inhaberin}</a>{` · ${a.aktualisiert ? 'Aktualisiert' : 'Veröffentlicht'} am ${datum} · ${a.lesezeit} Minuten Lesezeit`}
-      </p>
+  <article class="artikel magazin">
+    <header class="akopf">
+      <div class="container akopf__raster">
+        <div class="akopf__text">
+          <nav class="krumen" aria-label="Brotkrumen">
+            <a href={seiten.ratgeber}>Ratgeber</a>
+            <span aria-hidden="true">/</span>
+            <span>{thema.label}</span>
+          </nav>
+          <h1 class="m-titel akopf__titel">{a.titel}</h1>
+          <p class="akopf__beschreibung m-gedaempft">{a.beschreibung}</p>
+          <p class="akopf__meta m-gedaempft">
+            Von <a href={seiten.ueberMich}>{site.inhaberin}</a>{` · ${a.aktualisiert ? 'Aktualisiert' : 'Veröffentlicht'} am ${datum} · ${a.lesezeit} Minuten Lesezeit`}
+          </p>
+        </div>
+        {
+          bild && (
+            <div class="akopf__bild">
+              <Image src={bild.bild} alt={bild.alt} widths={[420, 640, 1000]} sizes="(min-width: 960px) 440px, 100vw" loading="eager" />
+            </div>
+          )
+        }
+      </div>
     </header>
 
+    <div class="lesen">
     <div class="container artikel__raster">
       <aside class="inhalt" aria-label="Inhalt dieses Artikels">
         <p class="inhalt__titel">Inhalt</p>
@@ -70,7 +88,7 @@ const pfad = artikelPfad(slug!);
           <Inhalt />
         </div>
 
-        <div class="artikel__journal">
+        <div class="artikel__journal m-hell">
           <JournalKarte
             variante="kompakt"
             ueberschriftEbene="h2"
@@ -108,59 +126,140 @@ const pfad = artikelPfad(slug!);
           )
         }
 
-        {
-          weitere.length > 0 && (
-            <nav class="weitere" aria-label="Weitere Artikel zum Thema">
-              <p class="label">Weiterlesen</p>
-              <ul>
-                {weitere.map((w) => (
-                  <li>
-                    <a href={artikelPfad(w.slug)}>{w.kurztitel}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )
-        }
-
         <p class="hinweis gedaempft">
           Dieser Artikel dient der Selbstreflexion und ersetzt keine Psychotherapie oder medizinische Behandlung.
         </p>
       </div>
     </div>
+    </div>
+
+    <nav class="aende" aria-label="Weiterlesen im Ratgeber">
+      <div class="container aende__innen">
+        <p class="m-kennzeile">Weiterlesen</p>
+        {
+          weitere.length > 0 && (
+            <ul class="aende__liste">
+              {weitere.map((w) => (
+                <li>
+                  <a class="m-titel" href={artikelPfad(w.slug)}>{w.kurztitel}</a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        <a class="aende__alle" href={seiten.ratgeber}>Alle Artikel im Ratgeber <span aria-hidden="true">→</span></a>
+      </div>
+    </nav>
   </article>
 </Base>
 
 <style>
-  .artikel__kopf {
-    padding-top: clamp(32px, 5vw, 72px);
-    padding-bottom: clamp(24px, 3vw, 40px);
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    max-width: calc(var(--breite-seite) - 2 * var(--rand));
+  .akopf {
+    padding: clamp(32px, 6vw, 88px) 0 clamp(40px, 6vw, 80px);
   }
 
-  .artikel__kopf h1 {
-    max-width: 22ch;
+  .akopf__raster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .akopf__raster {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+  }
+
+  .akopf__text {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .akopf__titel {
+    font-size: clamp(38px, 5.2vw, 72px);
+    max-width: 18ch;
+  }
+
+  .akopf__beschreibung {
+    font-family: var(--schrift-magazin);
+    font-style: italic;
+    font-size: clamp(19px, 1.8vw, 23px);
+    line-height: 1.5;
+    max-width: 34rem;
+    margin: 0;
+  }
+
+  .akopf__meta {
+    font-size: 14.5px;
+    margin: 0;
+  }
+
+  .akopf__meta a {
+    color: var(--abend-akzent);
+    font-weight: 700;
+  }
+
+  .akopf__bild :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
   }
 
   .krumen {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    font-size: 14px;
-    color: var(--text-gedaempft);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--abend-gedaempft);
   }
 
   .krumen a {
-    color: var(--terrakotta-tief);
+    color: var(--abend-akzent);
     font-weight: 700;
   }
 
-  .artikel__meta {
-    font-size: 15px;
-    color: var(--text-gedaempft);
+  .lesen {
+    background: var(--lesen-grund);
+    color: var(--tinte);
+    padding-top: clamp(40px, 6vw, 88px);
+  }
+
+  .aende {
+    padding: clamp(48px, 7vw, 96px) 0 clamp(64px, 8vw, 112px);
+  }
+
+  .aende__innen {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .aende__liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .aende__liste a {
+    font-size: clamp(26px, 3vw, 38px);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .aende__alle {
+    font-weight: 700;
+    color: var(--abend-akzent) !important;
+    align-self: flex-start;
+    border-bottom: 1px solid currentColor;
   }
 
   .artikel__raster {
@@ -183,7 +282,7 @@ const pfad = artikelPfad(slug!);
 
   .inhalt {
     font-size: 15px;
-    border-left: 2px solid var(--linie);
+    border-left: 2px solid var(--lesen-linie);
     padding-left: 18px;
   }
 
@@ -224,16 +323,18 @@ const pfad = artikelPfad(slug!);
   }
 
   .kurz {
-    background: var(--leinen);
+    background: #f1e8da;
     border-left: 3px solid var(--terrakotta);
     padding: clamp(20px, 3vw, 28px);
   }
 
   .kurz__titel {
-    font-family: var(--schrift-hand);
-    font-size: 28px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--terrakotta-tief);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .kurz ul {
@@ -245,13 +346,31 @@ const pfad = artikelPfad(slug!);
   }
 
   .prosa {
-    font-size: 18px;
-    line-height: 1.7;
+    font-family: var(--schrift-magazin);
+    font-size: clamp(19px, 1.5vw, 21px);
+    line-height: 1.68;
+  }
+
+  .prosa > :global(p:first-of-type::first-letter) {
+    float: left;
+    font-size: 4.2em;
+    line-height: 0.82;
+    padding: 0.06em 0.1em 0 0;
+    color: var(--terrakotta-tief);
   }
 
   .prosa :global(h2) {
+    font-family: var(--schrift-magazin);
+    font-weight: 500;
+    font-size: clamp(28px, 2.8vw, 38px);
+    line-height: 1.15;
     margin: 1.8em 0 0.6em;
     scroll-margin-top: 110px;
+  }
+
+  .prosa :global(h3) {
+    font-family: var(--schrift-magazin);
+    font-weight: 500;
   }
 
   .prosa :global(p) {
@@ -306,11 +425,6 @@ const pfad = artikelPfad(slug!);
 
   .fragen details p {
     margin-top: 10px;
-  }
-
-  .weitere ul {
-    margin: 8px 0 0;
-    padding-left: 20px;
   }
 
   .hinweis {

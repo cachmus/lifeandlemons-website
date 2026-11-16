@@ -14,6 +14,7 @@ import ModulKarte from '../components/ModulKarte.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
 import WartelisteKurz from '../components/WartelisteKurz.astro';
+import AngebotsVergleich from '../components/AngebotsVergleich.astro';
 import { site, seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-mauer.jpg';
@@ -68,7 +69,7 @@ const hilft = [
           werden soll.
         </p>
         <div class="aktionen">
-          <a class="button" href="#weg">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="button" href="#wege">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
           <a class="textlink" href="#ueber">Lerne mich kennen</a>
         </div>
         <a class="neu" href={seiten.journal}>
@@ -101,6 +102,17 @@ const hilft = [
           quality={80}
         />
       </div>
+    </div>
+  </section>
+
+  <!-- 1b. Welcher Weg passt zu dir? · Überblick über die Einstiege direkt nach dem ersten Bildschirm (Neugestaltung 16.11.2026) -->
+  <section class="abschnitt abschnitt--wege" aria-labelledby="wege-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">Dein Einstieg</p>
+        <h2 id="wege-titel" class="zeile">Welcher Weg passt zu <span class="pivot">dir</span>?</h2>
+      </div>
+      <AngebotsVergleich />
     </div>
   </section>
 
@@ -292,7 +304,7 @@ const hilft = [
   <section class="abschnitt" id="kursbuch" aria-labelledby="einstieg-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">06 · Dein Einstieg</p>
+        <p class="label">06 · Die Einstiege im Detail</p>
         <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
         <p class="einleitung text">
           Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn

@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche } from '../config/site';
+import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, aktuellerKopfKnopf } from '../config/site';
 import { pruefeAngebote } from '../config/angebote';
 import { grunddaten } from '../config/strukturierteDaten';
 import Logo from '../components/Logo.astro';
@@ -18,7 +18,7 @@ interface Props {
    * Sonst bekommt der Footer selbst einen weichen Übergang.
    */
   dunklerSchluss?: boolean;
-  /** Blendet „Zum Kursbuch“ in der Kopfzeile aus, z. B. auf Danke-Seiten nach einem Kauf */
+  /** Blendet den Knopf zum Hauptangebot in der Kopfzeile aus, z. B. auf Danke-Seiten nach einem Kauf */
   ohneKaufbutton?: boolean;
   /** Zusätzliche strukturierte Daten dieser Seite (siehe src/config/strukturierteDaten.ts) */
   daten?: Record<string, unknown>[];
@@ -28,6 +28,7 @@ interface Props {
 
 const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website' } = Astro.props;
 const istStart = Astro.url.pathname === '/';
+const knopf = aktuellerKopfKnopf();
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
@@ -141,7 +142,7 @@ if (!g.__angeboteGeprueft) {
             }
           </ul>
         </nav>
-        {!ohneKaufbutton && <a class="button button--klein kopf__button" href={`${seiten.modul1}#kursbuch`}>Zum Kursbuch</a>}
+        {!ohneKaufbutton && !pfad.startsWith(knopf.ziel) && <a class="button button--klein kopf__button" href={knopf.ziel}>{knopf.text}</a>}
       </div>
     </header>
 

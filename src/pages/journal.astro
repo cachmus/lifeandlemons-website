@@ -10,6 +10,7 @@
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import FesterKnopf from '../components/FesterKnopf.astro';
 import Polaroid from '../components/Polaroid.astro';
 import JournalFormular from '../components/JournalFormular.astro';
 import { seiten } from '../config/site';
@@ -247,6 +248,7 @@ const teile = [
     pivot="Journal"
     text="Trag deine E-Mail-Adresse ein und bestätige kurz deine Anmeldung. Direkt danach liegt dein Journal mit allen drei Fassungen in deinem Postfach, als Geschenk von mir."
   />
+  <FesterKnopf zeile="Gratis-Journal für deinen Jahresrückblick" text="Kostenlos holen" ziel="#anfordern" ausblendenBei="#anfordern" />
 </Base>
 
 <style>

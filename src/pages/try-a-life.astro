@@ -10,9 +10,10 @@
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import FesterKnopf from '../components/FesterKnopf.astro';
 import AngebotButton from '../components/AngebotButton.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
-import { seiten } from '../config/site';
+import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import BlickInsSpiel from '../components/BlickInsSpiel.astro';
 import talBild from '../assets/try-a-life-tal.jpg';
@@ -168,6 +169,7 @@ const umfang = [
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
     vorauswahl={['tryalife']}
   />
+  <FesterKnopf zeile={`Try a Life · Start ${tryALifeAnkuendigung.start}`} angebot="try-a-life" />
 </Base>
 
 <style>
