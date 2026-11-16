@@ -3,9 +3,8 @@
  * „Blick ins Spiel“: Bild-Slider mit Screenshots aus Try a Life (Wunsch Christine, 16.11.2026).
  * Aufgenommen am 16.11.2026 im laufenden Spiel (Stand Branch fix/weg-im-bild, PR #112, Vollversion, Handyansicht), mit Beispiel-Spielständen.
  * Bildunterschriften geprüft gegen die Stationen im Spiel (Repository lifeandlemons-spiel, CLAUDE.md).
- * Ohne Bibliothek: Scroll-Snap, Pfeile und Punkte mit wenigen Zeilen Skript. Ohne Skript bleibt der Slider wischbar.
  */
-import { Image } from 'astro:assets';
+import BildSlider from './BildSlider.astro';
 import tal from '../assets/blick-ins-spiel/01-tal.jpg';
 import rad from '../assets/blick-ins-spiel/02-lebensrad.jpg';
 import wartebank from '../assets/blick-ins-spiel/03-wartebank.jpg';
@@ -21,7 +20,6 @@ interface Props {
   ueberschriftEbene?: 'h2' | 'h3';
 }
 const { kennung = 'blick', ueberschriftEbene = 'h3' } = Astro.props;
-const Ueberschrift = ueberschriftEbene;
 
 const bilder = [
   {
@@ -72,225 +70,12 @@ const bilder = [
 ];
 ---
 
-<div class="blick" data-blick id={`${kennung}-slider`}>
-  <div class="blick__kopf">
-    <div>
-      <p class="label">Blick ins Spiel</p>
-      <Ueberschrift class="blick__titel">So sieht Try a Life aus</Ueberschrift>
-    </div>
-    <div class="blick__pfeile" data-pfeile hidden>
-      <button type="button" class="blick__pfeil" data-zurueck aria-label="Vorheriges Bild">
-        <span aria-hidden="true">←</span>
-      </button>
-      <button type="button" class="blick__pfeil" data-vor aria-label="Nächstes Bild">
-        <span aria-hidden="true">→</span>
-      </button>
-    </div>
-  </div>
-
-  <ul class="blick__liste" data-liste aria-label="Bilder aus dem Spiel Try a Life" tabindex="0">
-    {
-      bilder.map((b, i) => (
-        <li class="blick__eintrag" aria-label={`Bild ${i + 1} von ${bilder.length}`}>
-          <figure>
-            <Image
-              class="blick__bild"
-              src={b.bild}
-              alt={b.alt}
-              widths={[260, 390, 520]}
-              sizes="(min-width: 960px) 260px, 62vw"
-              loading="lazy"
-            />
-            <figcaption>{b.text}</figcaption>
-          </figure>
-        </li>
-      ))
-    }
-  </ul>
-
-  <div class="blick__punkte" data-punkte hidden>
-    {
-      bilder.map((_, i) => (
-        <button type="button" class="blick__punkt" data-punkt={i} aria-label={`Zu Bild ${i + 1}`} />
-      ))
-    }
-  </div>
-  <p class="blick__hinweis">Bilder aus der Vorschau des Spiels, mit Beispieleinträgen.</p>
-</div>
-
-<script>
-  for (const slider of document.querySelectorAll<HTMLElement>('[data-blick]')) {
-    const liste = slider.querySelector<HTMLElement>('[data-liste]')!;
-    const eintraege = [...liste.querySelectorAll<HTMLElement>('li')];
-    const punkte = [...slider.querySelectorAll<HTMLButtonElement>('[data-punkt]')];
-    const zurueck = slider.querySelector<HTMLButtonElement>('[data-zurueck]')!;
-    const vor = slider.querySelector<HTMLButtonElement>('[data-vor]')!;
-    slider.querySelector<HTMLElement>('[data-pfeile]')!.hidden = false;
-    slider.querySelector<HTMLElement>('[data-punkte]')!.hidden = false;
-
-    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const gehe = (i: number) => {
-      const ziel = eintraege[Math.max(0, Math.min(eintraege.length - 1, i))];
-      liste.scrollTo({ left: ziel.offsetLeft - liste.offsetLeft, behavior: ruhig ? 'auto' : 'smooth' });
-    };
-    const aktuell = () => {
-      const links = liste.scrollLeft;
-      let beste = 0;
-      eintraege.forEach((e, i) => {
-        if (Math.abs(e.offsetLeft - liste.offsetLeft - links) < Math.abs(eintraege[beste].offsetLeft - liste.offsetLeft - links)) beste = i;
-      });
-      return beste;
-    };
-    const aktualisiere = () => {
-      const i = aktuell();
-      punkte.forEach((p, k) => p.setAttribute('aria-current', k === i ? 'true' : 'false'));
-      zurueck.disabled = liste.scrollLeft <= 2;
-      vor.disabled = liste.scrollLeft + liste.clientWidth >= liste.scrollWidth - 2;
-    };
-    zurueck.addEventListener('click', () => gehe(aktuell() - 1));
-    vor.addEventListener('click', () => gehe(aktuell() + 1));
-    punkte.forEach((p, k) => p.addEventListener('click', () => gehe(k)));
-    liste.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); gehe(aktuell() + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); gehe(aktuell() - 1); }
-    });
-    let warte = 0;
-    liste.addEventListener('scroll', () => {
-      cancelAnimationFrame(warte);
-      warte = requestAnimationFrame(aktualisiere);
-    }, { passive: true });
-    window.addEventListener('resize', aktualisiere);
-    aktualisiere();
-  }
-</script>
-
-<style>
-  .blick {
-    margin-top: clamp(48px, 7vw, 88px);
-  }
-
-  .blick__kopf {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-
-  .blick__titel {
-    font-family: var(--schrift-titel);
-    font-weight: 500;
-    font-size: clamp(28px, 3.4vw, 40px);
-    line-height: 1.1;
-    margin: 0;
-  }
-
-  .blick__pfeile {
-    display: flex;
-    gap: 8px;
-  }
-
-  .blick__pfeile[hidden],
-  .blick__punkte[hidden] {
-    display: none;
-  }
-
-  .blick__pfeil {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--tinte);
-    background: transparent;
-    color: var(--tinte);
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .blick__pfeil:hover:not(:disabled) {
-    background: var(--tinte);
-    color: var(--papier-hell);
-  }
-
-  .blick__pfeil:disabled {
-    opacity: 0.35;
-    cursor: default;
-  }
-
-  .blick__pfeil:focus-visible,
-  .blick__punkt:focus-visible,
-  .blick__liste:focus-visible {
-    outline: 2px solid var(--terrakotta-tief);
-    outline-offset: 3px;
-  }
-
-  .blick__liste {
-    list-style: none;
-    margin: 0;
-    padding: 0 0 8px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(62vw, 260px);
-    gap: clamp(16px, 2vw, 28px);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-  }
-
-  .blick__eintrag {
-    scroll-snap-align: start;
-  }
-
-  .blick__eintrag figure {
-    margin: 0;
-  }
-
-  .blick__bild {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--linie);
-    background: var(--papier-hell);
-  }
-
-  .blick__eintrag figcaption {
-    margin-top: 14px;
-    font-size: 15.5px;
-    line-height: 1.5;
-  }
-
-  .blick__punkte {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 20px;
-  }
-
-  .blick__punkt {
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .blick__punkt::after {
-    content: '';
-    position: absolute;
-    inset: 10px;
-    border-radius: 50%;
-    background: var(--linie);
-  }
-
-  .blick__punkt[aria-current='true']::after {
-    background: var(--terrakotta);
-    inset: 8px;
-  }
-
-  .blick__hinweis {
-    margin-top: 8px;
-    font-size: 13.5px;
-    color: var(--text-gedaempft);
-  }
-</style>
+<BildSlider
+  kennung={kennung}
+  kennzeile="Blick ins Spiel"
+  titel="So sieht Try a Life aus"
+  listenLabel="Bilder aus dem Spiel Try a Life"
+  bilder={bilder}
+  hinweis="Bilder aus der Vorschau des Spiels, mit Beispieleinträgen."
+  ueberschriftEbene={ueberschriftEbene}
+/>

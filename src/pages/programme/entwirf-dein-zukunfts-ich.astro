@@ -13,6 +13,7 @@ import umschlag from '../../assets/kursbuch-umschlag.png';
 import FormatKarte from '../../components/FormatKarte.astro';
 import AngebotButton from '../../components/AngebotButton.astro';
 import FesterKnopf from '../../components/FesterKnopf.astro';
+import BlickInsBuch from '../../components/BlickInsBuch.astro';
 import { seiten, anfrageLink } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
 import { kursbuchDaten } from '../../config/strukturierteDaten';
@@ -195,6 +196,7 @@ const orientierung = anfrageLink(
       <p class="aufbau__summe gedaempft">
         Insgesamt arbeitest du rund 10 Stunden aktiv an deiner Zukunft, verteilt über bis zu 6 Wochen.
       </p>
+      <BlickInsBuch kennung="kurs-buch" />
     </div>
   </section>
 

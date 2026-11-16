@@ -10,6 +10,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import JournalKarte from '../components/JournalKarte.astro';
 import BlickInsSpiel from '../components/BlickInsSpiel.astro';
+import BlickInsBuch from '../components/BlickInsBuch.astro';
 import WartelisteKurz from '../components/WartelisteKurz.astro';
 import AngebotButton from '../components/AngebotButton.astro';
 import Preis from '../components/Preis.astro';
@@ -120,6 +121,9 @@ const tryUmfang = [
           <a class="textlink" href={seiten.modul1}>Alles zu Kurs 1</a>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <BlickInsBuch kennung="angebote-buch" />
     </div>
   </section>
 
