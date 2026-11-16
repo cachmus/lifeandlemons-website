@@ -82,6 +82,7 @@ export type Angebot = {
 /**
  * Bestell-Adressen bei Digistore24. Nach der Produktfreigabe hier eintragen
  * (Digistore24 → Produkt → Bestellformular-Link, beginnt mit https://www.checkout-ds24.com/product/…).
+ * In Digistore24 unter Zahlungspläne „Alle Preise sind …“ auf Bruttopreise (inkl. MwSt.) stellen.
  * Für einen Wechsel zu ablefy nur diese Adressen und den Anbieter in checkoutOderAnfrage austauschen.
  */
 export const DIGISTORE24 = {
@@ -92,6 +93,22 @@ export const DIGISTORE24 = {
 } as const;
 
 export type DigistoreId = keyof typeof DIGISTORE24;
+
+/**
+ * Hinweis unter jedem Preis (Steuerberatung, 16.11.2026):
+ * Bei Digistore24 ist Digistore24 die Verkäuferin und berechnet die Umsatzsteuer selbst,
+ * deshalb dort Bruttopreis „inkl. MwSt.“ und kein Hinweis auf § 19 UStG.
+ * Verkauft Christine selbst (Bestellung per E-Mail), gilt die Kleinunternehmerregelung.
+ * OFFEN: Versandkosten für das gedruckte Workbook (enthalten oder „zzgl. Versandkosten“).
+ */
+export const PREIS_HINWEIS = {
+  digistore24: 'inkl. MwSt.',
+  direkt: 'Aufgrund der Kleinunternehmerregelung gemäß § 19 UStG wird keine Umsatzsteuer erhoben oder ausgewiesen.',
+} as const;
+
+export function preisHinweis(a: Angebot): string {
+  return a.aktion.typ === 'checkout' ? PREIS_HINWEIS.digistore24 : PREIS_HINWEIS.direkt;
+}
 
 /** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung oder Anmeldung per E-Mail. */
 function checkoutOderAnfrage(url: string, label: string, ersatz: string, ersatzLabel = label): Aktion {

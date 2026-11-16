@@ -7,7 +7,7 @@
 import { Image } from 'astro:assets';
 import AngebotButton from './AngebotButton.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
-import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
+import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
 import journalCover from '../assets/journal-cover.jpg';
 import talBild from '../assets/try-a-life-tal.jpg';
 import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
@@ -72,6 +72,7 @@ const tryPreis = aktuellerPreis(tryALife);
       <div><dt>Format</dt><dd>gedruckt, 184 Seiten</dd></div>
       <div><dt>Zeit</dt><dd>9 Einheiten, rund 6 Wochen</dd></div>
     </dl>
+    {kursbuchPreis && <p class="weg__steuer">{preisHinweis(kursbuch)}</p>}
     <div class="weg__knopf"><AngebotButton id="kursbuch" /></div>
   </li>
 </ul>
@@ -183,6 +184,12 @@ const tryPreis = aktuellerPreis(tryALife);
 
   .weg__klein {
     font-weight: 400;
+    color: var(--text-gedaempft);
+  }
+  .weg__steuer {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
     color: var(--text-gedaempft);
   }
 

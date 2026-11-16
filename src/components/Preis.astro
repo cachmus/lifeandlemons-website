@@ -3,8 +3,7 @@
  * Zeigt den aktuell gültigen Preis eines Angebots, nie einen späteren.
  * Bis zum Ende der Einführungsphase mit dem Hinweis „Einführungspreis bis …“.
  */
-import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
-import { preisZusatz } from '../config/site';
+import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
 
 interface Props {
   id: string;
@@ -13,7 +12,9 @@ interface Props {
 }
 
 const { id, form = 'gross' } = Astro.props;
-const preis = aktuellerPreis(angebotNachId(id));
+const angebot = angebotNachId(id);
+const preis = aktuellerPreis(angebot);
+const preisZusatz = preisHinweis(angebot);
 ---
 
 {

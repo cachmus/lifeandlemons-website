@@ -70,12 +70,6 @@ export const seiten = {
   liste: '/#liste',
 } as const;
 
-/**
- * OFFEN: Zusatz zu jedem Preis, z. B. „inkl. MwSt.“ oder bei Kleinunternehmerregelung
- * „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.“ Mit Steuerberatung klären und hier eintragen.
- */
-export const preisZusatz = '';
-
 export type NavPunkt = { label: string; href: string };
 
 /**
