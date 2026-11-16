@@ -1,7 +1,8 @@
 ---
 /**
  * Bild-Slider für Produktansichten („Blick ins Spiel“, „Blick ins Buch“).
- * Ohne Bibliothek: Scroll-Snap, Pfeile und Punkte mit wenigen Zeilen Skript. Ohne Skript bleibt der Slider wischbar.
+ * Ohne Bibliothek: ein Bild vorn in der Mitte, die Nachbarn treten zurück, Pfeile, Punkte, Tastatur, Wischen.
+ * Ohne Skript stehen die Bilder untereinander.
  * `format`: 'hoch' für Handy-Screenshots, 'quer' für Doppelseiten.
  */
 import type { ImageMetadata } from 'astro';
@@ -23,39 +24,37 @@ const Ueberschrift = ueberschriftEbene;
 
 <div class="blick" data-blick id={`${kennung}-slider`}>
   <div class="blick__kopf">
-    <div>
-      <p class="label">{kennzeile}</p>
-      <Ueberschrift class="blick__titel">{titel}</Ueberschrift>
-    </div>
-    <div class="blick__pfeile" data-pfeile hidden>
-      <button type="button" class="blick__pfeil" data-zurueck aria-label="Vorheriges Bild">
-        <span aria-hidden="true">←</span>
-      </button>
-      <button type="button" class="blick__pfeil" data-vor aria-label="Nächstes Bild">
-        <span aria-hidden="true">→</span>
-      </button>
-    </div>
+    <p class="label">{kennzeile}</p>
+    <Ueberschrift class="blick__titel">{titel}</Ueberschrift>
   </div>
 
-  <ul class:list={['blick__liste', `blick__liste--${format}`]} data-liste aria-label={listenLabel} tabindex="0">
-    {
-      bilder.map((b, i) => (
-        <li class="blick__eintrag" aria-label={`Bild ${i + 1} von ${bilder.length}`}>
-          <figure>
-            <Image
-              class="blick__bild"
-              src={b.bild}
-              alt={b.alt}
-              widths={format === 'quer' ? [480, 720, 1000] : [260, 390, 520]}
-              sizes={format === 'quer' ? '(min-width: 960px) 520px, 86vw' : '(min-width: 960px) 260px, 62vw'}
-              loading="lazy"
-            />
-            <figcaption>{b.text}</figcaption>
-          </figure>
-        </li>
-      ))
-    }
-  </ul>
+  <div class:list={['blick__buehne', `blick__buehne--${format}`]}>
+    <ul class="blick__liste" data-liste aria-label={listenLabel} aria-roledescription="Karussell" tabindex="0">
+      {
+        bilder.map((b, i) => (
+          <li class="blick__eintrag" data-lage={i === 0 ? 'mitte' : i === 1 ? 'rechts' : 'weg-rechts'} aria-roledescription="Bild" aria-label={`Bild ${i + 1} von ${bilder.length}`}>
+            <figure>
+              <Image
+                class="blick__bild"
+                src={b.bild}
+                alt={b.alt}
+                widths={format === 'quer' ? [480, 720, 1000] : [280, 420, 560]}
+                sizes={format === 'quer' ? '(min-width: 960px) 560px, 78vw' : '(min-width: 960px) 280px, 60vw'}
+                loading={i < 2 ? 'eager' : 'lazy'}
+              />
+              <figcaption>{b.text}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+    <button type="button" class="blick__pfeil blick__pfeil--links" data-zurueck aria-label="Vorheriges Bild" hidden>
+      <span aria-hidden="true">←</span>
+    </button>
+    <button type="button" class="blick__pfeil blick__pfeil--rechts" data-vor aria-label="Nächstes Bild" hidden>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
 
   <div class="blick__punkte" data-punkte hidden>
     {
@@ -64,52 +63,62 @@ const Ueberschrift = ueberschriftEbene;
       ))
     }
   </div>
+  <p class="sr-only" aria-live="polite" data-ansage></p>
   {hinweis && <p class="blick__hinweis">{hinweis}</p>}
 </div>
 
 <script>
+  // Ein Bild steht vorn in der Mitte, die beiden Nachbarn treten leicht zurück, alle übrigen sind ausgeblendet
+  // (Christine, 16.11.2026). Bedient wird mit den Pfeilen, den Punkten, der Tastatur oder durch Wischen; keine Scrollleiste.
   for (const slider of document.querySelectorAll<HTMLElement>('[data-blick]')) {
     const liste = slider.querySelector<HTMLElement>('[data-liste]')!;
     const eintraege = [...liste.querySelectorAll<HTMLElement>('li')];
     const punkte = [...slider.querySelectorAll<HTMLButtonElement>('[data-punkt]')];
     const zurueck = slider.querySelector<HTMLButtonElement>('[data-zurueck]')!;
     const vor = slider.querySelector<HTMLButtonElement>('[data-vor]')!;
-    slider.querySelector<HTMLElement>('[data-pfeile]')!.hidden = false;
+    const ansage = slider.querySelector<HTMLElement>('[data-ansage]')!;
+    slider.dataset.bereit = '';
+    zurueck.hidden = false;
+    vor.hidden = false;
     slider.querySelector<HTMLElement>('[data-punkte]')!.hidden = false;
 
-    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const gehe = (i: number) => {
-      const ziel = eintraege[Math.max(0, Math.min(eintraege.length - 1, i))];
-      liste.scrollTo({ left: ziel.offsetLeft - liste.offsetLeft, behavior: ruhig ? 'auto' : 'smooth' });
-    };
-    const aktuell = () => {
-      const links = liste.scrollLeft;
-      let beste = 0;
-      eintraege.forEach((e, i) => {
-        if (Math.abs(e.offsetLeft - liste.offsetLeft - links) < Math.abs(eintraege[beste].offsetLeft - liste.offsetLeft - links)) beste = i;
+    let aktiv = 0;
+    const zeige = (i: number, ansagen = true) => {
+      aktiv = Math.max(0, Math.min(eintraege.length - 1, i));
+      eintraege.forEach((e, k) => {
+        const abstand = k - aktiv;
+        e.dataset.lage = abstand === 0 ? 'mitte' : abstand === -1 ? 'links' : abstand === 1 ? 'rechts' : abstand < 0 ? 'weg-links' : 'weg-rechts';
+        e.setAttribute('aria-hidden', abstand === 0 ? 'false' : 'true');
+        // Nachbarn schon laden, damit beim Weiterschalten nichts aufblitzt.
+        if (Math.abs(abstand) <= 2) e.querySelector('img')?.setAttribute('loading', 'eager');
       });
-      return beste;
+      punkte.forEach((p, k) => p.setAttribute('aria-current', k === aktiv ? 'true' : 'false'));
+      zurueck.disabled = aktiv === 0;
+      vor.disabled = aktiv === eintraege.length - 1;
+      if (ansagen) ansage.textContent = `Bild ${aktiv + 1} von ${eintraege.length}: ${eintraege[aktiv].querySelector('figcaption')?.textContent ?? ''}`;
     };
-    const aktualisiere = () => {
-      const i = aktuell();
-      punkte.forEach((p, k) => p.setAttribute('aria-current', k === i ? 'true' : 'false'));
-      zurueck.disabled = liste.scrollLeft <= 2;
-      vor.disabled = liste.scrollLeft + liste.clientWidth >= liste.scrollWidth - 2;
-    };
-    zurueck.addEventListener('click', () => gehe(aktuell() - 1));
-    vor.addEventListener('click', () => gehe(aktuell() + 1));
-    punkte.forEach((p, k) => p.addEventListener('click', () => gehe(k)));
+
+    zurueck.addEventListener('click', () => zeige(aktiv - 1));
+    vor.addEventListener('click', () => zeige(aktiv + 1));
+    punkte.forEach((p, k) => p.addEventListener('click', () => zeige(k)));
+    // Ein Tipp auf ein Nachbarbild holt es nach vorn.
+    eintraege.forEach((e, k) => e.addEventListener('click', () => { if (k !== aktiv) zeige(k); }));
     liste.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); gehe(aktuell() + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); gehe(aktuell() - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); zeige(aktiv + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); zeige(aktiv - 1); }
     });
-    let warte = 0;
-    liste.addEventListener('scroll', () => {
-      cancelAnimationFrame(warte);
-      warte = requestAnimationFrame(aktualisiere);
+
+    // Wischen am Handy: nur waagerechte Bewegungen, senkrechtes Scrollen der Seite bleibt.
+    let startX = 0;
+    let startY = 0;
+    liste.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+    liste.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) zeige(aktiv + (dx < 0 ? 1 : -1));
     }, { passive: true });
-    window.addEventListener('resize', aktualisiere);
-    aktualisiere();
+
+    zeige(0, false);
   }
 </script>
 
@@ -119,10 +128,6 @@ const Ueberschrift = ueberschriftEbene;
   }
 
   .blick__kopf {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
     margin-bottom: 24px;
   }
 
@@ -134,63 +139,85 @@ const Ueberschrift = ueberschriftEbene;
     margin: 0;
   }
 
-  .blick__pfeile {
-    display: flex;
-    gap: 8px;
-  }
-
-  .blick__pfeile[hidden],
-  .blick__punkte[hidden] {
-    display: none;
-  }
-
-  .blick__pfeil {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--tinte);
-    background: transparent;
-    color: var(--tinte);
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .blick__pfeil:hover:not(:disabled) {
-    background: var(--tinte);
-    color: var(--papier-hell);
-  }
-
-  .blick__pfeil:disabled {
-    opacity: 0.35;
-    cursor: default;
-  }
-
-  .blick__pfeil:focus-visible,
-  .blick__punkt:focus-visible,
-  .blick__liste:focus-visible {
-    outline: 2px solid var(--terrakotta-tief);
-    outline-offset: 3px;
-  }
-
+  /* Ohne Skript: alle Bilder untereinander. */
   .blick__liste {
     list-style: none;
     margin: 0;
-    padding: 0 0 8px;
+    padding: 0;
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(62vw, 260px);
-    gap: clamp(16px, 2vw, 28px);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-  }
-
-  .blick__liste--quer {
-    grid-auto-columns: min(86vw, 520px);
+    gap: 32px;
+    justify-items: center;
   }
 
   .blick__eintrag {
-    scroll-snap-align: start;
+    width: var(--breite);
+  }
+
+  .blick__buehne {
+    --breite: min(60vw, 280px);
+    position: relative;
+  }
+
+  .blick__buehne--quer {
+    --breite: min(78vw, 560px);
+  }
+
+  [data-bereit] .blick__buehne {
+    overflow: hidden;
+    padding: 8px 0 4px;
+  }
+
+  /* Mit Skript: alle Bilder in derselben Zelle, die Lage setzt das Skript. */
+  [data-bereit] .blick__liste {
+    gap: 0;
+  }
+
+  [data-bereit] .blick__eintrag {
+    grid-area: 1 / 1;
+    transition:
+      transform 0.45s ease,
+      opacity 0.45s ease,
+      filter 0.45s ease;
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='mitte'] {
+    z-index: 3;
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='links'],
+  [data-bereit] .blick__eintrag[data-lage='rechts'] {
+    z-index: 2;
+    opacity: 0.45;
+    filter: saturate(0.6) blur(1px);
+    cursor: pointer;
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='links'] {
+    transform: translateX(-74%) scale(0.78);
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='rechts'] {
+    transform: translateX(74%) scale(0.78);
+  }
+
+  [data-bereit] .blick__eintrag[data-lage^='weg'] {
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='weg-links'] {
+    transform: translateX(-120%) scale(0.6);
+  }
+
+  [data-bereit] .blick__eintrag[data-lage='weg-rechts'] {
+    transform: translateX(120%) scale(0.6);
+  }
+
+  /* Die Bildunterschrift gehört nur zum Bild vorn. */
+  [data-bereit] .blick__eintrag:not([data-lage='mitte']) figcaption {
+    visibility: hidden;
   }
 
   .blick__eintrag figure {
@@ -203,19 +230,71 @@ const Ueberschrift = ueberschriftEbene;
     height: auto;
     border: 1px solid var(--linie);
     background: var(--papier-hell);
+    box-shadow: 0 18px 40px -24px rgba(34, 28, 25, 0.45);
   }
 
   .blick__eintrag figcaption {
-    margin-top: 14px;
+    margin-top: 16px;
     font-size: 15.5px;
     line-height: 1.5;
+    text-align: center;
+  }
+
+  .blick__pfeil {
+    position: absolute;
+    top: calc(var(--breite) * 0.85);
+    z-index: 4;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--tinte);
+    background: var(--papier-hell);
+    color: var(--tinte);
+    font-size: 20px;
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+
+  .blick__buehne--quer .blick__pfeil {
+    top: calc(var(--breite) * 0.35);
+  }
+
+  .blick__pfeil--links {
+    left: max(4px, calc(50% - var(--breite) / 2 - 64px));
+  }
+
+  .blick__pfeil--rechts {
+    right: max(4px, calc(50% - var(--breite) / 2 - 64px));
+  }
+
+  .blick__pfeil[hidden],
+  .blick__punkte[hidden] {
+    display: none;
+  }
+
+  .blick__pfeil:hover:not(:disabled) {
+    background: var(--tinte);
+    color: var(--papier-hell);
+  }
+
+  .blick__pfeil:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .blick__pfeil:focus-visible,
+  .blick__punkt:focus-visible,
+  .blick__liste:focus-visible {
+    outline: 2px solid var(--terrakotta-tief);
+    outline-offset: 3px;
   }
 
   .blick__punkte {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 4px;
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   .blick__punkt {
@@ -244,6 +323,13 @@ const Ueberschrift = ueberschriftEbene;
   .blick__hinweis {
     margin-top: 8px;
     font-size: 13.5px;
+    text-align: center;
     color: var(--text-gedaempft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-bereit] .blick__eintrag {
+      transition: none;
+    }
   }
 </style>
