@@ -367,6 +367,7 @@ export function bestellHinweis(angebot: Angebot): string | null {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
     return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
-  // Bestellung per E-Mail, solange die Digistore24-Adresse fehlt: kein Hinweis
+  // Direktbestellung des Workbooks (Christine, 16.11.2026): Rechnung per E-Mail, Zahlung per Überweisung
+  if (kursbuch && aktion.typ === 'anfrage') return 'Nach deiner Bestellung bekommst du die Rechnung per E-Mail und zahlst per Überweisung.';
   return null;
 }
