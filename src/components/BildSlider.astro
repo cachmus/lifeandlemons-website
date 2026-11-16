@@ -32,7 +32,7 @@ const Ueberschrift = ueberschriftEbene;
     <ul class="blick__liste" data-liste aria-label={listenLabel} aria-roledescription="Karussell" tabindex="0">
       {
         bilder.map((b, i) => (
-          <li class="blick__eintrag" data-lage={i === 0 ? 'mitte' : i === 1 ? 'rechts' : 'weg-rechts'} aria-roledescription="Bild" aria-label={`Bild ${i + 1} von ${bilder.length}`}>
+          <li class="blick__eintrag" data-lage={i === 0 ? 'mitte' : i === 1 ? 'rechts' : i === bilder.length - 1 ? 'links' : 'weg-rechts'} aria-roledescription="Bild" aria-label={`Bild ${i + 1} von ${bilder.length}`}>
             <figure>
               <Image
                 class="blick__bild"
@@ -40,7 +40,7 @@ const Ueberschrift = ueberschriftEbene;
                 alt={b.alt}
                 widths={format === 'quer' ? [480, 720, 1000] : [280, 420, 560]}
                 sizes={format === 'quer' ? '(min-width: 960px) 560px, 78vw' : '(min-width: 960px) 280px, 60vw'}
-                loading={i < 2 ? 'eager' : 'lazy'}
+                loading={i < 2 || i === bilder.length - 1 ? 'eager' : 'lazy'}
               />
               <figcaption>{b.text}</figcaption>
             </figure>
@@ -82,20 +82,22 @@ const Ueberschrift = ueberschriftEbene;
     vor.hidden = false;
     slider.querySelector<HTMLElement>('[data-punkte]')!.hidden = false;
 
+    // Rundlauf (Christine, 16.11.2026): Nach dem letzten Bild kommt wieder das erste und umgekehrt.
+    const n = eintraege.length;
     let aktiv = 0;
     const zeige = (i: number, ansagen = true) => {
-      aktiv = Math.max(0, Math.min(eintraege.length - 1, i));
+      aktiv = ((i % n) + n) % n;
       eintraege.forEach((e, k) => {
-        const abstand = k - aktiv;
+        // Kürzester Abstand im Kreis: Das letzte Bild steht links neben dem ersten.
+        let abstand = (((k - aktiv) % n) + n) % n;
+        if (abstand > n / 2) abstand -= n;
         e.dataset.lage = abstand === 0 ? 'mitte' : abstand === -1 ? 'links' : abstand === 1 ? 'rechts' : abstand < 0 ? 'weg-links' : 'weg-rechts';
         e.setAttribute('aria-hidden', abstand === 0 ? 'false' : 'true');
         // Nachbarn schon laden, damit beim Weiterschalten nichts aufblitzt.
         if (Math.abs(abstand) <= 2) e.querySelector('img')?.setAttribute('loading', 'eager');
       });
       punkte.forEach((p, k) => p.setAttribute('aria-current', k === aktiv ? 'true' : 'false'));
-      zurueck.disabled = aktiv === 0;
-      vor.disabled = aktiv === eintraege.length - 1;
-      if (ansagen) ansage.textContent = `Bild ${aktiv + 1} von ${eintraege.length}: ${eintraege[aktiv].querySelector('figcaption')?.textContent ?? ''}`;
+      if (ansagen) ansage.textContent = `Bild ${aktiv + 1} von ${n}: ${eintraege[aktiv].querySelector('figcaption')?.textContent ?? ''}`;
     };
 
     zurueck.addEventListener('click', () => zeige(aktiv - 1));
