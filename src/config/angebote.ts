@@ -67,6 +67,8 @@ export type Angebot = {
   hinweis?: string;
   /** Liefer- oder Vorbestellhinweis, erscheint direkt beim Kaufbutton */
   lieferhinweis?: string;
+  /** Versand ist im Preis enthalten (Workbook, Christine, 16.11.2026) */
+  versandInklusive?: boolean;
   /** Hinweis zum Kursstart nach der Buchung, erscheint in der Karte */
   startHinweis?: string;
   /** Von Hand auf true setzen, wenn alle Plätze vergeben sind */
@@ -99,7 +101,7 @@ export type DigistoreId = keyof typeof DIGISTORE24;
  * Bei Digistore24 ist Digistore24 die Verkäuferin und berechnet die Umsatzsteuer selbst,
  * deshalb dort Bruttopreis „inkl. MwSt.“ und kein Hinweis auf § 19 UStG.
  * Verkauft Christine selbst (Bestellung per E-Mail), gilt die Kleinunternehmerregelung.
- * OFFEN: Versandkosten für das gedruckte Workbook (enthalten oder „zzgl. Versandkosten“).
+ * Ist der Versand im Preis enthalten (versandInklusive), steht „inkl. Versand“ davor.
  */
 export const PREIS_HINWEIS = {
   digistore24: 'inkl. MwSt.',
@@ -107,7 +109,8 @@ export const PREIS_HINWEIS = {
 } as const;
 
 export function preisHinweis(a: Angebot): string {
-  return a.aktion.typ === 'checkout' ? PREIS_HINWEIS.digistore24 : PREIS_HINWEIS.direkt;
+  if (a.aktion.typ === 'checkout') return a.versandInklusive ? `${PREIS_HINWEIS.digistore24}, inkl. Versand` : PREIS_HINWEIS.digistore24;
+  return a.versandInklusive ? `Inkl. Versand. ${PREIS_HINWEIS.direkt}` : PREIS_HINWEIS.direkt;
 }
 
 /** Bestellbutton über Digistore24. Solange die Adresse fehlt, Bestellung oder Anmeldung per E-Mail. */
@@ -142,6 +145,7 @@ export const angebote: Angebot[] = [
     // Solange keine Exemplare auf Lager sind, wird vorbestellt. Mit Lagerbestand den Hinweis ändern,
     // z. B. „Versandfertig innerhalb von 2 Tagen“. Die Lieferzeit auch im Digistore24-Produkt eintragen.
     lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
+    versandInklusive: true,
     aktion: checkoutOderAnfrage(
       DIGISTORE24.kursbuch,
       'Workbook vorbestellen',
