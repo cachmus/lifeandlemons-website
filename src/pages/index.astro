@@ -13,11 +13,15 @@ import Treppe from '../components/Treppe.astro';
 import ModulKarte from '../components/ModulKarte.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
-import { site, seiten } from '../config/site';
+import WartelisteKurz from '../components/WartelisteKurz.astro';
+import { site, seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-mauer.jpg';
 import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
+import journalCover from '../assets/journal-cover.jpg';
+import talBild from '../assets/try-a-life-tal.jpg';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
 
 const kursbuch = angebotNachId('kursbuch');
 const kursbuchPreis = aktuellerPreis(kursbuch);
@@ -26,11 +30,12 @@ const kursbuchHinweis = bestellHinweis(kursbuch);
 /** Stimmen erst einblenden, wenn echte Stimmen mit schriftlicher Einwilligung vorliegen */
 const stimmenZeigen = false;
 
+/** Begriffe der Zielgruppe laut Sprachrecherche: Leben passt nicht mehr, Orientierung, zu spät, alte Muster (überarbeitet 16.11.2026) */
 const fragen = [
-  'Mein Leben funktioniert, aber es fühlt sich nicht ganz nach meinem Leben an.',
-  'Ich weiß, dass ich etwas verändern möchte, aber noch nicht genau, was.',
+  'Mein Leben funktioniert, aber es passt irgendwie nicht mehr zu mir.',
+  'Mir fehlt die Orientierung. Ich weiß, dass sich etwas ändern soll, aber nicht, was.',
+  'Ich frage mich, ob es für eine echte Veränderung nicht schon zu spät ist.',
   'Ich nehme mir viel vor und falle doch immer wieder in alte Muster zurück.',
-  'Ich möchte herausfinden, welche Richtung wirklich zu mir passt.',
 ];
 
 const leben = [
@@ -130,18 +135,20 @@ const hilft = [
         <p class="label">02 · Dein Weg</p>
         <h2 id="weg-titel" class="zeile">So entsteht dein <span class="pivot">Weg</span></h2>
         <p class="einleitung text">
-          Zu mir kommen Menschen, die spüren, dass sich etwas ändern soll, und noch nicht wissen, wohin. Wenn du dich darin
-          wiedererkennst, findest du mithilfe meines Methodenwerks heraus, welche inneren Muster dich bislang gebremst haben. Du
-          entwirfst drei völlig unterschiedliche Leben und testest den Entwurf, der dich am meisten anzieht, im Alltag, bevor du
-          dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht ein Weg,
-          der zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
+          Zu mir kommen Menschen, deren Leben von außen gut aussieht und sich trotzdem nicht mehr passend anfühlt. Ihnen fehlt die
+          Orientierung: Welche Lebensziele sind wirklich meine, wohin soll es gehen, und ist es dafür nicht längst zu spät? Wenn du
+          dich darin wiedererkennst, findest du mithilfe meines Methodenwerks heraus, welche inneren Muster dich bislang gebremst
+          haben. Du entwirfst drei völlig unterschiedliche Leben und testest den Entwurf, der dich am meisten anzieht, im Alltag,
+          bevor du dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht
+          eine Perspektive, die zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
         </p>
       </div>
       <div class="bremse">
         <div class="bremse__spalte" data-erscheinen>
           <h3 class="bremse__titel">Was dich bisher bremst</h3>
           <p>
-            Spätestens nach drei Wochen holt uns oft der Alltag zurück, und die alten Gewohnheiten klopfen wieder an.
+            Kennst du das von guten Vorsätzen zum Jahresanfang? Spätestens nach drei Wochen holt uns der Alltag zurück, und die
+            alten Gewohnheiten klopfen wieder an.
           </p>
           <p class="bremse__satz">„Du schaffst es ja sowieso nicht.“</p>
           <p>
@@ -287,7 +294,35 @@ const hilft = [
       <div class="kopfblock">
         <p class="label">06 · Dein Einstieg</p>
         <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
-        <p class="einleitung text">Alle Wege führen durch dieselbe Methode. Du entscheidest, wie viel Begleitung du dir wünschst.</p>
+        <p class="einleitung text">
+          Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn
+          du direkt tiefer einsteigen willst, ist das Kursbuch dein Weg.
+        </p>
+      </div>
+
+      <div class="einstieg">
+        <article class="einstieg__karte" data-erscheinen>
+          <a class="einstieg__bild einstieg__bild--journal" href={seiten.journal} tabindex="-1" aria-hidden="true">
+            <Image src={journalCover} alt="" widths={[260, 400]} sizes="(min-width: 860px) 220px, 50vw" />
+          </a>
+          <div class="einstieg__text">
+            <p class="label">Kostenlos · sofort per E-Mail</p>
+            <h3>Wer will ich in 12 Monaten <span class="pivot">sein</span>?</h3>
+            <p>Das Jahr ist fast vorbei, und du weißt noch nicht, was du dir fürs nächste wirklich vornehmen willst? In rund 90 Minuten findest du es heraus und startest mit einem ersten kleinen Schritt.</p>
+            <a class="button" href={seiten.journal}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="einstieg__karte" data-erscheinen>
+          <a class="einstieg__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
+            <Image src={talBild} alt="" widths={[480, 720]} sizes="(min-width: 860px) 560px, 92vw" />
+          </a>
+          <div class="einstieg__text">
+            <p class="label">Neu · Start {tryALifeAnkuendigung.start}</p>
+            <h3><Image class="einstieg__wortmarke" src={wortmarke} alt="Try a Life" width={260} /></h3>
+            <p>Dein Leben funktioniert, passt aber nicht mehr richtig zu dir? Try a Life ist ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Trag dich ein, dann erfährst du als Erste, wenn es losgeht.</p>
+            <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="start-try" />
+          </div>
+        </article>
       </div>
 
       <div class="dunkel kursbuch__innen">
@@ -319,18 +354,7 @@ const hilft = [
         </div>
       </div>
 
-      <div class="wege">
-        <article class="wege__karte" data-erscheinen>
-          <p class="label">Begleitet</p>
-          <p>In einer kleinen Gruppe in Hannover oder einzeln mit mir, vor Ort oder online.</p>
-          <a class="textlink" href={`${seiten.modul1}#formate`}>Club und Einzel-Track <span aria-hidden="true">→</span></a>
-        </article>
-        <article class="wege__karte" data-erscheinen>
-          <p class="label">Intensiv im 1:1</p>
-          <p>Wir übertragen jede Erkenntnis direkt auf deine Lebenssituation.</p>
-          <a class="textlink" href={`${seiten.modul1}#formate`}>VIP-Track <span aria-hidden="true">→</span></a>
-        </article>
-      </div>
+      {/* Begleitete Wege (Club, Einzel-Track, VIP-Track) ausgeblendet: seit 09.11.2026 vorerst nur Selbstlernversionen */}
     </div>
   </section>
 
@@ -344,6 +368,67 @@ const hilft = [
 </Base>
 
 <style>
+  /* Einstieg: Journal und Try a Life */
+  .einstieg {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin-bottom: clamp(32px, 5vw, 64px);
+  }
+
+  .einstieg__karte {
+    display: flex;
+    flex-direction: column;
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 3px solid var(--terrakotta);
+  }
+
+  .einstieg__bild {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .einstieg__bild :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .einstieg__bild--journal {
+    display: grid;
+    place-items: center;
+    background: var(--leinen);
+    padding: 20px;
+  }
+
+  .einstieg__bild--journal :global(img) {
+    width: auto;
+    height: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    transform: rotate(-3deg);
+    box-shadow: 0 14px 30px rgba(34, 48, 44, 0.2);
+  }
+
+  .einstieg__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: clamp(22px, 3vw, 32px);
+  }
+
+  .einstieg__text h3 {
+    margin: 0;
+  }
+
+  .einstieg__wortmarke {
+    width: min(100%, 240px);
+    height: auto;
+  }
+
   /* Erster Bildschirm */
   .hero {
     padding: clamp(40px, 6vw, 88px) 0 0;

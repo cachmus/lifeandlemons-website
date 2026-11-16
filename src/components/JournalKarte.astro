@@ -19,7 +19,7 @@ interface Props {
 
 const {
   titel = 'Wer will ich in 12 Monaten sein?',
-  text = 'Das Journal für deinen Jahresrückblick: Du schließt dein Jahr ab, beschreibst, wie du in 12 Monaten leben willst, und legst deinen ersten Schritt fest.',
+  text = 'Wieder ein Jahr vorbei, und du weißt nicht genau, wo es geblieben ist? Mit diesem Journal findest du heraus, was dir im neuen Jahr wirklich wichtig ist, und machst daraus einen Plan, der auch volle Wochen übersteht.',
   variante = 'gross',
   ueberschriftEbene = 'h2',
 } = Astro.props;
@@ -36,11 +36,13 @@ const Ebene = ueberschriftEbene;
     <p>{text}</p>
     {
       variante === 'gross' && (
+        <p class="jkarte__untertitel">Am Ende hast du:</p>
         <ul class="jkarte__liste">
-          <li>Who-to-be-Liste statt Vorsätzen</li>
-          <li>Rund 90 Minuten an zwei oder drei Abenden, Kurzweg in 35 Minuten</li>
-          <li>Für Tablet, zum Ausdrucken oder zum Ausfüllen am Bildschirm</li>
+          <li>Klarheit, was du im neuen Jahr wirklich willst, statt einer Liste, die im Februar vergessen ist</li>
+          <li>drei Sätze, wer du sein willst, an denen du jede Woche merkst, ob du auf Kurs bist</li>
+          <li>einen ersten Schritt, den du in den nächsten 72 Stunden machst</li>
         </ul>
+        <p class="jkarte__meta">Rund 90 Minuten oder 35 im Kurzweg · für Tablet, Drucker oder Bildschirm</p>
       )
     }
     <a class="button" href={seiten.journal}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
@@ -120,6 +122,16 @@ const Ebene = ueberschriftEbene;
 
   .jkarte--kompakt .jkarte__titel {
     font-size: clamp(26px, 3vw, 32px);
+  }
+
+  .jkarte__untertitel {
+    font-weight: 700;
+    margin-bottom: -6px;
+  }
+
+  .jkarte__meta {
+    font-size: 14.5px;
+    color: var(--text-gedaempft);
   }
 
   .jkarte__liste {
