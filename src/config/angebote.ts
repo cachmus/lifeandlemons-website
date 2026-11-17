@@ -67,6 +67,8 @@ export type Angebot = {
   hinweis?: string;
   /** Liefer- oder Vorbestellhinweis, erscheint direkt beim Kaufbutton */
   lieferhinweis?: string;
+  /** Verkauf über Digistore24 als Wiederverkäufer: Preis brutto „inkl. MwSt.“, nie der Hinweis auf § 19 UStG (auch vor dem Verkaufsstart) */
+  ueberDigistore?: boolean;
   /** Versand ist im Preis enthalten (Workbook, Christine, 16.11.2026) */
   versandInklusive?: boolean;
   /** Hinweis zum Kursstart nach der Buchung, erscheint in der Karte */
@@ -108,7 +110,7 @@ export const PREIS_HINWEIS = {
 } as const;
 
 export function preisHinweis(a: Angebot): string {
-  if (a.aktion.typ === 'checkout') return a.versandInklusive ? `${PREIS_HINWEIS.digistore24}, inkl. Versand` : PREIS_HINWEIS.digistore24;
+  if (a.aktion.typ === 'checkout' || a.ueberDigistore) return a.versandInklusive ? `${PREIS_HINWEIS.digistore24}, inkl. Versand` : PREIS_HINWEIS.digistore24;
   return a.versandInklusive ? `Inkl. Versand. ${PREIS_HINWEIS.direkt}` : PREIS_HINWEIS.direkt;
 }
 
@@ -243,7 +245,10 @@ export const angebote: Angebot[] = [
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
     enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen und einem Jahr Zugang.',
-    preisRegulaerBestaetigt: false,
+    // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
+    preisRegulaer: 119,
+    preisRegulaerBestaetigt: true,
+    ueberDigistore: true,
     ausgebucht: false,
     status: 'in-vorbereitung',
     aktion: { typ: 'liste', url: `${seiten.tryALife}#liste`, label: 'Benachrichtige mich zum Start' },

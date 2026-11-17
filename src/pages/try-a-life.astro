@@ -5,13 +5,15 @@
  *
  * Quellen: Positionierungspapier V5 (Abschnitte 1, 4, 8, 11 und 17), Beschreibungstext aus der
  * Sprachmuster-Recherche (Einordnung vom 10.11.2026), Angaben zur App bestätigt von Christine am 11.11.2026.
- * Preis, Starttermin und Kaufweg sind offen und stehen deshalb nicht auf der Seite.
+ * Preis (119 € brutto, Digistore24) steht seit 17.11.2026 da, weil Digistore24 ihn für die Freigabe verlangt.
+ * Starttermin offen; bis zur Freigabe bleibt der Knopf die Interessentenliste.
  * Button-Ziel und Leistungsumfang kommen aus src/config/angebote.ts (id „try-a-life“).
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import FesterKnopf from '../components/FesterKnopf.astro';
 import AngebotButton from '../components/AngebotButton.astro';
+import Preis from '../components/Preis.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId } from '../config/angebote';
@@ -130,10 +132,14 @@ const umfang = [
         <ul class="umfang">
           {umfang.map((u) => <li>{u}</li>)}
         </ul>
-        <p class="hinweis gedaempft">
-          Die App ist kostenpflichtig. Der Name meint, dass du ein mögliches Leben ausprobierst. Preis und Starttermin stehen hier, sobald
-          sie feststehen.
+        <Preis id="try-a-life" />
+        <!-- Angaben zu Kauf, Lieferung und Widerruf für die Freigabe durch Digistore24 (Vorschlag 17.11.2026, fachlich zu prüfen) -->
+        <p class="hinweis">
+          Du kaufst Try a Life bei Digistore24 und hast 12 Monate Zugang. Nach dem Kauf meldest du dich in der App mit der Mailadresse an,
+          mit der du gekauft hast, und bekommst einen Code per Mail. Die App läuft in deinem Browser, du kannst sie auf den Startbildschirm
+          deines Handys holen. Es gilt das gesetzliche Widerrufsrecht von 14 Tagen nach den Bedingungen von Digistore24.
         </p>
+        <p class="hinweis gedaempft">Der Name meint, dass du ein mögliches Leben ausprobierst.</p>
         <p class="hinweis gedaempft">
           Try a Life dient der Selbstreflexion und ersetzt keine Psychotherapie. Mehr zu Grundlagen und Grenzen steht unter{' '}
           <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
