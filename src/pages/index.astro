@@ -348,6 +348,7 @@ const hilft = [
             <h3><Image class="einstieg__wortmarke" src={wortmarke} alt="Try a Life" width={260} /></h3>
             <p>Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games. Trag dich ein, dann erfährst du zuerst, wenn es losgeht.</p>
             <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="start-try" />
+            <p class="einstieg__demo"><AngebotButton id="try-a-life" ziel="demo" /></p>
           </div>
         </article>
       </div>
@@ -437,6 +438,10 @@ const hilft = [
     object-fit: contain;
     transform: rotate(-3deg);
     box-shadow: 0 14px 30px rgba(34, 48, 44, 0.2);
+  }
+
+  .einstieg__demo {
+    margin-top: 0.75rem;
   }
 
   .einstieg__text {

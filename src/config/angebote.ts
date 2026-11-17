@@ -79,6 +79,8 @@ export type Angebot = {
   aktion: Aktion;
   /** Ziel, sobald das Angebot pausiert (nach Buchungsschluss oder ausgebucht) */
   aktionPausiert?: Aktion;
+  /** Kostenlose Demo, als zweiter Button über `<AngebotButton id="…" ziel="demo" />` */
+  demo?: { url: string; label: string };
   /** Satz, der bei pausiertem Angebot erscheint */
   textPausiert?: string;
 };
@@ -252,6 +254,8 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'in-vorbereitung',
     aktion: { typ: 'liste', url: `${seiten.tryALife}#liste`, label: 'Benachrichtige mich zum Start' },
+    // Die Demo ist der Rundblick in der App, ohne Anmeldung (Christine, 17.11.2026). Adresse der App seit 17.11.2026.
+    demo: { url: 'https://tryalife.lifeandlemons.de/', label: 'Demo kostenlos spielen' },
   },
 
   {
