@@ -56,8 +56,6 @@ export const seiten = {
   datenschutz: '/datenschutz/',
   /** Widerrufsbelehrung mit Muster-Widerrufsformular für das gedruckte Workbook (neu 16.11.2026, fachlich zu prüfen) */
   widerruf: '/widerruf/',
-  /** Danke-Seite nach dem Kauf des Workbooks; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
-  dankeKursbuch: '/danke/kursbuch/',
   /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
   dankeAnmeldung: '/danke/anmeldung/',
   /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
