@@ -8,6 +8,7 @@
  * Preis (119 € brutto, Digistore24) steht seit 17.11.2026 da, weil Digistore24 ihn für die Freigabe verlangt.
  * Kaufbar seit 18.11.2026: Kaufknopf zum Bestellformular, die Interessentenliste entfällt, solange der Status „verfuegbar“ ist.
  * Button-Ziel und Leistungsumfang kommen aus src/config/angebote.ts (id „try-a-life“).
+ * Vorschaubild beim Teilen: dasselbe wie in der App (public/marke/og-try-a-life.jpg, aus lifeandlemons-spiel/public/bilder/teilen.jpg, 18.11.2026).
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
@@ -53,6 +54,10 @@ const umfang = [
   dunklerSchluss
   title="Try a Life: Wie willst du wirklich leben?"
   description="Try a Life ist die Life-Coaching-App von Life&Lemons: Entwirf drei mögliche Leben und probiere im Alltag aus, welches zu dir passt, ohne alles umzuwerfen."
+  ogBild={{
+    pfad: '/marke/og-try-a-life.jpg',
+    alt: 'Aquarell eines Tals mit Wegweiser, Steinmännchen, Rucksack und Buch am Weg, dahinter Dorf und Steinbrücke, darüber der Schriftzug Try a Life',
+  }}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
