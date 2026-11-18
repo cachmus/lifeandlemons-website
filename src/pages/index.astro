@@ -324,8 +324,13 @@ const hilft = [
         <p class="label">06 · Die Einstiege im Detail</p>
         <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
         <p class="einleitung text">
-          Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn
-          du direkt tiefer einsteigen willst, ist das Workbook dein Weg.
+          {tryKaufbar ? <>
+            Am leichtesten startest du kostenlos mit dem Journal für deinen Jahresrückblick. Wenn du direkt tiefer einsteigen willst,
+            sind Try a Life oder das Workbook dein Weg.
+          </> : <>
+            Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn
+            du direkt tiefer einsteigen willst, ist das Workbook dein Weg.
+          </>}
         </p>
       </div>
 

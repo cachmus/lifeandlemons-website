@@ -105,14 +105,15 @@ export function aktuellerKopfKnopf(tryALifeVerfuegbar: boolean): { text: string;
  * Ab dem Start von Try a Life auf die Verkaufsseite umstellen (Text, Linktext, Ziel, Kennung).
  */
 export const hinweisleiste = {
+  // Seit 18.11.2026 auf Try a Life (Christine); vorher das Journal (kennung 'journal-2026-11'). Wortlaut Vorschlag.
   aktiv: true,
-  kennung: 'journal-2026-11',
-  marke: 'Gratis',
-  text: 'Journal für deinen Jahresrückblick: Wer will ich in 12 Monaten sein?',
-  linkText: 'Jetzt holen',
-  ziel: seiten.journal,
+  kennung: 'try-a-life-2026-11',
+  marke: 'Neu',
+  text: 'Try a Life ist da: die Life-Coaching-App im Format eines Cozy Games.',
+  linkText: 'Ansehen',
+  ziel: seiten.tryALife,
   /** Auf diesen Seiten (Anfang des Pfads) erscheint die Leiste nicht */
-  ausblendenAuf: [seiten.journal, '/danke/'],
+  ausblendenAuf: [seiten.tryALife, '/danke/'],
   wiederNachTagen: 7,
 } as const;
 
