@@ -25,9 +25,12 @@ interface Props {
   daten?: Record<string, unknown>[];
   /** og:type, für Ratgeberartikel 'article' */
   ogTyp?: 'website' | 'article';
+  /** Eigenes Vorschaubild beim Teilen (1200 × 630, Pfad unter public), sonst das Bild der Marke */
+  ogBild?: { pfad: string; alt: string };
 }
 
-const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website' } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website', ogBild } = Astro.props;
+const vorschau = ogBild ?? { pfad: '/marke/og-bild.png', alt: 'Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“' };
 const istStart = Astro.url.pathname === '/';
 const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
@@ -68,10 +71,10 @@ if (!g.__angeboteGeprueft) {
     <meta property="og:title" content={seitentitel} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/marke/og-bild.png', site.url).href} />
+    <meta property="og:image" content={new URL(vorschau.pfad, site.url).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“" />
+    <meta property="og:image:alt" content={vorschau.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
     <!--
