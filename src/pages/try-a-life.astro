@@ -6,7 +6,7 @@
  * Quellen: Positionierungspapier V5 (Abschnitte 1, 4, 8, 11 und 17), Beschreibungstext aus der
  * Sprachmuster-Recherche (Einordnung vom 10.11.2026), Angaben zur App bestätigt von Christine am 11.11.2026.
  * Preis (119 € brutto, Digistore24) steht seit 17.11.2026 da, weil Digistore24 ihn für die Freigabe verlangt.
- * Starttermin offen; bis zur Freigabe bleibt der Knopf die Interessentenliste.
+ * Kaufbar seit 18.11.2026: Kaufknopf zum Bestellformular, die Interessentenliste entfällt, solange der Status „verfuegbar“ ist.
  * Button-Ziel und Leistungsumfang kommen aus src/config/angebote.ts (id „try-a-life“).
  */
 import { Image } from 'astro:assets';
@@ -169,13 +169,13 @@ const umfang = [
     </div>
   </section>
 
-  <Interessentenliste
+  {app.status !== 'verfuegbar' && <Interessentenliste
     label="Start von Try a Life"
     titel="Ich melde mich, sobald es"
     pivot="losgeht"
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
     vorauswahl={['tryalife']}
-  />
+  />}
   <FesterKnopf zeile={`Try a Life · ${tryALifeAnkuendigung.status}`} angebot="try-a-life" />
 </Base>
 

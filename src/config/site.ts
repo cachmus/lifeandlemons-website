@@ -17,6 +17,8 @@ export const site = {
   rolle: 'Mentorin für Lebensentwürfe',
   slogan: 'Sei, wer du werden willst.',
   kontaktEmail: 'christine@lifeandlemons.de',
+  /** Telefon fürs Impressum, verlangt von Digistore24 für die Produktfreigabe (Christine, 18.11.2026) */
+  telefon: { anzeige: '+49 177 4042351', wahl: '+491774042351' },
   /** Ladungsfähige Anschrift für Impressum, Datenschutz und später den Newsletter-Fuß (entschieden 19.10.2026: Privatadresse) */
   anschrift: { strasse: 'Hesemannstr. 13', plzOrt: '30655 Hannover' },
   /** Handle laut Workbook-Umschlag und Broschüre */
@@ -120,7 +122,8 @@ export const hinweisleiste = {
  */
 export const tryALifeAnkuendigung = {
   // Christine, 16.11.2026: kein Datum nennen, Start, sobald die Vollversion online ist.
-  status: 'Bald verfügbar',
+  // Seit 18.11.2026 kaufbar (Kaufknopf vor der Freigabe durch Digistore24 live, Christine); Wortlaut Vorschlag.
+  status: 'Jetzt verfügbar',
   brevoListe: '9',
 } as const;
 

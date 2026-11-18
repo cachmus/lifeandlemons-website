@@ -239,13 +239,13 @@ export const angebote: Angebot[] = [
   },
   {
     // App „Try a Life“ (Positionierungspapier V5, Angaben bestätigt von Christine am 11.11.2026).
-    // Kaufweg entschieden (Christine, 18.11.2026): Kaufknopf direkt zum Bestellformular (DIGISTORE24['try-a-life']).
-    // Nach der Freigabe durch Digistore24: status auf 'verfuegbar', `art` ohne „bald verfügbar“ und `aktion` auf
-    // checkoutOderAnfrage(DIGISTORE24['try-a-life'], …) umstellen. Die Landingpage /try-a-life/ liest alles von hier.
+    // Kaufbar seit 18.11.2026: Kaufknopf direkt zum Bestellformular (DIGISTORE24['try-a-life']), schon vor der Freigabe
+    // durch Digistore24, weil die Checkliste einen Testkauf über den Kaufknopf der Verkaufsseite verlangt (Christine).
+    // Die Landingpage /try-a-life/ liest alles von hier.
     id: 'try-a-life',
     modul: 1,
     name: 'Try a Life',
-    art: 'Life-Coaching-App · bald verfügbar',
+    art: 'Life-Coaching-App',
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
@@ -255,8 +255,9 @@ export const angebote: Angebot[] = [
     preisRegulaerBestaetigt: true,
     ueberDigistore: true,
     ausgebucht: false,
-    status: 'in-vorbereitung',
-    aktion: { typ: 'liste', url: `${seiten.tryALife}#liste`, label: 'Benachrichtige mich zum Start' },
+    status: 'verfuegbar',
+    // Kaufknopf direkt zum Bestellformular, Beschriftung freigegeben (Christine, 18.11.2026)
+    aktion: checkoutOderAnfrage(DIGISTORE24['try-a-life'], 'Try a Life kaufen', anfrageLink('Try a Life')),
     // Die Demo ist der Rundblick in der App, ohne Anmeldung (Christine, 17.11.2026). Adresse der App seit 17.11.2026.
     demo: { url: 'https://tryalife.lifeandlemons.de/', label: 'Demo kostenlos spielen' },
   },

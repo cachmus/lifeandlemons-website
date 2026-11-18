@@ -15,9 +15,13 @@ import WartelisteKurz from '../components/WartelisteKurz.astro';
 import AngebotButton from '../components/AngebotButton.astro';
 import Preis from '../components/Preis.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
+import { angebotNachId } from '../config/angebote';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
 import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
+
+// Seit 18.11.2026 kaufbar: Kaufknopf statt Warteliste
+const tryKaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
 
 const sprungmarken = [
   { href: '#kostenlos', label: 'Gratis starten' },
@@ -37,7 +41,7 @@ const tryUmfang = [
 <Base
   dunklerSchluss
   title="Angebote: Gratis-Journal, Life-Coaching-App und Life-Coaching-Workbook"
-  description="Alle Angebote von Life&Lemons auf einen Blick: das kostenlose Journal für deinen Jahresrückblick, die Life-Coaching-App Try a Life (bald verfügbar) und das Life-Coaching-Workbook „Entwirf dein Zukunfts-Ich“."
+  description="Alle Angebote von Life&Lemons auf einen Blick: das kostenlose Journal für deinen Jahresrückblick, die Life-Coaching-App Try a Life und das Life-Coaching-Workbook „Entwirf dein Zukunfts-Ich“."
 >
   <section class="kopf-abschnitt">
     <div class="container">
@@ -86,8 +90,14 @@ const tryUmfang = [
           {tryUmfang.map((u) => <li>{u}</li>)}
         </ul>
         <p class="try__meta">Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo</p>
-        <p class="try__aufruf">Trag dich ein, dann erfährst du zuerst, wenn es losgeht.</p>
-        <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="try" />
+        {tryKaufbar ? (
+          <div class="try__aufruf"><AngebotButton id="try-a-life" /> <AngebotButton id="try-a-life" ziel="demo" /></div>
+        ) : (
+          <>
+            <p class="try__aufruf">Trag dich ein, dann erfährst du zuerst, wenn es losgeht.</p>
+            <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="try" />
+          </>
+        )}
         <a class="textlink" href={seiten.tryALife}>Mehr über Try a Life</a>
       </div>
       <Image

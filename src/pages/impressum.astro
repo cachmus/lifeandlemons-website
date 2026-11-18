@@ -3,7 +3,7 @@
  * Impressum. ENTWURF, fachlich zu prüfen (nur hier im Code vermerkt, nicht auf der Seite): vor dem Livegang von einer Fachperson prüfen lassen.
  * Stand der Angaben: 19.10.2026, Geschäftsbezeichnung 27.10.2026 (Christine).
  * - Anschrift: Privatadresse, bewusst gewählt (zentral in src/config/site.ts)
- * - Keine Telefonnummer; zweiter Kontaktweg neben E-Mail ist Instagram (Eignung fachlich zu prüfen)
+ * - Telefonnummer seit 18.11.2026 (Christine), weil Digistore24 sie für die Produktfreigabe verlangt; dazu Instagram
  * - Stand 16.11.2026 (Christine): gewerbliche Tätigkeit (Verkauf von Produkten steht im Vordergrund), Kleinunternehmerregelung
  *   nach § 19 UStG. Noch keine USt-IdNr. und keine Wirtschafts-Identifikationsnummer. Eine Steuernummer gehört nicht ins
  *   Impressum. Sobald eine USt-IdNr. oder W-IdNr. vergeben ist, muss sie hier ergänzt werden (§ 5 Abs. 1 Nr. 6 DDG).
@@ -29,6 +29,7 @@ import { site } from '../config/site';
 
       <h2>Kontakt</h2>
       <p>
+        Telefon: <a href={`tel:${site.telefon.wahl}`}>{site.telefon.anzeige}</a><br />
         E-Mail: <a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a><br />
         Instagram: <a href={site.instagram.url} rel="noopener">{site.instagram.handle}</a>
       </p>
