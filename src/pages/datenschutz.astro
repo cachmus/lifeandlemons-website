@@ -8,6 +8,24 @@
  * Bestellung des Workbooks direkt per E-Mail (seit 16.11.2026), digitale Produkte über Digistore24 als Wiederverkäufer,
  * Instagram nur als Link.
  *
+ * Web-App Try a Life (ergänzt am 18.11.2026, ENTWURF, fachlich zu prüfen), Stand des Codes in cachmus/lifeandlemons-spiel:
+ * - Hosting: Cloudflare Worker unter tryalife.lifeandlemons.de (wrangler.jsonc); Cloudflare nach EU-US DPF zertifiziert (Cloudflare Trust Hub, GDPR).
+ * - Einträge nur auf dem Gerät (IndexedDB, Rettungskopie im localStorage); verlassen es nur durch Handlungen der Nutzerin
+ *   (Sicherungsdatei, Teilen-Funktion, Kalenderdatei, Bild, PDF, Postkarte).
+ * - Supabase, Region Frankfurt: Tabellen zugang (E-Mail, Bestellnummer, Produkt, Status, Kaufdatum, Ende), geraete (zufällige Kennung,
+ *   Bezeichnung aus dem Browser wie „iPhone · Safari“, angemeldet am, zuletzt am), auth.users; Anmeldung per Code aus der Mail,
+ *   Versand über Brevo als SMTP. Die Tabelle fortschritt existiert, wird von der App aber nicht beschrieben (18.11.2026); wird sie genutzt,
+ *   hier „abgeschlossene Stationen mit Datum“ ergänzen.
+ * - Supabase: Auftragsverarbeiter ist Supabase Pte. Ltd., Singapur; Übermittlungen nach Singapur und in die USA auf Grundlage der
+ *   Standardvertragsklauseln im DPA; Protokolle in EU-Rechenzentren; Support kann weltweit zugreifen
+ *   (supabase.com/legal/privacy-resources/data-residency-and-transfers-faq).
+ * - Digistore24 meldet Kauf, Erstattung und Rückbuchung per IPN an die Edge Function digistore-ipn.
+ * - Newsletter aus der App über die Edge Function newsletter-anmeldung an Brevo (Double-Opt-in), die Adresse wird dort nicht gespeichert
+ *   und nicht protokolliert.
+ * - Keine Analyse: track() in src/lib/analytics.ts sendet nichts. Wird ein Analysedienst angeschlossen, muss dieser Text angepasst werden.
+ * - Löschfrist für zugang und geraete: Vorschlag, Entscheidung durch Christine offen. Es gibt noch keine automatische Löschung,
+ *   die Frist muss von Hand oder durch eine geplante Funktion eingehalten werden.
+ *
  * Ändert sich der Aufbau (z. B. eingebettetes Bestellformular, Kontaktformular, Analysewerkzeug,
  * Tracking in Brevo), muss dieser Text angepasst werden.
  *
@@ -42,6 +60,10 @@ import { site } from '../config/site';
         Diese Website setzt keine Cookies und verwendet keine Analyse- oder Werbedienste. Nur wenn du zustimmst, misst mein Hoster Netlify,
         wie schnell die Seiten laden. Schriften und Bilder liegen auf dem eigenen Server. Personenbezogene Daten verarbeite ich nur, soweit das für die Auslieferung der Website nötig ist,
         oder wenn du mir schreibst, dich in die Interessentenliste einträgst oder etwas bestellst.
+      </p>
+      <p>
+        In der Web-App <a href="#try-a-life">Try a Life</a> bleiben deine Einträge auf deinem Gerät. Mein Server kennt nur, was für deinen
+        Zugang nötig ist: deine E-Mail-Adresse, die Angaben zu deinem Kauf und deine angemeldeten Geräte.
       </p>
 
       <h2>Hosting und Server-Protokolle</h2>
@@ -133,6 +155,89 @@ import { site } from '../config/site';
         du bestellt hast. Ich nutze sie, um dir den gekauften Zugang bereitzustellen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ich
         speichere diese Daten, solange die steuer- und handelsrechtlichen Aufbewahrungspflichten es verlangen.
       </p>
+      <p>
+        Bei Try a Life meldet Digistore24 den Kauf und eine spätere Erstattung oder Rückbuchung automatisch an meinen Server, damit die App
+        deinen Zugang freischalten oder sperren kann. Was dabei gespeichert wird, steht im nächsten Abschnitt.
+      </p>
+
+      <h2 id="try-a-life">Die Web-App Try a Life</h2>
+      <p>
+        Try a Life läuft unter tryalife.lifeandlemons.de im Browser oder als App auf dem Startbildschirm deines Geräts. Die App setzt keine
+        Cookies, nutzt keine Analyse- oder Werbedienste und lädt keine Schriften oder Skripte von fremden Servern.
+      </p>
+
+      <h3>Deine Einträge bleiben auf deinem Gerät</h3>
+      <p>
+        Alles, was du in Try a Life einträgst, also Texte, Werte, Namen und dein Journal, speichert die App nur im Speicher deines Browsers auf
+        deinem Gerät. Diese Einträge werden weder an mich noch an einen Dienstleister übertragen, und ich kann sie nicht sehen.
+      </p>
+      <p>
+        Sie verlassen dein Gerät nur, wenn du selbst etwas damit tust: wenn du eine Sicherungsdatei speicherst, eine Karte über die
+        Teilen-Funktion deines Geräts verschickst, einen Kalendereintrag herunterlädst oder ein Ergebnis als Bild oder PDF sicherst. Bild, PDF
+        und Kalendereintrag entstehen dabei auf deinem Gerät. Wohin du sie danach schickst, entscheidest du.
+      </p>
+      <p>
+        Die Speicherung auf deinem Gerät ist erforderlich, damit die App funktioniert, die du nutzen möchtest (§ 25 Abs. 2 Nr. 2 TDDDG).
+        Du kannst deine Einträge löschen, indem du die Websitedaten von tryalife.lifeandlemons.de in deinem Browser entfernst. Sie lassen sich
+        danach nur aus einer Sicherungsdatei wiederherstellen.
+      </p>
+
+      <h3>Hosting bei Cloudflare</h3>
+      <p>
+        Die App liegt bei Cloudflare, Inc., San Francisco, USA. Beim Aufruf verarbeitet Cloudflare technisch notwendige Daten: deine
+        IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse und die Kennung deines Browsers. Ohne diese Daten kann die App nicht ausgeliefert
+        und nicht vor Missbrauch geschützt werden. Rechtsgrundlage ist mein berechtigtes Interesse an einer sicheren und funktionsfähigen App
+        (Art. 6 Abs. 1 lit. f DSGVO).
+      </p>
+      <p>
+        Cloudflare verarbeitet die Daten in meinem Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung (Art. 28 DSGVO). Die Daten
+        können dabei in die USA übermittelt werden. Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert, auf dessen Grundlage die
+        EU-Kommission ein angemessenes Datenschutzniveau festgestellt hat (Art. 45 DSGVO). Die Protokolle speichert Cloudflare nur so lange,
+        wie es für Betrieb und Sicherheit erforderlich ist.
+      </p>
+
+      <h3>Anmeldung und Zugang</h3>
+      <p>
+        Nach dem Kauf meldest du dich in der App mit der E-Mail-Adresse an, die du bei Digistore24 angegeben hast. Du bekommst eine E-Mail mit
+        einem sechsstelligen Code. Für die Anmeldung und die Prüfung deines Zugangs verarbeite ich:
+      </p>
+      <ul>
+        <li>deine E-Mail-Adresse und die Zeitpunkte deiner Anmeldungen,</li>
+        <li>
+          die Angaben zu deinem Kauf, die Digistore24 übermittelt: Bestellnummer, Produkt, Kaufdatum, Ende des Zugangs und ob der Kauf erstattet
+          oder zurückgebucht wurde,
+        </li>
+        <li>
+          für jedes angemeldete Gerät eine zufällige Kennung, eine grobe Bezeichnung wie „iPhone · Safari“ und wann es angemeldet und zuletzt
+          gesehen wurde. So erkennst du deine Geräte wieder, und die App kann den Zugang auf drei Geräte begrenzen.
+        </li>
+      </ul>
+      <p>
+        Deine Einträge aus der App gehören nicht dazu. Damit dein Gerät angemeldet bleibt, speichert die App dort einen Anmeldeschlüssel und
+        die Gerätekennung (§ 25 Abs. 2 Nr. 2 TDDDG). Rechtsgrundlage für die Verarbeitung ist die Bereitstellung des gekauften Zugangs
+        (Art. 6 Abs. 1 lit. b DSGVO).
+      </p>
+      <p>
+        Für Anmeldung und Zugang nutze ich Supabase. Auftragsverarbeiterin ist die Supabase Pte. Ltd., Singapur, auf Grundlage eines Vertrags
+        zur Auftragsverarbeitung (Art. 28 DSGVO). Die Daten liegen auf Servern in Frankfurt am Main. Supabase protokolliert Anmeldungen und
+        Anfragen technisch, dabei auch deine IP-Adresse, um den Dienst zu betreiben und vor Missbrauch zu schützen (Art. 6 Abs. 1 lit. f DSGVO).
+        Für Support und bei Sicherheitsvorfällen können Beschäftigte von Supabase auch von außerhalb der EU auf die Daten zugreifen, etwa aus
+        Singapur oder den USA. Dafür gelten die Standardvertragsklauseln der EU-Kommission (Art. 46 Abs. 2 lit. c DSGVO).
+      </p>
+      <p>
+        Die E-Mail mit dem Code verschickt Brevo (Anschrift im Abschnitt zur Interessentenliste) in meinem Auftrag.
+      </p>
+      <p>
+        Die Angaben zu deinem Zugang und deinen Geräten speichere ich, solange dein Zugang besteht. Danach lösche ich sie spätestens
+        sechs Monate nach seinem Ende. Ein Gerät, das du abmeldest, bleibt bis dahin als abgemeldet vermerkt.
+      </p>
+
+      <h3>Newsletter in der App</h3>
+      <p>
+        Wenn du dich in der App für den Newsletter einträgst, gehen deine E-Mail-Adresse und deine Auswahl über meinen Server bei Supabase an
+        Brevo. Supabase speichert deine Adresse dabei nicht. Für alles Weitere gilt, was im Abschnitt „Interessentenliste über Brevo“ steht:
+        Double-Opt-in, Einwilligung als Rechtsgrundlage und Abmeldung jederzeit.
+      </p>
 
       <h2>Links zu Instagram</h2>
       <p>
@@ -157,7 +262,7 @@ import { site } from '../config/site';
       </p>
       <p>Eine automatisierte Entscheidungsfindung oder ein Profiling findet nicht statt.</p>
 
-      <p class="gedaempft">Stand: 19.10.2026</p>
+      <p class="gedaempft">Stand: 18.11.2026</p>
     </div>
   </section>
 </Base>
@@ -180,5 +285,9 @@ import { site } from '../config/site';
   .recht h2 {
     font-size: clamp(26px, 2.6vw, 34px);
     margin-top: 1.6em;
+  }
+  .recht h3 {
+    font-size: clamp(20px, 2vw, 24px);
+    margin-top: 1.4em;
   }
 </style>
