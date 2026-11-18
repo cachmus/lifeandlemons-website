@@ -4,7 +4,11 @@
  * Echter Link im Quelltext (gut für Suchmaschinen), kein Pop-up. Schließen merkt sich der Browser
  * für `wiederNachTagen` Tage (localStorage, nur diese eine Angabe, kein Tracking).
  */
+import { Image } from 'astro:assets';
 import { hinweisleiste } from '../config/site';
+import zitrone from '../assets/hinweis/zitrone.webp';
+import zweig from '../assets/hinweis/zweig.webp';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
 
 interface Props {
   pfad: string;
@@ -13,6 +17,8 @@ interface Props {
 const { pfad } = Astro.props;
 const zeigen = hinweisleiste.aktiv && !hinweisleiste.ausblendenAuf.some((anfang) => pfad.startsWith(anfang));
 const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
+const app = (hinweisleiste as { design?: string }).design === 'app';
+const textOhneBild = (hinweisleiste as { textOhneBild?: string }).textOhneBild ?? hinweisleiste.text;
 ---
 
 {
@@ -24,11 +30,19 @@ const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
           if (zu && Date.now() - zu < tage * 86400000) document.documentElement.setAttribute('data-hinweis-zu', '');
         } catch (e) {}
       </script>
-      <aside class="hinweis" aria-label="Hinweis" data-hinweis={schluessel}>
+      <aside class:list={['hinweis', { 'hinweis--app': app }]} aria-label="Hinweis" data-hinweis={schluessel}>
+        {app && <Image class="hinweis__zweig" src={zweig} alt="" width={60} aria-hidden="true" />}
         <div class="container hinweis__innen">
           <a class="hinweis__link" href={hinweisleiste.ziel}>
+            {app && <Image class="hinweis__zitrone" src={zitrone} alt="" width={44} aria-hidden="true" />}
             <span class="hinweis__marke">{hinweisleiste.marke}</span>
-            <span class="hinweis__text">{hinweisleiste.text}</span>
+            {app ? (
+              <span class="hinweis__text">
+                <Image class="hinweis__wortmarke" src={wortmarke} alt="Try a Life" width={150} /> {hinweisleiste.text}
+              </span>
+            ) : (
+              <span class="hinweis__text">{textOhneBild}</span>
+            )}
             <span class="hinweis__aktion">
               {hinweisleiste.linkText} <span aria-hidden="true">→</span>
             </span>
@@ -166,6 +180,115 @@ const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
     }
     .hinweis__aktion {
       order: 3;
+    }
+  }
+
+  /* Design der App (Christine, 19.11.2026): Aquarellpapier, Zitrone, Zweig, Schriftzug; Farben aus Try a Life */
+  .hinweis--app {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 420px 120px at 8% 50%, rgba(226, 228, 59, 0.28), transparent 70%),
+      radial-gradient(ellipse 380px 110px at 94% 60%, rgba(185, 120, 80, 0.12), transparent 70%),
+      #fbf1e6;
+    color: #3a2f2b;
+    border-bottom: 1px solid rgba(185, 120, 80, 0.35);
+  }
+
+  .hinweis--app .hinweis__zweig {
+    position: absolute;
+    right: 96px;
+    top: 50%;
+    width: 46px;
+    height: auto;
+    transform: translateY(-50%) rotate(28deg);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .hinweis__zitrone {
+    width: 40px;
+    height: auto;
+    transform: rotate(-12deg);
+    filter: drop-shadow(0 3px 4px rgba(58, 47, 43, 0.18));
+  }
+
+  .hinweis--app .hinweis__marke {
+    background: #e2e43b;
+    border: 1.5px solid #3a2f2b;
+    color: #3a2f2b;
+    border-radius: 999px;
+  }
+
+  .hinweis--app .hinweis__marke::before {
+    display: none;
+  }
+
+  .hinweis--app .hinweis__text {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2px 8px;
+    font-weight: 600;
+  }
+
+  .hinweis__wortmarke {
+    width: 112px;
+    height: auto;
+    margin-bottom: 4px;
+  }
+
+  .hinweis--app .hinweis__aktion {
+    background: #3a2f2b;
+    color: #fbf1e6;
+  }
+
+  .hinweis--app .hinweis__link:hover .hinweis__aktion,
+  .hinweis--app .hinweis__link:focus-visible .hinweis__aktion {
+    background: #22302c;
+  }
+
+  .hinweis--app .hinweis__link:focus-visible,
+  .hinweis--app .hinweis__zu:focus-visible {
+    outline-color: #3a2f2b;
+  }
+
+  .hinweis--app .hinweis__zu {
+    color: #3a2f2b;
+  }
+
+  @media (max-width: 1100px) {
+    .hinweis--app .hinweis__zweig {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hinweis--app {
+      font-size: 15px;
+    }
+    .hinweis--app .hinweis__link {
+      gap: 6px 10px;
+    }
+    .hinweis--app .hinweis__marke {
+      display: none;
+    }
+    .hinweis__zitrone {
+      display: none;
+    }
+    .hinweis--app .hinweis__text {
+      display: block;
+    }
+    .hinweis__wortmarke {
+      display: inline;
+      width: 84px;
+      vertical-align: -6px;
+      margin: 0 2px 0 0;
+    }
+    .hinweis--app .hinweis__aktion {
+      padding: 7px 12px;
+      font-size: 14px;
     }
   }
 </style>

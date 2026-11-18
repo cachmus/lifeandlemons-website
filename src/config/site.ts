@@ -109,7 +109,11 @@ export const hinweisleiste = {
   aktiv: true,
   kennung: 'try-a-life-2026-11',
   marke: 'Neu',
-  text: 'Try a Life ist da: die Life-Coaching-App im Format eines Cozy Games.',
+  /** 'app': im Design der App (Papier, Zitrone, Zweig, Schriftzug Try a Life vor dem Text); sonst Terrakotta */
+  design: 'app',
+  /** Bei design 'app' steht der Schriftzug Try a Life vor dem Text */
+  text: 'ist da: die Life-Coaching-App im Format eines Cozy Games.',
+  textOhneBild: 'Try a Life ist da: die Life-Coaching-App im Format eines Cozy Games.',
   linkText: 'Ansehen',
   ziel: seiten.tryALife,
   /** Auf diesen Seiten (Anfang des Pfads) erscheint die Leiste nicht */
