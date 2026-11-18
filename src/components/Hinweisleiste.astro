@@ -6,9 +6,7 @@
  */
 import { Image } from 'astro:assets';
 import { hinweisleiste } from '../config/site';
-import zitrone from '../assets/hinweis/zitrone.webp';
-import zweig from '../assets/hinweis/zweig.webp';
-import wortmarke from '../assets/try-a-life-wortmarke.png';
+import symbol from '../assets/hinweis/app-symbol.png';
 
 interface Props {
   pfad: string;
@@ -31,14 +29,13 @@ const textOhneBild = (hinweisleiste as { textOhneBild?: string }).textOhneBild ?
         } catch (e) {}
       </script>
       <aside class:list={['hinweis', { 'hinweis--app': app }]} aria-label="Hinweis" data-hinweis={schluessel}>
-        {app && <Image class="hinweis__zweig" src={zweig} alt="" width={60} aria-hidden="true" />}
         <div class="container hinweis__innen">
           <a class="hinweis__link" href={hinweisleiste.ziel}>
-            {app && <Image class="hinweis__zitrone" src={zitrone} alt="" width={44} aria-hidden="true" />}
-            <span class="hinweis__marke">{hinweisleiste.marke}</span>
+            {app && <Image class="hinweis__symbol" src={symbol} alt="" width={40} height={40} aria-hidden="true" />}
+            {!app && <span class="hinweis__marke">{hinweisleiste.marke}</span>}
             {app ? (
               <span class="hinweis__text">
-                <Image class="hinweis__wortmarke" src={wortmarke} alt="Try a Life" width={150} /> {hinweisleiste.text}
+                <strong>Try a Life ist da</strong><span class="hinweis__lang">: {hinweisleiste.text}</span>
               </span>
             ) : (
               <span class="hinweis__text">{textOhneBild}</span>
@@ -183,111 +180,70 @@ const textOhneBild = (hinweisleiste as { textOhneBild?: string }).textOhneBild ?
     }
   }
 
-  /* Design der App (Christine, 19.11.2026): Aquarellpapier, Zitrone, Zweig, Schriftzug; Farben aus Try a Life */
+  /* Design der App (Christine, 19.11.2026): Waldgrün und Zitrone aus Try a Life, App-Symbol statt Schriftzug */
   .hinweis--app {
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(ellipse 420px 120px at 8% 50%, rgba(226, 228, 59, 0.28), transparent 70%),
-      radial-gradient(ellipse 380px 110px at 94% 60%, rgba(185, 120, 80, 0.12), transparent 70%),
-      #fbf1e6;
-    color: #3a2f2b;
-    border-bottom: 1px solid rgba(185, 120, 80, 0.35);
+    background: #326c42;
+    color: #fbf1e6;
   }
 
-  .hinweis--app .hinweis__zweig {
-    position: absolute;
-    right: 96px;
-    top: 50%;
-    width: 46px;
-    height: auto;
-    transform: translateY(-50%) rotate(28deg);
-    opacity: 0.85;
-    pointer-events: none;
-  }
-
-  .hinweis__zitrone {
-    width: 40px;
-    height: auto;
-    transform: rotate(-12deg);
-    filter: drop-shadow(0 3px 4px rgba(58, 47, 43, 0.18));
-  }
-
-  .hinweis--app .hinweis__marke {
-    background: #e2e43b;
-    border: 1.5px solid #3a2f2b;
-    color: #3a2f2b;
-    border-radius: 999px;
-  }
-
-  .hinweis--app .hinweis__marke::before {
-    display: none;
+  .hinweis__symbol {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    box-shadow: 0 0 0 1px rgba(251, 241, 230, 0.35);
   }
 
   .hinweis--app .hinweis__text {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 2px 8px;
-    font-weight: 600;
+    font-weight: 400;
   }
 
-  .hinweis__wortmarke {
-    width: 112px;
-    height: auto;
-    margin-bottom: 4px;
+  .hinweis--app .hinweis__text strong {
+    font-weight: 700;
   }
 
   .hinweis--app .hinweis__aktion {
-    background: #3a2f2b;
-    color: #fbf1e6;
+    background: #e2e43b;
+    color: #3a2f2b;
+    border: 1.5px solid #3a2f2b;
+    border-radius: 999px;
+    padding: 7px 16px;
   }
 
   .hinweis--app .hinweis__link:hover .hinweis__aktion,
   .hinweis--app .hinweis__link:focus-visible .hinweis__aktion {
-    background: #22302c;
+    background: #eef06a;
   }
 
   .hinweis--app .hinweis__link:focus-visible,
   .hinweis--app .hinweis__zu:focus-visible {
-    outline-color: #3a2f2b;
-  }
-
-  .hinweis--app .hinweis__zu {
-    color: #3a2f2b;
-  }
-
-  @media (max-width: 1100px) {
-    .hinweis--app .hinweis__zweig {
-      display: none;
-    }
+    outline-color: #fbf1e6;
   }
 
   @media (max-width: 720px) {
     .hinweis--app {
-      font-size: 15px;
+      font-size: 15.5px;
+    }
+    .hinweis--app .hinweis__innen {
+      min-height: 56px;
     }
     .hinweis--app .hinweis__link {
-      gap: 6px 10px;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 10px;
+      text-align: left;
     }
-    .hinweis--app .hinweis__marke {
+    .hinweis--app .hinweis__lang {
       display: none;
     }
-    .hinweis__zitrone {
-      display: none;
-    }
-    .hinweis--app .hinweis__text {
-      display: block;
-    }
-    .hinweis__wortmarke {
-      display: inline;
-      width: 84px;
-      vertical-align: -6px;
-      margin: 0 2px 0 0;
+    .hinweis__symbol {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
     }
     .hinweis--app .hinweis__aktion {
-      padding: 7px 12px;
+      margin-left: auto;
+      padding: 6px 12px;
       font-size: 14px;
     }
   }
