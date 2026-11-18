@@ -248,7 +248,7 @@ export const angebote: Angebot[] = [
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
-    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen und einem Jahr Zugang.',
+    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen, Begleitung bei deinen Meilensteinen danach und einem Jahr Zugang.',
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,

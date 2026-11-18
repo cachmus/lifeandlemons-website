@@ -353,7 +353,7 @@ const hilft = [
           <div class="einstieg__text">
             <p class="label">Neu · {tryALifeAnkuendigung.status}</p>
             <h3><Image class="einstieg__wortmarke" src={wortmarke} alt="Try a Life" width={260} /></h3>
-            <p>Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.{!tryKaufbar && ' Trag dich ein, dann erfährst du zuerst, wenn es losgeht.'}</p>
+            <p>Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Danach begleitet sie dich über Monate bei deinen Meilensteinen. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.{!tryKaufbar && ' Trag dich ein, dann erfährst du zuerst, wenn es losgeht.'}</p>
             {tryKaufbar ? <p class="einstieg__demo"><AngebotButton id="try-a-life" /> <AngebotButton id="try-a-life" ziel="demo" /></p> : <>
               <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="start-try" />
               <p class="einstieg__demo"><AngebotButton id="try-a-life" ziel="demo" /></p>

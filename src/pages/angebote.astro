@@ -35,6 +35,7 @@ const tryUmfang = [
   'verstehen, was du dir wirklich wünschst und was dich bisher davon abhält',
   'mögliche Wege für dein Leben entwerfen und im echten Alltag spüren, welcher sich richtig anfühlt',
   'mit jedem kleinen Schritt merken, dass du deinem Leben selbst eine Richtung geben kannst',
+  'auch nach dem Programm über Monate dranbleiben: deine Meilensteine abhaken und rund alle vier Wochen festhalten, wie es dir in den Bereichen deines Lebens geht',
 ];
 ---
 
@@ -89,7 +90,7 @@ const tryUmfang = [
         <ul class="punkte">
           {tryUmfang.map((u) => <li>{u}</li>)}
         </ul>
-        <p class="try__meta">Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo</p>
+        <p class="try__meta">Einheiten für vier bis sechs Wochen, danach Begleitung bei deinen Meilensteinen, ein Jahr Zugang</p>
         {tryKaufbar ? (
           <div class="try__aufruf"><AngebotButton id="try-a-life" /> <AngebotButton id="try-a-life" ziel="demo" /></div>
         ) : (

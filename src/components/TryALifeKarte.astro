@@ -19,7 +19,7 @@ interface Props {
 
 const {
   titel = 'Wie willst du wirklich leben?',
-  text = 'Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.',
+  text = 'Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Danach begleitet sie dich über Monate bei deinen Meilensteinen. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.',
   ueberschriftEbene = 'h2',
 } = Astro.props;
 const Ebene = ueberschriftEbene;
@@ -35,7 +35,7 @@ const kaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
     <Image class="tkarte__wortmarke" src={wortmarke} alt="Try a Life" width={240} />
     <Ebene class="tkarte__titel">{titel}</Ebene>
     <p>{text}</p>
-    <p class="tkarte__meta">Einheiten für vier bis sechs Wochen, ein Jahr Zugang in deinem eigenen Tempo</p>
+    <p class="tkarte__meta">Einheiten für vier bis sechs Wochen, danach Begleitung bei deinen Meilensteinen, ein Jahr Zugang</p>
     <div class="tkarte__knoepfe">
       {kaufbar ? <AngebotButton id="try-a-life" /> : <a class="button" href={seiten.tryALife}>Mehr über Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>}
       <AngebotButton id="try-a-life" ziel="demo" />
