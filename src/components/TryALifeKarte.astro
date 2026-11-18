@@ -1,0 +1,167 @@
+---
+/**
+ * Karte für die App Try a Life mit Bild aus dem Spiel und Kaufknopf, Gegenstück zu JournalKarte.
+ * Im Ratgeber vor der Journal-Karte (Christine, 19.11.2026). Kaufknopf und Demo aus src/config/angebote.ts (id „try-a-life“).
+ * Text aus der Startseite und der Angebotsseite übernommen.
+ */
+import { Image } from 'astro:assets';
+import AngebotButton from './AngebotButton.astro';
+import { seiten } from '../config/site';
+import { angebotNachId } from '../config/angebote';
+import talBild from '../assets/try-a-life-tal.jpg';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
+
+interface Props {
+  titel?: string;
+  text?: string;
+  ueberschriftEbene?: 'h2' | 'h3';
+}
+
+const {
+  titel = 'Wie willst du wirklich leben?',
+  text = 'Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Danach begleitet sie dich über Monate bei deinen Meilensteinen. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.',
+  ueberschriftEbene = 'h2',
+} = Astro.props;
+const Ebene = ueberschriftEbene;
+const kaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
+---
+
+<div class="tkarte tkarte--gross">
+  <a class="tkarte__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
+    <Image src={talBild} alt="" widths={[320, 480, 720]} sizes="(min-width: 900px) 320px, 80vw" />
+  </a>
+  <div class="tkarte__text">
+    <p class="tkarte__marke">Life-Coaching-App{kaufbar && ' · Jetzt verfügbar'}</p>
+    <Image class="tkarte__wortmarke" src={wortmarke} alt="Try a Life" width={240} />
+    <Ebene class="tkarte__titel">{titel}</Ebene>
+    <p>{text}</p>
+    <p class="tkarte__meta">Einheiten für vier bis sechs Wochen, danach Begleitung bei deinen Meilensteinen, ein Jahr Zugang</p>
+    <div class="tkarte__knoepfe">
+      {kaufbar ? <AngebotButton id="try-a-life" /> : <a class="button" href={seiten.tryALife}>Mehr über Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>}
+      <AngebotButton id="try-a-life" ziel="demo" />
+    </div>
+    {kaufbar && <a class="textlink" href={seiten.tryALife}>Mehr über Try a Life</a>}
+  </div>
+</div>
+
+<style>
+  .tkarte {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(24px, 4vw, 48px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 3px solid var(--terrakotta);
+  }
+
+  .tkarte--gross {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 760px) {
+    .tkarte--gross {
+      grid-template-columns: minmax(200px, 320px) minmax(0, 1fr);
+    }
+    .tkarte--kompakt {
+      grid-template-columns: 140px minmax(0, 1fr);
+    }
+  }
+
+  .tkarte__bild {
+    justify-self: center;
+    width: min(100%, 320px);
+  }
+
+  .tkarte--kompakt .tkarte__bild {
+    width: min(100%, 140px);
+  }
+
+  .tkarte__bild :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 16px 34px rgba(34, 48, 44, 0.18);
+  }
+
+  .tkarte__wortmarke {
+    width: min(100%, 240px);
+    height: auto;
+  }
+
+  .tkarte__knoepfe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tkarte__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .tkarte__marke {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .tkarte__marke::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .tkarte__titel {
+    margin: 0;
+  }
+
+  .tkarte--kompakt .tkarte__titel {
+    font-size: clamp(26px, 3vw, 32px);
+  }
+
+  .tkarte__untertitel {
+    font-weight: 700;
+    margin-bottom: -6px;
+  }
+
+  .tkarte__meta {
+    font-size: 14.5px;
+    color: var(--text-gedaempft);
+  }
+
+  .tkarte__liste {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tkarte__liste li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .tkarte__liste li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--terrakotta);
+  }
+</style>

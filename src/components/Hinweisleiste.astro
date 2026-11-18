@@ -4,7 +4,9 @@
  * Echter Link im Quelltext (gut für Suchmaschinen), kein Pop-up. Schließen merkt sich der Browser
  * für `wiederNachTagen` Tage (localStorage, nur diese eine Angabe, kein Tracking).
  */
+import { Image } from 'astro:assets';
 import { hinweisleiste } from '../config/site';
+import symbol from '../assets/hinweis/app-symbol.png';
 
 interface Props {
   pfad: string;
@@ -13,6 +15,8 @@ interface Props {
 const { pfad } = Astro.props;
 const zeigen = hinweisleiste.aktiv && !hinweisleiste.ausblendenAuf.some((anfang) => pfad.startsWith(anfang));
 const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
+const app = (hinweisleiste as { design?: string }).design === 'app';
+const textOhneBild = (hinweisleiste as { textOhneBild?: string }).textOhneBild ?? hinweisleiste.text;
 ---
 
 {
@@ -24,11 +28,18 @@ const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
           if (zu && Date.now() - zu < tage * 86400000) document.documentElement.setAttribute('data-hinweis-zu', '');
         } catch (e) {}
       </script>
-      <aside class="hinweis" aria-label="Hinweis" data-hinweis={schluessel}>
+      <aside class:list={['hinweis', { 'hinweis--app': app }]} aria-label="Hinweis" data-hinweis={schluessel}>
         <div class="container hinweis__innen">
           <a class="hinweis__link" href={hinweisleiste.ziel}>
-            <span class="hinweis__marke">{hinweisleiste.marke}</span>
-            <span class="hinweis__text">{hinweisleiste.text}</span>
+            {app && <Image class="hinweis__symbol" src={symbol} alt="" width={40} height={40} aria-hidden="true" />}
+            {!app && <span class="hinweis__marke">{hinweisleiste.marke}</span>}
+            {app ? (
+              <span class="hinweis__text">
+                <strong>Try a Life ist da</strong><span class="hinweis__lang">: {hinweisleiste.text}</span>
+              </span>
+            ) : (
+              <span class="hinweis__text">{textOhneBild}</span>
+            )}
             <span class="hinweis__aktion">
               {hinweisleiste.linkText} <span aria-hidden="true">→</span>
             </span>
@@ -166,6 +177,74 @@ const schluessel = `ll-hinweis-${hinweisleiste.kennung}`;
     }
     .hinweis__aktion {
       order: 3;
+    }
+  }
+
+  /* Design der App (Christine, 19.11.2026): Waldgrün und Zitrone aus Try a Life, App-Symbol statt Schriftzug */
+  .hinweis--app {
+    background: #326c42;
+    color: #fbf1e6;
+  }
+
+  .hinweis__symbol {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    box-shadow: 0 0 0 1px rgba(251, 241, 230, 0.35);
+  }
+
+  .hinweis--app .hinweis__text {
+    font-weight: 400;
+  }
+
+  .hinweis--app .hinweis__text strong {
+    font-weight: 700;
+  }
+
+  .hinweis--app .hinweis__aktion {
+    background: #e2e43b;
+    color: #3a2f2b;
+    border: 1.5px solid #3a2f2b;
+    border-radius: 999px;
+    padding: 7px 16px;
+  }
+
+  .hinweis--app .hinweis__link:hover .hinweis__aktion,
+  .hinweis--app .hinweis__link:focus-visible .hinweis__aktion {
+    background: #eef06a;
+  }
+
+  .hinweis--app .hinweis__link:focus-visible,
+  .hinweis--app .hinweis__zu:focus-visible {
+    outline-color: #fbf1e6;
+  }
+
+  @media (max-width: 720px) {
+    .hinweis--app {
+      font-size: 15.5px;
+    }
+    .hinweis--app .hinweis__innen {
+      min-height: 56px;
+    }
+    .hinweis--app .hinweis__link {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 10px;
+      text-align: left;
+    }
+    .hinweis--app .hinweis__lang {
+      display: none;
+    }
+    .hinweis__symbol {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    .hinweis--app .hinweis__aktion {
+      margin-left: auto;
+      padding: 6px 12px;
+      font-size: 14px;
     }
   }
 </style>

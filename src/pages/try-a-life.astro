@@ -40,12 +40,18 @@ const schritte = [
     titel: 'Im echten Leben ausprobieren',
     text: 'Während des Programms gehst du immer wieder kleine Schritte in deinem echten Leben. So erlebst du deine Entwürfe am eigenen Leib und spürst, welche Richtung sich richtig anfühlt, bevor du dich festlegst. Am Ende steht eine Probezeit von 10 Tagen.',
   },
+  {
+    // Christine, 19.11.2026: den Teil nach dem Einzug ankündigen (Haus am Horizont, Meilensteine, Lebensrad am Haus)
+    titel: 'Über Monate dranbleiben',
+    text: 'Passt deine Richtung, ziehst du in dein Haus am Horizont ein. Dort begleitet dich die App weiter: Du trägst deine Meilensteine in deinen Kalender ein und hakst ab, was du erreicht hast. Rund alle vier Wochen hältst du fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist, und schaust, ob du dich in die gewünschte Richtung bewegst.',
+  },
 ];
 
 const umfang = [
   'eine App zum Selbstlernen, die dich Schritt für Schritt führt und deinen Fortschritt zeigt',
   'Einheiten für vier bis sechs Wochen',
   'kleine Schritte im echten Leben und eine Probezeit von 10 Tagen',
+  'Begleitung nach dem Programm: Meilensteine abhaken und rund alle vier Wochen eine Momentaufnahme deiner Lebensbereiche',
   'ein Jahr Zugang, in dem du in deinem eigenen Tempo arbeitest',
 ];
 ---
@@ -139,6 +145,13 @@ const umfang = [
           {umfang.map((u) => <li>{u}</li>)}
         </ul>
         <Preis id="try-a-life" />
+        {/* Kaufknopf und Demo direkt beim Preis (Christine, 19.11.2026) */}
+        {app.status === 'verfuegbar' && (
+          <div class="aktionen umfang__aktionen">
+            <AngebotButton id="try-a-life" />
+            <AngebotButton id="try-a-life" ziel="demo" />
+          </div>
+        )}
         <!-- Angaben zu Kauf, Lieferung und Widerruf für die Freigabe durch Digistore24 (Vorschlag 17.11.2026, fachlich zu prüfen) -->
         <p class="hinweis">
           Du kaufst Try a Life bei Digistore24 und hast 12 Monate Zugang. Nach dem Kauf meldest du dich in der App mit der Mailadresse an,
@@ -243,13 +256,30 @@ const umfang = [
     padding: 12px 0;
   }
 
+  .umfang__aktionen {
+    margin: 8px 0 24px;
+  }
+
   .schritte {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(24px, 3vw, 44px);
+  }
+
+  /* Vier Schritte: zwei mal zwei, ab breiten Bildschirmen in einer Reihe */
+  @media (min-width: 640px) {
+    .schritte {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .schritte {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   .schritte li {
