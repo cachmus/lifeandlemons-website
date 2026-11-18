@@ -94,7 +94,9 @@ export type Angebot = {
 export const DIGISTORE24 = {
   // Entschieden 16.11.2026 (Christine): Über Digistore24 laufen nur noch digitale Produkte.
   // Das gedruckte Workbook und die Begleitung bestellt man direkt bei Christine.
-  'try-a-life': '',
+  // Bestellformular von Produkt 766184 (17.11.2026). Bis zur Freigabe durch Digistore24 nur Testzahlung.
+  // Beim Verkaufsstart führt der Kaufknopf auf /try-a-life/ direkt hierher (Christine, 18.11.2026).
+  'try-a-life': 'https://www.checkout-ds24.com/product/766184/',
 } as const;
 
 export type DigistoreId = keyof typeof DIGISTORE24;
@@ -237,8 +239,9 @@ export const angebote: Angebot[] = [
   },
   {
     // App „Try a Life“ (Positionierungspapier V5, Angaben bestätigt von Christine am 11.11.2026).
-    // OFFEN: Preis, Starttermin und Kaufweg. Sobald die App kaufbar ist: status auf 'verfuegbar',
-    // Preis eintragen und `aktion` auf den Checkout umstellen. Die Landingpage /try-a-life/ liest alles von hier.
+    // Kaufweg entschieden (Christine, 18.11.2026): Kaufknopf direkt zum Bestellformular (DIGISTORE24['try-a-life']).
+    // Nach der Freigabe durch Digistore24: status auf 'verfuegbar', `art` ohne „bald verfügbar“ und `aktion` auf
+    // checkoutOderAnfrage(DIGISTORE24['try-a-life'], …) umstellen. Die Landingpage /try-a-life/ liest alles von hier.
     id: 'try-a-life',
     modul: 1,
     name: 'Try a Life',
