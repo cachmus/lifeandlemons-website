@@ -6,45 +6,11 @@
  * Anker: #phasen, #grundlagen (früher auf der Seite Modul 1)
  */
 import Base from '../layouts/Base.astro';
+import PhaseZeichen from '../components/PhaseZeichen.astro';
+import { phasen } from '../config/methode';
 import { seiten } from '../config/site';
 
-const phasen = [
-  {
-    titel: 'Verstehen, wo du stehst',
-    text: 'Ein Lebensrad mit neun Feldern zeigt dir, was fehlt und was dich schon trägt: Familie, Freundschaft, Liebe, Innenleben, Körper, Entwicklung, Geld, Beitrag und Freude. Dazu kommen deine Stärken, deine Ressourcen, Tätigkeiten, die du abgeben oder reduzieren möchtest, und dein Element. Dort kommen Stärken, Interessen und Sinn zusammen, und du gehst ganz in einer Tätigkeit auf.',
-    frage: 'Was fehlt mir, und was trägt mich schon?',
-  },
-  {
-    titel: 'Erkennen, was dich bremst',
-    text: 'Du findest heraus, welche inneren Muster dich bislang gebremst haben, und untersuchst, wie sie heute wirken. Ihre Entstehung arbeiten wir nicht auf.',
-    frage: 'Welche Muster haben mich bisher zurückgehalten?',
-  },
-  {
-    titel: 'Drei mögliche Leben entwerfen',
-    text: 'Mit gelöster Bremse entstehen drei völlig unterschiedliche Entwürfe. Weitergehen fragt, was sich ändert, wenn du deinen Weg mutiger gehst. Umsteigen fragt, was du aufbaust, wenn dein bisheriger Weg wegfällt. Wagen fragt, was du tust, wenn ein Scheitern dich nicht aus der Bahn werfen kann.',
-    frage: 'Welche Leben wären für mich möglich?',
-  },
-  {
-    titel: 'Spüren, welcher Entwurf dich anzieht',
-    text: 'Du vergleichst deine Entwürfe danach, wie sehr sie emotional und persönlich zu dir passen.',
-    frage: 'Welchen Menschen, der ich in fünf Jahren in diesem Entwurf wäre, würde ich gern kennenlernen?',
-  },
-  {
-    titel: 'Klären, was dir wichtig ist',
-    text: 'Aus deinen drei Entwürfen arbeitest du heraus, welche Werte und Bedürfnisse immer wieder auftauchen und wer dein gewünschtes Zukunfts-Ich ist. Daran orientieren sich deine Tests.',
-    frage: 'Was taucht in allen meinen Entwürfen wieder auf?',
-  },
-  {
-    titel: 'Ausprobieren und nachjustieren',
-    text: 'Du sprichst mit Menschen, die ein ähnliches Leben führen, und probierst einzelne Bestandteile deines gewünschten Alltags aus. Deine Erfahrungen gleichst du mit deinen Werten ab und setzt daraus deinen eigenen Weg zusammen. Er darf Elemente aus allen drei Entwürfen enthalten.',
-    frage: 'Stimmen meine Annahmen über dieses Leben?',
-  },
-  {
-    titel: 'Im Alltag verankern',
-    text: 'Du übersetzt deinen Weg in Meilensteine, Gewohnheiten, Wenn-dann-Pläne und einen Alltag, der es dir leicht macht. Deine Werte geben dir die Richtung, ein bewusst gewähltes Lebensgefühl ist dein Maßstab.',
-    frage: 'Was tue ich regelmäßig als der Mensch, der ich werden will?',
-  },
-];
+
 
 const schritte = [
   'Du wählst eine kleine Aufgabe, die du bisher aufgeschoben hast, etwa einen Termin vereinbaren, eine Reklamation schreiben oder ein Gespräch führen.',
@@ -106,12 +72,12 @@ const grundlagen = [
       <h1>Vom heutigen Leben zu deinem eigenen <span class="pivot">Weg</span></h1>
       <p class="einleitung">
         Am Ende steht dein eigener Weg, zusammengesetzt aus dem, was sich in Entwürfen und Tests bewährt hat. Dazu kommt eine Methode,
-        mit der du dein Leben auch in späteren Phasen selbst neu ausrichten kannst. Sie ist auf jedem Weg dieselbe, ob du allein mit
-        dem Kursbuch arbeitest oder ich dich begleite.
+        mit der du dein Leben auch in späteren Phasen selbst neu ausrichten kannst. Sie ist auf beiden Wegen dieselbe, ob du mit dem
+        Workbook arbeitest oder mit der App Try a Life.
       </p>
       <div class="aktionen">
         <a class="button" href="#phasen">Die sieben Phasen <span class="button__pfeil" aria-hidden="true">→</span></a>
-        <a class="textlink" href={`${seiten.modul1}#formate`}>Zum Angebot</a>
+        <a class="textlink" href={seiten.angebote}>Zu den Angeboten</a>
       </div>
     </div>
   </section>
@@ -127,7 +93,10 @@ const grundlagen = [
         {
           phasen.map((p, i) => (
             <li class:list={['phase', { 'phase--modul2': i === 6 }]} data-erscheinen>
-              <span class="phase__nr" aria-hidden="true">{i + 1}</span>
+              <div class="phase__zeichen" aria-hidden="true">
+                <PhaseZeichen symbol={p.symbol} klasse="phase__bild" />
+                <span class="phase__nr">{i + 1}</span>
+              </div>
               <div class="phase__inhalt">
                 <h3>{p.titel}</h3>
                 <p>{p.text}</p>
@@ -139,7 +108,7 @@ const grundlagen = [
       </ol>
       <div class="phasen__hinweise text">
         <p>
-          Das Kursbuch „Entwirf dein Zukunfts-Ich“ führt dich durch die Phasen 1 bis 6. Mit der Probezeit am Ende des Kursbuchs beginnt
+          Das Workbook „Entwirf dein Zukunfts-Ich“ führt dich durch die Phasen 1 bis 6. Mit der Probezeit am Ende des Workbooks beginnt
           Phase 7: Du prüfst deine Richtung 14 Tage lang im Alltag und übst eine erste Gewohnheit ein. Phase 7 ist der Schwerpunkt von{' '}
           <a href={seiten.modul2}>Modul 2 „Manifestiere dein Zukunfts-Ich“</a>, das gerade entsteht.
         </p>
@@ -272,11 +241,10 @@ const grundlagen = [
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>
-          Du kannst allein mit dem Kursbuch arbeiten oder dich begleiten lassen, in einer kleinen Gruppe in Hannover, einzeln mit mir
-          vor Ort oder online oder intensiv im 1:1.
+          Du kannst mit dem gedruckten Workbook arbeiten oder mit der Life-Coaching-App Try a Life.
         </p>
         <div class="aktionen">
-          <a class="button" href={`${seiten.modul1}#formate`}>Zum Angebot <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="button" href={seiten.angebote}>Zu den Angeboten <span class="button__pfeil" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
@@ -307,7 +275,7 @@ const grundlagen = [
 
   .phase {
     display: grid;
-    grid-template-columns: clamp(48px, 6vw, 88px) minmax(0, 1fr);
+    grid-template-columns: clamp(64px, 8vw, 104px) minmax(0, 1fr);
     gap: 0 clamp(16px, 3vw, 40px);
     border-top: 1px solid var(--linie);
     padding: clamp(22px, 3vw, 32px) 0;
@@ -317,9 +285,23 @@ const grundlagen = [
     border-bottom: 1px solid var(--linie);
   }
 
+  .phase__zeichen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .phase__zeichen :global(.phase__bild) {
+    display: block;
+    width: clamp(56px, 6vw, 80px);
+    height: clamp(56px, 6vw, 80px);
+    object-fit: contain;
+  }
+
   .phase__nr {
     font-family: var(--schrift-titel);
-    font-size: clamp(40px, 4.4vw, 60px);
+    font-size: clamp(26px, 2.6vw, 34px);
     line-height: 1;
     color: var(--terrakotta);
   }

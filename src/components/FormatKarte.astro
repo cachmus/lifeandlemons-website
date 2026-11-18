@@ -1,11 +1,12 @@
 ---
 /**
- * Ein Format von Modul 1 (Kursbuch, Club, Einzel-Track, VIP-Track) mit Passung, Leistungen,
+ * Ein Format von Modul 1 (Workbook, Club, Einzel-Track, VIP-Track) mit Passung, Leistungen,
  * Terminen, aktuellem Preis und Button. Alle Angaben kommen aus src/config/angebote.ts.
  */
 import AngebotButton from './AngebotButton.astro';
 import Preis from './Preis.astro';
 import { angebotNachId, istPausiert, formatDatum, bestellHinweis } from '../config/angebote';
+import { seiten } from '../config/site';
 
 interface Props {
   id: string;
@@ -64,7 +65,7 @@ if (!pausiert) {
     {pausiert ? <p class="format__pause">{a.textPausiert ?? 'Dieses Angebot pausiert gerade.'}</p> : <Preis id={id} />}
     {!pausiert && a.lieferhinweis && <p class="format__liefer">{a.lieferhinweis}</p>}
     <AngebotButton id={id} />
-    {hinweis && <p class="format__hinweis">{hinweis}</p>}
+    {hinweis && <p class="format__hinweis">{hinweis}{a.versandInklusive && <> <a href={seiten.widerruf}>Widerrufsbelehrung</a></>}</p>}
   </div>
 </article>
 

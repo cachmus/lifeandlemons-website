@@ -1,0 +1,207 @@
+---
+/**
+ * „Welcher Weg passt zu dir?“: die drei Einstiege nebeneinander mit Bild, Faktenleiste und einem Knopf
+ * (Neugestaltung, entschieden 16.11.2026). Preise, „für dich, wenn …“ und Kaufziele kommen aus src/config/angebote.ts.
+ * Das Journal ist kostenlos und steht deshalb nicht in angebote.ts.
+ */
+import { Image } from 'astro:assets';
+import AngebotButton from './AngebotButton.astro';
+import { seiten, tryALifeAnkuendigung } from '../config/site';
+import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
+import journalCover from '../assets/journal-cover.jpg';
+import talBild from '../assets/try-a-life-tal.jpg';
+import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
+
+interface Props {
+  kennung?: string;
+}
+const { kennung = 'wege' } = Astro.props;
+
+const kursbuch = angebotNachId('kursbuch');
+const kursbuchPreis = aktuellerPreis(kursbuch);
+const tryALife = angebotNachId('try-a-life');
+const tryPreis = aktuellerPreis(tryALife);
+---
+
+<ul class="wege" aria-label="Die drei Einstiege im Vergleich" id={kennung}>
+  <li class="weg">
+    <a class="weg__bild weg__bild--papier" href={seiten.journal} tabindex="-1" aria-hidden="true">
+      <Image src={journalCover} alt="" widths={[220, 340]} sizes="200px" />
+    </a>
+    <p class="weg__marke">Kostenlos reinschnuppern</p>
+    <h3 class="weg__name">Gratis-Journal</h3>
+    <p class="weg__fuer">Für dich, wenn du dein Jahr abschließen und wissen willst, was du dir fürs nächste wirklich vornimmst.</p>
+    <dl class="weg__fakten">
+      <div><dt>Preis</dt><dd>kostenlos</dd></div>
+      <div><dt>Format</dt><dd>PDF, 17 Seiten</dd></div>
+      <div><dt>Zeit</dt><dd>rund 90 Minuten</dd></div>
+    </dl>
+    <a class="button weg__knopf" href={seiten.journal}>Journal holen <span class="button__pfeil" aria-hidden="true">→</span></a>
+  </li>
+
+  <li class="weg weg--hervor">
+    <a class="weg__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
+      <Image src={talBild} alt="" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
+    </a>
+    <p class="weg__marke">Try a Life · {tryALifeAnkuendigung.status}</p>
+    <h3 class="weg__name">Life-Coaching-App</h3>
+    <p class="weg__fuer">Für dich, wenn {tryALife.fuerDich}</p>
+    <dl class="weg__fakten">
+      <div><dt>Preis</dt><dd>{tryPreis ? formatEuro(tryPreis.betrag) : tryALifeAnkuendigung.status}{tryPreis && <span class="weg__klein"> {preisHinweis(tryALife)}</span>}</dd></div>
+      <div><dt>Format</dt><dd>App zum Selbstlernen</dd></div>
+      <div><dt>Zeit</dt><dd>4 bis 6 Wochen, 1 Jahr Zugang</dd></div>
+    </dl>
+    <a class="button weg__knopf" href={seiten.tryALife}>Mehr zu Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>
+  </li>
+
+  <li class="weg">
+    <a class="weg__bild" href={seiten.modul1} tabindex="-1" aria-hidden="true">
+      <Image src={kursbuchFoto} alt="" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
+    </a>
+    <p class="weg__marke">Entwirf dein Zukunfts-Ich</p>
+    <h3 class="weg__name">Life-Coaching-Workbook</h3>
+    <p class="weg__fuer">Für dich, wenn {kursbuch.fuerDich}</p>
+    <dl class="weg__fakten">
+      <div>
+        <dt>Preis</dt>
+        <dd>
+          {kursbuchPreis ? formatEuro(kursbuchPreis.betrag) : 'auf Anfrage'}
+          {kursbuchPreis?.einfuehrung && <span class="weg__klein"> bis {formatDatum(STICHTAGE.einfuehrungBis)}</span>}
+        </dd>
+      </div>
+      <div><dt>Format</dt><dd>gedruckt, 184 Seiten</dd></div>
+      <div><dt>Zeit</dt><dd>9 Einheiten, rund 6 Wochen</dd></div>
+    </dl>
+    {kursbuchPreis && <p class="weg__steuer">{preisHinweis(kursbuch)}</p>}
+    <div class="weg__knopf"><AngebotButton id="kursbuch" /></div>
+  </li>
+</ul>
+
+<style>
+  .wege {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+    align-items: stretch;
+  }
+
+  .weg {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(20px, 2.5vw, 28px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+  }
+
+  .weg--hervor {
+    border: 2px solid var(--tinte);
+  }
+
+  .weg__bild {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    margin: calc(-1 * clamp(20px, 2.5vw, 28px)) calc(-1 * clamp(20px, 2.5vw, 28px)) 8px;
+  }
+
+  .weg--hervor .weg__bild {
+    margin: calc(-1 * clamp(20px, 2.5vw, 28px) + 1px) calc(-1 * clamp(20px, 2.5vw, 28px) + 1px) 8px;
+  }
+
+  .weg__bild :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .weg__bild--papier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--leinen);
+    padding: 16px;
+  }
+
+  .weg__bild--papier :global(img) {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    box-shadow: 0 8px 18px rgba(34, 48, 44, 0.18);
+  }
+
+  .weg__marke {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+    margin: 0;
+  }
+
+  .weg__name {
+    font-family: var(--schrift-titel);
+    font-size: clamp(28px, 2.4vw, 34px);
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .weg__fuer {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .weg__fakten {
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--linie);
+  }
+
+  .weg__fakten div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--linie);
+    font-size: 15px;
+  }
+
+  .weg__fakten dt {
+    color: var(--text-gedaempft);
+  }
+
+  .weg__fakten dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .weg__klein {
+    font-weight: 400;
+    color: var(--text-gedaempft);
+  }
+  .weg__steuer {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text-gedaempft);
+  }
+
+  .weg__knopf {
+    margin-top: auto;
+    padding-top: 8px;
+    align-self: stretch;
+  }
+
+  .weg__knopf :global(.button),
+  a.weg__knopf {
+    width: 100%;
+    justify-content: center;
+  }
+</style>

@@ -13,30 +13,43 @@ import Treppe from '../components/Treppe.astro';
 import ModulKarte from '../components/ModulKarte.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
-import { site, seiten } from '../config/site';
+import WartelisteKurz from '../components/WartelisteKurz.astro';
+import AngebotsVergleich from '../components/AngebotsVergleich.astro';
+import { site, seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-mauer.jpg';
 import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
+import journalCover from '../assets/journal-cover.jpg';
+import talBild from '../assets/try-a-life-tal.jpg';
+import wortmarke from '../assets/try-a-life-wortmarke.png';
+// Aquarellbilder aus Try a Life (Rechte bei Christine): die drei Welten und das Tal mit dem Weg
+import weltHochland from '../assets/leben/hochland.jpg';
+import weltUfer from '../assets/leben/ufer.jpg';
+import weltSchwebeinseln from '../assets/leben/schwebeinseln.jpg';
+import wegTal from '../assets/leben/weg-tal.jpg';
 
 const kursbuch = angebotNachId('kursbuch');
+// Seit 18.11.2026 kaufbar: Kaufknopf statt Warteliste
+const tryKaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
 const kursbuchPreis = aktuellerPreis(kursbuch);
 const kursbuchHinweis = bestellHinweis(kursbuch);
 
 /** Stimmen erst einblenden, wenn echte Stimmen mit schriftlicher Einwilligung vorliegen */
 const stimmenZeigen = false;
 
+/** Begriffe der Zielgruppe laut Sprachrecherche: Leben passt nicht mehr, Orientierung, zu spät, alte Muster (überarbeitet 16.11.2026) */
 const fragen = [
-  'Mein Leben funktioniert, aber es fühlt sich nicht ganz nach meinem Leben an.',
-  'Ich weiß, dass ich etwas verändern möchte, aber noch nicht genau, was.',
+  'Mein Leben funktioniert, aber es passt irgendwie nicht mehr zu mir.',
+  'Mir fehlt die Orientierung. Ich weiß, dass sich etwas ändern soll, aber nicht, was.',
+  'Ich frage mich, ob es für eine echte Veränderung nicht schon zu spät ist.',
   'Ich nehme mir viel vor und falle doch immer wieder in alte Muster zurück.',
-  'Ich möchte herausfinden, welche Richtung wirklich zu mir passt.',
 ];
 
 const leben = [
-  { titel: 'Weitergehen', frage: 'Was ändert sich, wenn du deinen Weg mutiger gehst?' },
-  { titel: 'Umsteigen', frage: 'Was baust du auf, wenn dein bisheriger Weg wegfällt?' },
-  { titel: 'Wagen', frage: 'Was tust du, wenn ein Scheitern dich nicht aus der Bahn werfen kann?' },
+  { titel: 'Weitergehen', frage: 'Was ändert sich, wenn du deinen Weg mutiger gehst?', bild: weltHochland, alt: 'Aquarell eines Hauses am Hang im Hochland mit Gondel und Garten' },
+  { titel: 'Umsteigen', frage: 'Was baust du auf, wenn dein bisheriger Weg wegfällt?', bild: weltUfer, alt: 'Aquarell eines Hausboots an einem Steg am anderen Ufer eines Sees' },
+  { titel: 'Wagen', frage: 'Was tust du, wenn ein Scheitern dich nicht aus der Bahn werfen kann?', bild: weltSchwebeinseln, alt: 'Aquarell eines kleinen Hauses auf einer schwebenden Insel über den Wolken' },
 ];
 
 const hilft = [
@@ -63,13 +76,17 @@ const hilft = [
           werden soll.
         </p>
         <div class="aktionen">
-          <a class="button" href="#weg">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="button" href="#wege">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
           <a class="textlink" href="#ueber">Lerne mich kennen</a>
         </div>
+        <a class="neu" href={seiten.journal}>
+          <span class="neu__label">Gratis</span>
+          <span class="neu__text">Journal für deinen Jahresrückblick: Wer will ich in 12 Monaten sein?</span>
+        </a>
         <a class="neu" href="#kursbuch">
           <span class="neu__label">Neu</span>
           <span class="neu__text">
-            Das Kursbuch „Entwirf dein Zukunfts-Ich“
+            Life-Coaching-Workbook „Entwirf dein Zukunfts-Ich“
             {kursbuchPreis && (
               <span class="neu__preis">
                 {` · ${formatEuro(kursbuchPreis.betrag)}${kursbuchPreis.einfuehrung ? ` Einführungspreis bis ${formatDatum(STICHTAGE.einfuehrungBis)}` : ''}`}
@@ -92,6 +109,17 @@ const hilft = [
           quality={80}
         />
       </div>
+    </div>
+  </section>
+
+  <!-- 1b. Welcher Weg passt zu dir? · Überblick über die Einstiege direkt nach dem ersten Bildschirm (Neugestaltung 16.11.2026) -->
+  <section class="abschnitt abschnitt--wege" aria-labelledby="wege-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">Dein Einstieg</p>
+        <h2 id="wege-titel" class="zeile">Welcher Weg passt zu <span class="pivot">dir</span>?</h2>
+      </div>
+      <AngebotsVergleich />
     </div>
   </section>
 
@@ -122,22 +150,33 @@ const hilft = [
   <!-- 3. So entsteht dein Weg · Verstehen -->
   <section class="abschnitt" id="weg" aria-labelledby="weg-titel">
     <div class="container">
+      <div class="weg-kopf">
       <div class="kopfblock">
         <p class="label">02 · Dein Weg</p>
         <h2 id="weg-titel" class="zeile">So entsteht dein <span class="pivot">Weg</span></h2>
         <p class="einleitung text">
-          Zu mir kommen Menschen, die spüren, dass sich etwas ändern soll, und noch nicht wissen, wohin. Wenn du dich darin
-          wiedererkennst, findest du mithilfe meines Methodenwerks heraus, welche inneren Muster dich bislang gebremst haben. Du
-          entwirfst drei völlig unterschiedliche Leben und testest den Entwurf, der dich am meisten anzieht, im Alltag, bevor du
-          dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht ein Weg,
-          der zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
+          Zu mir kommen Menschen, deren Leben von außen gut aussieht und sich trotzdem nicht mehr passend anfühlt. Ihnen fehlt die
+          Orientierung: Welche Lebensziele sind wirklich meine, wohin soll es gehen, und ist es dafür nicht längst zu spät? Wenn du
+          dich darin wiedererkennst, findest du mithilfe meines Methodenwerks heraus, welche inneren Muster dich bislang gebremst
+          haben. Du entwirfst drei völlig unterschiedliche Leben und testest den Entwurf, der dich am meisten anzieht, im Alltag,
+          bevor du dich festlegst. Jeder Schritt, den du gehst, setzt den alten Mustern eine neue Erfahrung entgegen. So entsteht
+          eine Perspektive, die zu dir passt, und das Vertrauen, dass du dich auf dich verlassen kannst.
         </p>
+      </div>
+      <Image
+        class="weg-kopf__bild"
+        src={wegTal}
+        alt="Aquarell eines mediterranen Tals mit einem gewundenen Weg zwischen Olivenbäumen"
+        widths={[420, 640, 900]}
+        sizes="(min-width: 960px) 420px, 92vw"
+      />
       </div>
       <div class="bremse">
         <div class="bremse__spalte" data-erscheinen>
           <h3 class="bremse__titel">Was dich bisher bremst</h3>
           <p>
-            Spätestens nach drei Wochen holt uns oft der Alltag zurück, und die alten Gewohnheiten klopfen wieder an.
+            Kennst du das von guten Vorsätzen zum Jahresanfang? Spätestens nach drei Wochen holt uns der Alltag zurück, und die
+            alten Gewohnheiten klopfen wieder an.
           </p>
           <p class="bremse__satz">„Du schaffst es ja sowieso nicht.“</p>
           <p>
@@ -167,6 +206,7 @@ const hilft = [
         {
           leben.map((l) => (
             <li class="leben__karte" data-erscheinen>
+              <Image class="leben__bild" src={l.bild} alt={l.alt} widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
               <h3>{l.titel}</h3>
               <p>{l.frage}</p>
             </li>
@@ -209,11 +249,11 @@ const hilft = [
             },
             {
               label: 'Am Ende',
-              text: 'weißt du, worauf du gewartet hast und welche Muster dich zurückhalten. Du hast drei mögliche Leben entworfen, deine Werte daraus abgeleitet, eine Richtung gewählt und sie 14 Tage lang im Alltag erprobt.',
+              text: 'weißt du, worauf du gewartet hast und welche Muster dich zurückhalten. Du hast drei mögliche Leben entworfen, deine Werte daraus abgeleitet, eine Richtung gewählt und sie in einer Probezeit im Alltag erprobt.',
             },
             {
               label: 'So arbeitest du',
-              text: 'allein mit dem Kursbuch, oder wir gehen den Weg gemeinsam, in der Gruppe oder zu zweit. Der Kurs hat neun Einheiten und braucht rund 10 Stunden, verteilt über bis zu 6 Wochen.',
+              text: 'allein, mit dem gedruckten Workbook oder mit der App Try a Life. Der Kurs hat neun Einheiten und braucht rund 10 Stunden, verteilt über bis zu 6 Wochen.',
             },
           ]}
           link={{ href: seiten.modul1, label: 'Mehr zu Modul 1' }}
@@ -231,7 +271,7 @@ const hilft = [
             },
             {
               label: 'Einstieg',
-              text: 'Das Kursbuch ist einzeln erhältlich, sobald es erscheint. Persönliche Begleitung beginnt mit einem Orientierungsgespräch, in dem wir klären, ob Modul 1 vorher sinnvoll ist.',
+              text: 'Das Workbook ist einzeln erhältlich, sobald es erscheint.',
             },
           ]}
           link={{ href: '#liste', label: 'Benachrichtige mich zum Start' }}
@@ -277,20 +317,51 @@ const hilft = [
     )
   }
 
-  <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Kursbuch) -->
+  <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Workbook) -->
   <section class="abschnitt" id="kursbuch" aria-labelledby="einstieg-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">06 · Dein Einstieg</p>
+        <p class="label">06 · Die Einstiege im Detail</p>
         <h2 id="einstieg-titel" class="zeile">Welcher Weg weckt dein <span class="pivot">Interesse</span>?</h2>
-        <p class="einleitung text">Alle Wege führen durch dieselbe Methode. Du entscheidest, wie viel Begleitung du dir wünschst.</p>
+        <p class="einleitung text">
+          Am leichtesten startest du kostenlos: mit dem Journal für deinen Jahresrückblick oder auf der Warteliste für Try a Life. Wenn
+          du direkt tiefer einsteigen willst, ist das Workbook dein Weg.
+        </p>
+      </div>
+
+      <div class="einstieg">
+        <article class="einstieg__karte" data-erscheinen>
+          <a class="einstieg__bild einstieg__bild--journal" href={seiten.journal} tabindex="-1" aria-hidden="true">
+            <Image src={journalCover} alt="" widths={[260, 400]} sizes="(min-width: 860px) 220px, 50vw" />
+          </a>
+          <div class="einstieg__text">
+            <p class="label">Kostenlos · sofort per E-Mail</p>
+            <h3>Wer will ich in 12 Monaten <span class="pivot">sein</span>?</h3>
+            <p>Das Jahr ist fast vorbei, und du weißt noch nicht, was du dir fürs nächste wirklich vornehmen willst? In rund 90 Minuten findest du es heraus und startest mit einem ersten kleinen Schritt.</p>
+            <a class="button" href={seiten.journal}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="einstieg__karte" data-erscheinen>
+          <a class="einstieg__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
+            <Image src={talBild} alt="" widths={[480, 720]} sizes="(min-width: 860px) 560px, 92vw" />
+          </a>
+          <div class="einstieg__text">
+            <p class="label">Neu · {tryALifeAnkuendigung.status}</p>
+            <h3><Image class="einstieg__wortmarke" src={wortmarke} alt="Try a Life" width={260} /></h3>
+            <p>Von außen läuft alles, und trotzdem fragst du dich, ob das schon alles war? Mit Try a Life findest du heraus, was du dir wirklich wünschst, und probierst neue Wege in deinem echten Leben aus. Ein komplettes Life-Coaching-Programm im alltagstauglichen Format eines Cozy Games.{!tryKaufbar && ' Trag dich ein, dann erfährst du zuerst, wenn es losgeht.'}</p>
+            {tryKaufbar ? <p class="einstieg__demo"><AngebotButton id="try-a-life" /> <AngebotButton id="try-a-life" ziel="demo" /></p> : <>
+              <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="start-try" />
+              <p class="einstieg__demo"><AngebotButton id="try-a-life" ziel="demo" /></p>
+            </>}
+          </div>
+        </article>
       </div>
 
       <div class="dunkel kursbuch__innen">
         <div class="kursbuch__bild" data-erscheinen>
           <Image
             src={kursbuchFoto}
-            alt="Das Kursbuch Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
+            alt="Das Workbook Entwirf dein Zukunfts-Ich mit Vorder- und Rückseite auf einem hellen Leinentuch"
             widths={[420, 640, 900]}
             sizes="(max-width: 860px) 92vw, 40vw"
             format="webp"
@@ -298,10 +369,10 @@ const hilft = [
           />
         </div>
         <div class="kursbuch__text">
-          <p class="label">Allein mit dem Kursbuch</p>
+          <p class="label">Allein mit dem Workbook</p>
           <h3 class="kursbuch__titel">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h3>
           <p>
-            Du arbeitest in deinem eigenen Tempo. Das Kursbuch verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und
+            Du arbeitest in deinem eigenen Tempo. Das Workbook verfügt über 184 Seiten, mit viel Platz für deine Erkenntnisse und
             Notizen. Es führt dich ganz intuitiv durch jede Übung, ohne dass du lange Texte verfassen musst. Zwischen den neun
             Einheiten gehst du erste Schritte im echten Leben, und zum Schluss probierst du deine neue Richtung 14 Tage lang im
             Alltag aus.
@@ -311,22 +382,11 @@ const hilft = [
           <div class="aktionen">
             <AngebotButton id="kursbuch" variante="hell" />
           </div>
-          {kursbuchHinweis && <p class="kursbuch__hinweis">{kursbuchHinweis}</p>}
+          {kursbuchHinweis && <p class="kursbuch__hinweis">{kursbuchHinweis} <a href={seiten.widerruf}>Widerrufsbelehrung</a></p>}
         </div>
       </div>
 
-      <div class="wege">
-        <article class="wege__karte" data-erscheinen>
-          <p class="label">Begleitet</p>
-          <p>In einer kleinen Gruppe in Hannover oder einzeln mit mir, vor Ort oder online.</p>
-          <a class="textlink" href={`${seiten.modul1}#formate`}>Club und Einzel-Track <span aria-hidden="true">→</span></a>
-        </article>
-        <article class="wege__karte" data-erscheinen>
-          <p class="label">Intensiv im 1:1</p>
-          <p>Wir übertragen jede Erkenntnis direkt auf deine Lebenssituation.</p>
-          <a class="textlink" href={`${seiten.modul1}#formate`}>VIP-Track <span aria-hidden="true">→</span></a>
-        </article>
-      </div>
+      {/* Begleitete Wege (Club, Einzel-Track, VIP-Track) ausgeblendet: seit 09.11.2026 vorerst nur Selbstlernversionen */}
     </div>
   </section>
 
@@ -340,6 +400,71 @@ const hilft = [
 </Base>
 
 <style>
+  /* Einstieg: Journal und Try a Life */
+  .einstieg {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin-bottom: clamp(32px, 5vw, 64px);
+  }
+
+  .einstieg__karte {
+    display: flex;
+    flex-direction: column;
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 3px solid var(--terrakotta);
+  }
+
+  .einstieg__bild {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .einstieg__bild :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .einstieg__bild--journal {
+    display: grid;
+    place-items: center;
+    background: var(--leinen);
+    padding: 20px;
+  }
+
+  .einstieg__bild--journal :global(img) {
+    width: auto;
+    height: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    transform: rotate(-3deg);
+    box-shadow: 0 14px 30px rgba(34, 48, 44, 0.2);
+  }
+
+  .einstieg__demo {
+    margin-top: 0.75rem;
+  }
+
+  .einstieg__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: clamp(22px, 3vw, 32px);
+  }
+
+  .einstieg__text h3 {
+    margin: 0;
+  }
+
+  .einstieg__wortmarke {
+    width: min(100%, 240px);
+    height: auto;
+  }
+
   /* Erster Bildschirm */
   .hero {
     padding: clamp(40px, 6vw, 88px) 0 0;
@@ -479,7 +604,7 @@ const hilft = [
     margin-top: clamp(48px, 6vw, 88px);
   }
 
-  /* Kursbuch */
+  /* Workbook */
   .kursbuch__innen {
     padding: clamp(28px, 5vw, 72px);
     display: flex;
@@ -594,6 +719,27 @@ const hilft = [
   }
 
   /* Drei mögliche Leben */
+  .weg-kopf {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: end;
+  }
+
+  @media (min-width: 960px) {
+    .weg-kopf {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+  }
+
+  .weg-kopf__bild {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
   .leben {
     list-style: none;
     margin: 0;
@@ -603,10 +749,21 @@ const hilft = [
     gap: clamp(20px, 2.5vw, 32px);
   }
 
+  .leben__bild {
+    display: block;
+    width: calc(100% + 2 * clamp(24px, 3vw, 40px));
+    max-width: none;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    margin: calc(-1 * clamp(24px, 3vw, 40px)) calc(-1 * clamp(24px, 3vw, 40px)) 8px;
+  }
+
   .leben__karte {
     border: 1px solid var(--linie);
     border-top: 2px solid var(--terrakotta);
     padding: clamp(24px, 3vw, 40px);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -670,7 +827,7 @@ const hilft = [
     margin: 0 auto;
   }
 
-  /* Weitere Wege neben dem Kursbuch */
+  /* Weitere Wege neben dem Workbook */
   .kursbuch__titel {
     font-size: clamp(36px, 4vw, 56px);
     line-height: 1;

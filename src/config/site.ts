@@ -17,9 +17,11 @@ export const site = {
   rolle: 'Mentorin für Lebensentwürfe',
   slogan: 'Sei, wer du werden willst.',
   kontaktEmail: 'christine@lifeandlemons.de',
+  /** Telefon fürs Impressum, verlangt von Digistore24 für die Produktfreigabe (Christine, 18.11.2026) */
+  telefon: { anzeige: '+49 177 4042351', wahl: '+491774042351' },
   /** Ladungsfähige Anschrift für Impressum, Datenschutz und später den Newsletter-Fuß (entschieden 19.10.2026: Privatadresse) */
   anschrift: { strasse: 'Hesemannstr. 13', plzOrt: '30655 Hannover' },
-  /** Handle laut Kursbuch-Umschlag und Broschüre */
+  /** Handle laut Workbook-Umschlag und Broschüre */
   instagram: { handle: '@christineachmus', url: 'https://www.instagram.com/christineachmus/' },
   /**
    * Ort für Suchmaschinen und strukturierte Daten. Öffentlich erscheint nur die Stadt, keine Straße
@@ -54,23 +56,21 @@ export const seiten = {
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
-  /** Danke-Seite nach dem Kauf des Kursbuchs; in Digistore24 im Produkt als Dankeseite eintragen. Immer noindex. */
-  dankeKursbuch: '/danke/kursbuch/',
+  /** Widerrufsbelehrung mit Muster-Widerrufsformular für das gedruckte Workbook (neu 16.11.2026, fachlich zu prüfen) */
+  widerruf: '/widerruf/',
   /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
   dankeAnmeldung: '/danke/anmeldung/',
   /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
   tryALife: '/try-a-life/',
   /** Landingpage des kostenlosen Jahresabschluss-Journals (neu 11.11.2026). Ziel des Links in der Instagram-Bio, Adresse nicht ändern. */
   journal: '/journal/',
+  /** Übersicht aller Angebote, Journal und Try a Life zuerst (neu 16.11.2026). Ziel des Menüpunkts „Angebote“. */
+  angebote: '/angebote/',
+  /** Ratgeber mit Artikeln; Artikel liegen unter /ratgeber/<slug>/ (Quelltexte in src/ratgeber/) */
+  ratgeber: '/ratgeber/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;
-
-/**
- * OFFEN: Zusatz zu jedem Preis, z. B. „inkl. MwSt.“ oder bei Kleinunternehmerregelung
- * „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.“ Mit Steuerberatung klären und hier eintragen.
- */
-export const preisZusatz = '';
 
 export type NavPunkt = { label: string; href: string };
 
@@ -80,15 +80,59 @@ export type NavPunkt = { label: string; href: string };
  * die Seite zu Modul 1 und den Footer erreichbar.
  */
 export const hauptnavigation: NavPunkt[] = [
-  { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
-  { label: 'Angebot', href: seiten.modul1 },
+  { label: 'Angebote', href: seiten.angebote },
+  { label: 'Ratgeber', href: seiten.ratgeber },
   { label: 'Über mich', href: seiten.ueberMich },
 ];
 
+/**
+ * Knopf rechts im Kopfbereich: immer das aktuelle Hauptangebot (Neugestaltung, entschieden 16.11.2026).
+ * Der Wechsel greift mit dem Deploy, der Try a Life auf „verfuegbar“ stellt.
+ */
+// Christine, 16.11.2026: Der Knopf wechselt, sobald Try a Life kaufbar ist (Status „verfuegbar“ in angebote.ts), nicht an einem Datum.
+export const kopfKnopf = {
+  vorher: { text: 'Gratis-Journal', ziel: seiten.journal },
+  nachher: { text: 'Try a Life', ziel: seiten.tryALife },
+} as const;
+
+export function aktuellerKopfKnopf(tryALifeVerfuegbar: boolean): { text: string; ziel: string } {
+  return tryALifeVerfuegbar ? kopfKnopf.nachher : kopfKnopf.vorher;
+}
+
+/**
+ * Hinweisleiste über dem Kopf auf jeder Seite (entschieden 16.11.2026: schließen erlaubt).
+ * Geschlossen bleibt sie `wiederNachTagen` Tage aus. Für ein neues Thema `kennung` ändern, dann sehen alle sie wieder.
+ * Ab dem Start von Try a Life auf die Verkaufsseite umstellen (Text, Linktext, Ziel, Kennung).
+ */
+export const hinweisleiste = {
+  aktiv: true,
+  kennung: 'journal-2026-11',
+  marke: 'Gratis',
+  text: 'Journal für deinen Jahresrückblick: Wer will ich in 12 Monaten sein?',
+  linkText: 'Jetzt holen',
+  ziel: seiten.journal,
+  /** Auf diesen Seiten (Anfang des Pfads) erscheint die Leiste nicht */
+  ausblendenAuf: [seiten.journal, '/danke/'],
+  wiederNachTagen: 7,
+} as const;
+
+/**
+ * Try a Life auf der Angebotsseite, solange es noch nicht buchbar ist.
+ * `start` erscheint öffentlich (entschieden 16.11.2026: Start Anfang Januar). Bei Verschiebung nur hier ändern.
+ */
+export const tryALifeAnkuendigung = {
+  // Christine, 16.11.2026: kein Datum nennen, Start, sobald die Vollversion online ist.
+  // Seit 18.11.2026 kaufbar (Kaufknopf vor der Freigabe durch Digistore24 live, Christine); Wortlaut Vorschlag.
+  status: 'Jetzt verfügbar',
+  brevoListe: '9',
+} as const;
+
 export const fussnavigation: NavPunkt[] = [
+  { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
   { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },
   { label: 'Impressum', href: seiten.impressum },
   { label: 'Datenschutz', href: seiten.datenschutz },
+  { label: 'Widerruf', href: seiten.widerruf },
 ];
 
 /**
@@ -102,7 +146,7 @@ export const fussnavigation: NavPunkt[] = [
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
  * 4. Die Listen-IDs unten bei `brevoListe` eintragen. Stand 11.11.2026: #9 Try a Life · Warteliste, #10 Life&Lemons · Newsletter,
  *    #11 Life&Lemons · Jahresabschluss-Journal, #12 Modul 2 · Warteliste. Interessen ohne Liste blendet das Formular aus,
- *    sobald Brevo angebunden ist (betrifft derzeit Selbstlernkurs, Club und Einzel-Track).
+ *    sobald Brevo angebunden ist. Selbstlernkurs, Club und Einzel-Track seit 16.11.2026 entfernt.
  * 5. Einstellungen → Kontakte → „Per-contact pixel tracking consent“: „Track contacts whose consent is unknown“ auf „No“
  *    stellen und kein Zustimmungsfeld für Tracking ins Formular aufnehmen. Die Datenschutzerklärung sagt zu, dass
  *    Öffnungen und Klicks nicht ausgewertet werden (entschieden 19.10.2026).
@@ -117,11 +161,8 @@ export const newsletter = {
   /** Name des Listenfelds laut HTML-Code des Brevo-Formulars (Feld „Mehrere Listen“); Werte sind die Listen-IDs */
   listenFeld: 'lists_25[]',
   interessen: [
-    { id: 'tryalife', label: 'die App „Try a Life“', brevoListe: '9' },
-    { id: 'modul2', label: 'Kursbuch Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
-    { id: 'selbstlernkurs', label: 'Selbstlernkurs mit Video', brevoListe: '' },
-    { id: 'club', label: 'die nächste Gruppe im Life&Lemons Club', brevoListe: '' },
-    { id: 'einzel', label: 'den Einzel-Track ab Sommer 2027', brevoListe: '' },
+    { id: 'tryalife', label: 'die Life-Coaching-App „Try a Life“', brevoListe: '9' },
+    { id: 'modul2', label: 'Workbook Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
   ],
   /**
    * PLATZHALTER: Einwilligungstext. Vor dem Livegang durch den Text aus dem Brevo-Formular ersetzen

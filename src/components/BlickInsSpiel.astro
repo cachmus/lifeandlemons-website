@@ -1,0 +1,81 @@
+---
+/**
+ * „Blick ins Spiel“: Bild-Slider mit Screenshots aus Try a Life (Wunsch Christine, 16.11.2026).
+ * Aufgenommen am 16.11.2026 im laufenden Spiel (Stand Branch fix/weg-im-bild, PR #112, Vollversion, Handyansicht), mit Beispiel-Spielständen.
+ * Bildunterschriften geprüft gegen die Stationen im Spiel (Repository lifeandlemons-spiel, CLAUDE.md).
+ */
+import BildSlider from './BildSlider.astro';
+import tal from '../assets/blick-ins-spiel/01-tal.jpg';
+import rad from '../assets/blick-ins-spiel/02-lebensrad.jpg';
+import wartebank from '../assets/blick-ins-spiel/03-wartebank.jpg';
+import uebung from '../assets/blick-ins-spiel/04-uebung.jpg';
+import gondeln from '../assets/blick-ins-spiel/05-gondeln.jpg';
+import kueste from '../assets/blick-ins-spiel/06-kueste.jpg';
+import wegkreuz from '../assets/blick-ins-spiel/07-wegkreuz.jpg';
+import probezeit from '../assets/blick-ins-spiel/08-probezeit.jpg';
+import zuhause from '../assets/blick-ins-spiel/09-zuhause.jpg';
+
+interface Props {
+  kennung?: string;
+  ueberschriftEbene?: 'h2' | 'h3';
+}
+const { kennung = 'blick', ueberschriftEbene = 'h3' } = Astro.props;
+
+const bilder = [
+  {
+    bild: tal,
+    text: 'Du startest in einem Tal. Es steht für dein heutiges Leben, das du Station für Station erkundest.',
+    alt: 'Spielansicht: Aquarell eines mediterranen Tals mit Tisch, Weg und Dorf, eine leuchtende Zitrone zeigt die nächste Station',
+  },
+  {
+    bild: rad,
+    text: 'Als Erstes schaust du, wie zufrieden du gerade mit neun Bereichen deines Lebens bist.',
+    alt: 'Spielansicht: Rad mit neun Lebensbereichen wie Familie, Freundschaft und Geld, einige Bereiche farbig ausgefüllt, darunter eine Skala von 1 bis 10',
+  },
+  {
+    bild: wartebank,
+    text: 'An der Wartebank geht es darum, worauf du bisher gewartet hast.',
+    alt: 'Spielansicht: Holzbank mit Sanduhr und Büchern an einem Fluss, darunter die Übungen der Station',
+  },
+  {
+    bild: uebung,
+    text: 'Jede Übung führt dich mit klaren Fragen. Du schreibst nur für dich, nichts wird bewertet.',
+    alt: 'Spielansicht der Übung „Der Lottogewinn“ mit einem gezeichneten Lottoschein und einem Eingabefeld',
+  },
+  {
+    bild: gondeln,
+    text: 'Mit der Gondel besuchst du drei mögliche Leben und gibst dir in jedem einen Namen.',
+    alt: 'Spielansicht: drei Gondeln in einer Talstation, beschriftet mit Hochland, Anderes Ufer und Schwebeinseln',
+  },
+  {
+    bild: kueste,
+    text: 'Auf der Karte siehst du, welche Orte du schon kennst und was noch im Nebel liegt.',
+    alt: 'Spielansicht: Karte einer Küste mit Gondelstation, Kompass, Erkundung, Wegkreuz und Aufbruch als beschriftete Orte',
+  },
+  {
+    bild: wegkreuz,
+    text: 'Am Wegkreuz entscheidest du, in welche Richtung du gehen willst.',
+    alt: 'Spielansicht: Wegweiser mit drei Armen an einem Küstenpfad, der gewählte Arm zeigt nach vorn',
+  },
+  {
+    bild: probezeit,
+    text: 'Dann probierst du deine Richtung zehn Tage lang in deinem echten Alltag aus und hältst fest, wie es dir damit geht.',
+    alt: 'Spielansicht: Studienzimmer mit Schreibtisch, grünem Journal und Blick aufs Wasser, darunter die Station Probewohnen',
+  },
+  {
+    bild: zuhause,
+    text: 'Passt die Richtung, ziehst du in dein Haus am Horizont ein.',
+    alt: 'Spielansicht: Hausboot an einem Steg mit Türschild, darunter „Willkommen zu Hause!“',
+  },
+];
+---
+
+<BildSlider
+  kennung={kennung}
+  kennzeile="Blick ins Spiel"
+  titel="So sieht Try a Life aus"
+  listenLabel="Bilder aus dem Spiel Try a Life"
+  bilder={bilder}
+  hinweis="Bilder aus der Vorschau des Spiels, mit Beispieleinträgen."
+  ueberschriftEbene={ueberschriftEbene}
+/>

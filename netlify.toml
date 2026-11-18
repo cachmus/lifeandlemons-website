@@ -47,9 +47,15 @@
   to = "/programme/entwirf-dein-zukunfts-ich/#kursbuch"
   status = 302
 
+# Danke-Seite nach dem Digistore-Kauf des Workbooks, seit 17.11.2026 gelöscht (Workbook nur noch direkt per Mail)
+[[redirects]]
+  from = "/danke/kursbuch/*"
+  to = "/angebote/"
+  status = 301
+
 [[redirects]]
   from = "/club"
-  to = "/programme/entwirf-dein-zukunfts-ich/#club"
+  to = "/angebote/"
   status = 302
 
 # ---------------------------------------------------------------------------

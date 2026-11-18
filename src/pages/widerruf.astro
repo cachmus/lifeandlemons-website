@@ -1,0 +1,111 @@
+---
+/**
+ * Widerrufsbelehrung und Muster-Widerrufsformular für das gedruckte Workbook (Direktverkauf, Christine, 16.11.2026).
+ * ENTWURF, fachlich zu prüfen (nur hier im Code vermerkt, nicht auf der Seite).
+ * - Grundlage: Muster-Widerrufsbelehrung und Muster-Widerrufsformular nach Anlage 1 und 2 zu Art. 246a § 1 EGBGB,
+ *   Variante „eine Ware, einheitlich geliefert“. Gestaltungshinweise: Rücksendekosten trägt die Käuferin, Wertersatz
+ *   bei Wertverlust durch nicht notwendigen Umgang (etwa Einträge im Workbook).
+ * - Ein Ausschluss des Widerrufs nach dem Versand ist für Bücher nicht zulässig (§ 312g Abs. 2 BGB), deshalb keiner.
+ * - Offen, fachlich zu klären: Ob für die Bestellung per E-Mail die elektronische Widerrufsfunktion nach § 356a BGB
+ *   (seit 19.06.2026, „Vertrag widerrufen“) nötig ist. Sie gilt für Verträge über eine Online-Benutzeroberfläche.
+ *   Falls ja, braucht die Belehrung den Hinweis auf die Schaltfläche und die Website die Funktion selbst.
+ * - Digitale Produkte über Digistore24: Dort belehrt Digistore24 als Verkäuferin selbst. Diese Seite gilt nur für
+ *   Bestellungen direkt bei Christine.
+ */
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+
+const adresse = `${site.firmierung}, ${site.inhaberin}, ${site.anschrift.strasse}, ${site.anschrift.plzOrt}, E-Mail: ${site.kontaktEmail}`;
+---
+
+<Base title="Widerrufsbelehrung" description={`Widerrufsbelehrung und Muster-Widerrufsformular für Bestellungen bei ${site.firmierung}.`}>
+  <section class="abschnitt recht">
+    <div class="container text fliesstext">
+      <p class="label">Rechtliches</p>
+      <h1>Widerrufsbelehrung</h1>
+      <p>Diese Belehrung gilt für Bestellungen des gedruckten Workbooks direkt bei mir. Für Käufe über Digistore24 gelten die Bedingungen von Digistore24.</p>
+
+      <h2>Widerrufsrecht</h2>
+      <p>
+        Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist
+        beträgt vierzehn Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die
+        Waren in Besitz genommen haben bzw. hat.
+      </p>
+      <p>
+        Um Ihr Widerrufsrecht auszuüben, müssen Sie mich ({adresse}) mittels einer eindeutigen Erklärung (z. B. ein mit der
+        Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können
+        dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.
+      </p>
+      <p>
+        Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor
+        Ablauf der Widerrufsfrist absenden.
+      </p>
+
+      <h2>Folgen des Widerrufs</h2>
+      <p>
+        Wenn Sie diesen Vertrag widerrufen, habe ich Ihnen alle Zahlungen, die ich von Ihnen erhalten habe, einschließlich
+        der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der
+        Lieferung als die von mir angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens
+        binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei mir
+        eingegangen ist. Für diese Rückzahlung verwende ich dasselbe Zahlungsmittel, das Sie bei der ursprünglichen
+        Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall
+        werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.
+      </p>
+      <p>
+        Ich kann die Rückzahlung verweigern, bis ich die Waren wieder zurückerhalten habe oder bis Sie den Nachweis
+        erbracht haben, dass Sie die Waren zurückgesandt haben, je nachdem, welches der frühere Zeitpunkt ist.
+      </p>
+      <p>
+        Sie haben die Waren unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie mich über
+        den Widerruf dieses Vertrags unterrichten, an mich ({site.firmierung}, {site.inhaberin}, {site.anschrift.strasse},
+        {site.anschrift.plzOrt}) zurückzusenden oder zu übergeben. Die Frist ist gewahrt, wenn Sie die Waren vor Ablauf der
+        Frist von vierzehn Tagen absenden.
+      </p>
+      <p>Sie tragen die unmittelbaren Kosten der Rücksendung der Waren.</p>
+      <p>
+        Sie müssen für einen etwaigen Wertverlust der Waren nur aufkommen, wenn dieser Wertverlust auf einen zur Prüfung
+        der Beschaffenheit, Eigenschaften und Funktionsweise der Waren nicht notwendigen Umgang mit ihnen zurückzuführen
+        ist.
+      </p>
+
+      <h2>Muster-Widerrufsformular</h2>
+      <p>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)</p>
+      <div class="formular">
+        <p>An {site.firmierung}, {site.inhaberin}, {site.anschrift.strasse}, {site.anschrift.plzOrt}, E-Mail: {site.kontaktEmail}</p>
+        <p>
+          Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren
+          (*)/die Erbringung der folgenden Dienstleistung (*)
+        </p>
+        <p>Bestellt am (*)/erhalten am (*)</p>
+        <p>Name des/der Verbraucher(s)</p>
+        <p>Anschrift des/der Verbraucher(s)</p>
+        <p>Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)</p>
+        <p>Datum</p>
+        <p class="formular__fuss">(*) Unzutreffendes streichen.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .recht h1 {
+    font-size: clamp(44px, 6vw, 72px);
+    margin-bottom: 0.4em;
+  }
+  .recht h2 {
+    font-size: clamp(26px, 2.6vw, 34px);
+    margin-top: 1.6em;
+  }
+  .formular {
+    border: 1px dashed currentColor;
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin-top: 12px;
+  }
+  .formular p {
+    margin: 0 0 12px;
+  }
+  .formular__fuss {
+    font-size: 14px;
+  }
+</style>

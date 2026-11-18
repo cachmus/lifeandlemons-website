@@ -9,6 +9,7 @@
  * Abgeglichen mit dem HTML-Code aus Brevo am 11.11.2026.
  */
 import { newsletter, site, seiten, type InteresseId } from '../config/site';
+import { angebotNachId } from '../config/angebote';
 
 interface Props {
   label: string;
@@ -26,7 +27,9 @@ interface Props {
 const { label, titel, pivot, nach, text, vorauswahl = [] } = Astro.props;
 const angebunden = newsletter.formularAdresse.length > 0;
 // Mit Brevo-Anbindung nur Interessen zeigen, für die es eine Liste gibt
-const interessen = angebunden ? newsletter.interessen.filter((i) => i.brevoListe !== '') : newsletter.interessen;
+const alleInteressen = angebunden ? newsletter.interessen.filter((i) => (i.brevoListe as string) !== '') : newsletter.interessen;
+// Ist Try a Life kaufbar (seit 18.11.2026), entfällt die Warteliste dafür
+const interessen = angebotNachId('try-a-life').status === 'verfuegbar' ? alleInteressen.filter((i) => i.id !== 'tryalife') : alleInteressen;
 const action = angebunden ? newsletter.formularAdresse : `mailto:${site.kontaktEmail}?subject=Interessentenliste`;
 ---
 

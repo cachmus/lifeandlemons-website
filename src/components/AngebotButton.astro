@@ -3,17 +3,20 @@
  * Button für ein Angebot. Ziel und Beschriftung kommen ausschließlich aus src/config/angebote.ts.
  * Nach Buchungsschluss führt der Button automatisch zur Interessentenliste.
  * Verwendung: <AngebotButton id="kursbuch" />
+ * Mit ziel="demo" führt der Button zur kostenlosen Demo des Angebots (`demo` in angebote.ts), hell.
  */
 import { angebotNachId, aktuelleAktion } from '../config/angebote';
 
 interface Props {
   id: string;
   variante?: 'primaer' | 'hell';
+  ziel?: 'aktion' | 'demo';
 }
 
-const { id, variante = 'primaer' } = Astro.props;
+const { id, ziel = 'aktion', variante = ziel === 'demo' ? 'hell' : 'primaer' } = Astro.props;
 const angebot = angebotNachId(id);
-const aktion = aktuelleAktion(angebot);
+const aktion = ziel === 'demo' ? { typ: 'demo', ...angebot.demo! } : aktuelleAktion(angebot);
+if (ziel === 'demo' && !angebot.demo) throw new Error(`Angebot ${id} hat keine Demo`);
 ---
 
 <a

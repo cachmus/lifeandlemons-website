@@ -5,7 +5,8 @@
  * statische Seite bei Netlify, lokale Schriften, keine Cookies, keine Analyse, Leistungsmessung von Netlify nur mit Einwilligung
  * (Entscheidung im Web-Speicher des Browsers, siehe `messung` in src/config/site.ts),
  * E-Mail über IONOS, Interessentenliste über Brevo (Double-Opt-in, ohne Öffnungs- und Klickmessung),
- * Bestellung über Digistore24 als Wiederverkäufer, Instagram nur als Link.
+ * Bestellung des Workbooks direkt per E-Mail (seit 16.11.2026), digitale Produkte über Digistore24 als Wiederverkäufer,
+ * Instagram nur als Link.
  *
  * Ändert sich der Aufbau (z. B. eingebettetes Bestellformular, Kontaktformular, Analysewerkzeug,
  * Tracking in Brevo), muss dieser Text angepasst werden.
@@ -81,7 +82,7 @@ import { site } from '../config/site';
 
       <h2>Kontakt per E-Mail</h2>
       <p>
-        Wenn du mir eine E-Mail schreibst, zum Beispiel für ein Orientierungsgespräch, verarbeite ich deine E-Mail-Adresse, deinen Namen und
+        Wenn du mir eine E-Mail schreibst, zum Beispiel mit einer Frage, verarbeite ich deine E-Mail-Adresse, deinen Namen und
         die Angaben in deiner Nachricht, um dir zu antworten. Geht es um eine Buchung oder einen Vertrag, ist die Rechtsgrundlage Art. 6 Abs.
         1 lit. b DSGVO, bei allen anderen Anfragen mein berechtigtes Interesse, Anfragen zu beantworten (Art. 6 Abs. 1 lit. f DSGVO).
       </p>
@@ -111,17 +112,26 @@ import { site } from '../config/site';
       </p>
       <p>Ich werte nicht aus, ob und wann du meine E-Mails öffnest oder auf Links darin klickst.</p>
 
+      <h2>Bestellung des Workbooks</h2>
+      <p>
+        Das gedruckte Workbook bestellst du direkt bei mir per E-Mail. Dafür verarbeite ich deinen Namen, deine E-Mail-Adresse, deine
+        Lieferanschrift und was du bestellt hast. Ich nutze diese Angaben, um dir die Rechnung zu schicken, deine Zahlung zuzuordnen und
+        das Workbook zu versenden. Für den Versand gebe ich Name und Anschrift an das Versandunternehmen weiter. Rechtsgrundlage ist
+        Art. 6 Abs. 1 lit. b DSGVO. Rechnungen und Bestellunterlagen bewahre ich auf, solange die steuer- und handelsrechtlichen
+        Aufbewahrungspflichten es verlangen (Art. 6 Abs. 1 lit. c DSGVO).
+      </p>
+
       <h2>Bestellungen über Digistore24</h2>
       <p>
-        Kursbuch und Begleitung verkaufe ich über Digistore24, die Digistore24 GmbH, St.-Godehard-Straße 32, 31139 Hildesheim. Wenn du auf
-        einen Bestell- oder Buchungsbutton klickst, gelangst du zum Bestellformular von Digistore24. Digistore24 wird dein Vertragspartner und
-        ist für die Daten im Bestellformular und die Zahlungsabwicklung verantwortlich. Dafür gilt die Datenschutzerklärung von Digistore24.
+        Digitale Produkte verkaufe ich über Digistore24, die Digistore24 GmbH, St.-Godehard-Straße 32, 31139 Hildesheim. Wenn du auf einen
+        Bestellbutton für ein digitales Produkt klickst, gelangst du zum Bestellformular von Digistore24. Digistore24 wird dein
+        Vertragspartner und ist für die Daten im Bestellformular und die Zahlungsabwicklung verantwortlich. Dafür gilt die
+        Datenschutzerklärung von Digistore24.
       </p>
       <p>
-        Von Digistore24 erhalte ich die Angaben, die ich brauche, um meine Leistung zu erbringen: deinen Namen, deine E-Mail-Adresse, deine
-        Lieferanschrift und was du bestellt hast. Ich nutze sie, um dir das Kursbuch zu schicken und die gebuchte Begleitung mit dir zu
-        vereinbaren und durchzuführen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ich speichere diese Daten, solange die steuer- und
-        handelsrechtlichen Aufbewahrungspflichten es verlangen.
+        Von Digistore24 erhalte ich die Angaben, die ich brauche, um meine Leistung zu erbringen: deinen Namen, deine E-Mail-Adresse und was
+        du bestellt hast. Ich nutze sie, um dir den gekauften Zugang bereitzustellen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ich
+        speichere diese Daten, solange die steuer- und handelsrechtlichen Aufbewahrungspflichten es verlangen.
       </p>
 
       <h2>Links zu Instagram</h2>

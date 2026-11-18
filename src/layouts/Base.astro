@@ -1,10 +1,12 @@
 ---
 import '../styles/global.css';
-import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche } from '../config/site';
+import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, aktuellerKopfKnopf } from '../config/site';
+import { angebotNachId } from '../config/angebote';
 import { pruefeAngebote } from '../config/angebote';
 import { grunddaten } from '../config/strukturierteDaten';
 import Logo from '../components/Logo.astro';
 import Einwilligung from '../components/Einwilligung.astro';
+import Hinweisleiste from '../components/Hinweisleiste.astro';
 
 interface Props {
   /** Seitentitel ohne Markenname; auf der Startseite der vollständige Titel */
@@ -17,14 +19,17 @@ interface Props {
    * Sonst bekommt der Footer selbst einen weichen Übergang.
    */
   dunklerSchluss?: boolean;
-  /** Blendet „Zum Kursbuch“ in der Kopfzeile aus, z. B. auf Danke-Seiten nach einem Kauf */
+  /** Blendet den Knopf zum Hauptangebot in der Kopfzeile aus, z. B. auf Danke-Seiten nach einem Kauf */
   ohneKaufbutton?: boolean;
   /** Zusätzliche strukturierte Daten dieser Seite (siehe src/config/strukturierteDaten.ts) */
   daten?: Record<string, unknown>[];
+  /** og:type, für Ratgeberartikel 'article' */
+  ogTyp?: 'website' | 'article';
 }
 
-const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [] } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website' } = Astro.props;
 const istStart = Astro.url.pathname === '/';
+const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
@@ -57,7 +62,7 @@ if (!g.__angeboteGeprueft) {
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#f5f2eb" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogTyp} />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={seitentitel} />
@@ -118,6 +123,8 @@ if (!g.__angeboteGeprueft) {
   <body>
     <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
+    <Hinweisleiste pfad={pfad} />
+
     <header class="kopf" data-kopf>
       <div class="container kopf__innen">
         <a href={seiten.start} class="kopf__marke" aria-label={`${site.name}, zur Startseite`}>
@@ -136,7 +143,7 @@ if (!g.__angeboteGeprueft) {
             }
           </ul>
         </nav>
-        {!ohneKaufbutton && <a class="button button--klein kopf__button" href={`${seiten.modul1}#kursbuch`}>Zum Kursbuch</a>}
+        {!ohneKaufbutton && !pfad.startsWith(knopf.ziel) && <a class="button button--klein kopf__button" href={knopf.ziel}>{knopf.text}</a>}
       </div>
     </header>
 

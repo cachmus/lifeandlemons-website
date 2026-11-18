@@ -1,0 +1,139 @@
+---
+/**
+ * Kurzes Wartelisten-Formular für genau eine Brevo-Liste (z. B. Try a Life auf der Angebotsseite).
+ * Nutzt dasselbe Brevo-Formular wie die Interessentenliste (newsletter.formularAdresse, DOI-Vorlage #35)
+ * und setzt die Liste als verstecktes Feld. Felder wie im Brevo-HTML: EMAIL, lists_25[], email_address_check, locale.
+ */
+import { newsletter, seiten } from '../config/site';
+
+interface Props {
+  /** Brevo-Listen-ID, z. B. '9' für Try a Life */
+  liste: string;
+  /** Eindeutiger Teil der Feld-IDs auf der Seite */
+  kennung: string;
+  knopf?: string;
+  hell?: boolean;
+}
+
+const { liste, kennung, knopf = 'Auf die Warteliste', hell = false } = Astro.props;
+const feld = `warteliste-${kennung}`;
+---
+
+<form class:list={['warteliste', { 'warteliste--hell': hell }]} action={newsletter.formularAdresse} method="post" data-warteliste novalidate>
+  <div class="warteliste__zeile">
+    <label class="sr-only" for={feld}>Deine E-Mail-Adresse</label>
+    <input id={feld} type="email" name="EMAIL" required autocomplete="email" inputmode="email" placeholder="Deine E-Mail-Adresse" />
+    <button class="button" type="submit">{knopf} <span class="button__pfeil" aria-hidden="true">→</span></button>
+  </div>
+  <input type="hidden" name={newsletter.listenFeld} value={liste} />
+  <input class="warteliste__honig" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <input type="hidden" name="locale" value="de" />
+  <p class="warteliste__fehler" data-fehler hidden>Bitte gib eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.</p>
+  <!-- Einwilligungstext: fachlich zu prüfen (newsletter.einwilligung in src/config/site.ts) -->
+  <p class="warteliste__klein">
+    {newsletter.einwilligung} Mehr dazu in der <a href={seiten.datenschutz}>Datenschutzerklärung</a>.
+  </p>
+  <p class="warteliste__meldung" role="status" aria-live="polite" data-meldung></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-warteliste]').forEach((form) => {
+    const email = form.querySelector<HTMLInputElement>('input[type="email"]')!;
+    const fehler = form.querySelector<HTMLElement>('[data-fehler]')!;
+    const meldung = form.querySelector<HTMLElement>('[data-meldung]')!;
+    const knopf = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+
+    form.addEventListener('submit', async (ereignis) => {
+      ereignis.preventDefault();
+      meldung.textContent = '';
+      const ok = email.value.trim() !== '' && email.validity.valid;
+      fehler.hidden = ok;
+      email.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok) {
+        email.focus();
+        return;
+      }
+      knopf.disabled = true;
+      try {
+        const antwort = await fetch(`${form.action}${form.action.includes('?') ? '&' : '?'}isAjax=1`, { method: 'POST', body: new FormData(form) });
+        const daten = await antwort.json().catch(() => ({}));
+        if (antwort.ok && daten.success !== false) {
+          form.reset();
+          meldung.textContent =
+            'Fast geschafft: Bitte bestätige deine Anmeldung über den Link in der E-Mail, die gerade an dich unterwegs ist. Keine Mail da? Dann schau bitte im Spam-Ordner nach und verschieb sie in dein Postfach, erst dort funktioniert der Link.';
+        } else {
+          meldung.textContent = 'Das hat leider nicht geklappt. Bitte versuch es noch einmal oder schreib mir eine E-Mail.';
+        }
+      } catch {
+        form.submit();
+      } finally {
+        knopf.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .warteliste {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 560px;
+  }
+
+  .warteliste__zeile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  input[type='email'] {
+    flex: 1 1 240px;
+    min-height: 52px;
+    padding: 0 16px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--tinte);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-bottom-color: var(--tinte);
+    border-radius: 0;
+  }
+
+  input[type='email']:focus-visible {
+    outline: 2px solid var(--terrakotta-tief);
+    outline-offset: 2px;
+  }
+
+  .warteliste__klein {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-gedaempft);
+  }
+
+  .warteliste--hell .warteliste__klein {
+    color: #c9cfc2;
+  }
+
+  .warteliste__fehler {
+    color: var(--terrakotta-tief);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .warteliste__meldung {
+    font-weight: 700;
+  }
+
+  .warteliste__meldung:empty {
+    display: none;
+  }
+
+  .warteliste__honig {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+</style>

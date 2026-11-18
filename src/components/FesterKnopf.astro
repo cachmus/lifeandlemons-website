@@ -1,0 +1,87 @@
+---
+/**
+ * Fester Knopf am unteren Rand, nur am Handy (Neugestaltung, entschieden 16.11.2026).
+ * Erscheint nach dem ersten Bildschirm und verschwindet, solange das Ziel (Formular oder Kaufbereich) sichtbar ist.
+ * Mit `angebot` kommen Ziel und Beschriftung aus src/config/angebote.ts (wie AngebotButton), sonst aus `text` und `ziel`.
+ */
+import { angebotNachId, aktuelleAktion } from '../config/angebote';
+
+interface Props {
+  text?: string;
+  ziel?: string;
+  angebot?: string;
+  /** Kurzer Satz links neben dem Knopf */
+  zeile: string;
+  /** Element, bei dessen Sichtbarkeit der Knopf ausgeblendet wird, z. B. '#anfordern' */
+  ausblendenBei?: string;
+}
+
+const { text, ziel, angebot, zeile, ausblendenBei } = Astro.props;
+const aktion = angebot ? aktuelleAktion(angebotNachId(angebot)) : undefined;
+const href = aktion?.url ?? ziel ?? '#';
+const label = aktion?.label ?? text ?? '';
+---
+
+<div class="fest" data-fest data-ausblenden-bei={ausblendenBei} hidden>
+  <p class="fest__zeile">{zeile}</p>
+  <a class="button fest__knopf" href={href}>{label}</a>
+</div>
+
+<script>
+  const fest = document.querySelector<HTMLElement>('[data-fest]');
+  if (fest) {
+    const ziel = fest.dataset.ausblendenBei ? document.querySelector(fest.dataset.ausblendenBei) : null;
+    let zielSichtbar = false;
+    const aktualisiere = () => {
+      fest.hidden = !(window.scrollY > window.innerHeight * 0.8 && !zielSichtbar);
+    };
+    if (ziel) {
+      new IntersectionObserver((e) => {
+        zielSichtbar = e[0].isIntersecting;
+        aktualisiere();
+      }).observe(ziel);
+    }
+    window.addEventListener('scroll', aktualisiere, { passive: true });
+    aktualisiere();
+  }
+</script>
+
+<style>
+  .fest {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--papier-hell);
+    border-top: 1px solid var(--linie);
+    box-shadow: 0 -6px 18px rgba(34, 48, 44, 0.08);
+  }
+
+  .fest[hidden] {
+    display: none;
+  }
+
+  .fest__zeile {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .fest__knopf {
+    flex: none;
+    min-height: 44px;
+    padding-inline: 18px;
+  }
+
+  @media (min-width: 761px) {
+    .fest {
+      display: none !important;
+    }
+  }
+</style>

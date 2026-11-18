@@ -7,6 +7,8 @@
  */
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
+import PhaseZeichen from '../components/PhaseZeichen.astro';
+import { phasen } from '../config/methode';
 import { site, seiten } from '../config/site';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
@@ -35,7 +37,7 @@ const weg = [
 <Base
   dunklerSchluss
   title={`${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}`}
-  description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich in die Begleitung mitbringe.`}
+  description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich mitbringe.`}
 >
   <section class="kopf-abschnitt">
     <div class="container zwei-spalten kopf-abschnitt__innen">
@@ -52,6 +54,9 @@ const weg = [
           <p>
             Ich nehme deine Fragen ernst und arbeite mit einem klaren Vorgehen. Wie dein Leben aussehen soll, entscheidest du.
           </p>
+        </div>
+        <div class="aktionen">
+          <a class="button" href={seiten.wieIchArbeite}>Wie ich arbeite <span class="button__pfeil" aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="kopf-abschnitt__foto">
@@ -83,10 +88,40 @@ const weg = [
     </div>
   </section>
 
+  <section class="abschnitt methode" aria-labelledby="methode-titel">
+    <div class="container">
+      <div class="methode__kopf">
+        <div class="kopfblock">
+          <p class="label">02 · Wie ich arbeite</p>
+          <h2 id="methode-titel" class="zeile">Meine Methode in sieben <span class="pivot">Phasen</span></h2>
+          <p class="einleitung text">
+            Am Ende steht dein eigener Weg, zusammengesetzt aus dem, was sich in Entwürfen und Tests bewährt hat.
+          </p>
+        </div>
+        <a class="button" href={seiten.wieIchArbeite}>So arbeite ich <span class="button__pfeil" aria-hidden="true">→</span></a>
+      </div>
+      <ol class="methode__phasen" data-erscheinen>
+        {
+          phasen.map((p, i) => (
+            <li>
+              <a href={`${seiten.wieIchArbeite}#phasen`} class="methode__phase">
+                <span class="methode__zeichen" aria-hidden="true">
+                  <PhaseZeichen symbol={p.symbol} klasse="methode__bild" />
+                </span>
+                <span class="methode__nr" aria-hidden="true">{i + 1}</span>
+                <span class="methode__titel">{p.titel}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
   <section class="abschnitt" aria-labelledby="mitbringe-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">02 · Kompetenz</p>
+        <p class="label">03 · Kompetenz</p>
         <h2 id="mitbringe-titel" class="zeile">Was ich <span class="pivot">mitbringe</span></h2>
       </div>
       <dl class="mitbringe" data-erscheinen>
@@ -106,9 +141,9 @@ const weg = [
           </dd>
         </div>
         <div>
-          <dt>Kursbuch</dt>
+          <dt>Workbook</dt>
           <dd>
-            Mein Kursbuch verbindet Forschung zu Zielen, Gewohnheiten und möglichen Selbst mit Methoden der Lebensgestaltung.{' '}
+            Mein Workbook verbindet Forschung zu Zielen, Gewohnheiten und möglichen Selbst mit Methoden der Lebensgestaltung.{' '}
             <a href={`${seiten.wieIchArbeite}#grundlagen`}>Worauf meine Arbeit beruht</a>
           </dd>
         </div>
@@ -119,16 +154,15 @@ const weg = [
   <section class="abschnitt abschnitt--ende" aria-labelledby="einstieg-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">03 · Zusammenarbeit</p>
+        <p class="label">04 · Zusammenarbeit</p>
         <h2 id="einstieg-titel" class="zeile">Finde deinen <span class="pivot">Einstieg</span></h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>
-          Mit dem Kursbuch arbeitest du allein. Wenn du dir Begleitung wünschst, findest du Club, Einzel-Track und VIP-Track auf der
-          Seite zu Modul 1.
+          Meine Methode gibt es auf zwei Wegen: als gedrucktes Workbook und als Life-Coaching-App Try a Life.
         </p>
         <div class="aktionen">
-          <a class="button" href={`${seiten.modul1}#formate`}>Zu den Formaten <span class="button__pfeil" aria-hidden="true">→</span></a>
+          <a class="button" href={seiten.angebote}>Zu den Angeboten <span class="button__pfeil" aria-hidden="true">→</span></a>
         </div>
         <p class="gedaempft">
           Persönliches aus meinem Alltag teile ich auf Instagram unter{' '}
@@ -188,6 +222,86 @@ const weg = [
 
   .weg__titel {
     font-size: clamp(26px, 2.4vw, 32px);
+  }
+
+  .methode {
+    background: var(--papier-hell);
+    border-top: 1px solid var(--linie);
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .methode__kopf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+
+  .methode__kopf .kopfblock {
+    margin-bottom: 0;
+  }
+
+  .methode__phasen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: clamp(10px, 1.6vw, 20px);
+  }
+
+  .methode__phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    padding: 18px 10px 20px;
+    border: 1px solid var(--linie);
+    background: var(--papier);
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .methode__phase:hover {
+    border-color: var(--terrakotta);
+    transform: translateY(-2px);
+  }
+
+  .methode__zeichen :global(.methode__bild) {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+  }
+
+  .methode__nr {
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .methode__titel {
+    font-size: 14.5px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .methode__phasen {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .methode__phase {
+      transition: none;
+    }
   }
 
   .mitbringe {

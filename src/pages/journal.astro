@@ -10,11 +10,20 @@
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import FesterKnopf from '../components/FesterKnopf.astro';
 import Polaroid from '../components/Polaroid.astro';
 import JournalFormular from '../components/JournalFormular.astro';
 import { seiten } from '../config/site';
+import { journalDaten, faqDaten } from '../config/strukturierteDaten';
 import cover from '../assets/journal-cover.jpg';
 import portraet from '../assets/portraet-christine-4x5.jpg';
+// Ausschnitte der echten Journalseiten (aus public/downloads/jahresabschluss-journal-druck.pdf, Seiten 5, 8, 10, 12, 13, 14; 16.11.2026)
+import seiteRueckblick from '../assets/journal-seiten/01-rueckblick.jpg';
+import seiteVision from '../assets/journal-seiten/02-vision.jpg';
+import seiteRueckwaerts from '../assets/journal-seiten/03-rueckwaerts.jpg';
+import seiteHindernisse from '../assets/journal-seiten/04-hindernisse.jpg';
+import seiteKompass from '../assets/journal-seiten/05-kompass.jpg';
+import seiteSchritt from '../assets/journal-seiten/06-erster-schritt.jpg';
 
 /** „Was du am Ende in der Hand hast“, Seite 2 des Journals */
 const ergebnisse = [
@@ -26,21 +35,44 @@ const ergebnisse = [
   'einen ersten Schritt für die nächsten 72 Stunden',
 ];
 
+/** Häufige Fragen, sichtbar auf der Seite und als strukturierte Daten (Angaben laut Journal und Brevo-Einrichtung) */
+const fragen = [
+  {
+    frage: 'Kostet das Journal etwas?',
+    antwort:
+      'Nein. Du trägst deine E-Mail-Adresse ein und bestätigst die Anmeldung. Danach bekommst du das Journal per E-Mail und anschließend meinen Newsletter, den du jederzeit abbestellen kannst.',
+  },
+  {
+    frage: 'Wie lange brauche ich dafür?',
+    antwort: 'Rund 90 Minuten, am besten verteilt auf zwei oder drei ruhige Abende. Mit dem Kurzweg schaffst du die wichtigsten Übungen in rund 35 Minuten.',
+  },
+  {
+    frage: 'In welchem Format bekomme ich das Journal?',
+    antwort: 'Als PDF in drei Fassungen: zum Ausfüllen auf dem Tablet, zum Ausdrucken und zum Tippen direkt am Bildschirm.',
+  },
+  {
+    frage: 'Ich habe keine Bestätigungsmail bekommen. Was nun?',
+    antwort:
+      'Schau bitte im Spam-Ordner nach und verschieb die Mail in dein Postfach. Erst dort funktioniert der Bestätigungslink. Findest du sie gar nicht, schreib mir eine E-Mail.',
+  },
+];
+
 /** Die sechs Teile mit Zeitangaben laut Inhaltsverzeichnis des Journals */
 const teile = [
-  { titel: 'Rückblick auf dein Jahr', zeit: 'rund 20 Minuten', text: 'Mit Lebensrad und vier Feldern schaust du zurück und gibst deinem Jahr einen Titel.' },
-  { titel: 'Vision und Who-to-be-Liste', zeit: 'rund 25 Minuten', text: 'Du beschreibst dein Leben in 12 Monaten und hältst fest, wer du sein willst.' },
-  { titel: 'Rückwärtsplanung und Ressourcen', zeit: 'rund 15 Minuten', text: 'Du planst von deinem Ziel aus zurück und siehst, was du schon mitbringst.' },
-  { titel: 'Hindernisse und Wenn-dann-Pläne', zeit: 'rund 10 Minuten', text: 'Du legst vorher fest, was du tust, wenn es hakt.' },
-  { titel: 'Kompass-Seite', zeit: 'rund 10 Minuten', text: 'Alles Wichtige auf einer Seite, die dich durch das Jahr begleitet.' },
-  { titel: 'Erster Schritt und Selbstcheck', zeit: 'rund 10 Minuten', text: 'Ein Schritt für die nächsten 72 Stunden und ein ehrlicher Blick darauf, wie klar dein Bild schon ist.' },
+  { titel: 'Rückblick auf dein Jahr', bild: seiteRueckblick, alt: 'Journalseite „Was dein Jahr dir gezeigt hat“ mit einem leeren Rad aus neun Lebensbereichen zum Ausfüllen', zeit: 'rund 20 Minuten', text: 'Du schaust, wie zufrieden du mit den einzelnen Bereichen deines Lebens bist, blickst auf dein Jahr zurück und gibst ihm einen Titel.' },
+  { titel: 'Vision und Who-to-be-Liste', bild: seiteVision, alt: 'Journalseite „Wer du in 12 Monaten sein willst“ mit Schreibfeldern', zeit: 'rund 25 Minuten', text: 'Du beschreibst dein Leben in 12 Monaten und hältst fest, wer du sein willst.' },
+  { titel: 'Rückwärtsplanung und Ressourcen', bild: seiteRueckwaerts, alt: 'Journalseite „Vom Ziel zurück bis heute“ mit einer Zeitleiste von 12 Monaten bis zu den nächsten vier Wochen', zeit: 'rund 15 Minuten', text: 'Du planst von deinem Ziel aus zurück und siehst, was du schon mitbringst.' },
+  { titel: 'Hindernisse und Wenn-dann-Pläne', bild: seiteHindernisse, alt: 'Journalseite „Wenn es hakt“ mit Feldern für Hindernisse und Wenn-dann-Pläne', zeit: 'rund 10 Minuten', text: 'Du legst vorher fest, was du tust, wenn es hakt.' },
+  { titel: 'Kompass-Seite', bild: seiteKompass, alt: 'Journalseite „Mein Kompass für das neue Jahr“ mit Feldern für Werte, Lebensgefühl und drei Sätze', zeit: 'rund 10 Minuten', text: 'Alles Wichtige auf einer Seite, die dich durch das Jahr begleitet.' },
+  { titel: 'Erster Schritt und Selbstcheck', bild: seiteSchritt, alt: 'Journalseite „Dein erster Schritt“ mit Feldern für einen Schritt in den nächsten 72 Stunden', zeit: 'rund 10 Minuten', text: 'Ein Schritt für die nächsten 72 Stunden und ein ehrlicher Blick darauf, wie klar dein Bild schon ist.' },
 ];
 ---
 
 <Base
   dunklerSchluss
-  title="Wer will ich in 12 Monaten sein? Das kostenlose Jahresabschluss-Journal"
-  description="Schließ dein Jahr ab, beschreib, wie du in 12 Monaten leben willst, und leg deinen ersten Schritt fest. Das Jahresabschluss-Journal von Life&Lemons mit Who-to-be-Liste statt Vorsätzen, kostenlos als PDF."
+  title="Persönlicher Jahresrückblick: kostenloses Journal als PDF"
+  description="Wieder ein Jahr vorbei? Finde mit dem kostenlosen Journal für deinen persönlichen Jahresrückblick heraus, was dir im neuen Jahr wirklich wichtig ist, und mach daraus einen Plan, der auch volle Wochen übersteht. PDF, 17 Seiten."
+  daten={[journalDaten(cover.src), faqDaten(fragen)]}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
@@ -48,12 +80,12 @@ const teile = [
         <p class="label">Kostenlos · 17 Seiten als PDF</p>
         <h1>Wer will ich in 12 Monaten <span class="pivot">sein</span>?</h1>
         <p class="einleitung">
-          Das Jahresabschluss-Journal von Life&amp;Lemons. Du schließt dein Jahr ab, beschreibst, wie du in 12 Monaten leben willst, und
-          legst deinen ersten Schritt fest. Mit Who-to-be-Liste statt Vorsätzen. Und es gehört dir, ganz ohne Kosten.
+          Wieder ein Jahr vorbei, und die Vorsätze vom Januar sind längst vergessen? Mit diesem Journal findest du heraus, was dir im
+          neuen Jahr wirklich wichtig ist, und machst daraus einen Plan, der auch volle Wochen übersteht. Du bekommst es von mir geschenkt.
         </p>
         <div class="aktionen">
           <a class="button" href="#anfordern">Journal kostenlos anfordern <span class="button__pfeil" aria-hidden="true">→</span></a>
-          <a class="textlink" href="#inhalt">Was drinsteht</a>
+          <a class="textlink" href="#dein-weg">Was drinsteht</a>
         </div>
       </div>
       <div class="kopf__bild">
@@ -101,7 +133,7 @@ const teile = [
     </div>
   </section>
 
-  <section class="abschnitt" id="inhalt" aria-labelledby="teile-titel">
+  <section class="abschnitt" id="dein-weg" aria-labelledby="teile-titel">
     <div class="container">
       <div class="kopfblock">
         <p class="label">03 · Dein Weg durch das Journal</p>
@@ -111,8 +143,18 @@ const teile = [
         {
           teile.map((t, i) => (
             <li data-erscheinen>
-              <span class="teile__ziffer" aria-hidden="true">{i + 1}</span>
-              <h3>{t.titel}</h3>
+              <Image
+                class="teile__seite"
+                src={t.bild}
+                alt={t.alt}
+                widths={[380, 560, 760]}
+                sizes="(min-width: 960px) 360px, 100vw"
+                loading="lazy"
+              />
+              <div class="teile__kopf">
+                <span class="teile__ziffer" aria-hidden="true">{i + 1}</span>
+                <h3>{t.titel}</h3>
+              </div>
               <p class="teile__zeit">{t.zeit}</p>
               <p>{t.text}</p>
             </li>
@@ -181,12 +223,32 @@ const teile = [
     </div>
   </section>
 
+  <section class="abschnitt" aria-labelledby="fragen-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">Häufige Fragen</p>
+        <h2 id="fragen-titel" class="zeile">Kurz <span class="pivot">beantwortet</span></h2>
+      </div>
+      <div class="text faq">
+        {
+          fragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <JournalFormular
     label="06 · Kostenlos anfordern"
     titel="Hol dir dein"
     pivot="Journal"
     text="Trag deine E-Mail-Adresse ein und bestätige kurz deine Anmeldung. Direkt danach liegt dein Journal mit allen drei Fassungen in deinem Postfach, als Geschenk von mir."
   />
+  <FesterKnopf zeile="Gratis-Journal für deinen Jahresrückblick" text="Kostenlos holen" ziel="#anfordern" ausblendenBei="#anfordern" />
 </Base>
 
 <style>
@@ -264,13 +326,30 @@ const teile = [
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-top: 2px dashed var(--terrakotta);
-    padding-top: 18px;
     font-size: 16px;
   }
 
   .teile h3 {
     margin: 0;
+    font-size: clamp(24px, 2.2vw, 30px);
+    hyphens: manual;
+  }
+
+  .teile__seite {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--linie);
+    background: #fff;
+    margin-bottom: 8px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  }
+
+  .teile__kopf {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
   }
 
   .teile__ziffer {
@@ -325,5 +404,23 @@ const teile = [
   .hinweis {
     margin-top: 20px;
     font-size: 15px;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--linie);
+    padding: 16px 0;
+  }
+
+  .faq details:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .faq summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .faq details p {
+    margin-top: 10px;
   }
 </style>

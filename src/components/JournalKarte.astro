@@ -1,0 +1,161 @@
+---
+/**
+ * Karte für das kostenlose Journal mit Cover und Button zur Seite /journal/.
+ * Wird auf der Angebotsseite, im Ratgeber und in Artikeln eingesetzt. Angaben laut Journal (17 Seiten, rund 90 Minuten, Kurzweg 35 Minuten).
+ */
+import { Image } from 'astro:assets';
+import { seiten } from '../config/site';
+import cover from '../assets/journal-cover.jpg';
+
+interface Props {
+  /** Überschrift der Karte; Standard ist der Journaltitel */
+  titel?: string;
+  /** Einleitender Satz aus Sicht der Leserin */
+  text?: string;
+  /** groß: Angebotsseite; kompakt: in Artikeln */
+  variante?: 'gross' | 'kompakt';
+  ueberschriftEbene?: 'h2' | 'h3';
+}
+
+const {
+  titel = 'Wer will ich in 12 Monaten sein?',
+  text = 'Wieder ein Jahr vorbei, und du weißt nicht genau, wo es geblieben ist? Mit diesem Journal findest du heraus, was dir im neuen Jahr wirklich wichtig ist, und machst daraus einen Plan, der auch volle Wochen übersteht.',
+  variante = 'gross',
+  ueberschriftEbene = 'h2',
+} = Astro.props;
+const Ebene = ueberschriftEbene;
+---
+
+<div class:list={['jkarte', `jkarte--${variante}`]}>
+  <a class="jkarte__bild" href={seiten.journal} tabindex="-1" aria-hidden="true">
+    <Image src={cover} alt="" widths={[240, 360, 520]} sizes={variante === 'gross' ? '(min-width: 900px) 320px, 60vw' : '160px'} />
+  </a>
+  <div class="jkarte__text">
+    <p class="jkarte__marke">Kostenlos · PDF · 17 Seiten</p>
+    <Ebene class="jkarte__titel">{titel}</Ebene>
+    <p>{text}</p>
+    {
+      variante === 'gross' && (
+        <p class="jkarte__untertitel">Am Ende hast du:</p>
+        <ul class="jkarte__liste">
+          <li>Klarheit, was du im neuen Jahr wirklich willst, statt einer Liste, die im Februar vergessen ist</li>
+          <li>drei Sätze, wer du sein willst, an denen du jede Woche merkst, ob du auf Kurs bist</li>
+          <li>einen ersten Schritt, den du in den nächsten 72 Stunden machst</li>
+        </ul>
+        <p class="jkarte__meta">Rund 90 Minuten oder 35 im Kurzweg · für Tablet, Drucker oder Bildschirm</p>
+      )
+    }
+    <a class="button" href={seiten.journal}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<style>
+  .jkarte {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(24px, 4vw, 48px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 3px solid var(--terrakotta);
+  }
+
+  .jkarte--gross {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 760px) {
+    .jkarte--gross {
+      grid-template-columns: minmax(200px, 320px) minmax(0, 1fr);
+    }
+    .jkarte--kompakt {
+      grid-template-columns: 140px minmax(0, 1fr);
+    }
+  }
+
+  .jkarte__bild {
+    justify-self: center;
+    width: min(100%, 320px);
+  }
+
+  .jkarte--kompakt .jkarte__bild {
+    width: min(100%, 140px);
+  }
+
+  .jkarte__bild :global(img) {
+    width: 100%;
+    height: auto;
+    transform: rotate(-2.5deg);
+    box-shadow: 0 16px 34px rgba(34, 48, 44, 0.18);
+  }
+
+  .jkarte__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .jkarte__marke {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .jkarte__marke::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .jkarte__titel {
+    margin: 0;
+  }
+
+  .jkarte--kompakt .jkarte__titel {
+    font-size: clamp(26px, 3vw, 32px);
+  }
+
+  .jkarte__untertitel {
+    font-weight: 700;
+    margin-bottom: -6px;
+  }
+
+  .jkarte__meta {
+    font-size: 14.5px;
+    color: var(--text-gedaempft);
+  }
+
+  .jkarte__liste {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .jkarte__liste li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .jkarte__liste li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--terrakotta);
+  }
+</style>
