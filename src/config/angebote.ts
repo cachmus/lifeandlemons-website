@@ -148,15 +148,14 @@ export const angebote: Angebot[] = [
     preisRegulaerBestaetigt: false,
     ausgebucht: false,
     status: 'verfuegbar',
-    // Solange keine Exemplare auf Lager sind, wird vorbestellt. Mit Lagerbestand den Hinweis ändern,
-    // z. B. „Versandfertig innerhalb von 2 Tagen“.
-    lieferhinweis: 'Jetzt vorbestellen: normalerweise versandfertig innerhalb von 7 Tagen.',
+    // Seit 19.11.2026 bestellen statt vorbestellen (Christine).
+    lieferhinweis: 'Normalerweise versandfertig innerhalb von 7 Tagen.',
     versandInklusive: true,
     // Nur direkt bei Christine (16.11.2026), nicht über Digistore24
     aktion: {
       typ: 'anfrage',
       url: anfrageLink('Bestellung Workbook', 'Hallo Christine,\n\nich möchte das Workbook „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
-      label: 'Workbook vorbestellen',
+      label: 'Workbook bestellen',
     },
   },
   {

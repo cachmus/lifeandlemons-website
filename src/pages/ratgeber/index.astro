@@ -2,13 +2,14 @@
 /**
  * Ratgeber-Übersicht als Magazin, Richtung B „Abendlicht“ (Neugestaltung, entschieden 16.11.2026).
  * Artikel nach Themen, aus src/ratgeber/*.md (Konfiguration src/config/ratgeber.ts).
- * Aufbau: Kopf mit Bild, neuester Artikel groß, Rubriken mit Motiv, weitere Artikel, Journal.
+ * Aufbau: Kopf mit Bild, neuester Artikel groß, Rubriken mit Motiv, weitere Artikel, Try a Life, Journal (Try a Life zuerst, Christine, 19.11.2026).
  * Wortlaut: Entwurf vom 16.11.2026, Freigabe durch Christine offen.
  */
 import '../../styles/magazin.css';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
+import TryALifeKarte from '../../components/TryALifeKarte.astro';
 import { site } from '../../config/site';
 import { themen, artikel, artikelPfad, aufmacher } from '../../config/ratgeber';
 import kopfBild from '../../assets/ratgeber/magazin-kopf.jpg';
@@ -125,8 +126,9 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
       )
     }
 
-    <section class="m-journal" aria-label="Kostenloses Journal">
-      <div class="container m-hell">
+    <section class="m-journal" aria-label="Try a Life und kostenloses Journal">
+      <div class="container m-hell m-karten">
+        <TryALifeKarte />
         <JournalKarte
           titel="Lieber gleich loslegen?"
           text="Mein kostenloses Journal führt dich Schritt für Schritt durch deinen Jahresrückblick, bis zu einem ersten Schritt, der in deinen Alltag passt."
@@ -335,6 +337,12 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
 
   .eintrag__titel {
     font-size: clamp(24px, 2.4vw, 32px);
+  }
+
+  .m-karten {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vw, 40px);
   }
 
   .m-journal {
