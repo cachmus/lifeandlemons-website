@@ -145,6 +145,13 @@ const umfang = [
           {umfang.map((u) => <li>{u}</li>)}
         </ul>
         <Preis id="try-a-life" />
+        {/* Kaufknopf und Demo direkt beim Preis (Christine, 19.11.2026) */}
+        {app.status === 'verfuegbar' && (
+          <div class="aktionen umfang__aktionen">
+            <AngebotButton id="try-a-life" />
+            <AngebotButton id="try-a-life" ziel="demo" />
+          </div>
+        )}
         <!-- Angaben zu Kauf, Lieferung und Widerruf für die Freigabe durch Digistore24 (Vorschlag 17.11.2026, fachlich zu prüfen) -->
         <p class="hinweis">
           Du kaufst Try a Life bei Digistore24 und hast 12 Monate Zugang. Nach dem Kauf meldest du dich in der App mit der Mailadresse an,
@@ -247,6 +254,10 @@ const umfang = [
   .fragen li {
     border-top: 1px solid var(--linie);
     padding: 12px 0;
+  }
+
+  .umfang__aktionen {
+    margin: 8px 0 24px;
   }
 
   .schritte {
