@@ -8,6 +8,7 @@ import '../../styles/magazin.css';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
+import FormateVergleich from '../../components/FormateVergleich.astro';
 import { site, seiten } from '../../config/site';
 import { artikelModule, artikel, artikelPfad, themen, aufmacher } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
@@ -85,6 +86,7 @@ const bild = aufmacher[slug!];
         </div>
 
         <div class="prosa">
+          {a.vergleich && <FormateVergleich />}
           <Inhalt />
         </div>
 
@@ -92,8 +94,8 @@ const bild = aufmacher[slug!];
           <JournalKarte
             variante="kompakt"
             ueberschriftEbene="h2"
-            titel="Alle Fragen in einem Journal"
-            text="Du willst die Fragen nicht abschreiben? Mein kostenloses Journal „Wer will ich in 12 Monaten sein?“ führt dich durch Rückblick, Who-to-be-Liste und deinen ersten Schritt."
+            titel={a.journalKarte?.titel ?? 'Alle Fragen in einem Journal'}
+            text={a.journalKarte?.text ?? 'Du willst die Fragen nicht abschreiben? Mein kostenloses Journal „Wer will ich in 12 Monaten sein?“ führt dich durch Rückblick, Who-to-be-Liste und deinen ersten Schritt.'}
           />
         </div>
 
@@ -256,6 +258,9 @@ const bild = aufmacher[slug!];
   }
 
   .aende__alle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-weight: 700;
     color: var(--abend-akzent) !important;
     align-self: flex-start;
@@ -447,6 +452,9 @@ const bild = aufmacher[slug!];
     cursor: pointer;
     font-weight: 700;
     list-style-position: outside;
+    /* Trefferfläche für Finger (Mobil-Test, D2.5) */
+    padding: 8px 0;
+    min-height: 44px;
   }
 
   .fragen details p {

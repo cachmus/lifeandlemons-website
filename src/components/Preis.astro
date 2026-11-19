@@ -23,6 +23,7 @@ const preisZusatz = preisHinweis(angebot);
       <span class="preis__betrag">{formatEuro(preis.betrag)}</span>
       {preis.einfuehrung && <span class="preis__hinweis">Einführungspreis bis {formatDatum(STICHTAGE.einfuehrungBis)}</span>}
       {preisZusatz && <span class="preis__zusatz">{preisZusatz}</span>}
+      {angebot.preisAnker && <span class="preis__anker">{angebot.preisAnker}</span>}
     </p>
   )
 }
@@ -48,6 +49,12 @@ const preisZusatz = preisHinweis(angebot);
   }
   .preis__zusatz {
     flex-basis: 100%;
+  }
+  .preis__anker {
+    flex-basis: 100%;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: 6px;
   }
   :global(.dunkel) .preis__hinweis,
   :global(.dunkel) .preis__zusatz {

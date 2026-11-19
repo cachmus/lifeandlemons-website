@@ -4,6 +4,7 @@ import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, akt
 import { angebotNachId } from '../config/angebote';
 import { pruefeAngebote } from '../config/angebote';
 import { grunddaten } from '../config/strukturierteDaten';
+import BewertungsHinweis from '../components/BewertungsHinweis.astro';
 import Logo from '../components/Logo.astro';
 import Einwilligung from '../components/Einwilligung.astro';
 import Hinweisleiste from '../components/Hinweisleiste.astro';
@@ -159,11 +160,14 @@ if (!g.__angeboteGeprueft) {
         <div class="fuss__marke">
           <Logo variante="gestapelt" hell />
           <p class="fuss__slogan">{site.slogan}</p>
+          <BewertungsHinweis hell />
         </div>
         <nav aria-label="Weitere Seiten, Kontakt und Rechtliches">
           <ul class="fuss__links">
             <li><a href={`mailto:${site.kontaktEmail}`}>{site.kontaktEmail}</a></li>
             {fussnavigation.map((punkt) => <li><a href={punkt.href}>{punkt.label}</a></li>)}
+            <li><a href={site.instagram.url} rel="noopener me">Instagram</a></li>
+            {site.linkedin && <li><a href={site.linkedin} rel="noopener me">LinkedIn</a></li>}
             <li><button class="fuss__knopf" type="button" data-einwilligung-oeffnen>Messung zulassen oder ablehnen</button></li>
           </ul>
         </nav>

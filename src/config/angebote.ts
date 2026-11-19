@@ -79,6 +79,11 @@ export type Angebot = {
   aktion: Aktion;
   /** Ziel, sobald das Angebot pausiert (nach Buchungsschluss oder ausgebucht) */
   aktionPausiert?: Aktion;
+  /**
+   * Ein Satz unter dem Preis, der ihn einordnet (Audit heycatch, D4.3 und D4.4). Erscheint überall, wo der Preis steht.
+   * Nur Aussagen, die Christine bestätigt hat.
+   */
+  preisAnker?: string;
   /** Kostenlose Demo, als zweiter Button über `<AngebotButton id="…" ziel="demo" />` */
   demo?: { url: string; label: string };
   /** Satz, der bei pausiertem Angebot erscheint */
@@ -252,6 +257,8 @@ export const angebote: Angebot[] = [
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
+    // VORSCHLAG aus dem Audit (heycatch, 19.11.2026), von Christine zu bestätigen: Vergleich mit Einzel-Coaching-Sitzungen
+    preisAnker: 'Kostet weniger als zwei Einzel-Coaching-Sitzungen und enthält das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
     ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',

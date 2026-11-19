@@ -5,7 +5,7 @@
  * Prüfen lassen sich die Daten mit https://validator.schema.org (Adresse der Seite eingeben).
  */
 import { site, seiten } from './site';
-import { angebotNachId, aktuellerPreis } from './angebote';
+import { angebotNachId, aktuellerPreis, istBuchbar, type Angebot } from './angebote';
 
 const adresse = (pfad: string) => new URL(pfad, site.url).href;
 
@@ -14,9 +14,31 @@ export const ids = {
   organisation: adresse('/#organisation'),
   person: adresse(`${seiten.ueberMich}#christine`),
   kursbuch: adresse(`${seiten.modul1}#kursbuch`),
+  tryALife: adresse(`${seiten.tryALife}#app`),
 };
 
+/**
+ * Angebot mit aktuellem Preis für Suchmaschinen und KI-Assistenten (Audit heycatch, D5.5).
+ * Nur der aktuell gültige Preis; ohne bestätigten Preis entfällt das Angebot.
+ */
+function angebotKnoten(a: Angebot, url: string): Knoten | null {
+  const preis = aktuellerPreis(a);
+  if (!preis) return null;
+  return {
+    '@type': 'Offer',
+    price: String(preis.betrag),
+    priceCurrency: 'EUR',
+    availability: istBuchbar(a) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    url,
+    areaServed: { '@type': 'Country', name: 'Deutschland' },
+    seller: { '@id': ids.organisation },
+  };
+}
+
 type Knoten = Record<string, unknown>;
+
+/** Öffentliche Profile für sameAs; LinkedIn erst, wenn in site.ts eingetragen */
+const profile = () => [site.instagram.url, ...(site.linkedin ? [site.linkedin] : [])];
 
 /** Erscheint auf jeder Seite: Website, Unternehmen und Inhaberin. */
 export function grunddaten(): Knoten[] {
@@ -56,7 +78,7 @@ export function grunddaten(): Knoten[] {
         { '@type': 'Country', name: 'Deutschland' },
       ],
       knowsLanguage: 'de',
-      sameAs: [site.instagram.url],
+      sameAs: profile(),
     },
     {
       '@type': 'Person',
@@ -66,7 +88,7 @@ export function grunddaten(): Knoten[] {
       url: adresse(seiten.ueberMich),
       worksFor: { '@id': ids.organisation },
       homeLocation: { '@type': 'City', name: site.ort.stadt },
-      sameAs: [site.instagram.url],
+      sameAs: profile(),
     },
   ];
 }
@@ -74,9 +96,10 @@ export function grunddaten(): Knoten[] {
 /** Das Workbook als Buch mit Autorin und aktuellem Preis (Seite Modul 1). `umschlag`: Pfad des Umschlagbilds. */
 export function kursbuchDaten(umschlag?: string): Knoten {
   const kursbuch = angebotNachId('kursbuch');
-  const preis = aktuellerPreis(kursbuch);
+  const angebot = angebotKnoten(kursbuch, ids.kursbuch);
   return {
-    '@type': 'Book',
+    // Buch und Produkt zugleich, damit der Preis als Produktangebot lesbar ist (D5.5)
+    '@type': ['Book', 'Product'],
     '@id': ids.kursbuch,
     name: 'Entwirf dein Zukunfts-Ich',
     description: 'Workbook zum Selbstarbeiten in neun Einheiten mit zwei Praxiswochen und einer Probezeit von 14 Tagen.',
@@ -86,17 +109,28 @@ export function kursbuchDaten(umschlag?: string): Knoten {
     numberOfPages: 184,
     url: ids.kursbuch,
     image: adresse(umschlag ?? '/marke/og-bild.png'),
-    // Nur der aktuell gültige Preis; ohne bestätigten Preis entfällt das Angebot
-    ...(preis && {
-      offers: {
-        '@type': 'Offer',
-        price: String(preis.betrag),
-        priceCurrency: 'EUR',
-        url: ids.kursbuch,
-        areaServed: { '@type': 'Country', name: 'Deutschland' },
-        seller: { '@id': ids.organisation },
-      },
-    }),
+    brand: { '@id': ids.organisation },
+    ...(angebot && { offers: angebot }),
+  };
+}
+
+/** Die App Try a Life als Produkt mit aktuellem Preis (Startseite und /try-a-life/). `bild`: Pfad eines Bilds der App. */
+export function tryALifeDaten(bild?: string): Knoten {
+  const app = angebotNachId('try-a-life');
+  const angebot = angebotKnoten(app, adresse(seiten.tryALife));
+  return {
+    '@type': ['Product', 'SoftwareApplication'],
+    '@id': ids.tryALife,
+    name: 'Try a Life',
+    description: `Life-Coaching-App im Format eines Cozy Games: ${app.enthaelt}`,
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Browser',
+    inLanguage: 'de-DE',
+    url: adresse(seiten.tryALife),
+    image: adresse(bild ?? '/marke/og-try-a-life.jpg'),
+    author: { '@id': ids.person },
+    brand: { '@id': ids.organisation },
+    ...(angebot && { offers: angebot }),
   };
 }
 
@@ -148,7 +182,8 @@ export function faqDaten(faq: { frage: string; antwort: string }[]): Knoten {
 /** Das kostenlose Journal als frei zugängliches Dokument (Seite /journal/). */
 export function journalDaten(cover: string): Knoten {
   return {
-    '@type': 'DigitalDocument',
+    // Dokument und Produkt zugleich, mit kostenlosem Angebot (D5.5)
+    '@type': ['DigitalDocument', 'Product'],
     '@id': adresse(`${seiten.journal}#journal`),
     name: 'Wer will ich in 12 Monaten sein? Das Jahresabschluss-Journal',
     description:
@@ -157,6 +192,15 @@ export function journalDaten(cover: string): Knoten {
     image: adresse(cover),
     inLanguage: 'de-DE',
     isAccessibleForFree: true,
+    brand: { '@id': ids.organisation },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: adresse(seiten.journal),
+      seller: { '@id': ids.organisation },
+    },
     numberOfPages: 17,
     encodingFormat: 'application/pdf',
     author: { '@id': ids.person },

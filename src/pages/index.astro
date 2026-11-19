@@ -15,6 +15,10 @@ import Polaroid from '../components/Polaroid.astro';
 import Interessentenliste from '../components/Interessentenliste.astro';
 import WartelisteKurz from '../components/WartelisteKurz.astro';
 import AngebotsVergleich from '../components/AngebotsVergleich.astro';
+import Stimmen from '../components/Stimmen.astro';
+import ZahlBeleg from '../components/ZahlBeleg.astro';
+import BlickInsSpiel from '../components/BlickInsSpiel.astro';
+import { journalDaten, tryALifeDaten, kursbuchDaten, faqDaten } from '../config/strukturierteDaten';
 import { site, seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId, aktuellerPreis, bestellHinweis, formatEuro, formatDatum, STICHTAGE } from '../config/angebote';
 import portraet from '../assets/portraet-christine-mauer.jpg';
@@ -35,8 +39,46 @@ const tryKaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
 const kursbuchPreis = aktuellerPreis(kursbuch);
 const kursbuchHinweis = bestellHinweis(kursbuch);
 
-/** Stimmen erst einblenden, wenn echte Stimmen mit schriftlicher Einwilligung vorliegen */
-const stimmenZeigen = false;
+/**
+ * Häufige Fragen auf der Startseite (Audit heycatch, D1.4 und D5.5, 19.11.2026). Antworten aus bestätigten Angaben:
+ * Über mich, „Wie ich arbeite“ (Kasten „Was meine Arbeit nicht ist“), angebote.ts und den Fragen auf der Seite Modul 1.
+ * Entwurf, Freigabe durch Christine offen. Dieselben Fragen gehen als FAQPage in die strukturierten Daten.
+ * OFFEN: „Was passiert nach den 12 Monaten Zugang?“ erst aufnehmen, wenn Christine die Antwort festgelegt hat.
+ */
+const haeufigeFragen = [
+  {
+    frage: 'Welche Ausbildung hast du?',
+    antwort:
+      'Ich habe Bildungswissenschaften mit Schwerpunkt Pädagogische Psychologie studiert und im Projektmanagement viele Veränderungsprozesse begleitet. Meine Methode habe ich zuerst an mir selbst erprobt. Auf welcher Forschung sie beruht, lege ich auf der Seite „Wie ich arbeite“ offen.',
+  },
+  {
+    frage: 'Ist das eine Therapie, und wo ist die Grenze?',
+    antwort:
+      'Nein. Ich schaue mit dir darauf, wie deine inneren Muster heute wirken. Ihre Entstehung arbeiten wir nicht auf. Mein Angebot ersetzt keine Psychotherapie und keine medizinische Behandlung. Wenn du dich seit Wochen niedergeschlagen oder hoffnungslos fühlst, wende dich bitte an deine Hausärztin oder deinen Hausarzt oder an eine Psychotherapeutin oder einen Psychotherapeuten. In akuten Krisen erreichst du die Telefonseelsorge rund um die Uhr unter 0800 111 0 111.',
+  },
+  {
+    frage: 'Wie unterscheidet sich das von einem Journal?',
+    antwort:
+      'Mit dem kostenlosen Journal schließt du in rund 90 Minuten dein Jahr ab, beschreibst, wer du in 12 Monaten sein willst, und planst einen ersten Schritt. Try a Life und das Workbook sind das komplette Programm: Über vier bis sechs Wochen entwirfst du drei mögliche Leben, probierst einen Entwurf im Alltag aus und prüfst deine Richtung in einer Probezeit.',
+  },
+  {
+    frage: 'App oder Workbook: Was passt zu mir?',
+    antwort:
+      'Beide führen dich durch dieselbe Methode. Try a Life passt, wenn du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst. Nach dem Programm begleitet dich die App bei deinen Meilensteinen. Das gedruckte Workbook passt, wenn du lieber mit Stift und Papier schreibst und dir feste Zeiten selbst einrichten kannst.',
+  },
+  {
+    frage: 'Kann ich Try a Life vorher ausprobieren?',
+    antwort: 'Ja. Die Demo spielst du kostenlos und ohne Anmeldung in deinem Browser.',
+  },
+  {
+    frage: 'Wie viel Zeit brauche ich?',
+    antwort: 'Rund zehn Stunden, verteilt über vier bis sechs Wochen. Dazwischen gehst du kleine Schritte in deinem Alltag.',
+  },
+  {
+    frage: 'Muss ich schon wissen, was ich will?',
+    antwort: 'Nein. Genau dafür entwirfst du drei völlig unterschiedliche Leben. Was du willst, zeigt sich beim Vergleichen und Ausprobieren.',
+  },
+];
 
 /** Begriffe der Zielgruppe laut Sprachrecherche: Leben passt nicht mehr, Orientierung, zu spät, alte Muster (überarbeitet 16.11.2026) */
 const fragen = [
@@ -64,6 +106,7 @@ const hilft = [
   dunklerSchluss
   title="Life&Lemons · Life Coaching und Mentoring in Hannover und online"
   description="Mentoring und Life Coaching von Christine Achmus, in Hannover und online: Du entwirfst drei mögliche Leben, testest sie im Alltag und findest heraus, welcher Weg deiner wird."
+  daten={[journalDaten(journalCover.src), tryALifeDaten(), kursbuchDaten(kursbuchFoto.src), faqDaten(haeufigeFragen)]}
 >
   <!-- 1. Erster Bildschirm · Wiedererkennen -->
   <section class="hero">
@@ -71,14 +114,18 @@ const hilft = [
       <div class="hero__text">
         <p class="label">Mentoring für selbstbestimmte Lebensgestaltung · {site.inhaberin} · {site.ort.stadt} und online</p>
         <h1>Sei, wer du werden <span class="pivot">willst</span>.</h1>
+        <!-- Methode und Kategorie im ersten Satz (Audit heycatch, D1.1, 19.11.2026; Wortlaut Vorschlag, Freigabe durch Christine offen) -->
         <p class="unterzeile">
-          Mit drei völlig unterschiedlichen Lebensentwürfen und praktischen Tests im Alltag findest du heraus, welcher Weg deiner
+          Mit meinem Life-Coaching-Programm entwirfst du drei völlig unterschiedliche Leben und testest im Alltag, welcher Weg deiner
           werden soll.
         </p>
         <div class="aktionen">
           <a class="button" href="#wege">Finde deinen Einstieg <span class="button__pfeil" aria-hidden="true">→</span></a>
           <a class="textlink" href="#ueber">Lerne mich kennen</a>
         </div>
+        <!-- Demo im ersten Bildschirm (Audit heycatch, D1.5 und D2.1) -->
+        {tryKaufbar && <p class="hero__demo"><AngebotButton id="try-a-life" ziel="demo" variante="text" text="Erst testen: Demo von Try a Life kostenlos spielen" /></p>}
+        <ZahlBeleg />
         <a class="neu" href={seiten.journal}>
           <span class="neu__label">Gratis</span>
           <span class="neu__text">Journal für deinen Jahresrückblick: Wer will ich in 12 Monaten sein?</span>
@@ -301,21 +348,8 @@ const hilft = [
     </div>
   </section>
 
-  {
-    stimmenZeigen && (
-      <section class="abschnitt" aria-labelledby="stimmen-titel">
-        <div class="container">
-          <div class="kopfblock">
-            <p class="label">Stimmen</p>
-            <h2 id="stimmen-titel">
-              Erfahrungen aus der <span class="pivot">ersten</span> Gruppe
-            </h2>
-          </div>
-          {/* Hier zwei bis drei echte Stimmen mit schriftlicher Einwilligung einfügen */}
-        </div>
-      </section>
-    )
-  }
+  <!-- Stimmen erscheinen erst, wenn in src/config/belege.ts echte Stimmen mit Einwilligung stehen (Audit heycatch, D3.2) -->
+  <Stimmen kennung="stimmen" />
 
   <!-- 7. Welcher Weg weckt dein Interesse? · Entscheidung (mit Workbook) -->
   <section class="abschnitt" id="kursbuch" aria-labelledby="einstieg-titel">
@@ -362,6 +396,11 @@ const hilft = [
         </article>
       </div>
 
+      <!-- Echte Ansichten aus der App (Audit heycatch, D1.5) -->
+      <div class="einstieg__spiel">
+        <BlickInsSpiel kennung="start" ueberschriftEbene="h3" />
+      </div>
+
       <div class="dunkel kursbuch__innen">
         <div class="kursbuch__bild" data-erscheinen>
           <Image
@@ -395,9 +434,29 @@ const hilft = [
     </div>
   </section>
 
-  <!-- 8. Interessentenliste · Danach -->
+  <!-- 8. Häufige Fragen · Einwände (Audit heycatch, D1.4) -->
+  <section class="abschnitt" id="fragen" aria-labelledby="fragen-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">07 · Häufige Fragen</p>
+        <h2 id="fragen-titel" class="zeile">Was du vielleicht noch <span class="pivot">wissen</span> möchtest</h2>
+      </div>
+      <div class="faq text">
+        {
+          haeufigeFragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Interessentenliste · Danach -->
   <Interessentenliste
-    label="07 · Was als Nächstes startet"
+    label="08 · Was als Nächstes startet"
     titel="Ich melde mich, sobald es"
     pivot="losgeht"
     text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
@@ -405,6 +464,60 @@ const hilft = [
 </Base>
 
 <style>
+  .hero__demo {
+    margin-top: -8px;
+  }
+
+  .einstieg__spiel {
+    margin-bottom: clamp(32px, 5vw, 64px);
+  }
+
+  /* Häufige Fragen */
+  .faq {
+    flex: 1 1 520px;
+    min-width: 0;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--linie);
+  }
+
+  .faq details:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .faq details[open] summary::after {
+    content: '−';
+  }
+
+  .faq details p {
+    padding: 0 0 20px;
+    color: var(--text-gedaempft);
+  }
+
   /* Einstieg: Journal und Try a Life */
   .einstieg {
     display: grid;

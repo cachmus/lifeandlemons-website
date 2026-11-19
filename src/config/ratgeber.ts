@@ -10,6 +10,7 @@ import bildJahresrueckblick from '../assets/ratgeber/thema-jahresrueckblick.png'
 import bildOrientierung from '../assets/ratgeber/thema-orientierung.jpg';
 import bildDranbleiben from '../assets/ratgeber/thema-dranbleiben.jpg';
 import aufmacherJahresrueckblick from '../assets/ratgeber/aufmacher-jahresrueckblick.jpg';
+import aufmacherVergleich from '../assets/leben/weg-tal.jpg';
 
 export const themen = [
   {
@@ -41,6 +42,10 @@ export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
     bild: aufmacherJahresrueckblick,
     alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
   },
+  'selbstcoaching-vergleich': {
+    bild: aufmacherVergleich,
+    alt: 'Aquarell eines mediterranen Tals mit einem gewundenen Weg zwischen Olivenbäumen',
+  },
 };
 
 export type ThemaId = (typeof themen)[number]['id'];
@@ -59,6 +64,10 @@ export interface Artikel {
   lesezeit: number;
   kurz: string[];
   faq?: { frage: string; antwort: string }[];
+  /** true: Vergleichstabelle der Formate vor dem Text (Komponente FormateVergleich) */
+  vergleich?: boolean;
+  /** Eigene Überschrift und eigener Text der Journal-Karte, sonst der Text für den Jahresrückblick */
+  journalKarte?: { titel: string; text: string };
 }
 
 type Modul = { frontmatter: Omit<Artikel, 'slug'>; Content: unknown; getHeadings: () => { depth: number; slug: string; text: string }[] };

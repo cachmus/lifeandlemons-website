@@ -1,0 +1,32 @@
+---
+/**
+ * Bewertungen auf einer unabhängigen Plattform (Audit heycatch, D3.5). Daten aus src/config/belege.ts.
+ * Ohne eingetragene Bewertungen erscheint nichts.
+ */
+import { bewertungen } from '../config/belege';
+
+interface Props {
+  hell?: boolean;
+}
+const { hell = false } = Astro.props;
+const note = bewertungen ? bewertungen.note.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '';
+---
+
+{
+  bewertungen && (
+    <p class:list={['bewertung', { 'bewertung--hell': hell }]}>
+      <a href={bewertungen.url} rel="noopener">
+        {`${note} von 5 Sternen aus ${bewertungen.anzahl} Bewertungen bei ${bewertungen.anbieter}`}
+      </a>
+    </p>
+  )
+}
+
+<style>
+  .bewertung {
+    font-size: 15px;
+  }
+  .bewertung--hell a {
+    color: var(--kalk);
+  }
+</style>

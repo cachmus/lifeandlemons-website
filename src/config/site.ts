@@ -24,6 +24,11 @@ export const site = {
   /** Handle laut Workbook-Umschlag und Broschüre */
   instagram: { handle: '@christineachmus', url: 'https://www.instagram.com/christineachmus/' },
   /**
+   * PLATZHALTER: LinkedIn-Profil (Audit heycatch, D3.3). Sobald eingetragen, erscheint es im Footer, auf „Über mich“
+   * und in den strukturierten Daten. Leer lassen, solange es kein öffentliches Profil gibt.
+   */
+  linkedin: '',
+  /**
    * Ort für Suchmaschinen und strukturierte Daten. Öffentlich erscheint nur die Stadt, keine Straße
    * (Unternehmensprofil mit Einzugsgebiet, entschieden 30.10.2026).
    */
@@ -68,6 +73,8 @@ export const seiten = {
   angebote: '/angebote/',
   /** Ratgeber mit Artikeln; Artikel liegen unter /ratgeber/<slug>/ (Quelltexte in src/ratgeber/) */
   ratgeber: '/ratgeber/',
+  /** Vergleich der Formate mit Einzelcoaching (Ratgeberartikel, neu 19.11.2026 nach dem Audit von heycatch) */
+  vergleich: '/ratgeber/selbstcoaching-vergleich/',
   /** Anker der Interessentenliste auf der Startseite */
   liste: '/#liste',
 } as const;

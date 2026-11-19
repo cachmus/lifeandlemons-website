@@ -1,0 +1,115 @@
+---
+/**
+ * Tabelle „Die Formate auf einen Blick“: Journal, Try a Life, Workbook und Einzelcoaching (Audit heycatch, D5.3 und D1.4, 19.11.2026).
+ * Erscheint im Ratgeberartikel /ratgeber/selbstcoaching-vergleich/ (Frontmatter `vergleich: true`).
+ * Preise und Umfang kommen aus src/config/angebote.ts. Die Spalte Einzelcoaching beschreibt das Format allgemein, ohne Preise anderer Anbieter.
+ */
+import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
+
+const app = angebotNachId('try-a-life');
+const workbook = angebotNachId('kursbuch');
+const appPreis = aktuellerPreis(app);
+const wbPreis = aktuellerPreis(workbook);
+
+const spalten = ['Gratis-Journal', 'Try a Life (App)', 'Workbook', 'Einzelcoaching'];
+const zeilen: { label: string; werte: string[] }[] = [
+  {
+    label: 'Preis',
+    werte: [
+      'kostenlos',
+      appPreis ? `${formatEuro(appPreis.betrag)} ${preisHinweis(app)}` : 'auf Anfrage',
+      wbPreis
+        ? `${formatEuro(wbPreis.betrag)}${wbPreis.einfuehrung ? ` (Einführungspreis bis ${formatDatum(STICHTAGE.einfuehrungBis)})` : ''}, inkl. Versand`
+        : 'auf Anfrage',
+      'meist pro Sitzung, je nach Coach',
+    ],
+  },
+  { label: 'Format', werte: ['PDF, 17 Seiten', 'App im Browser, im Format eines Cozy Games', 'gedruckt, 184 Seiten', 'Gespräche vor Ort oder online'] },
+  { label: 'Zeit', werte: ['rund 90 Minuten', '4 bis 6 Wochen, 1 Jahr Zugang', '9 Einheiten, rund 6 Wochen', 'mehrere Sitzungen über Wochen oder Monate'] },
+  {
+    label: 'Führung',
+    werte: [
+      'Fragen, die du allein beantwortest',
+      'Schritt für Schritt mit sichtbarem Fortschritt, danach Begleitung bei deinen Meilensteinen',
+      'Übungen, durch die du dich selbst führst',
+      'persönlich, auf deine Lage zugeschnitten',
+    ],
+  },
+  {
+    label: 'Test im Alltag',
+    werte: ['ein erster kleiner Schritt', 'kleine Schritte im echten Leben und eine Probezeit von 10 Tagen', 'zwei Praxiswochen und eine Probezeit von 14 Tagen', 'je nach Coach'],
+  },
+  {
+    label: 'Passt, wenn',
+    werte: [
+      'du dein Jahr abschließen und wissen willst, was du dir fürs nächste wirklich vornimmst',
+      (app.passtWenn ?? app.fuerDich).replace(/\.$/, ''),
+      (workbook.passtWenn ?? workbook.fuerDich).replace(/\.$/, ''),
+      'deine Lage sehr verzweigt ist und du gezielte Rückmeldung auf deine Situation möchtest',
+    ],
+  },
+];
+---
+
+<section class="vergleich" aria-labelledby="vergleich-titel">
+  <h2 id="vergleich-titel">Die Formate auf einen Blick</h2>
+  <div class="vergleich__rahmen" tabindex="0" role="region" aria-labelledby="vergleich-titel">
+    <table>
+      <thead>
+        <tr>
+          <td></td>
+          {spalten.map((s) => <th scope="col">{s}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          zeilen.map((z) => (
+            <tr>
+              <th scope="row">{z.label}</th>
+              {z.werte.map((w) => <td>{w}</td>)}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="vergleich__hinweis">Journal, Try a Life und das Workbook sind meine eigenen Angebote.</p>
+</section>
+
+<style>
+  .vergleich {
+    margin: 0 0 clamp(32px, 4vw, 48px);
+  }
+  .vergleich__rahmen {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid var(--linie);
+  }
+  thead th {
+    font-weight: 700;
+    border-bottom: 2px solid var(--tinte);
+  }
+  tbody th {
+    font-weight: 700;
+    color: var(--terrakotta-tief);
+    white-space: nowrap;
+  }
+  .vergleich__hinweis {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--text-gedaempft);
+  }
+</style>
