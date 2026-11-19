@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, aktuellerKopfKnopf } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import { pruefeAngebote } from '../config/angebote';
-import { seitenDaten, type SeitenAngaben, grunddaten } from '../config/strukturierteDaten';
+import { seitenDaten, type SeitenAngaben, grunddaten, organisationDaten } from '../config/strukturierteDaten';
 import BewertungsHinweis from '../components/BewertungsHinweis.astro';
 import Logo from '../components/Logo.astro';
 import Einwilligung from '../components/Einwilligung.astro';
@@ -94,6 +94,8 @@ if (!g.__angeboteGeprueft) {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={vorschau.alt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Unternehmen (Organization) auf jeder Seite, eigener Block; die übrigen Daten verweisen per @id darauf -->
+    <script type="application/ld+json" set:html={JSON.stringify(organisationDaten())} />
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
     <!--
       Sperre für die Leistungsmessung von Netlify (siehe `messung` in src/config/site.ts).

@@ -38,10 +38,47 @@ function angebotKnoten(a: Angebot, url: string): Knoten | null {
 
 type Knoten = Record<string, unknown>;
 
-/** Öffentliche Profile für sameAs; LinkedIn erst, wenn in site.ts eingetragen */
-const profile = () => [site.instagram.url, ...(site.linkedin ? [site.linkedin] : [])];
+/** Öffentliche Profile für sameAs; LinkedIn und weitere Profile erst, wenn in site.ts eingetragen (Audit a_sameas) */
+const profile = () => [site.instagram.url, ...(site.linkedin ? [site.linkedin] : []), ...site.weitereProfile.filter((u) => /^https:\/\//.test(u))];
 
-/** Erscheint auf jeder Seite: Website, Unternehmen und Inhaberin. */
+/**
+ * Das Unternehmen Life&Lemons (Organization). Steht als eigener Block im gemeinsamen Kopf jeder Seite (Base.astro),
+ * damit Suchmaschinen und KI-Assistenten die Marke auf der Website mit Erwähnungen anderswo verbinden.
+ * Name überall genau „Life&Lemons“ (site.name); andere Schreibweisen nur als alternateName.
+ */
+export function organisationDaten(): Knoten {
+  return {
+    '@context': 'https://schema.org',
+    // Organization ausdrücklich, ProfessionalService als genauere Art (Audit geo-audit a_org_schema, 19.11.2026)
+    '@type': ['Organization', 'ProfessionalService'],
+    '@id': ids.organisation,
+    name: site.name,
+    alternateName: ['Life and Lemons', site.firmierung],
+    slogan: site.slogan,
+    description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, in ${site.ort.stadt} und online.`,
+    url: adresse('/'),
+    logo: adresse('/apple-touch-icon.png'),
+    image: adresse('/marke/og-bild.png'),
+    email: site.kontaktEmail,
+    founder: { '@id': ids.person },
+    // Nur die Stadt: Life&Lemons ist ein Unternehmen mit Einzugsgebiet ohne öffentliche Geschäftsräume
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: site.ort.stadt,
+      addressRegion: site.ort.region,
+      addressCountry: site.ort.land,
+    },
+    // Treffen in Hannover, Einzelbegleitung online in Deutschland (Workbook-Versand nur innerhalb Deutschlands)
+    areaServed: [
+      { '@type': 'City', name: site.ort.stadt },
+      { '@type': 'Country', name: 'Deutschland' },
+    ],
+    knowsLanguage: 'de',
+    sameAs: profile(),
+  };
+}
+
+/** Erscheint auf jeder indexierten Seite: Website und Inhaberin. Das Unternehmen steht in organisationDaten(). */
 export function grunddaten(): Knoten[] {
   return [
     {
@@ -53,33 +90,6 @@ export function grunddaten(): Knoten[] {
       alternateName: ['Life and Lemons', 'Life & Lemons'],
       inLanguage: 'de-DE',
       publisher: { '@id': ids.organisation },
-    },
-    {
-      '@type': 'ProfessionalService',
-      '@id': ids.organisation,
-      name: site.name,
-      alternateName: ['Life and Lemons', site.firmierung],
-      slogan: site.slogan,
-      description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, in ${site.ort.stadt} und online.`,
-      url: adresse('/'),
-      logo: adresse('/apple-touch-icon.png'),
-      image: adresse('/marke/og-bild.png'),
-      email: site.kontaktEmail,
-      founder: { '@id': ids.person },
-      // Nur die Stadt: Life&Lemons ist ein Unternehmen mit Einzugsgebiet ohne öffentliche Geschäftsräume
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: site.ort.stadt,
-        addressRegion: site.ort.region,
-        addressCountry: site.ort.land,
-      },
-      // Treffen in Hannover, Einzelbegleitung online in Deutschland (Workbook-Versand nur innerhalb Deutschlands)
-      areaServed: [
-        { '@type': 'City', name: site.ort.stadt },
-        { '@type': 'Country', name: 'Deutschland' },
-      ],
-      knowsLanguage: 'de',
-      sameAs: profile(),
     },
     {
       '@type': 'Person',
