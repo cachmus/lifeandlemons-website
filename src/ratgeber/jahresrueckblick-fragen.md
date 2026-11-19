@@ -3,7 +3,7 @@
 # freigegebene Begrüßungsstrecke (Mail 2 zur Who-to-be-Liste), Forschung wie im Text genannt.
 titel: 'Persönlicher Jahresrückblick: Fragen, die dich wirklich weiterbringen'
 kurztitel: 'Jahresrückblick: Fragen, die weiterbringen'
-beschreibung: 'Fragen für deinen persönlichen Jahresrückblick und Ausblick: zurückschauen, ein klares Bild für die nächsten 12 Monate finden und mit einem kleinen ersten Schritt starten.'
+beschreibung: 'Fragen für deinen persönlichen Jahresrückblick und Ausblick: zurückschauen, ein Bild für die nächsten 12 Monate finden und mit einem ersten Schritt starten.'
 thema: jahresrueckblick
 hauptbegriff: 'Jahresrückblick Fragen'
 veroeffentlicht: '2026-11-16'
