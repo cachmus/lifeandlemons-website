@@ -53,7 +53,7 @@ Try a Life ist eine App im Format eines Cozy Games. Sie läuft in deinem Browser
 
 ## Warum die App mehr kostet als das Workbook
 
-Mit dem Workbook gibst du dir den Rhythmus selbst vor. Die App übernimmt einen Teil der Führung, auch nach dem Programm: Du trägst deine Meilensteine in deinen Kalender ein, hakst ab, was du erreicht hast, und hältst rund alle vier Wochen fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist. Damit übernimmt sie einen Teil der Begleitung, die du sonst in einem Coaching bekommst.
+Mit dem Workbook gibst du dir den Rhythmus selbst vor. Die App führt dich Schritt für Schritt durch das Programm und zeigt dir, wie weit du bist. Wenn du das Programm abgeschlossen und dich für einen Entwurf entschieden hast, begleitet sie dich weiter: Du trägst deine Meilensteine in deinen Kalender ein, hakst ab, was du erreicht hast, und hältst rund alle vier Wochen fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist. Diese Begleitung über Monate gibt es im Workbook nicht.
 
 ## Einzelcoaching: wenn du persönliche Rückmeldung brauchst
 
