@@ -55,6 +55,11 @@ export interface Artikel {
   titel: string;
   /** Kurzer Titel für Karten und Brotkrumen */
   kurztitel: string;
+  /**
+   * Optional: Titel im Browser-Tab und in Suchergebnissen, 16 bis 46 Zeichen (danach hängt das Layout „ · Life&Lemons“ an).
+   * Ohne Angabe gilt `titel`, wenn er passt, sonst `kurztitel`.
+   */
+  seitentitel?: string;
   beschreibung: string;
   thema: ThemaId;
   /** Hauptsuchbegriff, nur zur Orientierung beim Schreiben */
@@ -84,3 +89,18 @@ export const artikel: Artikel[] = artikelModule
   .sort((a, b) => (b.veroeffentlicht > a.veroeffentlicht ? 1 : -1));
 
 export const artikelPfad = (slug: string) => `/ratgeber/${slug}/`;
+
+/** Erlaubte Länge des eigenen Teils im Seitentitel (Audit geo-audit c_title): gerendert mit „ · Life&Lemons“ 30 bis 60 Zeichen */
+export const SEITENTITEL = { min: 16, max: 46 } as const;
+
+const passt = (t?: string) => !!t && t.length >= SEITENTITEL.min && t.length <= SEITENTITEL.max;
+
+/** Seitentitel eines Artikels: `seitentitel`, sonst `titel`, sonst `kurztitel`. Passt keiner, Warnung im Build statt stillem Kürzen. */
+export function seitentitelVon(a: Artikel): string {
+  const wahl = [a.seitentitel, a.titel, a.kurztitel].find(passt);
+  if (!wahl) {
+    console.warn(`\n[Ratgeber] Kein Seitentitel mit ${SEITENTITEL.min} bis ${SEITENTITEL.max} Zeichen für „${a.slug}“. Bitte \`seitentitel\` im Frontmatter setzen.`);
+    return a.seitentitel ?? a.kurztitel;
+  }
+  return wahl;
+}

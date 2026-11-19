@@ -10,6 +10,8 @@ import Polaroid from '../components/Polaroid.astro';
 import PhaseZeichen from '../components/PhaseZeichen.astro';
 import { phasen } from '../config/methode';
 import { site, seiten } from '../config/site';
+import { artikel, artikelPfad } from '../config/ratgeber';
+import { profilseite } from '../config/strukturierteDaten';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
 const weg = [
@@ -36,8 +38,9 @@ const weg = [
 
 <Base
   dunklerSchluss
-  title={`${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}`}
+  title={`${site.inhaberin}, ${site.rolle}`}
   description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich mitbringe.`}
+  seite={profilseite(artikel.map((a) => ({ titel: a.titel, pfad: artikelPfad(a.slug) })))}
 >
   <section class="kopf-abschnitt">
     <div class="container zwei-spalten kopf-abschnitt__innen">
@@ -106,7 +109,7 @@ const weg = [
             <li>
               <a href={`${seiten.wieIchArbeite}#phasen`} class="methode__phase">
                 <span class="methode__zeichen" aria-hidden="true">
-                  <PhaseZeichen symbol={p.symbol} klasse="methode__bild" />
+                  <PhaseZeichen symbol={p.symbol} alt={p.symbolAlt} klasse="methode__bild" />
                 </span>
                 <span class="methode__nr" aria-hidden="true">{i + 1}</span>
                 <span class="methode__titel">{p.titel}</span>
@@ -151,10 +154,32 @@ const weg = [
     </div>
   </section>
 
+  <!-- Artikel der Autorin (Audit geo-audit a_author_page): Über mich ist die Autorinnenseite, jeder Artikel verlinkt hierher -->
+  {
+    artikel.length > 0 && (
+      <section class="abschnitt" id="artikel" aria-labelledby="artikel-titel">
+        <div class="container zwei-spalten">
+          <div class="kopfblock">
+            <p class="label">04 · Ratgeber</p>
+            <h2 id="artikel-titel" class="zeile">Was ich im Ratgeber <span class="pivot">schreibe</span></h2>
+          </div>
+          <ul class="artikelliste" data-erscheinen>
+            {artikel.map((a) => (
+              <li>
+                <a href={artikelPfad(a.slug)}>{a.titel}</a>
+                <p>{a.beschreibung}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
   <section class="abschnitt abschnitt--ende" aria-labelledby="einstieg-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">04 · Zusammenarbeit</p>
+        <p class="label">{artikel.length > 0 ? '05' : '04'} · Zusammenarbeit</p>
         <h2 id="einstieg-titel" class="zeile">Finde deinen <span class="pivot">Einstieg</span></h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
@@ -307,6 +332,30 @@ const weg = [
     .methode__phase {
       transition: none;
     }
+  }
+
+  .artikelliste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .artikelliste li {
+    border-top: 1px solid var(--linie);
+    padding: 18px 0 20px;
+  }
+
+  .artikelliste li:last-child {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .artikelliste a {
+    font-weight: 700;
+  }
+
+  .artikelliste p {
+    margin-top: 6px;
+    color: var(--text-gedaempft);
   }
 
   .mitbringe {

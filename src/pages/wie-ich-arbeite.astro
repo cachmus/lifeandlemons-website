@@ -63,8 +63,9 @@ const grundlagen = [
 
 <Base
   dunklerSchluss
-  title="Wie ich arbeite: Life Design in sieben Phasen"
-  description="Die Methode von Life&Lemons in sieben Phasen: drei völlig unterschiedliche Lebensentwürfe, Tests im Alltag und neue Gewohnheiten. Worauf sie beruht und wo ihre Grenzen liegen."
+  title="Life Design: vom heutigen Leben zum eigenen Weg"
+  markeImTitel={false}
+  description="Die Methode von Life&Lemons in sieben Phasen: drei völlig unterschiedliche Lebensentwürfe, Tests im Alltag und neue Gewohnheiten. Mit Grundlagen und Grenzen."
 >
   <section class="kopf-abschnitt">
     <div class="container kopf-abschnitt__text">
@@ -94,7 +95,7 @@ const grundlagen = [
           phasen.map((p, i) => (
             <li class:list={['phase', { 'phase--modul2': i === 6 }]} data-erscheinen>
               <div class="phase__zeichen" aria-hidden="true">
-                <PhaseZeichen symbol={p.symbol} klasse="phase__bild" />
+                <PhaseZeichen symbol={p.symbol} alt={p.symbolAlt} klasse="phase__bild" />
                 <span class="phase__nr">{i + 1}</span>
               </div>
               <div class="phase__inhalt">

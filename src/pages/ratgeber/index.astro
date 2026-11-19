@@ -24,7 +24,8 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
 ---
 
 <Base
-  title="Ratgeber: Jahresrückblick, Orientierung und Lebensziele"
+  title="Ratgeber für Fragen, die dich beschäftigen"
+  seite={{ typ: 'CollectionPage' }}
   description="Artikel mit Übungen für deinen Jahresrückblick, für mehr Orientierung und für Lebensziele, die im Alltag halten. Von Christine Achmus, Life&Lemons."
   dunklerSchluss
 >
@@ -39,7 +40,7 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
             mit Übungen, die du sofort ausprobieren kannst.
           </p>
           <p class="mkopf__von">
-            <Image class="mkopf__portraet" src={portraet} alt="" widths={[64, 128]} sizes="56px" />
+            <Image class="mkopf__portraet" src={portraet} alt="Christine Achmus als Aquarell-Porträt" widths={[64, 128]} sizes="56px" />
             <span>Von {site.inhaberin}, {site.rolle}</span>
           </p>
         </div>

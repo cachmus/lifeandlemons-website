@@ -3,7 +3,7 @@
 # freigegebene Begrüßungsstrecke (Mail 2 zur Who-to-be-Liste), Forschung wie im Text genannt.
 titel: 'Persönlicher Jahresrückblick: Fragen, die dich wirklich weiterbringen'
 kurztitel: 'Jahresrückblick: Fragen, die weiterbringen'
-beschreibung: 'Fragen für deinen persönlichen Jahresrückblick und Ausblick: zurückschauen, ein klares Bild für die nächsten 12 Monate finden und mit einem kleinen ersten Schritt starten.'
+beschreibung: 'Fragen für deinen persönlichen Jahresrückblick und Ausblick: zurückschauen, ein Bild für die nächsten 12 Monate finden und mit einem ersten Schritt starten.'
 thema: jahresrueckblick
 hauptbegriff: 'Jahresrückblick Fragen'
 veroeffentlicht: '2026-11-16'
@@ -28,15 +28,15 @@ Viele beantworten das mit einer Liste guter Vorsätze. Im Februar ist davon meis
 
 Hier findest du die Fragen, mit denen das gelingt.
 
-## Bevor du anfängst
+## Wie bereitest du deinen Jahresrückblick vor?
 
 Nimm dir zwei oder drei ruhige Abende, oder einen, wenn er lang genug ist. Leg dir deinen Kalender und dein Handy bereit. Die Fotos der letzten zwölf Monate erinnern dich an mehr, als du gerade im Kopf hast.
 
 Schreib mit der Hand oder tippe, beides funktioniert. Wichtig ist nur, dass du deine Antworten aufschreibst. Was nur im Kopf bleibt, ist am nächsten Morgen oft schon wieder weg.
 
-## Teil 1: Fragen für deinen Rückblick
+## Welche Fragen helfen beim Rückblick auf dein Jahr?
 
-Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbauen kannst.
+Hilfreich sind Fragen, die dir zeigen, worauf du im nächsten Jahr aufbauen kannst. Diese sieben führen dich durch dein Jahr.
 
 **Wie zufrieden bist du gerade mit den einzelnen Bereichen deines Lebens?** Bewerte Bereiche wie Gesundheit, Beziehungen, Beruf, Finanzen und Freizeit jeweils von 1 bis 10. Schreib zu den zwei höchsten und den zwei niedrigsten Werten je einen Satz, was dahintersteht. Dieses Bild heißt Lebensrad, und es zeigt dir auf einen Blick, wo sich am meisten bewegen soll.
 
@@ -56,11 +56,13 @@ Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbaue
 
 **Welchen Titel gibst du diesem Jahr?** Stell dir vor, dein Jahr wäre ein Kapitel in einem Buch über dein Leben. Mit diesem einen Satz schließt du es ab.
 
-## Teil 2: Fragen für deinen Ausblick
+## Welche Fragen helfen beim Ausblick auf das neue Jahr?
 
-Jetzt schaust du zwölf Monate nach vorn.
+Für den Ausblick brauchst du Fragen, mit denen ein genaues Bild von dir in zwölf Monaten entsteht. Diese vier helfen dir dabei.
 
-**Wie sieht ein ganz normaler Tag in zwölf Monaten aus?** Stell dir vor, es ist ein Dienstag in einem Jahr, und du bist zufrieden damit, wie du lebst. Wo wachst du auf? Mit wem frühstückst du? Was machst du am Nachmittag? Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, desto greifbarer wird das, worauf du zugehst.
+**Wie sieht ein ganz normaler Tag in zwölf Monaten aus?** Stell dir vor, es ist ein Dienstag in einem Jahr, und du bist zufrieden damit, wie du lebst. Wo wachst du auf? Mit wem frühstückst du? Was machst du am Nachmittag?
+
+Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, desto greifbarer wird das, worauf du zugehst.
 
 **Wie willst du dich die meiste Zeit fühlen?** Wähle drei Wörter und schreib zu jedem auf, woran du im Alltag merkst, dass das Gefühl da ist. Daran kannst du später Entscheidungen und Termine messen.
 
@@ -68,19 +70,19 @@ Jetzt schaust du zwölf Monate nach vorn.
 
 **Was darf so bleiben, wie es ist?** Schreib mindestens drei Dinge auf. Dein Plan soll auf dem aufbauen, was schon trägt.
 
-## Warum eine Who-to-be-Liste mehr trägt als ein Vorsatz
+## Warum trägt eine Who-to-be-Liste mehr als ein Vorsatz?
 
-Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag ausfällt, fühlt sich schnell der ganze Vorsatz erledigt an. Ein Satz wie „Ich bin jemand, der …“ zählt, was du an den meisten Tagen tust. Ein verpatzter Abend ändert daran nichts.
+Weil ein Satz wie „Ich bin jemand, der …“ zählt, was du an den meisten Tagen tust, und ein verpatzter Abend daran nichts ändert. Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag ausfällt, fühlt sich schnell der ganze Vorsatz erledigt an.
 
-Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat gezeigt, dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
+Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat [in einer Studie gezeigt](https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf), dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
 
 ![Journalseite „Mein Kompass für das neue Jahr“ mit Feldern für Werte, Lebensgefühl und drei Sätze, wer du sein willst](../assets/journal-seiten/05-kompass.jpg)
 
 *Im Journal landet deine Who-to-be-Liste auf einer Kompass-Seite, die dich durch das Jahr begleitet.*
 
-## Vom Bild zum ersten Schritt
+## Wie kommst du vom Bild zum ersten Schritt?
 
-Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in ihrer Forschung gezeigt, dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
+Du planst vom Ziel rückwärts, bis ein Schritt für die nächsten 72 Stunden übrig bleibt, und rechnest dabei mit Hindernissen. Ein schönes Bild allein reicht nämlich nicht. Die Psychologin Gabriele Oettingen hat [in ihrer Forschung gezeigt](https://www.psy.uni-hamburg.de/arbeitsbereiche/paedagogische-psychologie-und-motivation/personen/oettingen-gabriele/dokumente/oettingen-mayer-2002.pdf), dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
 
 **Plan rückwärts.** Dein Tag in zwölf Monaten ist das Ziel. Was muss in neun Monaten stehen, was in sechs, was in drei? Plane großzügiger, als es sich im ersten Moment anfühlt. Fast alles dauert länger als gedacht.
 
@@ -88,7 +90,7 @@ Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in
 
 *Die Rückwärtsplanung im Journal: von deinem Bild in 12 Monaten bis zu den nächsten vier Wochen.*
 
-**Rechne mit Hindernissen.** Schreib zu jedem Bereich, in dem sich etwas bewegen soll, ein äußeres Hindernis auf, etwa volle Wochen oder Schulferien. Und ein inneres, etwa einen Gedanken oder eine Gewohnheit, die dich bremst. Formuliere dann einen Wenn-dann-Plan: „Wenn ich nach 21 Uhr noch Mails lese, dann lege ich das Handy in den Flur.“ Solche Pläne helfen nachweislich, Vorhaben umzusetzen, das zeigt eine Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran.
+**Rechne mit Hindernissen.** Schreib zu jedem Bereich, in dem sich etwas bewegen soll, ein äußeres Hindernis auf, etwa volle Wochen oder Schulferien. Und ein inneres, etwa einen Gedanken oder eine Gewohnheit, die dich bremst. Formuliere dann einen Wenn-dann-Plan: „Wenn ich nach 21 Uhr noch Mails lese, dann lege ich das Handy in den Flur.“ Solche Pläne helfen nachweislich, Vorhaben umzusetzen, das zeigt eine [Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran](https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f).
 
 **Leg deinen ersten Schritt fest.** Wähle einen Schritt, der höchstens 30 Minuten dauert, und mach ihn in den nächsten 72 Stunden. Klein ist dabei Absicht. Du merkst: Ich habe getan, was ich mir vorgenommen habe. Der nächste Schritt darf dann größer werden.
 

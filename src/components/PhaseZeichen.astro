@@ -8,16 +8,18 @@ import { Image } from 'astro:assets';
 
 interface Props {
   symbol: ImageMetadata | null;
+  /** Beschreibung des Bilds (Audit geo-audit c_image_alt) */
+  alt?: string;
   klasse?: string;
 }
-const { symbol, klasse } = Astro.props;
+const { symbol, alt = '', klasse } = Astro.props;
 ---
 
 {
   symbol ? (
-    <Image class={klasse} src={symbol} alt="" widths={[96, 192]} sizes="80px" />
+    <Image class={klasse} src={symbol} alt={alt} widths={[96, 192]} sizes="80px" />
   ) : (
-    <svg class={klasse} viewBox="0 0 100 100">
+    <svg class={klasse} viewBox="0 0 100 100" role="img" aria-label={alt || undefined}>
                     <circle cx="50" cy="50" r="46" fill="#fbf9f5" stroke="#bb5e3a" stroke-width="1.5" />
                     <path d="M50 50 L50 4 A46 46 0 0 1 79.6 14.8 Z" fill="#e0a487" />
                     <path d="M50 50 L79.6 14.8 A46 46 0 0 1 95.3 42 Z" fill="#d7dcce" opacity="0.9" />
