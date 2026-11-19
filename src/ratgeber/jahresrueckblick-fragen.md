@@ -28,15 +28,15 @@ Viele beantworten das mit einer Liste guter Vorsätze. Im Februar ist davon meis
 
 Hier findest du die Fragen, mit denen das gelingt.
 
-## Bevor du anfängst
+## Wie bereitest du deinen Jahresrückblick vor?
 
 Nimm dir zwei oder drei ruhige Abende, oder einen, wenn er lang genug ist. Leg dir deinen Kalender und dein Handy bereit. Die Fotos der letzten zwölf Monate erinnern dich an mehr, als du gerade im Kopf hast.
 
 Schreib mit der Hand oder tippe, beides funktioniert. Wichtig ist nur, dass du deine Antworten aufschreibst. Was nur im Kopf bleibt, ist am nächsten Morgen oft schon wieder weg.
 
-## Teil 1: Fragen für deinen Rückblick
+## Welche Fragen helfen beim Rückblick auf dein Jahr?
 
-Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbauen kannst.
+Hilfreich sind Fragen, die dir zeigen, worauf du im nächsten Jahr aufbauen kannst. Diese sieben führen dich durch dein Jahr.
 
 **Wie zufrieden bist du gerade mit den einzelnen Bereichen deines Lebens?** Bewerte Bereiche wie Gesundheit, Beziehungen, Beruf, Finanzen und Freizeit jeweils von 1 bis 10. Schreib zu den zwei höchsten und den zwei niedrigsten Werten je einen Satz, was dahintersteht. Dieses Bild heißt Lebensrad, und es zeigt dir auf einen Blick, wo sich am meisten bewegen soll.
 
@@ -56,9 +56,9 @@ Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbaue
 
 **Welchen Titel gibst du diesem Jahr?** Stell dir vor, dein Jahr wäre ein Kapitel in einem Buch über dein Leben. Mit diesem einen Satz schließt du es ab.
 
-## Teil 2: Fragen für deinen Ausblick
+## Welche Fragen helfen beim Ausblick auf das neue Jahr?
 
-Jetzt schaust du zwölf Monate nach vorn.
+Für den Ausblick brauchst du Fragen, mit denen ein genaues Bild von dir in zwölf Monaten entsteht. Diese vier helfen dir dabei.
 
 **Wie sieht ein ganz normaler Tag in zwölf Monaten aus?** Stell dir vor, es ist ein Dienstag in einem Jahr, und du bist zufrieden damit, wie du lebst. Wo wachst du auf? Mit wem frühstückst du? Was machst du am Nachmittag? Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, desto greifbarer wird das, worauf du zugehst.
 
@@ -68,9 +68,9 @@ Jetzt schaust du zwölf Monate nach vorn.
 
 **Was darf so bleiben, wie es ist?** Schreib mindestens drei Dinge auf. Dein Plan soll auf dem aufbauen, was schon trägt.
 
-## Warum eine Who-to-be-Liste mehr trägt als ein Vorsatz
+## Warum trägt eine Who-to-be-Liste mehr als ein Vorsatz?
 
-Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag ausfällt, fühlt sich schnell der ganze Vorsatz erledigt an. Ein Satz wie „Ich bin jemand, der …“ zählt, was du an den meisten Tagen tust. Ein verpatzter Abend ändert daran nichts.
+Weil ein Satz wie „Ich bin jemand, der …“ zählt, was du an den meisten Tagen tust, und ein verpatzter Abend daran nichts ändert. Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag ausfällt, fühlt sich schnell der ganze Vorsatz erledigt an.
 
 Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat gezeigt, dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
 
@@ -78,9 +78,9 @@ Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstel
 
 *Im Journal landet deine Who-to-be-Liste auf einer Kompass-Seite, die dich durch das Jahr begleitet.*
 
-## Vom Bild zum ersten Schritt
+## Wie kommst du vom Bild zum ersten Schritt?
 
-Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in ihrer Forschung gezeigt, dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
+Du planst vom Ziel rückwärts, bis ein Schritt für die nächsten 72 Stunden übrig bleibt, und rechnest dabei mit Hindernissen. Ein schönes Bild allein reicht nämlich nicht. Die Psychologin Gabriele Oettingen hat in ihrer Forschung gezeigt, dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
 
 **Plan rückwärts.** Dein Tag in zwölf Monaten ist das Ziel. Was muss in neun Monaten stehen, was in sechs, was in drei? Plane großzügiger, als es sich im ersten Moment anfühlt. Fast alles dauert länger als gedacht.
 
