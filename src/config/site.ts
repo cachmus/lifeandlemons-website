@@ -29,6 +29,13 @@ export const site = {
    */
   linkedin: '',
   /**
+   * PLATZHALTER: weitere öffentliche Profile, die Life&Lemons gehören (Audit geo-audit a_sameas, 19.11.2026).
+   * Sie erscheinen als sameAs beim Unternehmen in den strukturierten Daten. Mindestens drei Profile zusammen mit
+   * Instagram und LinkedIn sind das Ziel, z. B. Google-Unternehmensprofil, Pinterest, YouTube, ProvenExpert.
+   * Nur Profile eintragen, die es wirklich gibt und die Christine selbst betreibt. Vollständige Adresse mit https://.
+   */
+  weitereProfile: [] as string[],
+  /**
    * Ort für Suchmaschinen und strukturierte Daten. Öffentlich erscheint nur die Stadt, keine Straße
    * (Unternehmensprofil mit Einzugsgebiet, entschieden 30.10.2026).
    */
