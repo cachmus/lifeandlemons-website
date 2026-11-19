@@ -259,7 +259,7 @@ export const angebote: Angebot[] = [
     preisRegulaerBestaetigt: true,
     // Nach dem Audit (heycatch, 19.11.2026). Christine, 19.11.2026: Schon eine einzelne Sitzung kostet teilweise mehr als 119 €.
     // Wortlaut gewählt von Christine, 19.11.2026
-    preisAnker: 'Eine einzelne Coaching-Sitzung kostet oft schon mehr. Hier bekommst du das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
+    preisAnker: 'Eine einzelne Coaching-Sitzung kostet oft schon mehr als das komplette Programm in Try a Life.',
     ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',
