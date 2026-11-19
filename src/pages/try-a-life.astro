@@ -19,6 +19,8 @@ import Interessentenliste from '../components/Interessentenliste.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import BlickInsSpiel from '../components/BlickInsSpiel.astro';
+import Stimmen from '../components/Stimmen.astro';
+import { tryALifeDaten } from '../config/strukturierteDaten';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
 
@@ -64,6 +66,7 @@ const umfang = [
     pfad: '/marke/og-try-a-life.jpg',
     alt: 'Aquarell eines Tals mit Wegweiser, Steinmännchen, Rucksack und Buch am Weg, dahinter Dorf und Steinbrücke, darüber der Schriftzug Try a Life',
   }}
+  daten={[tryALifeDaten()]}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
@@ -133,6 +136,9 @@ const umfang = [
       <BlickInsSpiel kennung="try" ueberschriftEbene="h3" />
     </div>
   </section>
+
+  <!-- Stimmen erscheinen erst, wenn in src/config/belege.ts echte Stimmen stehen (Audit heycatch, D3.2) -->
+  <Stimmen kennung="stimmen-try" />
 
   <section class="abschnitt" aria-labelledby="umfang-titel">
     <div class="container zwei-spalten">

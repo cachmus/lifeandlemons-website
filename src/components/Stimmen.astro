@@ -1,0 +1,110 @@
+---
+/**
+ * Stimmen von Menschen, die mit Try a Life, dem Workbook oder dem Journal gearbeitet haben (Audit heycatch, D3.2).
+ * Daten aus src/config/belege.ts. Ohne eingetragene Stimmen erscheint der Abschnitt nicht.
+ */
+import { Image } from 'astro:assets';
+import { stimmen } from '../config/belege';
+
+interface Props {
+  kennung?: string;
+  label?: string;
+}
+const { kennung = 'stimmen', label = 'Stimmen' } = Astro.props;
+const liste = stimmen.slice(0, 5);
+---
+
+{
+  liste.length > 0 && (
+    <section class="abschnitt" aria-labelledby={`${kennung}-titel`}>
+      <div class="container">
+        <div class="kopfblock">
+          <p class="label">{label}</p>
+          <h2 id={`${kennung}-titel`} class="zeile">
+            Menschen, die ihren Weg <span class="pivot">getestet</span> haben
+          </h2>
+        </div>
+        <ul class="stimmen">
+          {liste.map((s) => (
+            <li class="stimme" data-erscheinen>
+              <figure>
+                <blockquote>
+                  <p>„{s.zitat}“</p>
+                  {s.ergebnis && <p class="stimme__ergebnis">{s.ergebnis}</p>}
+                </blockquote>
+                <figcaption>
+                  {s.foto && <Image class="stimme__foto" src={s.foto} alt="" width={56} height={56} />}
+                  <span>
+                    <span class="stimme__name">{s.name}</span>
+                    <span class="stimme__format">mit {s.format}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .stimmen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+  .stimme figure {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(22px, 3vw, 32px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 2px solid var(--terrakotta);
+  }
+  .stimme blockquote {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stimme blockquote p {
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.3;
+  }
+  .stimme blockquote .stimme__ergebnis {
+    font-family: var(--schrift-text);
+    font-style: normal;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .stimme figcaption {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 15px;
+  }
+  .stimme__foto {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .stimme__name {
+    display: block;
+    font-weight: 700;
+  }
+  .stimme__format {
+    display: block;
+    color: var(--text-gedaempft);
+  }
+</style>

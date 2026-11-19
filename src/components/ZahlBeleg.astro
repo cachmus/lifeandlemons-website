@@ -1,0 +1,18 @@
+---
+/**
+ * Eine echte Zahl als Beleg, z. B. Downloads des Journals (Audit heycatch, D3.1). Daten aus src/config/belege.ts.
+ * Ohne eingetragene Zahl erscheint nichts.
+ */
+import { zahlBeleg } from '../config/belege';
+---
+
+{zahlBeleg && <p class="zahl-beleg">{zahlBeleg.text}</p>}
+
+<style>
+  .zahl-beleg {
+    font-size: 15px;
+    color: var(--text-gedaempft);
+    padding-left: 14px;
+    border-left: 2px solid var(--zitrone);
+  }
+</style>

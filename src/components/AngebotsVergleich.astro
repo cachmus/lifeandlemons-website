@@ -8,6 +8,7 @@ import { Image } from 'astro:assets';
 import AngebotButton from './AngebotButton.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
+import BewertungsHinweis from './BewertungsHinweis.astro';
 import journalCover from '../assets/journal-cover.jpg';
 import talBild from '../assets/try-a-life-tal.jpg';
 import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
@@ -43,14 +44,18 @@ const tryPreis = aktuellerPreis(tryALife);
     <a class="weg__bild" href={seiten.tryALife} tabindex="-1" aria-hidden="true">
       <Image src={talBild} alt="" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
     </a>
+    {/* Empfehlungsmarke statt nur Status (Audit heycatch, D4.3); Wortlaut Vorschlag, von Christine zu bestätigen */}
+    <p class="weg__empfehlung">Meine Empfehlung</p>
     <p class="weg__marke">Try a Life · {tryALifeAnkuendigung.status}</p>
     <h3 class="weg__name">Life-Coaching-App</h3>
     <p class="weg__fuer">Für dich, wenn {tryALife.fuerDich}</p>
+    {tryALife.passtWenigerWenn && <p class="weg__weniger">Weniger passend, wenn {tryALife.passtWenigerWenn}</p>}
     <dl class="weg__fakten">
       <div><dt>Preis</dt><dd>{tryPreis ? formatEuro(tryPreis.betrag) : tryALifeAnkuendigung.status}{tryPreis && <span class="weg__klein"> {preisHinweis(tryALife)}</span>}</dd></div>
       <div><dt>Format</dt><dd>App zum Selbstlernen</dd></div>
       <div><dt>Zeit</dt><dd>4 bis 6 Wochen, 1 Jahr Zugang</dd></div>
     </dl>
+    {tryPreis && tryALife.preisAnker && <p class="weg__anker">{tryALife.preisAnker}</p>}
     <a class="button weg__knopf" href={seiten.tryALife}>Mehr zu Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>
   </li>
 
@@ -61,6 +66,7 @@ const tryPreis = aktuellerPreis(tryALife);
     <p class="weg__marke">Entwirf dein Zukunfts-Ich</p>
     <h3 class="weg__name">Life-Coaching-Workbook</h3>
     <p class="weg__fuer">Für dich, wenn {kursbuch.fuerDich}</p>
+    {kursbuch.passtWenigerWenn && <p class="weg__weniger">Weniger passend, wenn {kursbuch.passtWenigerWenn}</p>}
     <dl class="weg__fakten">
       <div>
         <dt>Preis</dt>
@@ -76,6 +82,10 @@ const tryPreis = aktuellerPreis(tryALife);
     <div class="weg__knopf"><AngebotButton id="kursbuch" /></div>
   </li>
 </ul>
+<div class="wege__danach">
+  <BewertungsHinweis />
+  <a class="textlink" href={seiten.vergleich}>Journal, App, Workbook und Einzelcoaching im Vergleich <span aria-hidden="true">→</span></a>
+</div>
 
 <style>
   .wege {
@@ -191,6 +201,40 @@ const tryPreis = aktuellerPreis(tryALife);
     font-size: 13px;
     line-height: 1.45;
     color: var(--text-gedaempft);
+  }
+
+  .weg__empfehlung {
+    align-self: flex-start;
+    margin: 0;
+    padding: 4px 10px;
+    background: var(--tinte);
+    color: var(--kalk);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .weg__weniger {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--text-gedaempft);
+  }
+
+  .weg__anker {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .wege__danach {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 32px;
+    margin-top: clamp(20px, 2.5vw, 32px);
   }
 
   .weg__knopf {

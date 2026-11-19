@@ -4,21 +4,29 @@
  * Nach Buchungsschluss führt der Button automatisch zur Interessentenliste.
  * Verwendung: <AngebotButton id="kursbuch" />
  * Mit ziel="demo" führt der Button zur kostenlosen Demo des Angebots (`demo` in angebote.ts), hell.
+ * Mit variante="text" erscheint ein Textlink statt eines Buttons; `text` ersetzt dann die Beschriftung.
  */
 import { angebotNachId, aktuelleAktion } from '../config/angebote';
 
 interface Props {
   id: string;
-  variante?: 'primaer' | 'hell';
+  variante?: 'primaer' | 'hell' | 'text';
   ziel?: 'aktion' | 'demo';
+  /** Eigene Beschriftung, nur für variante="text" */
+  text?: string;
 }
 
-const { id, ziel = 'aktion', variante = ziel === 'demo' ? 'hell' : 'primaer' } = Astro.props;
+const { id, ziel = 'aktion', variante = ziel === 'demo' ? 'hell' : 'primaer', text } = Astro.props;
 const angebot = angebotNachId(id);
 const aktion = ziel === 'demo' ? { typ: 'demo', ...angebot.demo! } : aktuelleAktion(angebot);
 if (ziel === 'demo' && !angebot.demo) throw new Error(`Angebot ${id} hat keine Demo`);
 ---
 
+{variante === 'text' ? (
+  <a class="textlink" href={aktion.url} data-angebot={id} data-aktion={aktion.typ}>
+    {text ?? aktion.label}<span class="nur-screenreader">: {angebot.name}</span>
+  </a>
+) : (
 <a
   class:list={['button', { 'button--hell': variante === 'hell' }]}
   href={aktion.url}
@@ -28,3 +36,4 @@ if (ziel === 'demo' && !angebot.demo) throw new Error(`Angebot ${id} hat keine D
   {aktion.label}<span class="nur-screenreader">: {angebot.name}</span>
   <span class="button__pfeil" aria-hidden="true">→</span>
 </a>
+)}

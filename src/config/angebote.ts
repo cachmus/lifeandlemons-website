@@ -79,6 +79,11 @@ export type Angebot = {
   aktion: Aktion;
   /** Ziel, sobald das Angebot pausiert (nach Buchungsschluss oder ausgebucht) */
   aktionPausiert?: Aktion;
+  /**
+   * Ein Satz unter dem Preis, der ihn einordnet (Audit heycatch, D4.3 und D4.4). Erscheint überall, wo der Preis steht.
+   * Nur Aussagen, die Christine bestätigt hat.
+   */
+  preisAnker?: string;
   /** Kostenlose Demo, als zweiter Button über `<AngebotButton id="…" ziel="demo" />` */
   demo?: { url: string; label: string };
   /** Satz, der bei pausiertem Angebot erscheint */
@@ -252,6 +257,9 @@ export const angebote: Angebot[] = [
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
+    // Nach dem Audit (heycatch, 19.11.2026). Christine, 19.11.2026: Schon eine einzelne Sitzung kostet teilweise mehr als 119 €.
+    // Wortlaut gewählt von Christine, 19.11.2026
+    preisAnker: 'Eine einzelne Coaching-Sitzung kostet oft schon mehr als das komplette Programm in Try a Life.',
     ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',
