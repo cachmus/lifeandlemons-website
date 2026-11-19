@@ -60,7 +60,9 @@ Fang mit dem Blick zurück an. Er zeigt dir, worauf du im nächsten Jahr aufbaue
 
 Jetzt schaust du zwölf Monate nach vorn.
 
-**Wie sieht ein ganz normaler Tag in zwölf Monaten aus?** Stell dir vor, es ist ein Dienstag in einem Jahr, und du bist zufrieden damit, wie du lebst. Wo wachst du auf? Mit wem frühstückst du? Was machst du am Nachmittag? Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, desto greifbarer wird das, worauf du zugehst.
+**Wie sieht ein ganz normaler Tag in zwölf Monaten aus?** Stell dir vor, es ist ein Dienstag in einem Jahr, und du bist zufrieden damit, wie du lebst. Wo wachst du auf? Mit wem frühstückst du? Was machst du am Nachmittag?
+
+Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, desto greifbarer wird das, worauf du zugehst.
 
 **Wie willst du dich die meiste Zeit fühlen?** Wähle drei Wörter und schreib zu jedem auf, woran du im Alltag merkst, dass das Gefühl da ist. Daran kannst du später Entscheidungen und Termine messen.
 
