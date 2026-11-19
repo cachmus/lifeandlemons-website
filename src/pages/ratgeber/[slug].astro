@@ -50,7 +50,7 @@ const bild = aufmacher[slug!];
           <h1 class="m-titel akopf__titel">{a.titel}</h1>
           <p class="akopf__beschreibung m-gedaempft">{a.beschreibung}</p>
           <p class="akopf__meta m-gedaempft">
-            Von <a href={seiten.ueberMich}>{site.inhaberin}</a>{` · ${a.aktualisiert ? 'Aktualisiert' : 'Veröffentlicht'} am ${datum} · ${a.lesezeit} Minuten Lesezeit`}
+            Von <a href={seiten.ueberMich} rel="author">{site.inhaberin}</a>{` · ${a.aktualisiert ? 'Aktualisiert' : 'Veröffentlicht'} am ${datum} · ${a.lesezeit} Minuten Lesezeit`}
           </p>
         </div>
         {
@@ -110,7 +110,7 @@ const bild = aufmacher[slug!];
               Pädagogische Psychologie studiert. Die Übungen, über die ich schreibe, stützen sich auf psychologische Forschung, und ich habe
               sie zuerst an mir selbst ausprobiert.
             </p>
-            <a class="textlink" href={seiten.ueberMich}>Mehr über mich</a>
+            <a class="textlink" href={seiten.ueberMich} rel="author">Mehr über mich und meine Artikel</a>
           </div>
         </div>
 

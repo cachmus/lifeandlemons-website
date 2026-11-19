@@ -134,6 +134,22 @@ export function tryALifeDaten(bild?: string): Knoten {
   };
 }
 
+/**
+ * Über mich als Profilseite der Autorin (Audit geo-audit a_author_page, 19.11.2026): ProfilePage mit der Person
+ * und den Artikeln, die sie geschrieben hat.
+ */
+export function profilseiteDaten(artikel: { titel: string; pfad: string }[]): Knoten {
+  return {
+    '@type': 'ProfilePage',
+    '@id': adresse(`${seiten.ueberMich}#profil`),
+    url: adresse(seiten.ueberMich),
+    name: `${site.inhaberin}, ${site.rolle}`,
+    inLanguage: 'de-DE',
+    mainEntity: { '@id': ids.person },
+    hasPart: artikel.map((a) => ({ '@type': 'BlogPosting', headline: a.titel, url: adresse(a.pfad), author: { '@id': ids.person } })),
+  };
+}
+
 /** Ratgeberartikel mit Brotkrumen und, falls vorhanden, Fragen und Antworten (Seiten /ratgeber/<slug>/). */
 export function artikelDaten(a: {
   titel: string;
