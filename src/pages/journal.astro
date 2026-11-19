@@ -14,7 +14,7 @@ import FesterKnopf from '../components/FesterKnopf.astro';
 import Polaroid from '../components/Polaroid.astro';
 import JournalFormular from '../components/JournalFormular.astro';
 import { seiten } from '../config/site';
-import { journalDaten, faqDaten } from '../config/strukturierteDaten';
+import { journalDaten, faqDaten, ids } from '../config/strukturierteDaten';
 import cover from '../assets/journal-cover.jpg';
 import portraet from '../assets/portraet-christine-4x5.jpg';
 // Ausschnitte der echten Journalseiten (aus public/downloads/jahresabschluss-journal-druck.pdf, Seiten 5, 8, 10, 12, 13, 14; 16.11.2026)
@@ -74,6 +74,7 @@ const teile = [
   markeImTitel={false}
   description="Kostenloses Journal für deinen persönlichen Jahresrückblick: Finde heraus, was dir im neuen Jahr wichtig ist, und plane einen ersten Schritt. PDF, 17 Seiten."
   daten={[journalDaten(cover.src), faqDaten(fragen)]}
+  seite={{ felder: { mainEntity: { '@id': ids.journal } } }}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">

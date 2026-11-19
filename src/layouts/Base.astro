@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { site, seiten, hauptnavigation, fussnavigation, messung, inDerSuche, aktuellerKopfKnopf } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import { pruefeAngebote } from '../config/angebote';
-import { grunddaten } from '../config/strukturierteDaten';
+import { seitenDaten, type SeitenAngaben, grunddaten } from '../config/strukturierteDaten';
 import BewertungsHinweis from '../components/BewertungsHinweis.astro';
 import Logo from '../components/Logo.astro';
 import Einwilligung from '../components/Einwilligung.astro';
@@ -33,9 +33,11 @@ interface Props {
    * (Audit geo-audit c_title_h1_match). Auf der Startseite wird nie etwas angehängt.
    */
   markeImTitel?: boolean;
+  /** Art der Seite für die strukturierten Daten, z. B. ProfilePage, mit zusätzlichen Angaben (Audit g_structured_data) */
+  seite?: SeitenAngaben;
 }
 
-const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website', ogBild, markeImTitel = true } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website', ogBild, markeImTitel = true, seite } = Astro.props;
 const vorschau = ogBild ?? { pfad: '/marke/og-bild.png', alt: 'Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“' };
 const istStart = Astro.url.pathname === '/';
 const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
@@ -53,7 +55,9 @@ const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.ur
 const indexieren = site.indexierbar && !noindex && inDerSuche(pfad);
 const robots = indexieren ? 'index, follow' : 'noindex, nofollow';
 // Strukturierte Daten nur auf Seiten, die in der Suche erscheinen sollen
-const jsonLd = indexieren ? JSON.stringify({ '@context': 'https://schema.org', '@graph': [...grunddaten(), ...daten] }) : null;
+// Jede indexierte Seite beschreibt sich selbst (WebPage o. ä.); Ratgeberartikel bringen dafür BlogPosting mit
+const seitenKnoten = ogTyp === 'article' ? [] : [seitenDaten({ url: canonical, titel: seitentitel, beschreibung: description, bild: vorschau.pfad, seite })];
+const jsonLd = indexieren ? JSON.stringify({ '@context': 'https://schema.org', '@graph': [...seitenKnoten, ...grunddaten(), ...daten] }) : null;
 
 // Fehlende Digistore24-Adressen blockieren den Livegang nicht mehr (entschieden 30.10.2026).
 // Bis zur Freigabe führen die Buttons zur Bestellung oder Anfrage per E-Mail; pruefeAngebote() meldet das im Build-Protokoll.

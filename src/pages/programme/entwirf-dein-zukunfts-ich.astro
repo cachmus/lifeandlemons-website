@@ -15,7 +15,7 @@ import FesterKnopf from '../../components/FesterKnopf.astro';
 import BlickInsBuch from '../../components/BlickInsBuch.astro';
 import { seiten } from '../../config/site';
 import { einfuehrungAktiv, formatDatum, STICHTAGE } from '../../config/angebote';
-import { kursbuchDaten } from '../../config/strukturierteDaten';
+import { kursbuchDaten, ids } from '../../config/strukturierteDaten';
 
 const teile = [
   {
@@ -94,6 +94,7 @@ const fragen = [
   title="Entwirf dein Zukunfts-Ich: Workbook und App"
   description="In neun Einheiten entwirfst du drei mögliche Versionen deiner Zukunft und testest deine Richtung im Alltag. Als gedrucktes Workbook oder als App Try a Life."
   daten={[kursbuchDaten(umschlag.src)]}
+  seite={{ felder: { mainEntity: { '@id': ids.kursbuch } } }}
 >
   <!-- Einstieg -->
   <section class="kopf-abschnitt">

@@ -11,7 +11,7 @@ import PhaseZeichen from '../components/PhaseZeichen.astro';
 import { phasen } from '../config/methode';
 import { site, seiten } from '../config/site';
 import { artikel, artikelPfad } from '../config/ratgeber';
-import { profilseiteDaten } from '../config/strukturierteDaten';
+import { profilseite } from '../config/strukturierteDaten';
 import zweitesFoto from '../assets/portraet-christine-4x5.jpg';
 
 const weg = [
@@ -40,7 +40,7 @@ const weg = [
   dunklerSchluss
   title={`${site.inhaberin}, ${site.rolle}`}
   description={`Ich bin ${site.inhaberin}, ${site.rolle} in ${site.ort.stadt}. Hier erzähle ich, wie ich meine Methode an mir selbst erprobt habe und was ich mitbringe.`}
-  daten={[profilseiteDaten(artikel.map((a) => ({ titel: a.titel, pfad: artikelPfad(a.slug) })))]}
+  seite={profilseite(artikel.map((a) => ({ titel: a.titel, pfad: artikelPfad(a.slug) })))}
 >
   <section class="kopf-abschnitt">
     <div class="container zwei-spalten kopf-abschnitt__innen">

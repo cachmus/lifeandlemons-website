@@ -15,6 +15,7 @@ export const ids = {
   person: adresse(`${seiten.ueberMich}#christine`),
   kursbuch: adresse(`${seiten.modul1}#kursbuch`),
   tryALife: adresse(`${seiten.tryALife}#app`),
+  journal: adresse(`${seiten.journal}#journal`),
 };
 
 /**
@@ -134,19 +135,43 @@ export function tryALifeDaten(bild?: string): Knoten {
   };
 }
 
+/** Art der Seite und zusätzliche Angaben für den Seitenknoten (Base.astro, Prop `seite`) */
+export type SeitenAngaben = { typ?: 'WebPage' | 'ProfilePage' | 'CollectionPage' | 'AboutPage'; felder?: Knoten };
+
+/**
+ * Die Seite selbst (Audit geo-audit g_structured_data, 19.11.2026): erscheint auf jeder indexierten Seite außer
+ * Ratgeberartikeln (die haben BlogPosting). Wird in Base.astro aus denselben Werten wie <title>, Beschreibung,
+ * Canonical und Vorschaubild erzeugt, nie als feste Kopie.
+ */
+export function seitenDaten(a: { url: string; titel: string; beschreibung: string; bild: string; seite?: SeitenAngaben }): Knoten {
+  return {
+    '@type': a.seite?.typ ?? 'WebPage',
+    '@id': `${a.url}#seite`,
+    url: a.url,
+    name: a.titel,
+    headline: a.titel,
+    description: a.beschreibung,
+    inLanguage: 'de-DE',
+    mainEntityOfPage: a.url,
+    image: adresse(a.bild),
+    primaryImageOfPage: { '@type': 'ImageObject', url: adresse(a.bild) },
+    isPartOf: { '@id': ids.website },
+    publisher: { '@id': ids.organisation },
+    ...a.seite?.felder,
+  };
+}
+
 /**
  * Über mich als Profilseite der Autorin (Audit geo-audit a_author_page, 19.11.2026): ProfilePage mit der Person
- * und den Artikeln, die sie geschrieben hat.
+ * und den Artikeln, die sie geschrieben hat. Wird als `seite` an Base.astro übergeben.
  */
-export function profilseiteDaten(artikel: { titel: string; pfad: string }[]): Knoten {
+export function profilseite(artikel: { titel: string; pfad: string }[]): SeitenAngaben {
   return {
-    '@type': 'ProfilePage',
-    '@id': adresse(`${seiten.ueberMich}#profil`),
-    url: adresse(seiten.ueberMich),
-    name: `${site.inhaberin}, ${site.rolle}`,
-    inLanguage: 'de-DE',
-    mainEntity: { '@id': ids.person },
-    hasPart: artikel.map((a) => ({ '@type': 'BlogPosting', headline: a.titel, url: adresse(a.pfad), author: { '@id': ids.person } })),
+    typ: 'ProfilePage',
+    felder: {
+      mainEntity: { '@id': ids.person },
+      hasPart: artikel.map((a) => ({ '@type': 'BlogPosting', headline: a.titel, url: adresse(a.pfad), author: { '@id': ids.person } })),
+    },
   };
 }
 
@@ -200,7 +225,7 @@ export function journalDaten(cover: string): Knoten {
   return {
     // Dokument und Produkt zugleich, mit kostenlosem Angebot (D5.5)
     '@type': ['DigitalDocument', 'Product'],
-    '@id': adresse(`${seiten.journal}#journal`),
+    '@id': ids.journal,
     name: 'Wer will ich in 12 Monaten sein? Das Jahresabschluss-Journal',
     description:
       'Journal für deinen persönlichen Jahresrückblick mit Ausblick: Rückblick, Who-to-be-Liste, Rückwärtsplanung, Wenn-dann-Pläne und ein erster Schritt. 17 Seiten als PDF.',

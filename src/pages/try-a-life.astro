@@ -20,7 +20,7 @@ import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import BlickInsSpiel from '../components/BlickInsSpiel.astro';
 import Stimmen from '../components/Stimmen.astro';
-import { tryALifeDaten } from '../config/strukturierteDaten';
+import { tryALifeDaten, ids } from '../config/strukturierteDaten';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
 
@@ -67,6 +67,7 @@ const umfang = [
     alt: 'Aquarell eines Tals mit Wegweiser, Steinmännchen, Rucksack und Buch am Weg, dahinter Dorf und Steinbrücke, darüber der Schriftzug Try a Life',
   }}
   daten={[tryALifeDaten()]}
+  seite={{ felder: { mainEntity: { '@id': ids.tryALife } } }}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
