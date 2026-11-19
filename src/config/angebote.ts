@@ -258,7 +258,8 @@ export const angebote: Angebot[] = [
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
     // Nach dem Audit (heycatch, 19.11.2026). Christine, 19.11.2026: Schon eine einzelne Sitzung kostet teilweise mehr als 119 €.
-    preisAnker: 'Kostet etwa so viel wie eine einzelne Coaching-Sitzung und enthält das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
+    // Wortlaut gewählt von Christine, 19.11.2026
+    preisAnker: 'Eine einzelne Coaching-Sitzung kostet oft schon mehr. Hier bekommst du das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
     ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',
