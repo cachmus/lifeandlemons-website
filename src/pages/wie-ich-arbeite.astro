@@ -95,7 +95,7 @@ const grundlagen = [
           phasen.map((p, i) => (
             <li class:list={['phase', { 'phase--modul2': i === 6 }]} data-erscheinen>
               <div class="phase__zeichen" aria-hidden="true">
-                <PhaseZeichen symbol={p.symbol} klasse="phase__bild" />
+                <PhaseZeichen symbol={p.symbol} alt={p.symbolAlt} klasse="phase__bild" />
                 <span class="phase__nr">{i + 1}</span>
               </div>
               <div class="phase__inhalt">
