@@ -31,11 +31,11 @@ Wenn du dein Leben neu ausrichten willst, stellt sich schnell die Frage, womit d
 
 Damit du weißt, woher der Vergleich kommt: Journal, App und Workbook sind meine eigenen Angebote.
 
-## Worauf es beim Vergleich ankommt
+## Worauf kommt es beim Vergleich an?
 
-Ideen hast du vermutlich genug. Schwierig wird es im Alltag. Spätestens nach drei Wochen holt uns oft die Routine zurück, und die alten Gewohnheiten klopfen wieder an. Ein Bild davon, wer du sein willst, bringt dich vor allem dann ins Handeln, wenn konkrete Schritte dazugehören. Das hat die Psychologin Daphna Oyserman [in einer Studie gezeigt](https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf).
+Auf zwei Dinge: wie viel Führung du brauchst, um dranzubleiben, und ob du deinen Entwurf im echten Leben testest. Ideen hast du vermutlich genug. Schwierig wird es im Alltag. Spätestens nach drei Wochen holt uns oft die Routine zurück, und die alten Gewohnheiten klopfen wieder an.
 
-Deshalb lohnt es sich, zwei Fragen zu stellen. Wie viel Führung brauchst du, um dranzubleiben? Und testest du deinen Entwurf im echten Leben, oder bleibt er auf dem Papier?
+Ein Bild davon, wer du sein willst, bringt dich vor allem dann ins Handeln, wenn konkrete Schritte dazugehören. Das hat die Psychologin Daphna Oyserman [in einer Studie gezeigt](https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf).
 
 ## Das Journal: Bilanz ziehen und einen ersten Schritt planen
 
@@ -51,19 +51,19 @@ Das Workbook ist gedruckt und hat 184 Seiten. Du arbeitest mit Stift und Papier 
 
 Try a Life ist eine App im Format eines Cozy Games. Sie läuft in deinem Browser, führt dich Schritt für Schritt und zeigt dir deinen Fortschritt. Du hast ein Jahr Zugang.
 
-## Warum die App mehr kostet als das Workbook
+## Warum kostet die App mehr als das Workbook?
 
-Mit dem Workbook gibst du dir den Rhythmus selbst vor. Die App führt dich Schritt für Schritt durch das Programm und zeigt dir, wie weit du bist. Wenn du das Programm abgeschlossen und dich für einen Entwurf entschieden hast, begleitet sie dich weiter: Du trägst deine Meilensteine in deinen Kalender ein, hakst ab, was du erreicht hast, und hältst rund alle vier Wochen fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist. Diese Begleitung über Monate gibt es im Workbook nicht.
+Weil die App einen Teil der Führung übernimmt, die du dir mit dem Workbook selbst gibst. Sie führt dich Schritt für Schritt durch das Programm und zeigt dir, wie weit du bist. Wenn du das Programm abgeschlossen und dich für einen Entwurf entschieden hast, begleitet sie dich weiter: Du trägst deine Meilensteine in deinen Kalender ein, hakst ab, was du erreicht hast, und hältst rund alle vier Wochen fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist. Diese Begleitung über Monate gibt es im Workbook nicht.
 
-## Einzelcoaching: wenn du persönliche Rückmeldung brauchst
+## Wann lohnt sich ein Einzelcoaching?
 
-In einem Einzelcoaching arbeitet eine Coachin oder ein Coach mit dir an deiner Situation, vor Ort oder online. Du bekommst Rückmeldung auf deine Gedanken, und das Vorgehen passt sich deiner Lage an. Abgerechnet wird meist pro Sitzung, und für eine Neuorientierung brauchst du in der Regel mehrere Sitzungen.
+Ein Einzelcoaching lohnt sich, wenn deine Lage sehr verzweigt ist, wenn du allein schon oft abgebrochen hast oder wenn du gezielte Rückmeldung auf deine Situation möchtest. Eine Coachin oder ein Coach arbeitet dann mit dir an deiner Situation, vor Ort oder online, und das Vorgehen passt sich deiner Lage an. Abgerechnet wird meist pro Sitzung, und für eine Neuorientierung brauchst du in der Regel mehrere Sitzungen.
 
-Ein Coaching lohnt sich besonders, wenn deine Lage sehr verzweigt ist, wenn du allein schon oft abgebrochen hast oder wenn du gezielte Rückmeldung auf deine Situation möchtest. Frag bei der Auswahl nach, wie dein Weg im Alltag erprobt wird, bevor du große Entscheidungen triffst.
+Frag bei der Auswahl nach, wie dein Weg im Alltag erprobt wird, bevor du große Entscheidungen triffst.
 
 Geht es dir seit Wochen schlecht, wende dich bitte an deine Hausärztin oder deinen Hausarzt oder an eine Psychotherapeutin oder einen Psychotherapeuten. Weder Coaching noch Selbstcoaching ersetzen eine Therapie.
 
-## Womit du anfangen kannst
+## Womit fängst du am besten an?
 
 Wenn du noch unsicher bist, fang mit dem kostenlosen Journal an. Es zeigt dir in rund 90 Minuten, wo du stehst und was du dir für das nächste Jahr vornehmen willst.
 
