@@ -35,6 +35,10 @@ const vorschau = ogBild ?? { pfad: '/marke/og-bild.png', alt: 'Logo von Life&Lem
 const istStart = Astro.url.pathname === '/';
 const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
 const seitentitel = istStart ? title : `${title} · ${site.name}`;
+// Seitentitel 30 bis 60 Zeichen (Audit geo-audit c_title, 19.11.2026): zu kurz sagt nichts, zu lang wird abgeschnitten
+if ((seitentitel.length < 30 || seitentitel.length > 60) && !noindex && inDerSuche(Astro.url.pathname)) {
+  console.warn(`\n[Seitentitel] ${Astro.url.pathname}: ${seitentitel.length} Zeichen („${seitentitel}“), erlaubt sind 30 bis 60.`);
+}
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const pfad = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const indexieren = site.indexierbar && !noindex && inDerSuche(pfad);

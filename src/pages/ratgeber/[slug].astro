@@ -10,7 +10,7 @@ import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import FormateVergleich from '../../components/FormateVergleich.astro';
 import { site, seiten } from '../../config/site';
-import { artikelModule, artikel, artikelPfad, themen, aufmacher } from '../../config/ratgeber';
+import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
 // Aquarell-Porträt nach Christines Foto (von Christine erstellt und freigegeben, 16.11.2026)
 import portraet from '../../assets/portraet-christine-aquarell.jpg';
@@ -32,7 +32,7 @@ const bild = aufmacher[slug!];
 ---
 
 <Base
-  title={a.titel}
+  title={seitentitelVon(a)}
   description={a.beschreibung}
   ogTyp="article"
   dunklerSchluss
