@@ -37,8 +37,8 @@ function angebotKnoten(a: Angebot, url: string): Knoten | null {
 
 type Knoten = Record<string, unknown>;
 
-/** Öffentliche Profile für sameAs; LinkedIn erst, wenn in site.ts eingetragen */
-const profile = () => [site.instagram.url, ...(site.linkedin ? [site.linkedin] : [])];
+/** Öffentliche Profile für sameAs; LinkedIn und weitere Profile erst, wenn in site.ts eingetragen (Audit a_sameas) */
+const profile = () => [site.instagram.url, ...(site.linkedin ? [site.linkedin] : []), ...site.weitereProfile.filter((u) => /^https:\/\//.test(u))];
 
 /**
  * Das Unternehmen Life&Lemons (Organization). Steht als eigener Block im gemeinsamen Kopf jeder Seite (Base.astro),
