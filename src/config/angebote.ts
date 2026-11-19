@@ -257,8 +257,8 @@ export const angebote: Angebot[] = [
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
-    // VORSCHLAG aus dem Audit (heycatch, 19.11.2026), von Christine zu bestätigen: Vergleich mit Einzel-Coaching-Sitzungen
-    preisAnker: 'Kostet weniger als zwei Einzel-Coaching-Sitzungen und enthält das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
+    // Nach dem Audit (heycatch, 19.11.2026). Christine, 19.11.2026: Schon eine einzelne Sitzung kostet teilweise mehr als 119 €.
+    preisAnker: 'Kostet etwa so viel wie eine einzelne Coaching-Sitzung und enthält das komplette Programm für 4 bis 6 Wochen, in deinem Tempo.',
     ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',
