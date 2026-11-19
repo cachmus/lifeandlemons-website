@@ -74,7 +74,7 @@ Schreib in der Ich-Form und so genau wie möglich. Je konkreter dein Bild wird, 
 
 Ein Vorsatz sammelt Dinge, die du tun willst. Wenn eines davon im vollen Alltag ausfällt, fühlt sich schnell der ganze Vorsatz erledigt an. Ein Satz wie „Ich bin jemand, der …“ zählt, was du an den meisten Tagen tust. Ein verpatzter Abend ändert daran nichts.
 
-Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat gezeigt, dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
+Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstellungen davon, wer wir werden könnten, unser Handeln lenken. Daphna Oyserman hat [in einer Studie gezeigt](https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf), dass solche Bilder vor allem dann ins Handeln bringen, wenn ein konkreter nächster Schritt dazugehört. Genau darum geht es im letzten Teil.
 
 ![Journalseite „Mein Kompass für das neue Jahr“ mit Feldern für Werte, Lebensgefühl und drei Sätze, wer du sein willst](../assets/journal-seiten/05-kompass.jpg)
 
@@ -82,7 +82,7 @@ Die Psychologinnen Hazel Markus und Paula Nurius beschreiben, wie unsere Vorstel
 
 ## Vom Bild zum ersten Schritt
 
-Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in ihrer Forschung gezeigt, dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
+Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat [in ihrer Forschung gezeigt](https://www.psy.uni-hamburg.de/arbeitsbereiche/paedagogische-psychologie-und-motivation/personen/oettingen-gabriele/dokumente/oettingen-mayer-2002.pdf), dass reines Ausmalen das Handeln eher bremst. Es hilft, das Ziel mit den Hindernissen zu verbinden, die dir voraussichtlich begegnen.
 
 **Plan rückwärts.** Dein Tag in zwölf Monaten ist das Ziel. Was muss in neun Monaten stehen, was in sechs, was in drei? Plane großzügiger, als es sich im ersten Moment anfühlt. Fast alles dauert länger als gedacht.
 
@@ -90,7 +90,7 @@ Ein schönes Bild allein reicht nicht. Die Psychologin Gabriele Oettingen hat in
 
 *Die Rückwärtsplanung im Journal: von deinem Bild in 12 Monaten bis zu den nächsten vier Wochen.*
 
-**Rechne mit Hindernissen.** Schreib zu jedem Bereich, in dem sich etwas bewegen soll, ein äußeres Hindernis auf, etwa volle Wochen oder Schulferien. Und ein inneres, etwa einen Gedanken oder eine Gewohnheit, die dich bremst. Formuliere dann einen Wenn-dann-Plan: „Wenn ich nach 21 Uhr noch Mails lese, dann lege ich das Handy in den Flur.“ Solche Pläne helfen nachweislich, Vorhaben umzusetzen, das zeigt eine Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran.
+**Rechne mit Hindernissen.** Schreib zu jedem Bereich, in dem sich etwas bewegen soll, ein äußeres Hindernis auf, etwa volle Wochen oder Schulferien. Und ein inneres, etwa einen Gedanken oder eine Gewohnheit, die dich bremst. Formuliere dann einen Wenn-dann-Plan: „Wenn ich nach 21 Uhr noch Mails lese, dann lege ich das Handy in den Flur.“ Solche Pläne helfen nachweislich, Vorhaben umzusetzen, das zeigt eine [Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran](https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f).
 
 **Leg deinen ersten Schritt fest.** Wähle einen Schritt, der höchstens 30 Minuten dauert, und mach ihn in den nächsten 72 Stunden. Klein ist dabei Absicht. Du merkst: Ich habe getan, was ich mir vorgenommen habe. Der nächste Schritt darf dann größer werden.
 

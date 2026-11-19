@@ -1,6 +1,6 @@
 ---
 # Entwurf vom 19.11.2026 nach dem Audit von heycatch (D5.3, D1.4), Freigabe durch Christine offen.
-# Quellen: src/config/angebote.ts, Seiten Try a Life, Modul 1 und Journal, Kasten „Was meine Arbeit nicht ist“ auf „Wie ich arbeite“.
+# Quellen: src/config/angebote.ts, Studien wie im Text verlinkt (ergänzt 19.11.2026, Audit geo-audit a_external_sources), Seiten Try a Life, Modul 1 und Journal, Kasten „Was meine Arbeit nicht ist“ auf „Wie ich arbeite“.
 # Die Tabelle (Komponente FormateVergleich) liest Preise und Umfang aus angebote.ts. Im Text stehen deshalb keine Preise.
 titel: 'Selbstcoaching im Vergleich: Journal, Workbook, App und Einzelcoaching'
 kurztitel: 'Selbstcoaching im Vergleich'
@@ -33,7 +33,7 @@ Damit du weißt, woher der Vergleich kommt: Journal, App und Workbook sind meine
 
 ## Worauf es beim Vergleich ankommt
 
-Ideen hast du vermutlich genug. Schwierig wird es im Alltag. Spätestens nach drei Wochen holt uns oft die Routine zurück, und die alten Gewohnheiten klopfen wieder an.
+Ideen hast du vermutlich genug. Schwierig wird es im Alltag. Spätestens nach drei Wochen holt uns oft die Routine zurück, und die alten Gewohnheiten klopfen wieder an. Ein Bild davon, wer du sein willst, bringt dich vor allem dann ins Handeln, wenn konkrete Schritte dazugehören. Das hat die Psychologin Daphna Oyserman [in einer Studie gezeigt](https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf).
 
 Deshalb lohnt es sich, zwei Fragen zu stellen. Wie viel Führung brauchst du, um dranzubleiben? Und testest du deinen Entwurf im echten Leben, oder bleibt er auf dem Papier?
 
@@ -45,7 +45,7 @@ Für einen neuen Lebensentwurf reicht das meist nicht. Dafür brauchst du mehrer
 
 ## Workbook und App: das komplette Programm zum Selbstlernen
 
-Das Workbook „Entwirf dein Zukunfts-Ich“ und die App Try a Life führen dich durch dieselbe Methode. Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen. Den Entwurf, der dich am meisten anzieht, testest du mit kleinen Schritten im echten Leben. Zum Schluss prüfst du deine Richtung in einer Probezeit.
+Das Workbook „Entwirf dein Zukunfts-Ich“ und die App Try a Life führen dich durch dieselbe Methode. Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen. Die Idee, mehrere Lebensentwürfe zu vergleichen und im Kleinen zu testen, geht auf das Life Design von [Bill Burnett und Dave Evans](https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans) an der Stanford University zurück. Den Entwurf, der dich am meisten anzieht, testest du mit kleinen Schritten im echten Leben. Zum Schluss prüfst du deine Richtung in einer Probezeit.
 
 Das Workbook ist gedruckt und hat 184 Seiten. Du arbeitest mit Stift und Papier und richtest dir deine Zeiten selbst ein.
 
