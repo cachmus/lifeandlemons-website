@@ -28,13 +28,18 @@ interface Props {
   ogTyp?: 'website' | 'article';
   /** Eigenes Vorschaubild beim Teilen (1200 × 630, Pfad unter public), sonst das Bild der Marke */
   ogBild?: { pfad: string; alt: string };
+  /**
+   * false: Titel ohne „ · Life&Lemons“, wenn die Hauptaussage der H1 sonst nicht in 60 Zeichen passt
+   * (Audit geo-audit c_title_h1_match). Auf der Startseite wird nie etwas angehängt.
+   */
+  markeImTitel?: boolean;
 }
 
-const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website', ogBild } = Astro.props;
+const { title, description, noindex = false, dunklerSchluss = false, ohneKaufbutton = false, daten = [], ogTyp = 'website', ogBild, markeImTitel = true } = Astro.props;
 const vorschau = ogBild ?? { pfad: '/marke/og-bild.png', alt: 'Logo von Life&Lemons mit dem Slogan „Sei, wer du werden willst.“' };
 const istStart = Astro.url.pathname === '/';
 const knopf = aktuellerKopfKnopf(angebotNachId('try-a-life').status === 'verfuegbar');
-const seitentitel = istStart ? title : `${title} · ${site.name}`;
+const seitentitel = istStart || !markeImTitel ? title : `${title} · ${site.name}`;
 // Seitentitel 30 bis 60 Zeichen (Audit geo-audit c_title, 19.11.2026): zu kurz sagt nichts, zu lang wird abgeschnitten
 if ((seitentitel.length < 30 || seitentitel.length > 60) && !noindex && inDerSuche(Astro.url.pathname)) {
   console.warn(`\n[Seitentitel] ${Astro.url.pathname}: ${seitentitel.length} Zeichen („${seitentitel}“), erlaubt sind 30 bis 60.`);
