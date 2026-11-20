@@ -148,7 +148,7 @@ export const angebote: Angebot[] = [
     fuerDich: 'du gern allein und in deinem eigenen Tempo arbeitest.',
     passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
     passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
-    andererWeg: 'Wenn du es besonders mobil und spielerisch magst, empfehle ich dir die App Try a Life.',
+    andererWeg: 'Wenn du es besonders mobil und spielerisch bevorzugst, empfehle ich dir Try a Life in der App.',
     enthaelt: 'das gedruckte Workbook mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
     preisEinfuehrung: 49,
     // OFFEN: regulärer Preis ab 08.12.2026 (Projektstatus V2 nennt keinen Wert)
