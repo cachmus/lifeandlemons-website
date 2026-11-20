@@ -22,7 +22,7 @@ export const GET: APIRoute = () => {
   const zeilen = [
     `# ${site.name}`,
     '',
-    `> Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, ${site.rolle}, in ${site.ort.stadt} und online. Mit ihrer Methode entwirfst du drei völlig unterschiedliche Leben und testest im Alltag, welcher Weg zu dir passt.`,
+    `> Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, ${site.rolle}, mit App und Workbook zum Selbstlernen. Mit ihrer Methode entwirfst du drei völlig unterschiedliche Leben und testest im Alltag, welcher Weg zu dir passt.`,
     '',
     'Alle Angebote sind auf Deutsch. Sie dienen der Selbstreflexion und ersetzen keine Psychotherapie.',
     '',
