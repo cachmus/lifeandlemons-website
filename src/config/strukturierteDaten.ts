@@ -84,7 +84,7 @@ export function organisationDaten(): Knoten {
     name: site.name,
     alternateName: ['Life and Lemons', site.firmierung],
     slogan: site.slogan,
-    description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, in ${site.ort.stadt} und online.`,
+    description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, mit App und Workbook zum Selbstlernen.`,
     url: adresse('/'),
     logo: adresse('/apple-touch-icon.png'),
     image: adresse('/marke/og-bild.png'),
