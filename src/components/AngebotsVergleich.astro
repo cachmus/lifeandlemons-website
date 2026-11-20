@@ -53,7 +53,7 @@ const tryPreis = aktuellerPreis(tryALife);
       <div><dt>Preis</dt><dd>{tryPreis ? formatEuro(tryPreis.betrag) : tryALifeAnkuendigung.status}{tryPreis && <span class="weg__klein"> {preisHinweis(tryALife)}</span>}</dd></div>
       <div><dt>Format</dt><dd>App zum Selbstlernen</dd></div>
       <div><dt>Programm</dt><dd>4 bis 6 Wochen</dd></div>
-      <div><dt>Danach</dt><dd>Momentaufnahme und Nachverfolgung deiner Meilensteine, 1 Jahr Zugang</dd></div>
+      <div><dt>Danach</dt><dd>Monatliche Momentaufnahme und Nachverfolgung deiner Meilensteine, 1 Jahr Zugang</dd></div>
     </dl>
     {tryPreis && tryALife.preisAnker && <p class="weg__anker">{tryALife.preisAnker}</p>}
     {tryALife.andererWeg && <p class="weg__anderer">{tryALife.andererWeg}</p>}

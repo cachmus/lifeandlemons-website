@@ -148,7 +148,7 @@ export const angebote: Angebot[] = [
     fuerDich: 'du gern allein und in deinem eigenen Tempo arbeitest.',
     passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
     passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
-    andererWeg: 'Wenn du dir Führung Schritt für Schritt wünschst, empfehle ich dir Try a Life.',
+    andererWeg: 'Wenn du es besonders mobil und spielerisch magst, empfehle ich dir die App Try a Life.',
     enthaelt: 'das gedruckte Workbook mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
     preisEinfuehrung: 49,
     // OFFEN: regulärer Preis ab 08.12.2026 (Projektstatus V2 nennt keinen Wert)
@@ -258,7 +258,7 @@ export const angebote: Angebot[] = [
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
     // Sobald das digitale Workbook als Druck-PDF erhältlich ist, hier ergänzen (To-dos Abschnitt 12)
     andererWeg: 'Wenn du lieber mit Stift und Papier arbeitest, empfehle ich dir das Workbook.',
-    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen, Momentaufnahmen und der Nachverfolgung deiner Meilensteine nach dem Programm und einem Jahr Zugang.',
+    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen, monatlichen Momentaufnahmen und der Nachverfolgung deiner Meilensteine nach dem Programm und einem Jahr Zugang.',
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
