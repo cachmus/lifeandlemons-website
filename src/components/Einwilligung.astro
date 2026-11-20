@@ -1,7 +1,9 @@
 ---
 /**
- * Hinweis zur Einwilligung in die Leistungsmessung von Netlify. Einstellungen: `messung` in src/config/site.ts.
- * Die eigentliche Sperre steht im <head> von Base.astro; dieser Baustein fragt nur und speichert die Entscheidung.
+ * Hinweis zur Einwilligung in die Messung: Nutzung mit HeyCatch und Ladezeiten mit Netlify (seit 20.11.2026 gemeinsam).
+ * Einstellungen: `messung` in src/config/site.ts. Die Sperre für Netlify steht im <head> von Base.astro, die für HeyCatch
+ * in src/scripts/analytics.ts; dieser Baustein fragt, speichert die Entscheidung und schaltet HeyCatch sofort an oder aus.
+ * Wortlaut fachlich zu prüfen.
  * Erneut öffnen lässt sich der Hinweis über jedes Element mit `data-einwilligung-oeffnen` (Footer, Datenschutz).
  */
 import { seiten } from '../config/site';
@@ -10,10 +12,11 @@ import { seiten } from '../config/site';
 <section class="einwilligung" aria-labelledby="einwilligung-titel" data-einwilligung hidden>
   <div class="container einwilligung__innen">
     <div class="einwilligung__text">
-      <p id="einwilligung-titel" class="einwilligung__titel">Darf Netlify messen, wie schnell diese Seite lädt?</p>
+      <p id="einwilligung-titel" class="einwilligung__titel">Darf ich messen, wie diese Website genutzt wird?</p>
       <p>
-        Dann schickt dein Browser Ladezeiten, die aufgerufene Seite, Betriebssystem und Bildschirmgröße an meinen Hoster Netlify. Cookies werden
-        dabei nicht gesetzt. Du kannst deine Wahl jederzeit im Fußbereich ändern. Mehr dazu in der{' '}
+        Dann erfasst der Dienst HeyCatch, welche Seiten du aufrufst und was du anklickst, und mein Hoster Netlify misst, wie schnell die
+        Seiten laden. HeyCatch speichert dafür eine zufällige Kennung in deinem Browser. Die Daten gehen in die USA. Du kannst deine Wahl
+        jederzeit im Fußbereich ändern. Mehr dazu in der{' '}
         <a href={`${seiten.datenschutz}#messung`}>Datenschutzerklärung</a>.
       </p>
     </div>
@@ -26,6 +29,7 @@ import { seiten } from '../config/site';
 
 <script>
   import { messung } from '../config/site';
+  import { analytics } from '../scripts/analytics';
 
   const banner = document.querySelector<HTMLElement>('[data-einwilligung]');
 
@@ -53,13 +57,15 @@ import { seiten } from '../config/site';
         } catch {
           // Ohne Speicher wird beim nächsten Seitenaufruf erneut gefragt
         }
+        // HeyCatch sofort an- oder abschalten, nicht erst beim nächsten Seitenaufruf
+        if (knopf.dataset.wahl === 'ja') analytics.optInCapturing();
+        else analytics.optOutCapturing();
         banner.hidden = true;
       }),
     );
 
-    // Nur fragen, wenn Netlify das Messskript tatsächlich eingefügt hat (in der Vorschau immer)
-    const messskript = document.getElementById('netlify-rum-container') !== null;
-    if ((messskript || import.meta.env.DEV) && gespeicherteWahl() === null) zeigen(false);
+    // Seit HeyCatch (20.11.2026) immer fragen, solange keine gültige Entscheidung gespeichert ist
+    if (gespeicherteWahl() === null) zeigen(false);
   }
 
   document.querySelectorAll<HTMLElement>('[data-einwilligung-oeffnen]').forEach((element) =>
