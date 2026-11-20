@@ -35,7 +35,7 @@ const kaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
     <Image class="tkarte__wortmarke" src={wortmarke} alt="Try a Life" width={240} />
     <Ebene class="tkarte__titel">{titel}</Ebene>
     <p>{text}</p>
-    <p class="tkarte__meta">Einheiten für vier bis sechs Wochen, danach Begleitung bei deinen Meilensteinen, ein Jahr Zugang</p>
+    <p class="tkarte__meta">Einheiten für vier bis sechs Wochen, danach Momentaufnahme und Nachverfolgung deiner Meilensteine, ein Jahr Zugang</p>
     <div class="tkarte__knoepfe">
       {kaufbar ? <AngebotButton id="try-a-life" /> : <a class="button" href={seiten.tryALife}>Mehr über Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>}
       <AngebotButton id="try-a-life" ziel="demo" />
