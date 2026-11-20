@@ -197,6 +197,8 @@ if (!g.__angeboteGeprueft) {
 
     <script>
       import { starteBewegung } from '../scripts/bewegung';
+      // Nutzungsmessung mit HeyCatch; sendet erst nach „Zulassen“ im Hinweis (src/scripts/analytics.ts)
+      import '../scripts/analytics';
       starteBewegung();
     </script>
   </body>

@@ -22,7 +22,7 @@ export const ids = {
  * Angebot mit aktuellem Preis für Suchmaschinen und KI-Assistenten (Audit heycatch, D5.5).
  * Nur der aktuell gültige Preis; ohne bestätigten Preis entfällt das Angebot.
  */
-function angebotKnoten(a: Angebot, url: string): Knoten | null {
+function angebotKnoten(a: Angebot, url: string, extra: Knoten = {}): Knoten | null {
   const preis = aktuellerPreis(a);
   if (!preis) return null;
   return {
@@ -33,8 +33,37 @@ function angebotKnoten(a: Angebot, url: string): Knoten | null {
     url,
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     seller: { '@id': ids.organisation },
+    ...extra,
   };
 }
+
+/** Marke als eigenes Objekt; ein reiner Verweis auf das Unternehmen gilt bei Google als ungültiger Typ (Search Console, 20.11.2026) */
+const marke = () => ({ '@type': 'Brand', name: site.name });
+
+/**
+ * Versand und Rückgabe des gedruckten Workbooks (Search Console „Händlereinträge“, 20.11.2026).
+ * Quellen: Versand im Preis enthalten (`versandInklusive` in angebote.ts), Versand nur innerhalb Deutschlands
+ * (Christine, 30.10.2026), Widerruf 14 Tage per Post, Kundin trägt die Rücksendekosten (Seite /widerruf/).
+ * Eine Lieferzeit (deliveryTime) fehlt bewusst: Die Laufzeit des Versanddienstes ist nicht festgelegt.
+ */
+const workbookVersandUndRueckgabe = (a: Angebot): Knoten => ({
+  ...(a.versandInklusive && {
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'EUR' },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' },
+    },
+  }),
+  hasMerchantReturnPolicy: {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'DE',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+    merchantReturnDays: 14,
+    returnMethod: 'https://schema.org/ReturnByMail',
+    returnFees: 'https://schema.org/ReturnShippingFees',
+    merchantReturnLink: adresse(seiten.widerruf),
+  },
+});
 
 type Knoten = Record<string, unknown>;
 
@@ -107,7 +136,7 @@ export function grunddaten(): Knoten[] {
 /** Das Workbook als Buch mit Autorin und aktuellem Preis (Seite Modul 1). `umschlag`: Pfad des Umschlagbilds. */
 export function kursbuchDaten(umschlag?: string): Knoten {
   const kursbuch = angebotNachId('kursbuch');
-  const angebot = angebotKnoten(kursbuch, ids.kursbuch);
+  const angebot = angebotKnoten(kursbuch, ids.kursbuch, workbookVersandUndRueckgabe(kursbuch));
   return {
     // Buch und Produkt zugleich, damit der Preis als Produktangebot lesbar ist (D5.5)
     '@type': ['Book', 'Product'],
@@ -120,7 +149,7 @@ export function kursbuchDaten(umschlag?: string): Knoten {
     numberOfPages: 184,
     url: ids.kursbuch,
     image: adresse(umschlag ?? '/marke/og-bild.png'),
-    brand: { '@id': ids.organisation },
+    brand: marke(),
     ...(angebot && { offers: angebot }),
   };
 }
@@ -140,7 +169,7 @@ export function tryALifeDaten(bild?: string): Knoten {
     url: adresse(seiten.tryALife),
     image: adresse(bild ?? '/marke/og-try-a-life.jpg'),
     author: { '@id': ids.person },
-    brand: { '@id': ids.organisation },
+    brand: marke(),
     ...(angebot && { offers: angebot }),
   };
 }
@@ -233,8 +262,8 @@ export function faqDaten(faq: { frage: string; antwort: string }[]): Knoten {
 /** Das kostenlose Journal als frei zugängliches Dokument (Seite /journal/). */
 export function journalDaten(cover: string): Knoten {
   return {
-    // Dokument und Produkt zugleich, mit kostenlosem Angebot (D5.5)
-    '@type': ['DigitalDocument', 'Product'],
+    // Nur Dokument: Ein kostenloses PDF ist kein Händlerangebot für Google (Search Console, 20.11.2026)
+    '@type': 'DigitalDocument',
     '@id': ids.journal,
     name: 'Wer will ich in 12 Monaten sein? Das Jahresabschluss-Journal',
     description:
@@ -243,7 +272,6 @@ export function journalDaten(cover: string): Knoten {
     image: adresse(cover),
     inLanguage: 'de-DE',
     isAccessibleForFree: true,
-    brand: { '@id': ids.organisation },
     offers: {
       '@type': 'Offer',
       price: '0',

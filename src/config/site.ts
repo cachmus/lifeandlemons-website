@@ -217,13 +217,14 @@ export function anfrageLink(betreff: string, text?: string): string {
 }
 
 /**
+ * Einwilligung in die Messung. Seit 20.11.2026 gilt sie gemeinsam für HeyCatch (Nutzung, src/scripts/analytics.ts)
+ * und für die Leistungsmessung von Netlify. Der Hinweis erscheint immer, solange keine gültige Entscheidung gespeichert ist.
+ *
  * Leistungsmessung von Netlify („Real User Monitoring“), nur mit Einwilligung (entschieden 19.10.2026).
  *
  * Netlify fügt das Messskript auf der Live-Seite selbst ein, die Website kann das Laden nicht verhindern.
  * Deshalb hält ein kleines Skript im <head> (Base.astro) jede Übertragung an `host` zurück, bis die Besucherin
  * im Hinweis „Zulassen“ gewählt hat. Ohne Einwilligung verlässt keine Messung den Browser.
- * Das Banner erscheint nur, wenn das Messskript auf der Seite steckt; ist die Messung bei Netlify
- * abgeschaltet, gibt es auch kein Banner.
  *
  * Geprüft am 19.10.2026: Das Skript sendet Seitenadresse, Betriebssystem, Bildschirmgröße und Ladezeiten
  * an `host`, setzt keine Cookies und speichert nichts im Browser. Ändert Netlify die Zieladresse,
