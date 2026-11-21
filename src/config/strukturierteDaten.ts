@@ -13,7 +13,8 @@ export const ids = {
   website: adresse('/#website'),
   organisation: adresse('/#organisation'),
   person: adresse(`${seiten.ueberMich}#christine`),
-  kursbuch: adresse(`${seiten.modul1}#kursbuch`),
+  // Seit 21.11.2026 auf der Seite der Try-a-Life-Methode (Workbook als PDF)
+  kursbuch: adresse(`${seiten.tryALife}#workbook`),
   tryALife: adresse(`${seiten.tryALife}#app`),
   journal: adresse(`${seiten.journal}#journal`),
 };
@@ -41,29 +42,9 @@ function angebotKnoten(a: Angebot, url: string, extra: Knoten = {}): Knoten | nu
 const marke = () => ({ '@type': 'Brand', name: site.name });
 
 /**
- * Versand und Rückgabe des gedruckten Workbooks (Search Console „Händlereinträge“, 20.11.2026).
- * Quellen: Versand im Preis enthalten (`versandInklusive` in angebote.ts), Versand nur innerhalb Deutschlands
- * (Christine, 30.10.2026), Widerruf 14 Tage per Post, Kundin trägt die Rücksendekosten (Seite /widerruf/).
- * Eine Lieferzeit (deliveryTime) fehlt bewusst: Die Laufzeit des Versanddienstes ist nicht festgelegt.
+ * Das gedruckte Workbook mit Versand und Rückgabe per Post entfällt seit 21.11.2026 (Startplan Workbook und Shop).
+ * Das Workbook ist jetzt ein PDF über Digistore24: kein Versand, keine Rücksendung, Widerruf nach den Bedingungen von Digistore24.
  */
-const workbookVersandUndRueckgabe = (a: Angebot): Knoten => ({
-  ...(a.versandInklusive && {
-    shippingDetails: {
-      '@type': 'OfferShippingDetails',
-      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'EUR' },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' },
-    },
-  }),
-  hasMerchantReturnPolicy: {
-    '@type': 'MerchantReturnPolicy',
-    applicableCountry: 'DE',
-    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-    merchantReturnDays: 14,
-    returnMethod: 'https://schema.org/ReturnByMail',
-    returnFees: 'https://schema.org/ReturnShippingFees',
-    merchantReturnLink: adresse(seiten.widerruf),
-  },
-});
 
 type Knoten = Record<string, unknown>;
 
@@ -84,7 +65,7 @@ export function organisationDaten(): Knoten {
     name: site.name,
     alternateName: ['Life and Lemons', site.firmierung],
     slogan: site.slogan,
-    description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, in ${site.ort.stadt} und online.`,
+    description: `Mentoring und Life Coaching für selbstbestimmte Lebensgestaltung von ${site.inhaberin}, mit App und Workbook zum Selbstlernen.`,
     url: adresse('/'),
     logo: adresse('/apple-touch-icon.png'),
     image: adresse('/marke/og-bild.png'),
@@ -97,7 +78,7 @@ export function organisationDaten(): Knoten {
       addressRegion: site.ort.region,
       addressCountry: site.ort.land,
     },
-    // Treffen in Hannover, Einzelbegleitung online in Deutschland (Workbook-Versand nur innerhalb Deutschlands)
+    // Christine arbeitet von Hannover aus, App und Workbook gibt es digital in ganz Deutschland
     areaServed: [
       { '@type': 'City', name: site.ort.stadt },
       { '@type': 'Country', name: 'Deutschland' },
@@ -136,17 +117,18 @@ export function grunddaten(): Knoten[] {
 /** Das Workbook als Buch mit Autorin und aktuellem Preis (Seite Modul 1). `umschlag`: Pfad des Umschlagbilds. */
 export function kursbuchDaten(umschlag?: string): Knoten {
   const kursbuch = angebotNachId('kursbuch');
-  const angebot = angebotKnoten(kursbuch, ids.kursbuch, workbookVersandUndRueckgabe(kursbuch));
+  const angebot = angebotKnoten(kursbuch, ids.kursbuch);
   return {
     // Buch und Produkt zugleich, damit der Preis als Produktangebot lesbar ist (D5.5)
     '@type': ['Book', 'Product'],
     '@id': ids.kursbuch,
-    name: 'Entwirf dein Zukunfts-Ich',
-    description: 'Workbook zum Selbstarbeiten in neun Einheiten mit zwei Praxiswochen und einer Probezeit von 14 Tagen.',
+    name: 'Try a Life · Das Workbook',
+    description: 'Workbook als PDF zum Selbstarbeiten in neun Einheiten mit zwei Praxiswochen und einer Probezeit von 14 Tagen, am Tablet oder Rechner ausfüllbar oder zum Ausdrucken.',
+    bookFormat: 'https://schema.org/EBook',
     author: { '@id': ids.person },
     publisher: { '@id': ids.organisation },
     inLanguage: 'de',
-    numberOfPages: 184,
+    numberOfPages: 205,
     url: ids.kursbuch,
     image: adresse(umschlag ?? '/marke/og-bild.png'),
     brand: marke(),
@@ -161,7 +143,7 @@ export function tryALifeDaten(bild?: string): Knoten {
   return {
     '@type': ['Product', 'SoftwareApplication'],
     '@id': ids.tryALife,
-    name: 'Try a Life',
+    name: 'Try a Life · Die App',
     description: `Life-Coaching-App im Format eines Cozy Games: ${app.enthaelt}`,
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Browser',

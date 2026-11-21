@@ -100,10 +100,13 @@ export type Angebot = {
  */
 export const DIGISTORE24 = {
   // Entschieden 16.11.2026 (Christine): Über Digistore24 laufen nur noch digitale Produkte.
-  // Das gedruckte Workbook und die Begleitung bestellt man direkt bei Christine.
+  // Die Begleitung bestellt man direkt bei Christine (das gedruckte Workbook entfällt seit 21.11.2026).
   // Bestellformular von Produkt 766184 (17.11.2026). Bis zur Freigabe durch Digistore24 nur Testzahlung.
   // Beim Verkaufsstart führt der Kaufknopf auf /try-a-life/ direkt hierher (Christine, 18.11.2026).
   'try-a-life': 'https://www.checkout-ds24.com/product/766184/',
+  // Workbook als PDF, Produkt 749110 (früher gedrucktes Workbook, am 21.11.2026 auf PDF umgestellt, Startplan Workbook und Shop).
+  // Wie bei der App führt der Kaufknopf schon vor der Freigabe hierher, weil Digistore24 für die Freigabe einen Testkauf über die Verkaufsseite verlangt.
+  workbook: 'https://www.checkout-ds24.com/product/749110/',
 } as const;
 
 export type DigistoreId = keyof typeof DIGISTORE24;
@@ -141,30 +144,25 @@ const zurListe = (label = 'Benachrichtige mich zum Start'): Aktion => ({ typ: 'l
 
 export const angebote: Angebot[] = [
   {
+    // Seit 21.11.2026 das Workbook als PDF über Digistore24 (Startplan Workbook und Shop, Entscheidungen 1 bis 5, Christine).
+    // Kennung „kursbuch“ bleibt, damit Anker und strukturierte Daten stabil bleiben.
     id: 'kursbuch',
     modul: 1,
-    name: 'Das Workbook',
+    name: 'Try a Life · Das Workbook',
     art: 'Selbstständig',
     fuerDich: 'du gern allein und in deinem eigenen Tempo arbeitest.',
     passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
     passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
     andererWeg: 'Wenn du es besonders mobil und spielerisch bevorzugst, empfehle ich dir Try a Life in der App.',
-    enthaelt: 'das gedruckte Workbook mit 184 Seiten, neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
-    preisEinfuehrung: 49,
-    // OFFEN: regulärer Preis ab 08.12.2026 (Projektstatus V2 nennt keinen Wert)
-    preisRegulaer: undefined,
-    preisRegulaerBestaetigt: false,
+    enthaelt: 'das Workbook als PDF mit 205 Seiten, am Tablet oder Rechner ausfüllbar oder zum Ausdrucken, mit neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
+    // 39 € brutto (Entscheidung 2 im Startplan, Christine, 21.11.2026); 39 € + 80 € Upgrade = 119 € wie die App
+    preisRegulaer: 39,
+    preisRegulaerBestaetigt: true,
+    ueberDigistore: true,
     ausgebucht: false,
     status: 'verfuegbar',
-    // Seit 19.11.2026 bestellen statt vorbestellen (Christine).
-    lieferhinweis: 'Normalerweise versandfertig innerhalb von 7 Tagen.',
-    versandInklusive: true,
-    // Nur direkt bei Christine (16.11.2026), nicht über Digistore24
-    aktion: {
-      typ: 'anfrage',
-      url: anfrageLink('Bestellung Workbook', 'Hallo Christine,\n\nich möchte das Workbook „Entwirf dein Zukunfts-Ich“ bestellen.\n\nLieferadresse:\n'),
-      label: 'Workbook bestellen',
-    },
+    lieferhinweis: 'Sofort als Download nach dem Kauf.',
+    aktion: checkoutOderAnfrage(DIGISTORE24.workbook, 'Workbook kaufen', anfrageLink('Workbook')),
   },
   {
     id: 'club',
@@ -251,14 +249,14 @@ export const angebote: Angebot[] = [
     // Die Landingpage /try-a-life/ liest alles von hier.
     id: 'try-a-life',
     modul: 1,
-    name: 'Try a Life',
+    name: 'Try a Life · Die App',
     art: 'Life-Coaching-App',
     fuerDich: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenn: 'du gern digital arbeitest und dir Führung Schritt für Schritt mit sichtbarem Fortschritt wünschst.',
     passtWenigerWenn: 'du lieber mit Stift und Papier schreibst.',
     // Sobald das digitale Workbook als Druck-PDF erhältlich ist, hier ergänzen (To-dos Abschnitt 12)
     andererWeg: 'Wenn du lieber mit Stift und Papier arbeitest, empfehle ich dir das Workbook.',
-    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen, monatlichen Momentaufnahmen und der Nachverfolgung deiner Meilensteine nach dem Programm und einem Jahr Zugang.',
+    enthaelt: 'eine App zum Selbstlernen mit Einheiten für vier bis sechs Wochen, kleinen Schritten im echten Leben, einer Probezeit von 10 Tagen, monatlichen Momentaufnahmen und der Nachverfolgung deiner Meilensteine nach dem Programm, einem Jahr Zugang und dem Workbook als PDF dazu.',
     // 119 € brutto über Digistore24, Produkt 766184 (Christine, 14.11.2026); Preis vor der Freigabe sichtbar (17.11.2026)
     preisRegulaer: 119,
     preisRegulaerBestaetigt: true,
@@ -269,23 +267,13 @@ export const angebote: Angebot[] = [
     ausgebucht: false,
     status: 'verfuegbar',
     // Kaufknopf direkt zum Bestellformular, Beschriftung freigegeben (Christine, 18.11.2026)
-    aktion: checkoutOderAnfrage(DIGISTORE24['try-a-life'], 'Try a Life kaufen', anfrageLink('Try a Life')),
+    // Knöpfe nennen das Format (Entscheidung 1 im Startplan, 21.11.2026), vorher „Try a Life kaufen“
+    aktion: checkoutOderAnfrage(DIGISTORE24['try-a-life'], 'App kaufen', anfrageLink('Try a Life')),
     // Die Demo ist der Rundblick in der App, ohne Anmeldung (Christine, 17.11.2026). Adresse der App seit 17.11.2026.
     demo: { url: 'https://tryalife.lifeandlemons.de/', label: 'Demo kostenlos spielen' },
   },
 
-  {
-    id: 'kursbuch-band-2',
-    modul: 2,
-    name: 'Workbook Band 2',
-    art: 'In Vorbereitung',
-    fuerDich: 'du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest.',
-    enthaelt: 'das Workbook zu Modul 2, einzeln erhältlich, sobald es erscheint.',
-    preisRegulaerBestaetigt: false,
-    ausgebucht: false,
-    status: 'in-vorbereitung',
-    aktion: zurListe(),
-  },
+  // Workbook Band 2 und Modul 2 entfallen auf der Website (Entscheidung 6 im Startplan, 21.11.2026).
 ];
 
 // ---------------------------------------------------------------------------
@@ -382,7 +370,5 @@ export function bestellHinweis(angebot: Angebot): string | null {
     const anbieter = aktion.anbieter === 'digistore24' ? 'Digistore24' : 'ablefy';
     return `Die ${kursbuch ? 'Bestellung' : 'Buchung'} läuft über ${anbieter}.`;
   }
-  // Direktbestellung des Workbooks (Christine, 16.11.2026): Rechnung per E-Mail, Zahlung per Überweisung
-  if (kursbuch && aktion.typ === 'anfrage') return 'Nach deiner Bestellung bekommst du die Rechnung per E-Mail und zahlst per Überweisung.';
   return null;
 }

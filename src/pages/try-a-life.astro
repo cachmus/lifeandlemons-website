@@ -1,91 +1,205 @@
 ---
 /**
- * Landingpage der App „Try a Life“ (neu 11.11.2026).
- * Ziel des Kurzlinks und QR-Codes im Jahresabschluss-Journal „Wer will ich in 12 Monaten sein?“.
+ * Seite der Try-a-Life-Methode (seit 21.11.2026, Startplan Workbook und Shop, Entscheidungen 1 bis 8 von Christine).
+ * Eine Methode, zwei Arbeitsweisen: die App „Try a Life · Die App“ und das Workbook „Try a Life · Das Workbook“ (PDF).
+ * Vorher Landingpage der App (11.11.2026); die Seiten zum gedruckten Workbook und zu Modul 2 leiten seit 21.11.2026 hierher.
+ * Ziel des Kurzlinks und QR-Codes im Jahresabschluss-Journal „Wer will ich in 12 Monaten sein?“, Adresse nicht ändern.
  *
- * Quellen: Positionierungspapier V5 (Abschnitte 1, 4, 8, 11 und 17), Beschreibungstext aus der
- * Sprachmuster-Recherche (Einordnung vom 10.11.2026), Angaben zur App bestätigt von Christine am 11.11.2026.
- * Preis (119 € brutto, Digistore24) steht seit 17.11.2026 da, weil Digistore24 ihn für die Freigabe verlangt.
- * Kaufbar seit 18.11.2026: Kaufknopf zum Bestellformular, die Interessentenliste entfällt, solange der Status „verfuegbar“ ist.
- * Button-Ziel und Leistungsumfang kommen aus src/config/angebote.ts (id „try-a-life“).
- * Vorschaubild beim Teilen: dasselbe wie in der App (public/marke/og-try-a-life.jpg, aus lifeandlemons-spiel/public/bilder/teilen.jpg, 18.11.2026).
+ * Texte: Kopf, Fragen, Aufbau, Ergebnis, App-Umfang und häufige Fragen stammen aus den freigegebenen Fassungen der App-Seite und
+ * der Seite zu Modul 1 (Positionierungspapier V4 und V5, Christine 11.11. bis 20.11.2026). Neu und zur Freigabe (21.11.2026):
+ * Einleitungssatz zu den zwei Arbeitsweisen, Vergleichstabelle, Abschnitt Workbook, Abschnitt Wechseln, die Fragen zu App und Workbook.
+ * Anker: #arbeitsweisen, #app, #workbook (Kurzlink /workbook und /buch), #upgrade (Kurzlink /upgrade), #fragen.
+ * Preise, Knöpfe und Umfang kommen aus src/config/angebote.ts (Kennungen „try-a-life“ und „kursbuch“).
  */
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import FesterKnopf from '../components/FesterKnopf.astro';
 import AngebotButton from '../components/AngebotButton.astro';
+import FormatKarte from '../components/FormatKarte.astro';
 import Preis from '../components/Preis.astro';
-import Interessentenliste from '../components/Interessentenliste.astro';
-import { seiten, tryALifeAnkuendigung } from '../config/site';
-import { angebotNachId } from '../config/angebote';
+import { seiten } from '../config/site';
+import { angebotNachId, aktuellerPreis, formatEuro } from '../config/angebote';
 import BlickInsSpiel from '../components/BlickInsSpiel.astro';
+import BlickInsBuch from '../components/BlickInsBuch.astro';
 import Stimmen from '../components/Stimmen.astro';
-import { tryALifeDaten, ids } from '../config/strukturierteDaten';
+import { tryALifeDaten, kursbuchDaten, ids } from '../config/strukturierteDaten';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
+import workbookTitel from '../assets/workbook-titel.jpg';
 
 const app = angebotNachId('try-a-life');
+const workbook = angebotNachId('kursbuch');
+const appPreis = aktuellerPreis(app);
+const wbPreis = aktuellerPreis(workbook);
+/** Upgrade mit voller Anrechnung (Entscheidung 4 im Startplan): App-Preis minus Workbook-Preis */
+const upgradePreis = appPreis && wbPreis ? appPreis.betrag - wbPreis.betrag : null;
+const leseprobe = '/downloads/try-a-life-workbook-leseprobe.pdf';
 
 /** Kernfragen des Rahmenwerks (Positionierungspapier V5, Abschnitt 1) */
 const fragen = ['Worauf warte ich?', 'Was hält mich zurück?', 'Wie will ich wirklich leben?', 'Wer will ich sein?', 'Wie komme ich dahin?'];
 
-const schritte = [
+/** Aufbau aus der Seite zu Modul 1 (freigegeben), gilt für App und Workbook */
+const teile = [
   {
-    titel: 'Verstehen, was dich bisher gebremst hat',
-    text: 'Du schaust, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist, worauf du bisher gewartet hast und was dich zurückhält.',
+    nr: 'I',
+    titel: 'Heute',
+    text: 'Du schaust auf dein heutiges Leben, auf das, worauf du wartest, und auf den Menschen, der du in fünf Jahren wärst, wenn du nichts änderst. Schon nach diesem ersten Teil kennst du deine innere Bremse, also die Gedanken und Gewohnheiten, mit denen du dich selbst ausbremst, und hast ausgerechnet, was dich das Warten kostet.',
+    danach: 'Praxiswoche 1: ein kleiner Schritt, den du sonst aufschiebst',
   },
   {
-    titel: 'Drei mögliche Leben entwerfen',
-    text: 'Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen.',
+    nr: 'II',
+    titel: 'Drei mögliche Leben',
+    text: 'Du findest heraus, was dir liegt und wonach du dich sehnst. Daraus entwirfst du drei mögliche Versionen deines Zukunfts-Ichs, also des Menschen, der du in einigen Jahren sein könntest. Aus ihnen leitest du deine Werte ab und prüfst einen Entwurf im echten Leben.',
+    danach: 'Praxiswoche 2: ein Gespräch mit einem Menschen, der so ähnlich schon lebt, oder ein Selbstversuch',
   },
   {
-    titel: 'Im echten Leben ausprobieren',
-    text: 'Während des Programms gehst du immer wieder kleine Schritte in deinem echten Leben. So erlebst du deine Entwürfe am eigenen Leib und spürst, welche Richtung sich richtig anfühlt, bevor du dich festlegst. Am Ende steht eine Probezeit von 10 Tagen.',
-  },
-  {
-    // Christine, 19.11.2026: den Teil nach dem Einzug ankündigen (Haus am Horizont, Meilensteine, Lebensrad am Haus)
-    titel: 'Über Monate dranbleiben',
-    text: 'Passt deine Richtung, ziehst du in dein Haus am Horizont ein. Dort begleitet dich die App weiter: Du trägst deine Meilensteine in deinen Kalender ein und hakst ab, was du erreicht hast. Rund alle vier Wochen hältst du fest, wie zufrieden du gerade mit den einzelnen Bereichen deines Lebens bist, und schaust, ob du dich in die gewünschte Richtung bewegst.',
+    nr: 'III',
+    titel: 'Deine Richtung',
+    text: 'Du ziehst alle neuen Erkenntnisse zusammen und entscheidest dich für die Richtung, der du in den nächsten Monaten Raum geben möchtest. In der anschließenden Probezeit überprüfst du sie im Alltag: 14 Tage mit dem Workbook, 10 Tage in der App.',
+    danach: 'Probezeit: eine erste Aktion und zwei Gewohnheiten, eine neue und eine, die du ablegst',
   },
 ];
 
-const umfang = [
+const ergebnisse = [
+  'Einen ausgearbeiteten und getesteten Entwurf als klare Richtung für deine nähere Zukunft',
+  'Drei Handlungen, die du getan und nicht nur geplant hast',
+  'Eine neue Gewohnheit, die du in der Probezeit eingeübt hast, und eine ungünstige, die du in dieser Zeit vermieden hast',
+  'Die Muster, mit denen du dich selbst ausbremst und von deinen Zielen abbringst',
+  'Eine Rechnung darüber, was dich fünf weitere Jahre Warten kosten',
+  'Klarheit darüber, wohin dich dein nächster Lebensabschnitt führen soll und wie du anfängst',
+];
+
+/** Vergleich der Arbeitsweisen (Startplan, Abschnitt Website, zur Freigabe) */
+const vergleich: { label: string; app: string; workbook: string }[] = [
+  { label: 'Arbeitsweise', app: 'geführt, Schritt für Schritt im Spiel', workbook: 'selbstständig, in deinem eigenen Tempo' },
+  { label: 'Format', app: 'App im Browser für Handy, Tablet und Rechner', workbook: 'PDF, am Tablet oder Rechner ausfüllbar oder zum Ausdrucken' },
+  { label: 'Probezeit', app: '10 Tage mit Journal und Erinnerung im Kalender', workbook: '14 Tage mit Probezeit-Journal zum Ausfüllen' },
+  { label: 'Fortschritt', app: 'sichtbar im Spiel', workbook: 'du hältst ihn selbst fest' },
+  {
+    label: 'Nach dem Programm',
+    app: 'Meilensteine abhaken und rund alle vier Wochen eine Momentaufnahme deiner Lebensbereiche',
+    workbook: 'sechs Lebensräder für deine Momentaufnahmen und Seiten für deinen weiteren Weg',
+  },
+  { label: 'Zugang', app: '12 Monate', workbook: 'ohne Ablauf, die Datei gehört dir' },
+  {
+    label: 'Preis',
+    app: appPreis ? `${formatEuro(appPreis.betrag)}, das Workbook als PDF ist dabei` : 'auf Anfrage',
+    workbook: wbPreis ? formatEuro(wbPreis.betrag) : 'auf Anfrage',
+  },
+  {
+    label: 'Passt, wenn',
+    app: (app.passtWenn ?? app.fuerDich).replace(/\.$/, ''),
+    workbook: (workbook.passtWenn ?? workbook.fuerDich).replace(/\.$/, ''),
+  },
+];
+
+/** Umfang der App (freigegeben, App-Seite 19.11.2026), ergänzt um das Workbook als PDF (Entscheidung 3) */
+const umfangApp = [
   'eine App zum Selbstlernen, die dich Schritt für Schritt führt und deinen Fortschritt zeigt',
   'Einheiten für vier bis sechs Wochen',
   'kleine Schritte im echten Leben und eine Probezeit von 10 Tagen',
   'Begleitung nach dem Programm: Meilensteine abhaken und rund alle vier Wochen eine Momentaufnahme deiner Lebensbereiche',
   'ein Jahr Zugang, in dem du in deinem eigenen Tempo arbeitest',
+  'das Workbook als PDF dazu, zum Nachschlagen oder Ausdrucken',
+];
+
+const umfangWorkbook = [
+  '205 Seiten als PDF mit Feldern, in die du direkt schreibst',
+  'neun Einheiten in drei Teilen, zwei Praxiswochen und eine Probezeit von 14 Tagen',
+  'sechs Lebensräder, mit denen du nach dem Programm festhältst, wo du stehst',
+  'am Tablet oder Rechner ausfüllen und speichern oder ausdrucken und von Hand schreiben',
+  'sofort nach dem Kauf zum Herunterladen, ohne Ablauf',
+];
+
+/** Häufige Fragen: Positionierungspapier V4, § 17 (freigegeben), dazu die Fragen zu App und Workbook (zur Freigabe) */
+const haeufigeFragen = [
+  {
+    frage: 'Was ist der Unterschied zwischen App und Workbook?',
+    antwort:
+      'Die Übungen sind dieselben. In der App führt dich das Spiel Schritt für Schritt, erinnert dich an deine Praxiswochen und zeigt dir deinen Fortschritt. Im Workbook führst du dich selbst durch die Seiten und richtest dir deine Zeiten selbst ein.',
+  },
+  {
+    frage: 'Brauche ich beides?',
+    antwort: 'Nein, jede Arbeitsweise führt dich durch die ganze Methode. Kaufst du die App, ist das Workbook als PDF ohnehin dabei.',
+  },
+  {
+    frage: 'Kann ich später vom Workbook zur App wechseln?',
+    antwort:
+      'Ja, jederzeit. Was du für das Workbook bezahlt hast, wird angerechnet. Den Code dafür findest du auf deiner Bestellbestätigung.',
+  },
+  {
+    frage: 'Kann ich das Workbook am Handy ausfüllen?',
+    antwort:
+      'Lesen kannst du es überall. Zum Ausfüllen eignen sich Tablet und Rechner am besten, mit einem Programm, das ausgefüllte Formulare speichert, etwa dem kostenlosen Adobe Acrobat Reader. Am Handy sind die Felder klein. Du kannst die Seiten auch ausdrucken und von Hand schreiben.',
+  },
+  {
+    frage: 'Wie lange habe ich Zugang?',
+    antwort:
+      'Zur App hast du 12 Monate Zugang ab dem Kauf. Das Workbook lädst du herunter und behältst es, ohne Ablauf.',
+  },
+  {
+    frage: 'Wie bezahle ich?',
+    antwort:
+      'Du kaufst App und Workbook bei Digistore24. Dort zahlst du mit den angebotenen Zahlarten, etwa PayPal, Kreditkarte oder Lastschrift. Digistore24 schickt dir die Rechnung.',
+  },
+  {
+    frage: 'Muss ich schon wissen, was ich will?',
+    antwort: 'Nein. Genau dafür entwirfst du drei völlig unterschiedliche Leben. Was du willst, zeigt sich beim Vergleichen und Ausprobieren.',
+  },
+  {
+    frage: 'Muss ich mein Leben komplett umkrempeln?',
+    antwort:
+      'Nein. Einer deiner drei Entwürfe heißt Weitergehen. Darin baust du deinen bisherigen Weg bewusster aus. Dein Weg darf auch dort liegen, ergänzt um Teile aus den anderen beiden Entwürfen.',
+  },
+  {
+    frage: 'Wie viel Zeit brauche ich?',
+    antwort:
+      'Rund zehn Stunden, verteilt über bis zu sechs Wochen. Eine Einheit dauert im Schnitt eine Stunde. In den beiden Praxiswochen setzt du kleine Schritte in deinem Alltag um.',
+  },
+  {
+    frage: 'Was passiert, wenn mein Entwurf im Test nicht passt?',
+    antwort:
+      'Dann weißt du es, bevor du viel investiert hast. Du justierst nach und prüfst, ob ein anderer Entwurf oder ein Teil davon besser zu dir passt.',
+  },
+  {
+    frage: 'Ist das eine Therapie?',
+    antwort:
+      'Nein. Wir schauen darauf, wie deine inneren Muster heute wirken, und setzen ihnen neue Erfahrungen entgegen. Try a Life dient der Selbstreflexion und ersetzt keine Psychotherapie. Mehr dazu steht auf der Seite „Wie ich arbeite“.',
+  },
 ];
 ---
 
 <Base
   dunklerSchluss
   title="Try a Life: Wie willst du wirklich leben?"
-  description="Try a Life ist die Life-Coaching-App von Life&Lemons: Entwirf drei mögliche Leben und probiere im Alltag aus, welches zu dir passt, ohne alles umzuwerfen."
+  description="Die Try-a-Life-Methode von Life&Lemons: Entwirf drei mögliche Leben und probiere im Alltag aus, welches zu dir passt. Geführt in der App oder selbstständig im Workbook."
   ogBild={{
     pfad: '/marke/og-try-a-life.jpg',
     alt: 'Aquarell eines Tals mit Wegweiser, Steinmännchen, Rucksack und Buch am Weg, dahinter Dorf und Steinbrücke, darüber der Schriftzug Try a Life',
   }}
-  daten={[tryALifeDaten()]}
-  seite={{ felder: { mainEntity: { '@id': ids.tryALife } } }}
+  daten={[tryALifeDaten(), kursbuchDaten(workbookTitel.src)]}
+  seite={{ felder: { mainEntity: [{ '@id': ids.tryALife }, { '@id': ids.kursbuch }] } }}
 >
   <section class="kopf-abschnitt">
     <div class="container kopf">
       <div class="kopf__text">
-        <p class="label">{app.art}</p>
+        <p class="label">Die Try-a-Life-Methode</p>
         <h1>
           <Image class="wortmarke" src={wortmarke} alt="Try a Life" width={420} loading="eager" />
           <span class="untertitel">Wie willst du wirklich <span class="pivot">leben</span>?</span>
         </h1>
-        <!-- Beschreibungstext laut Einordnung im Ideen-Labor, 10.11.2026 -->
+        <!-- Beschreibungstext laut Einordnung im Ideen-Labor, 10.11.2026; zweiter Absatz: Kernbotschaft aus dem Startplan, zur Freigabe -->
         <p class="einleitung">
           Finde heraus, welche Wünsche du zurückgestellt hast und was dich bisher davon abhält. Entwirf drei mögliche Leben und probiere im
           Alltag aus, welches zu dir passt, ohne alles umzuwerfen.
         </p>
+        <p class="einleitung zwei-wege">
+          Eine Methode, zwei Arbeitsweisen: geführt in der App oder selbstständig im Workbook. Die Übungen sind dieselben.
+        </p>
         <div class="aktionen">
           <AngebotButton id="try-a-life" />
-          <AngebotButton id="try-a-life" ziel="demo" />
-          <a class="textlink" href={seiten.wieIchArbeite}>So arbeite ich</a>
+          <AngebotButton id="kursbuch" variante="hell" />
+          <a class="textlink" href="#arbeitsweisen">Arbeitsweisen vergleichen</a>
         </div>
       </div>
       <Image
@@ -107,8 +221,8 @@ const umfang = [
       </div>
       <div class="fliesstext text" data-erscheinen>
         <p>
-          Try a Life ist für Menschen, deren Leben funktioniert, sich aber nicht mehr ganz nach ihrem eigenen anfühlt. Die App führt dich
-          durch meine Methode, allein und in deinem eigenen Tempo.
+          Try a Life ist für Menschen, deren Leben funktioniert, sich aber nicht mehr ganz nach ihrem eigenen anfühlt. Die Methode führt
+          dich durch diese Fragen, allein und in deinem eigenen Tempo.
         </p>
         <ul class="fragen">
           {fragen.map((f) => <li>{f}</li>)}
@@ -117,58 +231,202 @@ const umfang = [
     </div>
   </section>
 
-  <section class="abschnitt" aria-labelledby="weg-titel">
+  <section class="abschnitt" aria-labelledby="aufbau-titel">
     <div class="container">
       <div class="kopfblock">
-        <p class="label">02 · Dein Weg in der App</p>
-        <h2 id="weg-titel" class="zeile">Erst entwerfen, dann <span class="pivot">ausprobieren</span></h2>
+        <p class="label">02 · So läuft es ab</p>
+        <h2 id="aufbau-titel" class="zeile">Erst entwerfen, dann <span class="pivot">ausprobieren</span></h2>
+        <p class="einleitung text">
+          Die Methode besteht aus drei Teilen mit neun Einheiten von durchschnittlich einer Stunde. Zwischen den Teilen liegen zwei
+          Praxiswochen, in denen du ins Handeln kommst und deine Entwürfe im echten Leben erprobst.
+        </p>
       </div>
-      <ol class="schritte">
+      <ol class="teile">
         {
-          schritte.map((s, i) => (
-            <li data-erscheinen>
-              <span class="schritte__ziffer" aria-hidden="true">{i + 1}</span>
-              <h3>{s.titel}</h3>
-              <p>{s.text}</p>
+          teile.map((teil) => (
+            <li class="teil" data-erscheinen>
+              <p class="teil__nr" aria-hidden="true">{teil.nr}</p>
+              <h3 class="teil__titel">
+                <span class="nur-screenreader">Teil {teil.nr}: </span>
+                {teil.titel}
+              </h3>
+              <p>{teil.text}</p>
+              <p class="teil__danach">{teil.danach}</p>
             </li>
           ))
         }
       </ol>
-      <BlickInsSpiel kennung="try" ueberschriftEbene="h3" />
+      <p class="aufbau__summe gedaempft">Insgesamt arbeitest du rund 10 Stunden aktiv an deiner Zukunft, verteilt über bis zu 6 Wochen.</p>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="ergebnis-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">03 · Ergebnis</p>
+        <h2 id="ergebnis-titel" class="zeile">Das <span class="pivot">hast</span> du am Ende</h2>
+      </div>
+      <ul class="ergebnisse" data-erscheinen>
+        {ergebnisse.map((e) => <li>{e}</li>)}
+      </ul>
     </div>
   </section>
 
   <!-- Stimmen erscheinen erst, wenn in src/config/belege.ts echte Stimmen stehen (Audit heycatch, D3.2) -->
   <Stimmen kennung="stimmen-try" />
 
-  <section class="abschnitt" aria-labelledby="umfang-titel">
+  <section class="abschnitt" id="arbeitsweisen" aria-labelledby="arbeitsweisen-titel">
+    <div class="container">
+      <div class="kopfblock">
+        <p class="label">04 · Zwei Arbeitsweisen</p>
+        <h2 id="arbeitsweisen-titel" class="zeile">Geführt oder <span class="pivot">selbstständig</span></h2>
+        <p class="einleitung text">
+          Beide Wege führen durch dieselben neun Einheiten und dieselbe Methode. Du entscheidest nur, wie du arbeiten möchtest.
+        </p>
+      </div>
+      <div class="vergleich" tabindex="0" role="region" aria-labelledby="arbeitsweisen-titel">
+        <table>
+          <thead>
+            <tr>
+              <td></td>
+              <th scope="col">App</th>
+              <th scope="col">Workbook</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              vergleich.map((z) => (
+                <tr>
+                  <th scope="row">{z.label}</th>
+                  <td>{z.app}</td>
+                  <td>{z.workbook}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="formate">
+        <FormatKarte id="try-a-life" anker="app" />
+        <FormatKarte id="kursbuch" anker="workbook" />
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="app-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">03 · Was du bekommst</p>
-        <h2 id="umfang-titel" class="zeile">Der Umfang auf einen <span class="pivot">Blick</span></h2>
+        <p class="label">05 · Die App</p>
+        <h2 id="app-titel" class="zeile">Schritt für Schritt im <span class="pivot">Spiel</span></h2>
       </div>
       <div class="text" data-erscheinen>
+        <p>
+          In der App erkundest du dein heutiges Leben, besuchst drei mögliche Welten und baust dir deinen Weg. Passt deine Richtung,
+          ziehst du in dein Haus am Horizont ein. Dort begleitet dich die App weiter: Du trägst deine Meilensteine in deinen Kalender ein
+          und hakst ab, was du erreicht hast. Rund alle vier Wochen hältst du fest, wie zufrieden du gerade mit den einzelnen Bereichen
+          deines Lebens bist.
+        </p>
         <ul class="umfang">
-          {umfang.map((u) => <li>{u}</li>)}
+          {umfangApp.map((u) => <li>{u}</li>)}
         </ul>
         <Preis id="try-a-life" />
-        {/* Kaufknopf und Demo direkt beim Preis (Christine, 19.11.2026) */}
-        {app.status === 'verfuegbar' && (
-          <div class="aktionen umfang__aktionen">
-            <AngebotButton id="try-a-life" />
-            <AngebotButton id="try-a-life" ziel="demo" />
-          </div>
-        )}
+        {
+          app.status === 'verfuegbar' && (
+            <div class="aktionen umfang__aktionen">
+              <AngebotButton id="try-a-life" />
+              <AngebotButton id="try-a-life" ziel="demo" />
+            </div>
+          )
+        }
         <!-- Angaben zu Kauf, Lieferung und Widerruf für die Freigabe durch Digistore24 (Vorschlag 17.11.2026, fachlich zu prüfen) -->
         <p class="hinweis">
-          Du kaufst Try a Life bei Digistore24 und hast 12 Monate Zugang. Nach dem Kauf meldest du dich in der App mit der Mailadresse an,
+          Du kaufst die App bei Digistore24 und hast 12 Monate Zugang. Nach dem Kauf meldest du dich in der App mit der Mailadresse an,
           mit der du gekauft hast, und bekommst einen Code per Mail. Die App läuft in deinem Browser, du kannst sie auf den Startbildschirm
-          deines Handys holen. Es gilt das gesetzliche Widerrufsrecht von 14 Tagen nach den Bedingungen von Digistore24.
+          deines Handys holen. Das Workbook als PDF lädst du nach dem Kauf über Digistore24 herunter. Es gilt das gesetzliche
+          Widerrufsrecht von 14 Tagen nach den Bedingungen von Digistore24.
         </p>
-        <p class="hinweis gedaempft">Der Name meint, dass du ein mögliches Leben ausprobierst.</p>
+      </div>
+    </div>
+    <div class="container">
+      <BlickInsSpiel kennung="try" ueberschriftEbene="h3" />
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="workbook-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">06 · Das Workbook</p>
+        <h2 id="workbook-titel" class="zeile">Selbstständig mit <span class="pivot">Stift</span> oder Tablet</h2>
+        <Image
+          class="workbook-titel"
+          src={workbookTitel}
+          alt="Titelseite von Try a Life · Das Workbook mit der Frage „Wie willst du wirklich leben?“ und einem Aquarell eines Wegs durch Wiesen"
+          widths={[320, 520]}
+          sizes="(min-width: 960px) 320px, 70vw"
+        />
+      </div>
+      <div class="text" data-erscheinen>
+        <p>
+          Im Workbook gehst du denselben Weg auf 205 Seiten. Du schreibst direkt in die Felder des PDF oder druckst die Seiten aus. Jede
+          Übung sagt dir, was du am Ende in der Hand hast, und verweist auf die Seiten, auf die du später zurückgreifst.
+        </p>
+        <ul class="umfang">
+          {umfangWorkbook.map((u) => <li>{u}</li>)}
+        </ul>
+        <Preis id="kursbuch" />
+        <div class="aktionen umfang__aktionen">
+          <AngebotButton id="kursbuch" />
+          <a class="button button--hell" href={leseprobe} download>
+            Leseprobe herunterladen <span class="button__pfeil" aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <p class="hinweis gedaempft">Die Leseprobe zeigt 16 Seiten aus dem Workbook (PDF, 1,8 MB).</p>
+        <!-- So füllst du es aus; Kauf und Widerruf über Digistore24 (zur Freigabe, fachlich zu prüfen) -->
+        <p class="hinweis">
+          Du kaufst das Workbook bei Digistore24 und lädst es direkt nach dem Kauf herunter, am besten im WLAN. Öffne es mit einem
+          Programm, das ausgefüllte Formulare speichert, etwa dem kostenlosen Adobe Acrobat Reader, und leg dir ab und zu eine
+          Sicherungskopie an. Es gelten die Bedingungen von Digistore24, auch zum Widerrufsrecht bei digitalen Inhalten.
+        </p>
+      </div>
+    </div>
+    <div class="container">
+      <BlickInsBuch kennung="workbook-buch" />
+    </div>
+  </section>
+
+  <section class="abschnitt" id="upgrade" aria-labelledby="upgrade-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">07 · Wechseln</p>
+        <h2 id="upgrade-titel" class="zeile">Vom Workbook zur <span class="pivot">App</span></h2>
+      </div>
+      <div class="fliesstext text" data-erscheinen>
+        <p>
+          Du hast mit dem Workbook angefangen und merkst, dass dir Führung und Erinnerungen helfen würden? Dann wechselst du jederzeit zur
+          App. Was du für das Workbook bezahlt hast, wird angerechnet{upgradePreis !== null && <>: Mit dem Code von deiner Bestellbestätigung kostet dich die App {formatEuro(upgradePreis)}</>}.
+        </p>
+        <p>Du beginnst lieber gleich mit der App? Dann ist das Workbook als PDF schon dabei.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt" id="fragen" aria-labelledby="faq-titel">
+    <div class="container zwei-spalten">
+      <div class="kopfblock">
+        <p class="label">08 · Häufige Fragen</p>
+        <h2 id="faq-titel" class="zeile">Was du vielleicht noch <span class="pivot">wissen</span> möchtest</h2>
+      </div>
+      <div class="faq text">
+        {
+          haeufigeFragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
         <p class="hinweis gedaempft">
-          Try a Life dient der Selbstreflexion und ersetzt keine Psychotherapie. Mehr zu Grundlagen und Grenzen steht unter{' '}
-          <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
+          Mehr zu Grundlagen und Grenzen der Methode steht unter <a href={seiten.wieIchArbeite}>Wie ich arbeite</a>.
         </p>
       </div>
     </div>
@@ -177,7 +435,7 @@ const umfang = [
   <section class="abschnitt" aria-labelledby="journal-titel">
     <div class="container zwei-spalten">
       <div class="kopfblock">
-        <p class="label">04 · Vom Journal zur App</p>
+        <p class="label">09 · Vom Journal zu Try a Life</p>
         <h2 id="journal-titel" class="zeile">Du kommst vom Jahresabschluss-<span class="pivot">Journal</span>?</h2>
       </div>
       <div class="fliesstext text" data-erscheinen>
@@ -186,22 +444,15 @@ const umfang = [
           beginnt auch Try a Life.
         </p>
         <p>
-          In der App gehst du einen Schritt weiter: Du entwirfst mehrere Möglichkeiten und erlebst eine davon im Alltag. So merkst du, ob
-          dein Bild zu dir passt.
+          Mit Try a Life gehst du einen Schritt weiter: Du entwirfst mehrere Möglichkeiten und erlebst eine davon im Alltag. So merkst du,
+          ob dein Bild zu dir passt.
         </p>
-        <p>Lieber auf Papier? Dieselbe Methode gibt es als <a href={seiten.modul1}>Workbook „Entwirf dein Zukunfts-Ich“</a>.</p>
+        <p>Noch nicht so weit? Das <a href={seiten.journal}>Jahresabschluss-Journal</a> bekommst du kostenlos.</p>
       </div>
     </div>
   </section>
 
-  {app.status !== 'verfuegbar' && <Interessentenliste
-    label="Start von Try a Life"
-    titel="Ich melde mich, sobald es"
-    pivot="losgeht"
-    text="Ich schreibe dir nur, wenn etwas startet, das du ausgewählt hast. Abmelden kannst du dich jederzeit."
-    vorauswahl={['tryalife']}
-  />}
-  <FesterKnopf zeile={`Try a Life · ${tryALifeAnkuendigung.status}`} angebot="try-a-life" />
+  <FesterKnopf zeile="Try a Life · App oder Workbook" angebot="try-a-life" />
 </Base>
 
 <style>
@@ -226,6 +477,10 @@ const umfang = [
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+
+  .zwei-wege {
+    font-weight: 700;
   }
 
   h1 {
@@ -263,51 +518,123 @@ const umfang = [
     padding: 12px 0;
   }
 
-  .umfang__aktionen {
-    margin: 8px 0 24px;
-  }
-
-  .schritte {
+  /* Aufbau */
+  .teile {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(24px, 3vw, 44px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(24px, 4vw, 56px);
   }
 
-  /* Vier Schritte: zwei mal zwei, ab breiten Bildschirmen in einer Reihe */
-  @media (min-width: 640px) {
-    .schritte {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 1100px) {
-    .schritte {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-
-  .schritte li {
+  .teil {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    border-top: 2px dashed var(--terrakotta);
-    padding-top: 18px;
+    gap: 14px;
+    border-top: 1px solid var(--tinte);
+    padding-top: 20px;
     font-size: 16px;
   }
 
-  .schritte__ziffer {
+  .teil__nr {
     font-family: var(--schrift-titel);
-    font-style: italic;
-    font-size: 40px;
+    font-size: 44px;
     line-height: 1;
     color: var(--terrakotta);
   }
 
-  .umfang {
+  .teil__titel {
+    font-size: clamp(28px, 2.6vw, 36px);
+  }
+
+  .teil__danach {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--terrakotta);
+    font-size: 14.5px;
+    color: var(--terrakotta-tief);
+    font-weight: 700;
+  }
+
+  .aufbau__summe {
+    margin-top: clamp(32px, 4vw, 48px);
+    font-size: 16px;
+  }
+
+  /* Ergebnis */
+  .ergebnisse {
+    list-style: none;
     margin: 0;
+    padding: 0;
+    counter-reset: ergebnis;
+  }
+
+  .ergebnisse li {
+    counter-increment: ergebnis;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 16px 0;
+    border-top: 1px solid var(--linie);
+  }
+
+  .ergebnisse li::before {
+    content: counter(ergebnis, decimal-leading-zero);
+    font-family: var(--schrift-titel);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--terrakotta-tief);
+  }
+
+  /* Vergleich */
+  .vergleich {
+    overflow-x: auto;
+    margin-bottom: clamp(32px, 4vw, 56px);
+    border-top: 2px solid var(--terrakotta);
+  }
+
+  .vergleich table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .vergleich th,
+  .vergleich td {
+    text-align: left;
+    vertical-align: top;
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .vergleich thead th {
+    font-family: var(--schrift-titel);
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 400;
+  }
+
+  .vergleich tbody th {
+    width: 22%;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .formate {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .umfang__aktionen {
+    margin: 8px 0 24px;
+  }
+
+  .umfang {
+    margin: 0 0 24px;
     padding: 0;
     list-style: none;
   }
@@ -329,8 +656,62 @@ const umfang = [
     background: var(--zitrone);
   }
 
+  .workbook-titel {
+    width: min(100%, 320px);
+    margin-top: 28px;
+    border: 1px solid var(--linie);
+    box-shadow: 0 10px 30px rgba(60, 50, 45, 0.15);
+  }
+
   .hinweis {
     margin-top: 20px;
     font-size: 15px;
+  }
+
+  /* Häufige Fragen */
+  .faq {
+    flex: 1 1 520px;
+    min-width: 0;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--linie);
+  }
+
+  .faq details:last-of-type {
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    min-height: 44px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    font-family: var(--schrift-titel);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--terrakotta);
+  }
+
+  .faq details[open] summary::after {
+    content: '−';
+  }
+
+  .faq details p {
+    padding: 0 0 20px;
+    color: var(--text-gedaempft);
   }
 </style>

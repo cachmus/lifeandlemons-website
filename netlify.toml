@@ -42,9 +42,25 @@
 # Kurzlinks (für Broschüre, Instagram und Gespräche)
 # ---------------------------------------------------------------------------
 
+# Seit 21.11.2026 (Startplan Workbook und Shop): eine Seite für die Try-a-Life-Methode mit App und Workbook
 [[redirects]]
   from = "/buch"
-  to = "/programme/entwirf-dein-zukunfts-ich/#kursbuch"
+  to = "/try-a-life/#workbook"
+  status = 302
+
+[[redirects]]
+  from = "/workbook"
+  to = "/try-a-life/#workbook"
+  status = 302
+
+[[redirects]]
+  from = "/app"
+  to = "/try-a-life/#app"
+  status = 302
+
+[[redirects]]
+  from = "/upgrade"
+  to = "/try-a-life/#upgrade"
   status = 302
 
 # Danke-Seite nach dem Digistore-Kauf des Workbooks, seit 17.11.2026 gelöscht (Workbook nur noch direkt per Mail)
@@ -65,12 +81,24 @@
 # Adressen aus dem ersten Code-Gerüst (nie öffentlich, zur Sicherheit weitergeleitet)
 [[redirects]]
   from = "/entwirf-dein-zukunfts-ich"
-  to = "/programme/entwirf-dein-zukunfts-ich/"
+  to = "/try-a-life/"
+  status = 301
+
+# Seiten zu Modul 1 (gedrucktes Workbook), Modul 2 und zur Widerrufsbelehrung für das gedruckte Workbook,
+# seit 21.11.2026 entfernt (Startplan Workbook und Shop, Entscheidungen 1 und 6)
+[[redirects]]
+  from = "/programme/entwirf-dein-zukunfts-ich/*"
+  to = "/try-a-life/"
   status = 301
 
 [[redirects]]
-  from = "/angebote"
-  to = "/programme/entwirf-dein-zukunfts-ich/#formate"
+  from = "/programme/manifestiere-dein-zukunfts-ich/*"
+  to = "/try-a-life/"
+  status = 301
+
+[[redirects]]
+  from = "/widerruf/*"
+  to = "/try-a-life/"
   status = 301
 
 # Übersicht der Programme gibt es (noch) nicht als eigene Seite

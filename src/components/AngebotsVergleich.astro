@@ -7,11 +7,11 @@
 import { Image } from 'astro:assets';
 import AngebotButton from './AngebotButton.astro';
 import { seiten, tryALifeAnkuendigung } from '../config/site';
-import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
+import { angebotNachId, aktuellerPreis, formatEuro, preisHinweis } from '../config/angebote';
 import BewertungsHinweis from './BewertungsHinweis.astro';
 import journalCover from '../assets/journal-cover.jpg';
 import talBild from '../assets/try-a-life-tal.jpg';
-import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
+import workbookTitel from '../assets/workbook-titel.jpg';
 
 interface Props {
   kennung?: string;
@@ -46,7 +46,7 @@ const tryPreis = aktuellerPreis(tryALife);
     </a>
     {/* Empfehlungsmarke statt nur Status (Audit heycatch, D4.3); Wortlaut Vorschlag, von Christine zu bestätigen */}
     <p class="weg__empfehlung">Meine Empfehlung</p>
-    <p class="weg__marke">Try a Life · {tryALifeAnkuendigung.status}</p>
+    <p class="weg__marke">Try a Life · Die App</p>
     <h3 class="weg__name">Life-Coaching-App</h3>
     <p class="weg__fuer">Für dich, wenn {tryALife.fuerDich}</p>
     <dl class="weg__fakten">
@@ -54,17 +54,18 @@ const tryPreis = aktuellerPreis(tryALife);
       <div><dt>Format</dt><dd>App zum Selbstlernen</dd></div>
       <div><dt>Programm</dt><dd>4 bis 6 Wochen</dd></div>
       <div><dt>Danach</dt><dd>Monatliche Momentaufnahme und Nachverfolgung deiner Meilensteine, 1 Jahr Zugang</dd></div>
+      <div><dt>Dazu</dt><dd>das Workbook als PDF</dd></div>
     </dl>
     {tryPreis && tryALife.preisAnker && <p class="weg__anker">{tryALife.preisAnker}</p>}
     {tryALife.andererWeg && <p class="weg__anderer">{tryALife.andererWeg}</p>}
-    <a class="button weg__knopf" href={seiten.tryALife}>Mehr zu Try a Life <span class="button__pfeil" aria-hidden="true">→</span></a>
+    <a class="button weg__knopf" href={`${seiten.tryALife}#app`}>Mehr zur App <span class="button__pfeil" aria-hidden="true">→</span></a>
   </li>
 
   <li class="weg">
-    <a class="weg__bild" href={seiten.modul1} tabindex="-1" aria-hidden="true">
-      <Image src={kursbuchFoto} alt="Das Workbook „Entwirf dein Zukunfts-Ich“ mit Vorder- und Rückseite auf einem hellen Leinentuch" widths={[360, 560]} sizes="(min-width: 960px) 360px, 92vw" />
+    <a class="weg__bild weg__bild--papier" href={seiten.workbook} tabindex="-1" aria-hidden="true">
+      <Image src={workbookTitel} alt="Titelseite von Try a Life · Das Workbook mit einem Aquarell eines Wegs durch Wiesen" widths={[220, 340]} sizes="200px" />
     </a>
-    <p class="weg__marke">Entwirf dein Zukunfts-Ich</p>
+    <p class="weg__marke">Try a Life · Das Workbook</p>
     <h3 class="weg__name">Life-Coaching-Workbook</h3>
     <p class="weg__fuer">Für dich, wenn {kursbuch.fuerDich}</p>
     <dl class="weg__fakten">
@@ -72,10 +73,9 @@ const tryPreis = aktuellerPreis(tryALife);
         <dt>Preis</dt>
         <dd>
           {kursbuchPreis ? formatEuro(kursbuchPreis.betrag) : 'auf Anfrage'}
-          {kursbuchPreis?.einfuehrung && <span class="weg__klein"> bis {formatDatum(STICHTAGE.einfuehrungBis)}</span>}
         </dd>
       </div>
-      <div><dt>Format</dt><dd>gedruckt, 184 Seiten</dd></div>
+      <div><dt>Format</dt><dd>PDF, 205 Seiten, ausfüllbar oder zum Ausdrucken</dd></div>
       <div><dt>Zeit</dt><dd>9 Einheiten, rund 6 Wochen</dd></div>
     </dl>
     {kursbuchPreis && <p class="weg__steuer">{preisHinweis(kursbuch)}</p>}

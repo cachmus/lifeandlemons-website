@@ -1,8 +1,8 @@
 ---
 /**
  * Übersicht aller Angebote (neu 16.11.2026). Ziel des Menüpunkts „Angebote“.
- * Reihenfolge nach Entscheidung vom 16.11.2026: kostenloses Journal zuerst, dann Try a Life (Ankündigung mit Warteliste),
- * dann Workbook und Kurs 1, dann Modul 2. Schnelles Finden und Conversion haben Vorrang.
+ * Reihenfolge nach Entscheidung vom 16.11.2026: kostenloses Journal zuerst, dann Try a Life als App, dann als Workbook.
+ * Modul 2 entfällt seit 21.11.2026 (Entscheidung 6 im Startplan). Schnelles Finden und Conversion haben Vorrang.
  * Wortlaut: Entwurf vom 16.11.2026, Freigabe durch Christine offen. Preise und Buttons aus src/config/angebote.ts.
  * Try a Life ohne Preis, solange es nicht buchbar ist; Starttermin aus `tryALifeAnkuendigung` (src/config/site.ts).
  */
@@ -18,7 +18,7 @@ import { seiten, tryALifeAnkuendigung } from '../config/site';
 import { angebotNachId } from '../config/angebote';
 import talBild from '../assets/try-a-life-tal.jpg';
 import wortmarke from '../assets/try-a-life-wortmarke.png';
-import kursbuchFoto from '../assets/kursbuch-vorder-und-rueckseite.jpg';
+import workbookTitel from '../assets/workbook-titel.jpg';
 
 // Seit 18.11.2026 kaufbar: Kaufknopf statt Warteliste
 const tryKaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
@@ -26,8 +26,7 @@ const tryKaufbar = angebotNachId('try-a-life').status === 'verfuegbar';
 const sprungmarken = [
   { href: '#kostenlos', label: 'Gratis starten' },
   { href: '#try-a-life', label: 'Als App' },
-  { href: '#kursbuch', label: 'Als Buch' },
-  { href: '#modul-2', label: 'Demnächst' },
+  { href: '#kursbuch', label: 'Als Workbook' },
 ];
 
 /** Umfang Try a Life (Probezeit im Spiel 10 Tage, Handlungen im echten Leben über die ganze Laufzeit; bestätigt 16.11.2026) */
@@ -42,7 +41,7 @@ const tryUmfang = [
 <Base
   dunklerSchluss
   title="Dein nächster Schritt: App, Workbook, Journal"
-  description="Alle Angebote auf einen Blick: das kostenlose Journal für deinen Jahresrückblick, die Life-Coaching-App Try a Life und das Workbook „Entwirf dein Zukunfts-Ich“."
+  description="Alle Angebote auf einen Blick: das kostenlose Journal für deinen Jahresrückblick und die Try-a-Life-Methode als App oder als Workbook."
 >
   <section class="kopf-abschnitt">
     <div class="container">
@@ -53,8 +52,8 @@ const tryUmfang = [
         nur noch nicht genau was. Hier findest du den Einstieg, der dazu passt.
       </p>
       <p class="einleitung">
-        Kostenlos reinschnuppern kannst du mit dem Journal. Meine Methode gibt es in zwei Formaten: digital als Life-Coaching-App und auf
-        Papier als Life-Coaching-Workbook.
+        Kostenlos reinschnuppern kannst du mit dem Journal. Die Try-a-Life-Methode gibt es in zwei Arbeitsweisen: geführt in der App
+        oder selbstständig im Workbook.
       </p>
       <nav class="sprung" aria-label="Zu den Angeboten springen">
         {sprungmarken.map((s) => <a href={s.href}>{s.label}</a>)}
@@ -75,7 +74,7 @@ const tryUmfang = [
   <section class="abschnitt" id="try-a-life" aria-labelledby="try-titel">
     <div class="container try">
       <div class="try__text">
-        <p class="label">02 · Life-Coaching-App · {tryALifeAnkuendigung.status}</p>
+        <p class="label">02 · Try a Life · Die App</p>
         <h2 id="try-titel">
           <Image class="try__wortmarke" src={wortmarke} alt="Try a Life" width={360} />
           <span class="try__unter">Wie willst du wirklich <span class="pivot">leben</span>?</span>
@@ -90,7 +89,7 @@ const tryUmfang = [
         <ul class="punkte">
           {tryUmfang.map((u) => <li>{u}</li>)}
         </ul>
-        <p class="try__meta">Einheiten für vier bis sechs Wochen, danach monatliche Momentaufnahme und Nachverfolgung deiner Meilensteine, ein Jahr Zugang</p>
+        <p class="try__meta">Einheiten für vier bis sechs Wochen, danach monatliche Momentaufnahme und Nachverfolgung deiner Meilensteine, ein Jahr Zugang, das Workbook als PDF dazu</p>
         {tryKaufbar ? (
           <div class="try__aufruf"><AngebotButton id="try-a-life" /> <AngebotButton id="try-a-life" ziel="demo" /></div>
         ) : (
@@ -99,7 +98,7 @@ const tryUmfang = [
             <WartelisteKurz liste={tryALifeAnkuendigung.brevoListe} kennung="try" />
           </>
         )}
-        <a class="textlink" href={seiten.tryALife}>Mehr über Try a Life</a>
+        <a class="textlink" href={seiten.tryALife}>Mehr zur Try-a-Life-Methode</a>
       </div>
       <Image
         class="try__bild"
@@ -114,26 +113,28 @@ const tryUmfang = [
     </div>
   </section>
 
-  <section class="abschnitt" id="kursbuch" aria-labelledby="kursbuch-titel">
+  <section class="abschnitt abschnitt--ende" id="kursbuch" aria-labelledby="kursbuch-titel">
     <div class="container angebot">
       <Image
         class="angebot__bild"
-        src={kursbuchFoto}
-        alt="Das Workbook „Entwirf dein Zukunfts-Ich“, Vorder- und Rückseite"
+        src={workbookTitel}
+        alt="Titelseite von Try a Life · Das Workbook mit einem Aquarell eines Wegs durch Wiesen"
         widths={[420, 680, 960]}
         sizes="(min-width: 960px) 460px, 100vw"
       />
       <div class="angebot__text">
-        <p class="label">03 · Life-Coaching-Workbook · dieselbe Methode auf Papier</p>
-        <h2 id="kursbuch-titel">Entwirf dein <span class="pivot">Zukunfts-Ich</span></h2>
+        <p class="label">03 · Try a Life · Das Workbook</p>
+        <h2 id="kursbuch-titel">Dieselbe Methode, <span class="pivot">selbstständig</span></h2>
         <p>
-          Für dich, wenn du spürst, dass sich etwas verändern soll, aber noch nicht genau sagen kannst, was es ist. Im gedruckten Workbook
-          entwirfst du in neun Einheiten drei mögliche Versionen deiner Zukunft und testest sie in einer Probezeit von 14 Tagen.
+          Für dich, wenn du spürst, dass sich etwas verändern soll, aber noch nicht genau sagen kannst, was es ist. Im Workbook entwirfst du
+          in neun Einheiten drei mögliche Versionen deiner Zukunft und testest sie in einer Probezeit von 14 Tagen. Du bekommst es als PDF
+          mit 205 Seiten, zum Ausfüllen am Tablet oder Rechner oder zum Ausdrucken.
         </p>
         <Preis id="kursbuch" form="inline" />
         <div class="aktionen">
           <AngebotButton id="kursbuch" />
-          <a class="textlink" href={seiten.modul1}>Alles zu Kurs 1</a>
+          <a class="textlink" href="/downloads/try-a-life-workbook-leseprobe.pdf" download>Leseprobe herunterladen</a>
+          <a class="textlink" href={seiten.workbook}>Alles zum Workbook</a>
         </div>
       </div>
     </div>
@@ -142,22 +143,6 @@ const tryUmfang = [
     </div>
   </section>
 
-  <section class="abschnitt abschnitt--ende" id="modul-2" aria-labelledby="modul2-titel">
-    <div class="container zwei-spalten">
-      <div class="kopfblock">
-        <p class="label">04 · Aufbaukurs · in Vorbereitung</p>
-        <h2 id="modul2-titel" class="zeile">Manifestiere dein <span class="pivot">Zukunfts-Ich</span></h2>
-      </div>
-      <div class="fliesstext text">
-        <p>
-          Für dich, wenn du deine Richtung kennst und sie zu einem festen Teil deines Lebens machen möchtest: 90 Tage mit Meilensteinen und
-          neuen Gewohnheiten.
-        </p>
-        <WartelisteKurz liste="12" kennung="modul2" hell />
-        <a class="textlink" href={seiten.modul2}>Mehr über Modul 2</a>
-      </div>
-    </div>
-  </section>
 </Base>
 
 <style>

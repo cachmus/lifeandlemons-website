@@ -1,7 +1,8 @@
 ---
 /**
  * Die Treppe mit den sieben Phasen der Methode (Positionierungspapier V4, § 4):
- * sechs in Modul 1 (durchgezogen), eine in Modul 2 (gestrichelt).
+ * sechs im Programm (durchgezogen), die siebte beginnt mit der Probezeit und geht danach im Alltag weiter (gestrichelt).
+ * Seit 21.11.2026 ohne Modul 2 (Startplan, Entscheidung 6); Beschriftung als Vorschlag zur Freigabe.
  * Zeichnet sich einmalig, sobald sie ins Bild kommt. Ohne JavaScript ist sie sofort vollständig.
  */
 const stufen = [
@@ -13,7 +14,7 @@ const stufen = [
   'Ausprobieren und nachjustieren',
   'Im Alltag verankern',
 ];
-/** Anzahl der Phasen in Modul 1; die übrigen gehören zu Modul 2 */
+/** Anzahl der Phasen im Programm; die übrigen gehen danach im Alltag weiter */
 const modul1 = 6;
 
 // Raster: sieben gleich breite Trittflächen, Steigung 34 Einheiten
@@ -33,8 +34,8 @@ const endpunkt = { x: breite - 9, y: y(letzte) };
 
 <figure class="treppe" data-treppe>
   <div class="treppe__module" aria-hidden="true" style={`grid-template-columns: ${modul1}fr ${stufen.length - modul1}fr`}>
-    <span class="treppe__modul">Modul 1</span>
-    <span class="treppe__modul treppe__modul--2">Modul 2</span>
+    <span class="treppe__modul">Im Programm</span>
+    <span class="treppe__modul treppe__modul--2">Danach</span>
   </div>
   <svg
     viewBox={`0 0 ${breite} ${hoehe}`}
@@ -42,7 +43,7 @@ const endpunkt = { x: breite - 9, y: y(letzte) };
     aria-labelledby="treppe-titel"
     preserveAspectRatio="xMidYMid meet"
   >
-    <title id="treppe-titel">Eine Treppe mit sieben Phasen: sechs in Modul 1, eine in Modul 2</title>
+    <title id="treppe-titel">Eine Treppe mit sieben Phasen: sechs im Programm, die siebte geht danach im Alltag weiter</title>
     <path class="treppe__linie" d={durchgezogen} pathLength="1" />
     <path class="treppe__strich" d={gestrichelt} />
     <circle class="treppe__punkt" cx={endpunkt.x} cy={endpunkt.y} r="5" />
