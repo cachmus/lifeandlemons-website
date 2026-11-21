@@ -14,7 +14,8 @@ export const site = {
    * muss deshalb zusätzlich genannt werden. Fachlich zu prüfen.
    */
   firmierung: 'Life&Lemons | Mentoring by Christine Achmus',
-  rolle: 'Mentorin für Lebensentwürfe',
+  /** Seit 21.11.2026 ohne „Mentorin für Lebensentwürfe“ (Entscheidung 8 im Startplan, Christine) */
+  rolle: 'Gründerin von Life&Lemons',
   slogan: 'Sei, wer du werden willst.',
   kontaktEmail: 'christine@lifeandlemons.de',
   /** Telefon fürs Impressum, verlangt von Digistore24 für die Produktfreigabe (Christine, 18.11.2026) */
@@ -61,18 +62,19 @@ export function inDerSuche(pfad: string): boolean {
 /** Feste Adressen der Seiten. Veröffentlichte URLs nicht ändern, sonst Weiterleitung in netlify.toml eintragen. */
 export const seiten = {
   start: '/',
-  modul1: '/programme/entwirf-dein-zukunfts-ich/',
-  modul2: '/programme/manifestiere-dein-zukunfts-ich/',
+  /** Das Workbook auf der Seite der Try-a-Life-Methode (seit 21.11.2026; die Seiten zu Modul 1 und 2 leiten auf /try-a-life/ weiter) */
+  workbook: '/try-a-life/#workbook',
+  /** Wechsel vom Workbook zur App mit Anrechnung (Kurzlink /upgrade) */
+  upgrade: '/try-a-life/#upgrade',
   /** Methode, Rolle, Grundlagen und Grenzen (neu 30.10.2026) */
   wieIchArbeite: '/wie-ich-arbeite/',
   ueberMich: '/ueber-mich/',
   impressum: '/impressum/',
   datenschutz: '/datenschutz/',
-  /** Widerrufsbelehrung mit Muster-Widerrufsformular für das gedruckte Workbook (neu 16.11.2026, fachlich zu prüfen) */
-  widerruf: '/widerruf/',
+  // Die Widerrufsbelehrung für das gedruckte Workbook entfällt seit 21.11.2026 (/widerruf/ leitet weiter); Käufe laufen über Digistore24.
   /** Bestätigungsseite nach dem Klick auf den Link in der Double-Opt-in-Mail (beide Brevo-Formulare). Immer noindex, Adresse nicht ändern. */
   dankeAnmeldung: '/danke/anmeldung/',
-  /** Landingpage der App „Try a Life“ (neu 11.11.2026). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
+  /** Seite der Try-a-Life-Methode mit App und Workbook (seit 21.11.2026, vorher Landingpage der App). Ziel des QR-Codes im Jahresabschluss-Journal, Adresse nicht ändern. */
   tryALife: '/try-a-life/',
   /** Landingpage des kostenlosen Jahresabschluss-Journals (neu 11.11.2026). Ziel des Links in der Instagram-Bio, Adresse nicht ändern. */
   journal: '/journal/',
@@ -90,8 +92,7 @@ export type NavPunkt = { label: string; href: string };
 
 /**
  * Reiter in Alltagssprache (entschieden 30.10.2026, ersetzt „Entwerfen“ und „Manifestieren“).
- * Modul 2 kommt erst ins Hauptmenü, wenn es buchbar ist; bis dahin über Startseite, „Wie ich arbeite“,
- * die Seite zu Modul 1 und den Footer erreichbar.
+ * Modul 2 entfällt auf der Website (Entscheidung 6 im Startplan, 21.11.2026).
  */
 export const hauptnavigation: NavPunkt[] = [
   { label: 'Angebote', href: seiten.angebote },
@@ -147,10 +148,8 @@ export const tryALifeAnkuendigung = {
 
 export const fussnavigation: NavPunkt[] = [
   { label: 'Wie ich arbeite', href: seiten.wieIchArbeite },
-  { label: 'Modul 2 · in Vorbereitung', href: seiten.modul2 },
   { label: 'Impressum', href: seiten.impressum },
   { label: 'Datenschutz', href: seiten.datenschutz },
-  { label: 'Widerruf', href: seiten.widerruf },
 ];
 
 /**
@@ -163,7 +162,8 @@ export const fussnavigation: NavPunkt[] = [
  * 3. Unter „Teilen“ den HTML-Code anzeigen und daraus die Adresse im Attribut `action` des
  *    <form>-Elements kopieren (beginnt mit https://…sibforms.com/serve/…). Diese Adresse hier eintragen.
  * 4. Die Listen-IDs unten bei `brevoListe` eintragen. Stand 11.11.2026: #9 Try a Life · Warteliste, #10 Life&Lemons · Newsletter,
- *    #11 Life&Lemons · Jahresabschluss-Journal, #12 Modul 2 · Warteliste. Interessen ohne Liste blendet das Formular aus,
+ *    #11 Life&Lemons · Jahresabschluss-Journal, #12 Modul 2 · Warteliste. Stand 21.11.2026: Im Formular stehen #10 und #12,
+ *    die Website zeigt nur #10; #9 ist in Brevo gelöscht, #13 und #14 (Käuferinnen) füllt die Edge Function digistore-ipn. Interessen ohne Liste blendet das Formular aus,
  *    sobald Brevo angebunden ist. Selbstlernkurs, Club und Einzel-Track seit 16.11.2026 entfernt.
  * 5. Einstellungen → Kontakte → „Per-contact pixel tracking consent“: „Track contacts whose consent is unknown“ auf „No“
  *    stellen und kein Zustimmungsfeld für Tracking ins Formular aufnehmen. Die Datenschutzerklärung sagt zu, dass
@@ -180,7 +180,9 @@ export const newsletter = {
   listenFeld: 'lists_25[]',
   interessen: [
     { id: 'tryalife', label: 'die Life-Coaching-App „Try a Life“', brevoListe: '9' },
-    { id: 'modul2', label: 'Workbook Band 2 und Modul 2 „Manifestiere dein Zukunfts-Ich“', brevoListe: '12' },
+    // Modul 2 entfällt auf der Website (Entscheidung 6 im Startplan, 21.11.2026), die Kontakte in Liste #12 bleiben in Brevo.
+    // Statt dessen der Newsletter (#10), am 21.11.2026 im Brevo-Formular als Liste ergänzt (Wortlaut Vorschlag zur Freigabe).
+    { id: 'newsletter', label: 'meinen Newsletter rund um Life Design', brevoListe: '10' },
   ],
   /**
    * PLATZHALTER: Einwilligungstext. Vor dem Livegang durch den Text aus dem Brevo-Formular ersetzen

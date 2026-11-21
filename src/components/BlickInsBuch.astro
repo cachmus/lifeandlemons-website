@@ -1,8 +1,8 @@
 ---
 /**
- * „Blick ins Buch“: Doppelseiten aus dem Workbook „Entwirf dein Zukunfts-Ich“ (Neugestaltung, 16.11.2026).
- * Quelle: Druckdatei 261013_Workbook_EntwirfdeinZukunftsIch_184p_11_Final_Innenseiten_korrigiert.pdf (PDF-Seiten 20/21, 24/25,
- * 62/63, 88/89, 120/121, 142/143, 166/167, 182/183). Bildunterschriften geprüft gegen die Seiten.
+ * „Blick ins Buch“: Doppelseiten aus Try a Life · Das Workbook (Neugestaltung, 16.11.2026; seit 21.11.2026 aus dem PDF).
+ * Quelle: Try-a-Life_Das-Workbook.pdf aus V28 (Seiten 24/25, 28/29, 66/67, 92/93, 122/123, 154/155, 172/173, 186/187).
+ * Bildunterschriften geprüft gegen die Seiten.
  */
 import BildSlider from './BildSlider.astro';
 import s1 from '../assets/blick-ins-buch/01-bevor-du-anfaengst.jpg';
@@ -21,13 +21,13 @@ interface Props {
 const { kennung = 'buch', ueberschriftEbene = 'h3' } = Astro.props;
 
 const bilder = [
-  { bild: s1, text: 'Bevor du anfängst, schaust du, wie zufrieden du gerade mit neun Bereichen deines Lebens bist.', alt: 'Doppelseite „Bevor du anfängst“ und „Das Lebensrad“ mit einem Rad aus neun Lebensbereichen' },
-  { bild: s2, text: 'Teil I, An der Schwelle: Du findest heraus, worauf du wartest und was dich bremst.', alt: 'Doppelseite zum Auftakt von Teil I „An der Schwelle“ mit Foto einer Wendeltreppe und Überblick über die Einheiten' },
-  { bild: s3, text: 'Teil II, Drei mögliche Leben: Du entdeckst, was dir Energie gibt, und entwirfst deine Zukunftsentwürfe.', alt: 'Doppelseite zum Auftakt von Teil II „Drei mögliche Leben“ mit Überblick über die Einheiten 3 bis 6' },
-  { bild: s4, text: 'Drei Bögen, drei Fragen: Weitergehen, Umsteigen, Wagen.', alt: 'Doppelseite „So gestaltest du deine drei Zukunftsentwürfe“ mit Kaffeetassen-Foto und den Fragen der drei Bögen' },
-  { bild: s5, text: 'Werte zur Orientierung helfen dir zu benennen, was dir wirklich wichtig ist.', alt: 'Doppelseite mit Wertegruppen wie Sicherheit, Wachstum, Freude und Freiheit in farbigen Feldern' },
-  { bild: s6, text: 'Am Ende von Teil II wird aus drei Möglichkeiten eine Richtung.', alt: 'Doppelseite „Vergleichen, abwägen, entscheiden“ mit Foto einer Tür mit gestreiftem Vorhang' },
-  { bild: s7, text: 'In der Probezeit lebst du deine Richtung vierzehn Tage im Alltag und hältst fest, wie es dir damit geht.', alt: 'Doppelseite „Dein Probezeit-Journal“ mit einer Tabelle für vierzehn Tage' },
+  { bild: s1, text: 'Bevor du anfängst, schaust du, wie zufrieden du gerade mit neun Bereichen deines Lebens bist.', alt: 'Doppelseite „Das Lebensrad“ und „Deine Momentaufnahme im Lebensrad“ mit einem Rad aus neun Lebensbereichen' },
+  { bild: s2, text: 'Teil I, An der Schwelle: Du findest heraus, worauf du wartest und was dich bremst.', alt: 'Doppelseite zum Auftakt von Teil I „An der Schwelle“ mit Überblick über die Einheiten und dem Foto einer Teetasse' },
+  { bild: s3, text: 'Teil II, Drei mögliche Leben: Du entdeckst, was dir Energie gibt, und entwirfst deine Zukunftsentwürfe.', alt: 'Doppelseite zum Auftakt von Teil II „Drei mögliche Leben“ mit Überblick über die Einheiten 3 bis 6 und einem Foto' },
+  { bild: s4, text: 'Drei Bögen, drei Fragen: Weitergehen, Umsteigen, Wagen.', alt: 'Doppelseite „So gestaltest du deine drei Zukunftsentwürfe“ mit den Fragen der drei Bögen und dem Aquarell eines Hauses am Hang' },
+  { bild: s5, text: 'Werte zur Orientierung helfen dir zu benennen, was dir wirklich wichtig ist.', alt: 'Doppelseite „Werte zur Orientierung“ mit Wertegruppen wie Sicherheit, Wachstum, Freiheit und Zugehörigkeit in farbigen Kreisen' },
+  { bild: s6, text: 'Am Ende von Teil II wird aus drei Möglichkeiten eine Richtung.', alt: 'Doppelseite „Deine Entscheidung“ mit Feldern zum Ankreuzen und Schreiben' },
+  { bild: s7, text: 'In der Probezeit lebst du deine Richtung vierzehn Tage im Alltag und hältst fest, wie es dir damit geht.', alt: 'Doppelseite „Probezeit-Journal“ mit Tabellen für vierzehn Tage' },
   { bild: s8, text: 'Auf der Zukunfts-Collage sammelst du deine wichtigsten Erkenntnisse an einer Stelle.', alt: 'Doppelseite „Mein Zukunfts-Ich“ mit Zetteln zum Ausfüllen wie auf einer Pinnwand' },
 ];
 ---
@@ -39,6 +39,6 @@ const bilder = [
   listenLabel="Doppelseiten aus dem Workbook"
   bilder={bilder}
   format="quer"
-  hinweis="Doppelseiten aus der Druckfassung, 184 Seiten."
+  hinweis="Doppelseiten aus dem Workbook, 205 Seiten als PDF."
   ueberschriftEbene={ueberschriftEbene}
 />

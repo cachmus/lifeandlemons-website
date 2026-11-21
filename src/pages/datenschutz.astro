@@ -5,7 +5,10 @@
  * statische Seite bei Netlify, lokale Schriften, keine Cookies, keine Analyse, Leistungsmessung von Netlify nur mit Einwilligung
  * (Entscheidung im Web-Speicher des Browsers, siehe `messung` in src/config/site.ts),
  * E-Mail über IONOS, Interessentenliste über Brevo (Double-Opt-in, ohne Öffnungs- und Klickmessung),
- * Bestellung des Workbooks direkt per E-Mail (seit 16.11.2026), digitale Produkte über Digistore24 als Wiederverkäufer,
+ * digitale Produkte über Digistore24 als Wiederverkäufer (seit 21.11.2026 auch das Workbook als PDF; die Bestellung des gedruckten
+ * Workbooks per E-Mail entfällt). Seit 21.11.2026 trägt die Edge Function digistore-ipn Käuferinnen in die Brevo-Listen
+ * „Kauf Workbook“ und „Kauf App“ ein und startet bei angekreuztem Newsletter im Bestellformular das Double-Opt-in
+ * (ENTWURF, fachlich zu prüfen),
  * Instagram nur als Link.
  *
  * Web-App Try a Life (ergänzt am 18.11.2026, ENTWURF, fachlich zu prüfen), Stand des Codes in cachmus/lifeandlemons-spiel:
@@ -144,8 +147,8 @@ import { site } from '../config/site';
 
       <h2>Interessentenliste über Brevo</h2>
       <p>
-        Wenn du dich in die Interessentenliste einträgst, verarbeite ich deine E-Mail-Adresse und die Themen, die du ausgewählt hast. Ich
-        schreibe dir nur, wenn eines dieser Themen startet. Beim Absenden übermittelt dein Browser die Angaben direkt an Brevo, die
+        Wenn du dich in die Interessentenliste oder in meinen Newsletter einträgst, verarbeite ich deine E-Mail-Adresse und die Themen, die
+        du ausgewählt hast. Ich schreibe dir nur zu diesen Themen. Beim Absenden übermittelt dein Browser die Angaben direkt an Brevo, die
         Brevo GmbH, Köpenicker Straße 126, 10179 Berlin. Brevo verwaltet die Liste und verschickt die E-Mails in meinem Auftrag; der Vertrag zur
         Auftragsverarbeitung ist Teil der Nutzungsbedingungen von Brevo. Brevo speichert die Daten auf Servern in der EU.
       </p>
@@ -162,15 +165,6 @@ import { site } from '../config/site';
       </p>
       <p>Ich werte nicht aus, ob und wann du meine E-Mails öffnest oder auf Links darin klickst.</p>
 
-      <h2>Bestellung des Workbooks</h2>
-      <p>
-        Das gedruckte Workbook bestellst du direkt bei mir per E-Mail. Dafür verarbeite ich deinen Namen, deine E-Mail-Adresse, deine
-        Lieferanschrift und was du bestellt hast. Ich nutze diese Angaben, um dir die Rechnung zu schicken, deine Zahlung zuzuordnen und
-        das Workbook zu versenden. Für den Versand gebe ich Name und Anschrift an das Versandunternehmen weiter. Rechtsgrundlage ist
-        Artikel 6 Absatz 1 Buchstabe b DSGVO. Rechnungen und Bestellunterlagen bewahre ich auf, solange die steuer- und handelsrechtlichen
-        Aufbewahrungspflichten es verlangen (Artikel 6 Absatz 1 Buchstabe c DSGVO).
-      </p>
-
       <h2>Bestellungen über Digistore24</h2>
       <p>
         Digitale Produkte verkaufe ich über Digistore24, die Digistore24 GmbH, St.-Godehard-Straße 32, 31139 Hildesheim. Wenn du auf einen
@@ -184,8 +178,19 @@ import { site } from '../config/site';
         speichere diese Daten, solange die steuer- und handelsrechtlichen Aufbewahrungspflichten es verlangen.
       </p>
       <p>
-        Bei Try a Life meldet Digistore24 den Kauf und eine spätere Erstattung oder Rückbuchung automatisch an meinen Server, damit die App
-        deinen Zugang freischalten oder sperren kann. Was dabei gespeichert wird, steht im nächsten Abschnitt.
+        Bei der App und beim Workbook meldet Digistore24 den Kauf und eine spätere Erstattung oder Rückbuchung automatisch an meinen Server.
+        Bei der App schaltet er damit deinen Zugang frei oder sperrt ihn. Was dabei gespeichert wird, steht im nächsten Abschnitt.
+      </p>
+      <p>
+        Damit ich dir Hinweise zu deinem Kauf schicken kann, etwa wie du das Workbook herunterlädst oder dich in der App anmeldest, trägt
+        mein Server deine E-Mail-Adresse in eine Käuferliste bei Brevo ein (Anschrift im Abschnitt zur Interessentenliste). Rechtsgrundlage
+        ist Artikel 6 Absatz 1 Buchstabe b DSGVO. Nach einer Erstattung oder Rückbuchung entfernt er dich aus dieser Liste.
+      </p>
+      <p>
+        Wenn du im Bestellformular ankreuzt, dass du meinen Newsletter bekommen möchtest, übermittelt Digistore24 diese Auswahl an meinen
+        Server. Brevo schickt dir dann eine E-Mail mit einem Bestätigungslink. Erst wenn du ihn anklickst, bist du im Newsletter eingetragen.
+        Für alles Weitere gilt, was im Abschnitt „Interessentenliste über Brevo“ steht: Double-Opt-in, Einwilligung als Rechtsgrundlage und
+        Abmeldung jederzeit.
       </p>
 
       <h2 id="try-a-life">Die Web-App Try a Life</h2>

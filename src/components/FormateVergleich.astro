@@ -4,27 +4,25 @@
  * Erscheint im Ratgeberartikel /ratgeber/selbstcoaching-vergleich/ (Frontmatter `vergleich: true`).
  * Preise und Umfang kommen aus src/config/angebote.ts. Die Spalte Einzelcoaching beschreibt das Format allgemein, ohne Preise anderer Anbieter.
  */
-import { angebotNachId, aktuellerPreis, formatEuro, formatDatum, preisHinweis, STICHTAGE } from '../config/angebote';
+import { angebotNachId, aktuellerPreis, formatEuro, preisHinweis } from '../config/angebote';
 
 const app = angebotNachId('try-a-life');
 const workbook = angebotNachId('kursbuch');
 const appPreis = aktuellerPreis(app);
 const wbPreis = aktuellerPreis(workbook);
 
-const spalten = ['Gratis-Journal', 'Try a Life (App)', 'Workbook', 'Einzelcoaching'];
+const spalten = ['Gratis-Journal', 'Try a Life · App', 'Try a Life · Workbook', 'Einzelcoaching'];
 const zeilen: { label: string; werte: string[] }[] = [
   {
     label: 'Preis',
     werte: [
       'kostenlos',
       appPreis ? `${formatEuro(appPreis.betrag)} ${preisHinweis(app)}` : 'auf Anfrage',
-      wbPreis
-        ? `${formatEuro(wbPreis.betrag)}${wbPreis.einfuehrung ? ` (Einführungspreis bis ${formatDatum(STICHTAGE.einfuehrungBis)})` : ''}, inkl. Versand`
-        : 'auf Anfrage',
+      wbPreis ? `${formatEuro(wbPreis.betrag)} ${preisHinweis(workbook)}` : 'auf Anfrage',
       'meist pro Sitzung, je nach Coach',
     ],
   },
-  { label: 'Format', werte: ['PDF, 17 Seiten', 'App im Browser, im Format eines Cozy Games', 'gedruckt, 184 Seiten', 'Gespräche vor Ort oder online'] },
+  { label: 'Format', werte: ['PDF, 17 Seiten', 'App im Browser, im Format eines Cozy Games', 'PDF, 205 Seiten, ausfüllbar oder zum Ausdrucken', 'Gespräche vor Ort oder online'] },
   { label: 'Zeit', werte: ['rund 90 Minuten', '4 bis 6 Wochen, danach monatliche Momentaufnahme und Nachverfolgung deiner Meilensteine, 1 Jahr Zugang', '9 Einheiten, rund 6 Wochen', 'mehrere Sitzungen über Wochen oder Monate'] },
   {
     label: 'Führung',
