@@ -47,7 +47,7 @@ Für einen neuen Lebensentwurf reicht das meist nicht. Dafür brauchst du mehrer
 
 Die App und das Workbook von Try a Life führen dich durch dieselbe Methode. Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen. Die Idee, mehrere Lebensentwürfe zu vergleichen und im Kleinen zu testen, geht auf das Life Design von [Bill Burnett und Dave Evans](https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans) an der Stanford University zurück. Den Entwurf, der dich am meisten anzieht, testest du mit kleinen Schritten im echten Leben. Zum Schluss prüfst du deine Richtung in einer Probezeit.
 
-Das Workbook ist ein PDF mit 205 Seiten. Du füllst es am Tablet oder Rechner aus oder druckst es aus und richtest dir deine Zeiten selbst ein.
+Das Workbook ist ein PDF mit 204 Seiten. Du füllst es am Tablet oder Rechner aus oder druckst es aus und richtest dir deine Zeiten selbst ein.
 
 Try a Life ist eine App im Format eines Cozy Games. Sie läuft in deinem Browser, führt dich Schritt für Schritt und zeigt dir deinen Fortschritt. Du hast ein Jahr Zugang.
 

@@ -182,7 +182,7 @@ export const newsletter = {
     { id: 'tryalife', label: 'die Life-Coaching-App „Try a Life“', brevoListe: '9' },
     // Modul 2 entfällt auf der Website (Entscheidung 6 im Startplan, 21.11.2026), die Kontakte in Liste #12 bleiben in Brevo.
     // Statt dessen der Newsletter (#10), am 21.11.2026 im Brevo-Formular als Liste ergänzt (Wortlaut Vorschlag zur Freigabe).
-    { id: 'newsletter', label: 'meinen Newsletter rund um Life Design', brevoListe: '10' },
+    { id: 'newsletter', label: 'meinen Newsletter mit Impulsen zu Orientierung und Lebenszielen', brevoListe: '10' },
   ],
   /**
    * PLATZHALTER: Einwilligungstext. Vor dem Livegang durch den Text aus dem Brevo-Formular ersetzen

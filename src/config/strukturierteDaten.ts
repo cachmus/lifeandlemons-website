@@ -128,7 +128,7 @@ export function kursbuchDaten(umschlag?: string): Knoten {
     author: { '@id': ids.person },
     publisher: { '@id': ids.organisation },
     inLanguage: 'de',
-    numberOfPages: 205,
+    numberOfPages: 204,
     url: ids.kursbuch,
     image: adresse(umschlag ?? '/marke/og-bild.png'),
     brand: marke(),
