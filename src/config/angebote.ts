@@ -154,7 +154,7 @@ export const angebote: Angebot[] = [
     passtWenn: 'du gern allein arbeitest und dir feste Zeiten selbst einrichten kannst.',
     passtWenigerWenn: 'du allein schon oft abgebrochen hast.',
     andererWeg: 'Wenn du es besonders mobil und spielerisch bevorzugst, empfehle ich dir Try a Life in der App.',
-    enthaelt: 'das Workbook als PDF mit 205 Seiten, am Tablet oder Rechner ausfüllbar oder zum Ausdrucken, mit neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
+    enthaelt: 'das Workbook als PDF mit 204 Seiten, am Tablet oder Rechner ausfüllbar oder zum Ausdrucken, mit neun Einheiten, zwei Praxiswochen und einer Probezeit von 14 Tagen.',
     // 39 € brutto (Entscheidung 2 im Startplan, Christine, 21.11.2026); 39 € + 80 € Upgrade = 119 € wie die App
     preisRegulaer: 39,
     preisRegulaerBestaetigt: true,
