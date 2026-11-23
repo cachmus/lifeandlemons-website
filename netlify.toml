@@ -74,6 +74,39 @@
   to = "/angebote/"
   status = 302
 
+# Flyer für Studierende in Hannover (23.11.2026): ein QR-Code je Aushangort, alle führen zum Journal.
+# Die Kampagnenangabe zeigt in der Messung (nur nach Einwilligung), welcher Ort Besuche bringt.
+# Das Ziel lässt sich hier ändern, ohne die Flyer neu zu drucken.
+[[redirects]]
+  from = "/flyer/mensa"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=mensa"
+  status = 302
+
+[[redirects]]
+  from = "/flyer/bibliothek"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=bibliothek"
+  status = 302
+
+[[redirects]]
+  from = "/flyer/wohnheim"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=wohnheim"
+  status = 302
+
+[[redirects]]
+  from = "/flyer/cafe"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=cafe"
+  status = 302
+
+[[redirects]]
+  from = "/flyer/hochschule"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=hochschule"
+  status = 302
+
+[[redirects]]
+  from = "/flyer"
+  to = "/journal/?utm_source=flyer&utm_medium=print&utm_campaign=studierende-hannover&utm_content=allgemein"
+  status = 302
+
 # ---------------------------------------------------------------------------
 # Weiterleitungen alter oder naheliegender Adressen
 # ---------------------------------------------------------------------------
