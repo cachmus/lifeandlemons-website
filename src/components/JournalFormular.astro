@@ -6,6 +6,11 @@
  * Felder wie im HTML-Code des Brevo-Formulars „Life&Lemons · Jahresabschluss-Journal“:
  * EMAIL, email_address_check (leer, Schutz vor Bots), locale.
  * Brevo trägt nach der Bestätigung in die Listen #11 (Journal) und #10 (Newsletter) ein; die Strecke #14 verschickt Mail 1 mit den Links.
+ *
+ * QUELLE (seit 24.11.2026, Entscheidung Christine): verstecktes Feld für das Brevo-Kontaktattribut QUELLE (Text). Es wird aus der
+ * Kampagnenangabe der aktuellen Adresse gefüllt (utm_source/utm_campaign/utm_content, etwa „pinterest/jahresrueckblick/fragenliste-01“),
+ * damit sich Anmeldungen Pins, Flyern oder Instagram zuordnen lassen. Nichts wird im Browser gespeichert; ohne Kampagnenangabe bleibt
+ * das Feld leer. Hinweis in der Datenschutzerklärung unter „Interessentenliste über Brevo“ (fachlich zu prüfen).
  */
 import { journal, seiten, site } from '../config/site';
 
@@ -48,6 +53,7 @@ const { label, titel, pivot, nach, text } = Astro.props;
 
       <input class="journal-form__honig" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <input type="hidden" name="locale" value="de" />
+      <input type="hidden" name="QUELLE" value="" data-quelle />
 
       <!-- Einwilligungstext: fachlich zu prüfen (wie newsletter.einwilligung in src/config/site.ts) -->
       <p class="journal-form__einwilligung">
@@ -68,7 +74,18 @@ const { label, titel, pivot, nach, text } = Astro.props;
 </section>
 
 <script>
+  /** Kampagnenangabe der aktuellen Adresse als kurzer Text, z. B. „pinterest/jahresrueckblick/fragenliste-01“; leer ohne Angabe */
+  function quelleAusAdresse(): string {
+    const parameter = new URLSearchParams(window.location.search);
+    return ['utm_source', 'utm_campaign', 'utm_content']
+      .map((name) => (parameter.get(name) ?? '').toLowerCase().replace(/[^a-z0-9._-]/g, '').slice(0, 40))
+      .filter(Boolean)
+      .join('/');
+  }
+
   function einrichten(form: HTMLFormElement) {
+    const quelle = form.querySelector<HTMLInputElement>('input[data-quelle]');
+    if (quelle) quelle.value = quelleAusAdresse();
     const meldung = form.querySelector<HTMLElement>('[data-meldung]')!;
     const fehler = form.querySelector<HTMLElement>('[data-fehler]')!;
     const email = form.querySelector<HTMLInputElement>('input[type="email"]')!;
