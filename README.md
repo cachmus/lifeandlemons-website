@@ -62,6 +62,6 @@ npm run build    # Typprüfung und Produktions-Build nach dist/
 ## Grundsätze
 
 - Keine API-Schlüssel oder Zugangsdaten im Repository. Das Repository ist öffentlich.
-- Kein Tracking, keine Cookies, Schriften lokal eingebunden (Fontsource).
+- Messung nur mit Einwilligung (HeyCatch und Netlify, seit 20.11.2026, siehe src/scripts/analytics.ts und Datenschutzerklärung), Schriften lokal eingebunden (Fontsource).
 - Keine eigene Zahlungsabwicklung. Bestellungen laufen über externe Anbieter.
 - Preise, Leistungen und Termine nur aus bestätigten Angaben.
