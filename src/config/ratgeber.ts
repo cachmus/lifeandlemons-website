@@ -42,6 +42,11 @@ export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
     bild: aufmacherJahresrueckblick,
     alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
   },
+  // Vorläufig das Themenbild (Terrasse mit Kompass, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
+  lebensrad: {
+    bild: bildOrientierung,
+    alt: 'Aquarell einer Terrasse mit Kompass und Globus über einem See',
+  },
   // Vorläufig das Themenbild (Wandkalender mit Zitronenblüte, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
   neujahrsvorsaetze: {
     bild: bildJahresrueckblick,

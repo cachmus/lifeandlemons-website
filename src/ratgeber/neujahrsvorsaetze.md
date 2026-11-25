@@ -29,6 +29,7 @@ quellen:
     url: 'https://doi.org/10.1287/mnsc.2014.1901'
 verwandt:
   - 'jahresrueckblick-fragen'
+  - 'lebensrad'
 journalKarte:
   titel: 'Deine Who-to-be-Liste im Journal'
   text: 'Im kostenlosen Journal „Wer will ich in 12 Monaten sein?“ schreibst du deine Who-to-be-Liste auf eine Kompass-Seite und planst deinen ersten Schritt für die nächsten 72 Stunden.'
@@ -51,7 +52,7 @@ Die Rangfolge ändert sich von Jahr zu Jahr kaum. Viele nehmen sich also jedes J
 
 ## Warum scheitern so viele Vorsätze?
 
-Ich hatte gefühlt zwanzig Jahre lang denselben Vorsatz: meine Gesundheit und meinen Körper in Ordnung bringen. Mein Gewicht ging rauf und runter, aber meine Gewohnheiten beim Essen und beim Sport änderten sich kaum. Die guten Vorsätze sind jedes Jahr gescheitert. Rückblickend war das immer ein Hoffen und selten ein Tun.
+Mein Körper und meine Gesundheit waren jahrelang mein Dauerthema (mich plagten als Jugendliche ein schwankendes Gewicht und Antriebslosigkeit). Gefühlt zwanzig Jahre lang hatte ich denselben Vorsatz: meine Gesundheit und meinen Körper in Ordnung bringen. Meine Gewohnheiten beim Essen und beim Sport änderten sich dabei kaum. Die guten Vorsätze sind jedes Jahr gescheitert. Rückblickend war das immer ein Hoffen und selten ein Tun.
 
 Heute weiß ich, woran das lag. Eine Liste mit Vorsätzen hat starke Gegner:
 
