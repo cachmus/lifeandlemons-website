@@ -42,6 +42,11 @@ export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
     bild: aufmacherJahresrueckblick,
     alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
   },
+  // Vorläufig das Themenbild (Wandkalender mit Zitronenblüte, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
+  neujahrsvorsaetze: {
+    bild: bildJahresrueckblick,
+    alt: 'Aquarell eines Wandkalenders aus Papier mit Zitronenblüte',
+  },
   'selbstcoaching-vergleich': {
     bild: aufmacherVergleich,
     alt: 'Aquarell eines mediterranen Tals mit einem gewundenen Weg zwischen Olivenbäumen',

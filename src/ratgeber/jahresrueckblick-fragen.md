@@ -27,6 +27,7 @@ quellen:
   - titel: 'Gollwitzer, P. M. & Sheeran, P. (2006): Implementation intentions and goal achievement: A meta-analysis of effects and processes. Advances in Experimental Social Psychology, 38, 69–119.'
     url: 'https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f'
 verwandt:
+  - 'neujahrsvorsaetze'
   - 'selbstcoaching-vergleich'
 faq:
   - frage: 'Wie lange dauert ein persönlicher Jahresrückblick?'
