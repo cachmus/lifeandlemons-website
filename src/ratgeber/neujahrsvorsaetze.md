@@ -2,9 +2,9 @@
 # Entwurf vom 25.11.2026 (Ratgeber Paket 1), Freigabe durch Christine offen.
 # Quellen: Christines Erfahrungen und Who-to-be-Gedanke aus dem Chat vom 25.11.2026 (wörtlich nah übernommen),
 # Journal „Wer will ich in 12 Monaten sein?“, Studien wie unter `quellen`. Beispielsätze unter „Welche Beispiele …“
-# sind Vorschläge von Claude zur Freigabe. veroeffentlicht: beim Merge auf das echte Datum setzen.
-titel: 'Neujahrsvorsätze, die halten: 5 Beispiele für deine Who-to-be-Liste'
-seitentitel: 'Neujahrsvorsätze, die halten: 5 Beispiele'
+# aus Christines eigener Who-to-be-Liste (Chat 25.11.2026), im ersten Satz die Zeitform angeglichen. veroeffentlicht: beim Merge auf das echte Datum setzen.
+titel: 'Neujahrsvorsätze, die halten: 6 Beispiele für deine Who-to-be-Liste'
+seitentitel: 'Neujahrsvorsätze, die halten: 6 Beispiele'
 kurztitel: 'Neujahrsvorsätze, die halten'
 beschreibung: 'Warum gute Vorsätze so oft scheitern und was stattdessen hilft: eine Who-to-be-Liste mit Beispielen, ein Wenn-dann-Plan und ein erster Schritt für den Alltag.'
 thema: jahresrueckblick
@@ -82,13 +82,16 @@ Wichtig ist, dass du formulierst, was du tun willst. In einer schwedischen Studi
 
 ## Welche Beispiele gibt es für gute Vorsätze?
 
-Nimm die häufigsten Vorsätze und schreib sie als Satz darüber, wer du sein willst. Jeder Satz beschreibt etwas, das man an dir sehen kann:
+So sehen Sätze aus meiner eigenen Who-to-be-Liste aus:
 
-- **Statt „Mehr Zeit für Familie und Freunde“:** Ich bin jemand, der jede Woche eine Freundin oder einen Freund anruft.
-- **Statt „Weniger Stress“:** Ich bin jemand, der mittags eine Pause ohne Bildschirm macht.
-- **Statt „Mehr Sport“:** Ich bin jemand, der nach dem Abendessen eine Runde um den Block geht.
-- **Statt „Mehr Zeit für mich“:** Ich bin jemand, der sich am Sonntagmorgen eine Stunde nur für sich nimmt.
-- **Statt „Gesünder essen“:** Ich bin jemand, der zu jeder Mahlzeit Gemüse auf den Teller legt.
+- Ich bin jemand, der sich bei alten Freunden meldet, auch wenn wir ein Jahr lang nichts voneinander gehört haben.
+- Ich bin ein Mensch, der Fremde mit einem Lächeln begrüßt.
+- Ich bin ein Mensch, der seinen Kindern aufmerksam zuhört.
+- Ich bin ein Mensch, der sich aktiv Zeit für kreative Projekte nimmt.
+- Ich bin ein Mensch, der im Berufsleben selbstsicher seinen Standpunkt vertritt.
+- Ich bin ein Mensch, der sich im Alltag Genuss gönnt.
+
+Jeder Satz beschreibt etwas, das man an mir sehen kann. Für deine eigene Liste nimmst du einen klassischen Vorsatz und fragst dich, woran man ihn im Alltag erkennen würde. Aus „mehr Sport“ wird dann zum Beispiel „Ich bin jemand, der nach dem Abendessen eine Runde um den Block geht“.
 
 Drei bis sieben solcher Sätze reichen. Sie dürfen vorläufig sein. Du schärfst sie im Laufe des Jahres nach.
 
