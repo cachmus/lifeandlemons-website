@@ -425,6 +425,45 @@ const journalZiel = journalLinkAus(slug!, seiten.journal);
     font-weight: 500;
   }
 
+  /* Tabellen im Fließtext (25.11.2026): Zeilen mit Trennlinien, Text oben bündig, erste Spalte als Stichwort */
+  .prosa :global(table) {
+    width: 100%;
+    margin: 1.4em 0 1.8em;
+    border-collapse: collapse;
+    font-family: var(--schrift-text);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .prosa :global(th),
+  .prosa :global(td) {
+    padding: 12px 14px 12px 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--lesen-linie);
+  }
+
+  .prosa :global(thead th) {
+    padding-top: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+    border-bottom: 2px solid var(--terrakotta);
+  }
+
+  .prosa :global(tbody td:first-child) {
+    width: 9.5em;
+    font-weight: 700;
+    color: var(--tinte);
+  }
+
+  .prosa :global(th:last-child),
+  .prosa :global(td:last-child) {
+    padding-right: 0;
+  }
+
   .prosa :global(p) {
     margin: 0 0 1em;
   }
