@@ -73,7 +73,7 @@ In meinem Lebensrad stehen neun Bereiche. Zu jedem steht hier, worauf du beim Be
 
 ## Warum neun Bereiche?
 
-Bill Burnett und Dave Evans, zwei Stanford-Professoren, arbeiten in ihrem Buch „Designing Your Life“ mit vier Bereichen: Health, Work, Play und Love. Das ist ein guter Anfang. Für meine Arbeit schaue ich genauer hin, weil sonst wichtige Unterschiede verloren gehen.
+Bill Burnett und Dave Evans, die an der Stanford University lehren, arbeiten in ihrem Buch „Designing Your Life“ mit vier Bereichen: Health, Work, Play und Love. Das ist ein guter Anfang. Für meine Arbeit schaue ich genauer hin, weil sonst wichtige Unterschiede verloren gehen.
 
 **Beziehungen brauchen unterschiedliche Aufmerksamkeit.** Vielleicht empfindest du viel Liebe für deine Kinder und hast ein enges Verhältnis zu deinen Freundinnen oder Eltern. Gleichzeitig ist in deiner Ehe etwas ins Wanken geraten. Deshalb stehen Familie, Freundschaft und Liebe bei mir getrennt im Rad.
 
