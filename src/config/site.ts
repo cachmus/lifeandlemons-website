@@ -209,6 +209,20 @@ export const journal = {
   },
 } as const;
 
+/**
+ * Freie Vorlagen zum direkten Download ohne Anmeldung (Entscheidung Christine, 25.11.2026), verlinkt aus Ratgeberartikeln.
+ * Liegen ebenfalls unter /downloads/ (noindex per netlify.toml): Gefunden werden soll der Artikel, nicht das PDF.
+ * Bauskript: Coaching/Digitale-Produkte/Freebie/_Quelle_Journal/lebensrad_vorlage.py
+ */
+export const vorlagen = {
+  lebensrad: {
+    pfad: '/downloads/lebensrad-vorlage.pdf',
+    umfang: 'Kostenlos · PDF · 3 Seiten',
+  },
+} as const;
+
+export type VorlageId = keyof typeof vorlagen;
+
 export type InteresseId = (typeof newsletter.interessen)[number]['id'];
 
 /** Baut einen mailto-Link mit vorbefülltem Betreff und optional Text. */

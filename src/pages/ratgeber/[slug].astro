@@ -1,7 +1,7 @@
 ---
 /**
  * Ratgeberartikel. Inhalte aus src/ratgeber/<slug>.md (Frontmatter siehe src/config/ratgeber.ts).
- * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, Quellen, weitere Artikel.
+ * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, freie Vorlage (falls vorhanden), Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, Quellen, weitere Artikel.
  * Gestaltung als Magazin, Richtung B „Abendlicht“ (16.11.2026): dunkler Kopf mit Aufmacher, Text auf heller Lesefläche.
  */
 import '../../styles/magazin.css';
@@ -9,6 +9,7 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import FormateVergleich from '../../components/FormateVergleich.astro';
+import VorlageKarte from '../../components/VorlageKarte.astro';
 import { site, seiten } from '../../config/site';
 import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon, weiterlesenFuer, journalLinkAus } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
@@ -88,6 +89,14 @@ const journalZiel = journalLinkAus(slug!, seiten.journal);
           <p class="kurz__titel">Kurz gesagt</p>
           <ul>{a.kurz.map((k) => <li>{k}</li>)}</ul>
         </div>
+
+        {
+          a.vorlage && (
+            <div class="m-hell">
+              <VorlageKarte datei={a.vorlage.datei} titel={a.vorlage.titel} text={a.vorlage.text} />
+            </div>
+          )
+        }
 
         <div class="prosa">
           {a.vergleich && <FormateVergleich />}

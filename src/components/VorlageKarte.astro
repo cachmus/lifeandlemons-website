@@ -1,0 +1,104 @@
+---
+/**
+ * Freie Vorlage zum direkten Download ohne Anmeldung (Ratgeber, seit 25.11.2026).
+ * Pfad und Umfang stehen in `vorlagen` (src/config/site.ts), Überschrift und Text im Frontmatter des Artikels.
+ * Das Vorschaubild zeigt die Seite, auf der gearbeitet wird.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { vorlagen, type VorlageId } from '../config/site';
+import vorschauLebensrad from '../assets/vorlagen/lebensrad-vorlage-seite.jpg';
+
+interface Props {
+  datei: VorlageId;
+  titel: string;
+  text: string;
+}
+
+const VORSCHAU: Record<VorlageId, { bild: ImageMetadata; alt: string }> = {
+  lebensrad: { bild: vorschauLebensrad, alt: 'Seite der Lebensrad-Vorlage mit einem leeren Rad aus neun Bereichen' },
+};
+
+const { datei, titel, text } = Astro.props;
+const vorlage = vorlagen[datei];
+if (!vorlage) throw new Error(`Unbekannte Vorlage „${datei}“ (siehe vorlagen in src/config/site.ts)`);
+const vorschau = VORSCHAU[datei];
+---
+
+<div class="vkarte">
+  <a class="vkarte__bild" href={vorlage.pfad} tabindex="-1" aria-hidden="true">
+    <Image src={vorschau.bild} alt={vorschau.alt} widths={[140, 280]} sizes="140px" />
+  </a>
+  <div class="vkarte__text">
+    <p class="vkarte__marke">{vorlage.umfang}</p>
+    <h2 class="vkarte__titel">{titel}</h2>
+    <p>{text}</p>
+    <a class="button button--klein" href={vorlage.pfad} download>PDF herunterladen <span class="button__pfeil" aria-hidden="true">↓</span></a>
+  </div>
+</div>
+
+<style>
+  .vkarte {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 36px);
+    align-items: center;
+    padding: clamp(20px, 3vw, 32px);
+    background: var(--papier-hell);
+    border: 1px solid var(--linie);
+    border-top: 3px solid var(--terrakotta);
+  }
+
+  @media (min-width: 640px) {
+    .vkarte {
+      grid-template-columns: 120px minmax(0, 1fr);
+    }
+  }
+
+  .vkarte__bild {
+    justify-self: center;
+    width: min(100%, 120px);
+  }
+
+  .vkarte__bild :global(img) {
+    width: 100%;
+    height: auto;
+    transform: rotate(-2deg);
+    box-shadow: 0 12px 26px rgba(34, 48, 44, 0.16);
+  }
+
+  .vkarte__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .vkarte__text p {
+    margin: 0;
+  }
+
+  .vkarte__marke {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+  }
+
+  .vkarte__marke::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--zitrone);
+  }
+
+  .vkarte__titel {
+    margin: 0;
+    font-size: clamp(24px, 2.6vw, 28px);
+  }
+</style>

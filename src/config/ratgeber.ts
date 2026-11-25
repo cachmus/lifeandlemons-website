@@ -6,6 +6,7 @@
  * Neuer Artikel: Aufmacher in src/assets/ratgeber/ ablegen und unten in `aufmacher` eintragen.
  */
 import type { ImageMetadata } from 'astro';
+import type { VorlageId } from './site';
 import bildJahresrueckblick from '../assets/ratgeber/thema-jahresrueckblick.png';
 import bildOrientierung from '../assets/ratgeber/thema-orientierung.jpg';
 import bildDranbleiben from '../assets/ratgeber/thema-dranbleiben.jpg';
@@ -90,6 +91,8 @@ export interface Artikel {
   vergleich?: boolean;
   /** Eigene Überschrift und eigener Text der Journal-Karte, sonst der Text für den Jahresrückblick */
   journalKarte?: { titel: string; text: string };
+  /** Freie Vorlage zum Download nach „Kurz gesagt“; `datei` ist ein Schlüssel aus `vorlagen` in site.ts */
+  vorlage?: { datei: VorlageId; titel: string; text: string };
 }
 
 type Modul = { frontmatter: Omit<Artikel, 'slug'>; Content: unknown; getHeadings: () => { depth: number; slug: string; text: string }[] };

@@ -4,12 +4,13 @@
 # „erst die Grundlagen“ (Chat 25.11.2026), Beschreibungen der Bereiche, Skala und Fragen aus Try a Life
 # (content/stationen/00-rundblick, Lesefassung Band 1 V46, Blatt 8 und 9), Schritte zu den Grundlagen aus den
 # Zaffri-Profilen Schlaf & Erholung, Stress & Resilienz, Energie & Antrieb (Lebensstil-Teile, Übernahme freigegeben
-# am 25.11.2026). Die Vorlage gibt es vorerst nur im Journal (Entscheidung zum freien Download offen).
+# am 25.11.2026). Freie Vorlage als PDF ohne Anmeldung (Entscheidung Christine, 25.11.2026), Pfad in `vorlagen`
+# (src/config/site.ts), Bauskript lebensrad_vorlage.py im Ordner _Quelle_Journal. Beispielbild aus dieser Vorlage.
 # veroeffentlicht: beim Merge auf das echte Datum setzen.
 titel: 'Lebensrad: Vorlage, Anleitung und Auswertung mit 9 Lebensbereichen'
 seitentitel: 'Lebensrad: Vorlage mit 9 Bereichen'
 kurztitel: 'Lebensrad: Vorlage und Anleitung'
-beschreibung: 'Mit dem Lebensrad siehst du in rund 15 Minuten, wo du gerade stehst: Anleitung, alle 9 Bereiche erklärt, Auswertung und die Vorlage kostenlos im Journal.'
+beschreibung: 'Mit dem Lebensrad siehst du in rund 15 Minuten, wo du gerade stehst: Anleitung, alle 9 Bereiche erklärt, Auswertung und eine kostenlose Vorlage als PDF.'
 thema: orientierung
 hauptbegriff: 'Lebensrad'
 veroeffentlicht: '2026-12-08'
@@ -27,10 +28,16 @@ quellen:
 verwandt:
   - 'jahresrueckblick-fragen'
   - 'neujahrsvorsaetze'
+vorlage:
+  datei: 'lebensrad'
+  titel: 'Lebensrad-Vorlage zum Ausfüllen'
+  text: 'Klick deine Werte direkt am Bildschirm an oder druck die Vorlage aus. Mit allen neun Bereichen, den Fragen zur Auswertung und deiner Ankerfrage. Ohne Anmeldung.'
 journalKarte:
-  titel: 'Das Lebensrad als Vorlage'
-  text: 'Im kostenlosen Journal „Wer will ich in 12 Monaten sein?“ findest du das Lebensrad mit allen neun Bereichen zum Ausfüllen, am Tablet oder ausgedruckt. Danach führt es dich durch Rückblick, Who-to-be-Liste und deinen ersten Schritt.'
+  titel: 'Vom Lebensrad zum ersten Schritt'
+  text: 'Im kostenlosen Journal „Wer will ich in 12 Monaten sein?“ ist das Lebensrad die erste Übung. Danach führt es dich durch Rückblick, Who-to-be-Liste und deinen ersten Schritt.'
 faq:
+  - frage: 'Gibt es eine Lebensrad-Vorlage zum Ausdrucken?'
+    antwort: 'Ja. Die Vorlage oben auf dieser Seite lädst du kostenlos und ohne Anmeldung herunter. Du kannst sie am Bildschirm ausfüllen oder ausdrucken.'
   - frage: 'Was ist ein Lebensrad?'
     antwort: 'Das Lebensrad ist eine verbreitete Übung aus dem Coaching. Du bewertest mehrere Lebensbereiche auf einer Skala von 1 bis 10 und trägst die Werte in einen Kreis ein. So siehst du, welche Bereiche gerade gut laufen und welche zu kurz kommen.'
   - frage: 'Wie oft sollte ich das Lebensrad ausfüllen?'
@@ -46,10 +53,6 @@ Das Lebensrad zeigt dir, wo du gerade stehst. Du bewertest neun Lebensbereiche v
 Das Lebensrad ist eine gängige Übung aus dem Coaching. Du stellst dir einen Kreis vor, der in neun Felder geteilt ist, für jeden Lebensbereich eines. Jedes Feld bekommt einen Wert von 1 bis 10. Je höher der Wert, desto weiter füllst du das Feld vom Mittelpunkt nach außen.
 
 Am Ende siehst du, ob dein Rad rund läuft oder eine Delle hat. Die Felder dürfen sich überschneiden. Ein Abend mit Freundinnen kann zur Freundschaft zählen und zugleich Freude bedeuten. Dabei zählt dein Gefühl.
-
-![Journalseite „Was dein Jahr dir gezeigt hat“ mit einem leeren Lebensrad aus neun Bereichen](../assets/journal-seiten/01-rueckblick.jpg)
-
-*So sieht das Lebensrad im kostenlosen Journal aus.*
 
 ## Welche Bereiche gehören in ein Lebensrad?
 
@@ -81,6 +84,8 @@ Wenn du eigene Schritte, Meilensteine und Wenn-dann-Pläne aufstellen willst, mu
 
 ## Wie füllst du das Lebensrad aus?
 
+Die [Lebensrad-Vorlage als PDF](/downloads/lebensrad-vorlage.pdf) kannst du am Bildschirm ausfüllen oder ausdrucken. So gehst du vor:
+
 **Bewerte jeden Bereich von 1 bis 10.** 1 heißt: kommt gerade deutlich zu kurz. 10 heißt: läuft gerade richtig gut. Füll spontan aus, ohne zu rechnen.
 
 **Wähle den Bereich, der dich im Moment am meisten stört.** Das muss nicht der mit der niedrigsten Zahl sein. Manchmal stört eine 6 mehr als eine 3, weil sie dir wichtiger ist.
@@ -88,6 +93,10 @@ Wenn du eigene Schritte, Meilensteine und Wenn-dann-Pläne aufstellen willst, mu
 **Schau dir alle neun Zahlen zusammen an.** Sind sie ausgewogen, oder ist etwas in Schieflage geraten?
 
 **Frag dich, wie es dazu kam.** Was hast du versehentlich oder absichtlich aufgegeben? Zwei bis drei Sätze reichen.
+
+![Ausgefülltes Lebensrad als Beispiel: In jedem der neun Bereiche sitzt ein farbiger Punkt auf dem passenden Ring, der Bereich Innenleben ist eingekreist](../assets/ratgeber/lebensrad-beispiel.jpg)
+
+*Beispiel aus der Vorlage: In jedem Bereich steht ein Punkt, innen liegt die 1, außen die 10. Eingekreist ist der Bereich, der gerade am meisten stört.*
 
 ## Wie wertest du dein Lebensrad aus?
 
