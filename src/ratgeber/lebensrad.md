@@ -5,7 +5,7 @@
 # (content/stationen/00-rundblick, Lesefassung Band 1 V46, Blatt 8 und 9), Schritte zu den Grundlagen aus den
 # Zaffri-Profilen Schlaf & Erholung, Stress & Resilienz, Energie & Antrieb (Lebensstil-Teile, Übernahme freigegeben
 # am 25.11.2026). Freie Vorlage als PDF ohne Anmeldung (Entscheidung Christine, 25.11.2026), Pfad in `vorlagen`
-# (src/config/site.ts), Bauskript lebensrad_vorlage.py im Ordner _Quelle_Journal. Beispielbild aus dieser Vorlage.
+# (src/config/site.ts), Bauskript lebensrad_vorlage.py im Ordner _Quelle_Journal. Aufmacher: Seite 2 der Vorlage als Beispiel.
 # veroeffentlicht: beim Merge auf das echte Datum setzen.
 titel: 'Lebensrad: Vorlage, Anleitung und Auswertung mit 9 Lebensbereichen'
 seitentitel: 'Lebensrad: Vorlage mit 9 Bereichen'
@@ -93,10 +93,6 @@ Die [Lebensrad-Vorlage als PDF](/downloads/lebensrad-vorlage.pdf) kannst du am B
 **Schau dir alle neun Zahlen zusammen an.** Sind sie ausgewogen, oder ist etwas in Schieflage geraten?
 
 **Frag dich, wie es dazu kam.** Was hast du versehentlich oder absichtlich aufgegeben? Zwei bis drei Sätze reichen.
-
-![Ausgefülltes Lebensrad als Beispiel: In jedem der neun Bereiche sitzt ein farbiger Punkt auf dem passenden Ring, der Bereich Innenleben ist eingekreist](../assets/ratgeber/lebensrad-beispiel.jpg)
-
-*Beispiel aus der Vorlage: In jedem Bereich steht ein Punkt, innen liegt die 1, außen die 10. Eingekreist ist der Bereich, der gerade am meisten stört.*
 
 ## Wie wertest du dein Lebensrad aus?
 

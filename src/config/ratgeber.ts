@@ -12,6 +12,7 @@ import bildOrientierung from '../assets/ratgeber/thema-orientierung.jpg';
 import bildDranbleiben from '../assets/ratgeber/thema-dranbleiben.jpg';
 import aufmacherJahresrueckblick from '../assets/ratgeber/aufmacher-jahresrueckblick.jpg';
 import aufmacherVergleich from '../assets/leben/weg-tal.jpg';
+import aufmacherLebensrad from '../assets/ratgeber/aufmacher-lebensrad.jpg';
 
 export const themen = [
   {
@@ -43,10 +44,10 @@ export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
     bild: aufmacherJahresrueckblick,
     alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
   },
-  // Vorläufig das Themenbild (Terrasse mit Kompass, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
+  // Die Vorlage selbst statt des Themenbilds (Christine, 25.11.2026): Seite 2 mit Beispielwerten, Zitronenzweig aus dem Journal
   lebensrad: {
-    bild: bildOrientierung,
-    alt: 'Aquarell einer Terrasse mit Kompass und Globus über einem See',
+    bild: aufmacherLebensrad,
+    alt: 'Lebensrad-Vorlage mit neun Bereichen, als Beispiel ausgefüllt, mit einem Zitronenzweig am Rand',
   },
   // Vorläufig das Themenbild (Wandkalender mit Zitronenblüte, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
   neujahrsvorsaetze: {
