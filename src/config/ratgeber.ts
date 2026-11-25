@@ -69,6 +69,13 @@ export interface Artikel {
   lesezeit: number;
   kurz: string[];
   faq?: { frage: string; antwort: string }[];
+  /**
+   * Quellenliste am Ende des Artikels (Ratgeber-Leitfaden, 25.11.2026: Zahlen nur mit Studie, am Ende eine Quellenliste).
+   * `titel` ist die vollständige Angabe (Autorinnen, Jahr, Titel, Zeitschrift), `url` der frei zugängliche Text, falls vorhanden.
+   */
+  quellen?: { titel: string; url?: string }[];
+  /** Artikel aus anderen Themen, die unter „Weiterlesen“ zuerst erscheinen (Dateinamen ohne .md) */
+  verwandt?: string[];
   /** true: Vergleichstabelle der Formate vor dem Text (Komponente FormateVergleich) */
   vergleich?: boolean;
   /** Eigene Überschrift und eigener Text der Journal-Karte, sonst der Text für den Jahresrückblick */
@@ -89,6 +96,25 @@ export const artikel: Artikel[] = artikelModule
   .sort((a, b) => (b.veroeffentlicht > a.veroeffentlicht ? 1 : -1));
 
 export const artikelPfad = (slug: string) => `/ratgeber/${slug}/`;
+
+/**
+ * Bis zu drei Artikel für „Weiterlesen“: zuerst die unter `verwandt` genannten, dann weitere aus demselben Thema.
+ * Ein Name unter `verwandt` ohne passenden Artikel bricht den Build ab, damit kein toter Verweis online geht.
+ */
+export function weiterlesenFuer(a: Artikel, anzahl = 3): Artikel[] {
+  const genannt = (a.verwandt ?? []).map((slug) => {
+    const treffer = artikel.find((x) => x.slug === slug);
+    if (!treffer) throw new Error(`[Ratgeber] „${a.slug}“ nennt unter verwandt den Artikel „${slug}“, den es nicht gibt.`);
+    return treffer;
+  });
+  const gleichesThema = artikel.filter((x) => x.thema === a.thema);
+  const liste = [...genannt, ...gleichesThema].filter((x, i, alle) => x.slug !== a.slug && alle.findIndex((y) => y.slug === x.slug) === i);
+  return liste.slice(0, anzahl);
+}
+
+/** Link zum Journal aus einem Artikel: Die Kampagnenangabe landet im Brevo-Feld QUELLE als „ratgeber/<slug>“ (JournalFormular). */
+export const journalLinkAus = (slug: string, journalPfad: string) =>
+  `${journalPfad}?utm_source=ratgeber&utm_medium=website&utm_campaign=${encodeURIComponent(slug)}`;
 
 /** Erlaubte Länge des eigenen Teils im Seitentitel (Audit geo-audit c_title): gerendert mit „ · Life&Lemons“ 30 bis 60 Zeichen */
 export const SEITENTITEL = { min: 16, max: 46 } as const;

@@ -1,7 +1,7 @@
 ---
 /**
  * Ratgeberartikel. Inhalte aus src/ratgeber/<slug>.md (Frontmatter siehe src/config/ratgeber.ts).
- * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, weitere Artikel.
+ * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, Quellen, weitere Artikel.
  * Gestaltung als Magazin, Richtung B „Abendlicht“ (16.11.2026): dunkler Kopf mit Aufmacher, Text auf heller Lesefläche.
  */
 import '../../styles/magazin.css';
@@ -10,7 +10,7 @@ import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import FormateVergleich from '../../components/FormateVergleich.astro';
 import { site, seiten } from '../../config/site';
-import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon } from '../../config/ratgeber';
+import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon, weiterlesenFuer, journalLinkAus } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
 // Aquarell-Porträt nach Christines Foto (von Christine erstellt und freigegeben, 16.11.2026)
 import portraet from '../../assets/portraet-christine-aquarell.jpg';
@@ -25,10 +25,13 @@ const a = artikel.find((x) => x.slug === slug)!;
 const Inhalt = eintrag.modul.Content as any;
 const kapitel = eintrag.modul.getHeadings().filter((h) => h.depth === 2);
 const thema = themen.find((t) => t.id === a.thema)!;
-const weitere = artikel.filter((x) => x.slug !== slug && x.thema === a.thema).slice(0, 3);
+// Zuerst die Artikel unter `verwandt`, dann dasselbe Thema (Ratgeber-Leitfaden: zwei bis vier Links zu anderen Artikeln)
+const weitere = weiterlesenFuer(a);
 const datum = new Date(a.aktualisiert ?? a.veroeffentlicht).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 const pfad = artikelPfad(slug!);
 const bild = aufmacher[slug!];
+// Herkunft im Brevo-Feld QUELLE: „ratgeber/<slug>“ (seit 25.11.2026)
+const journalZiel = journalLinkAus(slug!, seiten.journal);
 ---
 
 <Base
@@ -36,7 +39,7 @@ const bild = aufmacher[slug!];
   description={a.beschreibung}
   ogTyp="article"
   dunklerSchluss
-  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq })}
+  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq, bild: bild?.bild.src })}
 >
   <article class="artikel magazin">
     <header class="akopf">
@@ -76,6 +79,7 @@ const bild = aufmacher[slug!];
             ))
           }
           {a.faq?.length && <li><a href="#fragen">Häufige Fragen</a></li>}
+          {a.quellen?.length && <li><a href="#quellen">Quellen</a></li>}
         </ol>
       </aside>
 
@@ -92,6 +96,7 @@ const bild = aufmacher[slug!];
 
         <div class="artikel__journal m-hell">
           <JournalKarte
+            ziel={journalZiel}
             variante="kompakt"
             ueberschriftEbene="h2"
             titel={a.journalKarte?.titel ?? 'Alle Fragen in einem Journal'}
@@ -124,6 +129,19 @@ const bild = aufmacher[slug!];
                   <p>{f.antwort}</p>
                 </details>
               ))}
+            </section>
+          )
+        }
+
+        {
+          a.quellen?.length && (
+            <section class="quellen" id="quellen" aria-labelledby="quellen-titel">
+              <h2 id="quellen-titel">Quellen</h2>
+              <ol>
+                {a.quellen.map((q) => (
+                  <li>{q.url ? <a href={q.url} rel="noopener">{q.titel}</a> : q.titel}</li>
+                ))}
+              </ol>
             </section>
           )
         }
@@ -463,5 +481,24 @@ const bild = aufmacher[slug!];
 
   .hinweis {
     font-size: 14px;
+  }
+
+  .quellen h2 {
+    margin-bottom: 12px;
+  }
+
+  .quellen ol {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  .quellen a {
+    color: var(--tinte);
+    overflow-wrap: anywhere;
   }
 </style>

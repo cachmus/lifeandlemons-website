@@ -1,9 +1,13 @@
 ---
 # Entwurf vom 16.11.2026, Freigabe durch Christine offen. Quellen: Journal „Wer will ich in 12 Monaten sein?“,
 # freigegebene Begrüßungsstrecke (Mail 2 zur Who-to-be-Liste), Forschung wie im Text genannt.
-titel: 'Persönlicher Jahresrückblick: Fragen, die dich wirklich weiterbringen'
-kurztitel: 'Jahresrückblick: Fragen, die weiterbringen'
-beschreibung: 'Fragen für deinen persönlichen Jahresrückblick und Ausblick: zurückschauen, ein Bild für die nächsten 12 Monate finden und mit einem ersten Schritt starten.'
+# Überarbeitung 25.11.2026 (Ratgeber Paket 1, Vorschlag zur Freigabe durch Christine): Titel, Seitentitel und Beschreibung
+# mit Zahl und „PDF“ (Googles erster Vorschlag zu „jahresrückblick fragen“ ist „pdf“), Quellenliste, Weiterlesen.
+# Vorher: titel 'Persönlicher Jahresrückblick: Fragen, die dich wirklich weiterbringen'.
+titel: 'Persönlicher Jahresrückblick: 11 Fragen, die dich wirklich weiterbringen'
+seitentitel: 'Jahresrückblick: 11 Fragen mit PDF-Vorlage'
+kurztitel: 'Jahresrückblick: 11 Fragen, die weiterbringen'
+beschreibung: 'Jahresrückblick mit 11 Fragen: zurückschauen, ein Bild für die nächsten 12 Monate finden und mit einem ersten Schritt starten. Alle Fragen als kostenloses PDF.'
 thema: jahresrueckblick
 hauptbegriff: 'Jahresrückblick Fragen'
 veroeffentlicht: '2026-11-16'
@@ -13,6 +17,17 @@ kurz:
   - 'Fang mit dem an, was dir Kraft gegeben hat, und erst dann mit dem, was gefehlt hat.'
   - 'Schreib statt Vorsätzen auf, wer du sein willst, in Sätzen, die man im Alltag sehen kann.'
   - 'Plan vom Ziel rückwärts, bis ein Schritt für die nächsten 72 Stunden übrig bleibt.'
+quellen:
+  - titel: 'Markus, H. & Nurius, P. (1986): Possible selves. American Psychologist, 41(9), 954–969.'
+    url: 'https://doi.org/10.1037/0003-066X.41.9.954'
+  - titel: 'Oyserman, D., Bybee, D., Terry, K. & Hart-Johnson, T. (2004): Possible selves as roadmaps. Journal of Research in Personality, 38(2), 130–149.'
+    url: 'https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf'
+  - titel: 'Oettingen, G. & Mayer, D. (2002): The motivating function of thinking about the future: Expectations versus fantasies. Journal of Personality and Social Psychology, 83(5), 1198–1212.'
+    url: 'https://www.psy.uni-hamburg.de/arbeitsbereiche/paedagogische-psychologie-und-motivation/personen/oettingen-gabriele/dokumente/oettingen-mayer-2002.pdf'
+  - titel: 'Gollwitzer, P. M. & Sheeran, P. (2006): Implementation intentions and goal achievement: A meta-analysis of effects and processes. Advances in Experimental Social Psychology, 38, 69–119.'
+    url: 'https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f'
+verwandt:
+  - 'selbstcoaching-vergleich'
 faq:
   - frage: 'Wie lange dauert ein persönlicher Jahresrückblick?'
     antwort: 'Für einen gründlichen Rückblick mit Ausblick solltest du rund 90 Minuten einplanen, am besten verteilt auf zwei oder drei ruhige Abende. Wenn du wenig Zeit hast, reichen für die wichtigsten Fragen auch rund 35 Minuten.'
