@@ -6,6 +6,7 @@
 # Zaffri-Profilen Schlaf & Erholung, Stress & Resilienz, Energie & Antrieb (Lebensstil-Teile, Übernahme freigegeben
 # am 25.11.2026). Freie Vorlage als PDF ohne Anmeldung (Entscheidung Christine, 25.11.2026), Pfad in `vorlagen`
 # (src/config/site.ts), Bauskript lebensrad_vorlage.py im Ordner _Quelle_Journal. Aufmacher: Seite 2 der Vorlage als Beispiel.
+# Text überarbeitet von Christine im Doc „Reintext Ratgeberartikel Lebensrad“ (25.11.2026), wörtlich übernommen.
 # veroeffentlicht: beim Merge auf das echte Datum setzen.
 titel: 'Lebensrad: Vorlage, Anleitung und Auswertung mit 9 Lebensbereichen'
 seitentitel: 'Lebensrad: Vorlage mit 9 Bereichen'
@@ -46,13 +47,13 @@ faq:
     antwort: 'Fang mit Körper und Innenleben an, also mit Schlaf, Erholung und Bewegung. Wenn dich die Lage stark belastet oder du dich über Wochen erschöpft fühlst, hol dir ärztlichen oder psychotherapeutischen Rat. Das Lebensrad ersetzt keine Behandlung.'
 ---
 
-Das Lebensrad zeigt dir, wo du gerade stehst. Du bewertest neun Lebensbereiche von 1 bis 10 und siehst auf einen Blick, was gut läuft und was zu kurz kommt. Dafür brauchst du rund 15 Minuten und dein Bauchgefühl.
+Das Lebensrad zeigt dir, wo du gerade stehst. Du bewertest neun Lebensbereiche auf einer Skala von 1 bis 10 und siehst auf einen Blick, was gut läuft und was zu kurz kommt. Dafür brauchst du nur rund 15 Minuten und dein Bauchgefühl.
 
 ## Wie funktioniert das Lebensrad?
 
-Das Lebensrad ist eine gängige Übung aus dem Coaching. Du stellst dir einen Kreis vor, der in neun Felder geteilt ist, für jeden Lebensbereich eines. Jedes Feld bekommt einen Wert von 1 bis 10. Je höher der Wert, desto weiter füllst du das Feld vom Mittelpunkt nach außen.
+Das Lebensrad ist eine gängige Übung aus der Coaching-Praxis. Du stellst dir einen Kreis vor, der in neun Felder geteilt ist, für jeden Lebensbereich eines. Jedes Feld bekommt einen Wert von 1 bis 10. Je höher der Wert, desto weiter füllst du das Feld vom Mittelpunkt nach außen.
 
-Am Ende siehst du, ob dein Rad rund läuft oder eine Delle hat. Die Felder dürfen sich überschneiden. Ein Abend mit Freundinnen kann zur Freundschaft zählen und zugleich Freude bedeuten. Dabei zählt dein Gefühl.
+Am Ende siehst du, ob dein Rad rund läuft oder eine Delle hat.
 
 ## Welche Bereiche gehören in ein Lebensrad?
 
@@ -72,11 +73,11 @@ In meinem Lebensrad stehen neun Bereiche. Zu jedem steht hier, worauf du beim Be
 
 ## Warum neun Bereiche?
 
-Bill Burnett und Dave Evans arbeiten in ihrem Buch „Designing Your Life“ mit vier Bereichen: Health, Work, Play und Love. Das ist ein guter Anfang. Für meine Arbeit schaue ich genauer hin, weil sonst wichtige Unterschiede verloren gehen.
+Bill Burnett und Dave Evans, zwei Stanford-Professoren, arbeiten in ihrem Buch „Designing Your Life“ mit vier Bereichen: Health, Work, Play und Love. Das ist ein guter Anfang. Für meine Arbeit schaue ich genauer hin, weil sonst wichtige Unterschiede verloren gehen.
 
-**Beziehungen brauchen unterschiedliche Aufmerksamkeit.** Vielleicht empfindest du viel Liebe für deine Kinder und hast ein enges Verhältnis zu deinen Freundinnen oder Eltern. Gleichzeitig ist in deiner Ehe etwas ins Wanken geraten. Deshalb stehen Familie, Freundschaft und Liebe getrennt im Rad.
+**Beziehungen brauchen unterschiedliche Aufmerksamkeit.** Vielleicht empfindest du viel Liebe für deine Kinder und hast ein enges Verhältnis zu deinen Freundinnen oder Eltern. Gleichzeitig ist in deiner Ehe etwas ins Wanken geraten. Deshalb stehen Familie, Freundschaft und Liebe bei mir getrennt im Rad.
 
-**Gesundheit ist innen und außen.** Kaum Infekte zu haben und gut Treppen steigen zu können ist etwas anderes, als dich selbst völlig fertigzumachen, gestresst zu sein und deshalb schlecht zu schlafen. Oder ein schlechtes Bild davon zu haben, was du schaffen kannst. Körper und Innenleben sind beide wichtig, und du betrachtest sie einzeln.
+**Gesundheit ist innen und außen.** Kaum Infekte zu haben und gut Treppen steigen zu können ist die eine Sache. Aber mit sich selbst im Reinen zu sein, anstatt sich selbst fertigzumachen und unter Dauerstress zu leiden, ist noch eine völlig andere. Körper und Innenleben sind beide wichtig und ergänzen sich, weshalb wir sie im Rad einzeln betrachten.
 
 **Arbeit umfasst mehr als den Job.** Kommen deine Fähigkeiten und Ressourcen zur Geltung? Hast du das Gefühl, einen sinnvollen Beitrag zu leisten und dich zu entwickeln? Kannst du dir das Leben leisten, das du dir wünschst? Vielleicht hast du ein ungünstiges Verhältnis zu Geld, an dem du arbeiten könntest, um ein paar Bremsen zu lösen. Darum stehen Entwicklung, Geld und Beitrag einzeln im Rad.
 
@@ -116,6 +117,6 @@ Wenn du dich über Wochen erschöpft fühlst, obwohl du genug schläfst, lass di
 
 ## Wie oft solltest du das Lebensrad ausfüllen?
 
-Alle drei Monate. Drei Monate kannst du gut überblicken, und in dieser Zeit kann eine Menge passieren. Oder du merkst, dass drei Monate vergangen sind und sich nichts getan hat. Auch das ist eine wichtige Erkenntnis.
+Ich empfehle alle drei Monate. Drei Monate kannst du noch gut überblicken, und gleichzeitig kann in dieser Zeit bereits eine Menge passieren. Oder aber du merkst, dass drei Monate vergangen sind und sich nichts getan hat. Auch das ist eine wichtige Erkenntnis.
 
 Mit diesem Abstand wird das Rad mehr als eine Momentaufnahme deiner Tagesform. Wenn du eine Woche lang mit Grippe im Bett lagst, machst du dein Kreuz bei Körper vielleicht etwas niedriger. Im Abstand von drei Monaten siehst du eher, wie es dir insgesamt geht. Das gilt für alle neun Bereiche.
