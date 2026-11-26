@@ -21,8 +21,8 @@ kurz:
   - 'Liegen Körper und Innenleben ganz unten, kümmerst du dich zuerst um diese Grundlagen.'
   - 'Füll das Rad alle drei Monate neu aus. So siehst du, wie sich deine Bereiche über die Zeit entwickeln.'
 quellen:
-  - titel: 'Burnett, B. & Evans, D. (2016): Designing Your Life. How to Build a Well-Lived, Joyful Life. New York: Knopf.'
-    url: 'https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans'
+  - titel: 'Burnett, B. & Evans, D. (2016): Mach, was Du willst. Design Thinking fürs Leben. Berlin: Econ. Originalausgabe: Designing Your Life. New York: Knopf.'
+    url: 'https://www.thalia.de/shop/home/artikeldetails/A1039595043'
   - titel: 'Zaccaro, A., Piarulli, A., Laurino, M., Garbella, E., Menicucci, D., Neri, B. & Gemignani, A. (2018): How breath-control can change your life: A systematic review on psycho-physiological correlates of slow breathing. Frontiers in Human Neuroscience, 12, 353.'
     url: 'https://doi.org/10.3389/fnhum.2018.00353'
 verwandt:

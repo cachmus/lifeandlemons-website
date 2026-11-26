@@ -23,8 +23,8 @@ kurz:
 quellen:
   - titel: 'Oyserman, D., Bybee, D., Terry, K. & Hart-Johnson, T. (2004): Possible selves as roadmaps. Journal of Research in Personality, 38(2), 130–149.'
     url: 'https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf'
-  - titel: 'Burnett, B. & Evans, D. (2016): Designing Your Life. How to Build a Well-Lived, Joyful Life. New York: Knopf.'
-    url: 'https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans'
+  - titel: 'Burnett, B. & Evans, D. (2016): Mach, was Du willst. Design Thinking fürs Leben. Berlin: Econ. Originalausgabe: Designing Your Life. New York: Knopf.'
+    url: 'https://www.thalia.de/shop/home/artikeldetails/A1039595043'
 verwandt:
   - 'jahresrueckblick-fragen'
 faq:
@@ -54,7 +54,7 @@ Für einen neuen Lebensentwurf reicht das meist nicht. Dafür brauchst du mehrer
 
 ## Workbook und App: das komplette Programm zum Selbstlernen
 
-Die App und das Workbook von Try a Life führen dich durch dieselbe Methode. Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen. Die Idee, mehrere Lebensentwürfe zu vergleichen und im Kleinen zu testen, geht auf das Life Design von [Bill Burnett und Dave Evans](https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans) an der Stanford University zurück. Den Entwurf, der dich am meisten anzieht, testest du mit kleinen Schritten im echten Leben. Zum Schluss prüfst du deine Richtung in einer Probezeit.
+Die App und das Workbook von Try a Life führen dich durch dieselbe Methode. Du entwirfst drei völlig unterschiedliche Leben: Weitergehen, Umsteigen und Wagen. Die Idee, mehrere Lebensentwürfe zu vergleichen und im Kleinen zu testen, geht auf das Life Design von [Bill Burnett und Dave Evans](https://www.thalia.de/shop/home/artikeldetails/A1039595043) an der Stanford University zurück. Den Entwurf, der dich am meisten anzieht, testest du mit kleinen Schritten im echten Leben. Zum Schluss prüfst du deine Richtung in einer Probezeit.
 
 Das Workbook ist ein PDF mit 204 Seiten. Du füllst es am Tablet oder Rechner aus oder druckst es aus und richtest dir deine Zeiten selbst ein.
 
