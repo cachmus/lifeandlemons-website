@@ -1,5 +1,5 @@
 ---
-# Entwurf vom 25.11.2026 (Ratgeber Paket 1), Freigabe durch Christine offen.
+# Entwurf vom 25.11.2026 (Ratgeber Paket 1), freigegeben von Christine am 27.11.2026.
 # Quellen: Christines Begründung der neun Bereiche und des Rhythmus von drei Monaten (Chat 25.11.2026), ihre Regel
 # „erst die Grundlagen“ (Chat 25.11.2026), Beschreibungen der Bereiche, Skala und Fragen aus Try a Life
 # (content/stationen/00-rundblick, Lesefassung Band 1 V46, Blatt 8 und 9), Schritte zu den Grundlagen aus den
@@ -7,14 +7,13 @@
 # am 25.11.2026). Freie Vorlage als PDF ohne Anmeldung (Entscheidung Christine, 25.11.2026), Pfad in `vorlagen`
 # (src/config/site.ts), Bauskript lebensrad_vorlage.py im Ordner _Quelle_Journal. Aufmacher: Seite 2 der Vorlage als Beispiel.
 # Text überarbeitet von Christine im Doc „Reintext Ratgeberartikel Lebensrad“ (25.11.2026), wörtlich übernommen.
-# veroeffentlicht: beim Merge auf das echte Datum setzen.
 titel: 'Lebensrad: Vorlage, Anleitung und Auswertung mit 9 Lebensbereichen'
 seitentitel: 'Lebensrad: Vorlage mit 9 Bereichen'
 kurztitel: 'Lebensrad: Vorlage und Anleitung'
 beschreibung: 'Mit dem Lebensrad siehst du in rund 15 Minuten, wo du gerade stehst: Anleitung, alle 9 Bereiche erklärt, Auswertung und eine kostenlose Vorlage als PDF.'
 thema: orientierung
 hauptbegriff: 'Lebensrad'
-veroeffentlicht: '2026-12-08'
+veroeffentlicht: '2026-11-27'
 lesezeit: 8
 kurz:
   - 'Im Lebensrad bewertest du neun Lebensbereiche von 1 bis 10 und siehst auf einen Blick, wo etwas klemmt.'

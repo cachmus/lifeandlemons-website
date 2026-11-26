@@ -8,6 +8,7 @@ beschreibung: 'Journal, Workbook, App oder Einzelcoaching? Ein Vergleich nach Pr
 thema: orientierung
 hauptbegriff: 'Selbstcoaching'
 veroeffentlicht: '2026-11-19'
+aktualisiert: '2026-11-27'
 lesezeit: 5
 vergleich: true
 journalKarte:

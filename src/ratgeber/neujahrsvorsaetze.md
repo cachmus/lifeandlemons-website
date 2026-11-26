@@ -3,14 +3,14 @@
 # Neujahrsvorsätze“ (26.11.2026), wörtlich übernommen.
 # Quellen: Christines Erfahrungen und Who-to-be-Gedanke aus dem Chat vom 25.11.2026 (wörtlich nah übernommen),
 # Journal „Wer will ich in 12 Monaten sein?“, Studien wie unter `quellen`. Beispielsätze unter „Welche Beispiele …“
-# aus Christines eigener Who-to-be-Liste (Chat 25.11.2026), im ersten Satz die Zeitform angeglichen. veroeffentlicht: beim Merge auf das echte Datum setzen.
+# aus Christines eigener Who-to-be-Liste (Chat 25.11.2026), im ersten Satz die Zeitform angeglichen.
 titel: 'Neujahrsvorsätze, die halten: 6 Beispiele für deine Who-to-be-Liste'
 seitentitel: 'Neujahrsvorsätze, die halten: 6 Beispiele'
 kurztitel: 'Neujahrsvorsätze, die halten'
 beschreibung: 'Warum gute Vorsätze so oft scheitern und was stattdessen hilft: eine Who-to-be-Liste mit Beispielen, ein Wenn-dann-Plan und ein erster Schritt für den Alltag.'
 thema: jahresrueckblick
 hauptbegriff: 'Neujahrsvorsätze'
-veroeffentlicht: '2026-12-08'
+veroeffentlicht: '2026-11-27'
 lesezeit: 7
 kurz:
   - 'Vorsätze scheitern oft, weil sie Listen sind: Der Alltag, widersprüchliche Ziele oder der Wunsch nach Erleichterung räumen sie ab.'

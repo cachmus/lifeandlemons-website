@@ -1,11 +1,11 @@
 ---
-# Entwurf vom 16.11.2026, Freigabe durch Christine offen. Quellen: Journal „Wer will ich in 12 Monaten sein?“,
+# Entwurf vom 16.11.2026. Quellen: Journal „Wer will ich in 12 Monaten sein?“,
 # freigegebene Begrüßungsstrecke (Mail 2 zur Who-to-be-Liste), Forschung wie im Text genannt.
 # Überarbeitung 25.11.2026 (Ratgeber Paket 1, Vorschlag zur Freigabe durch Christine): Titel, Seitentitel und Beschreibung
 # mit Zahl und „PDF“ (Googles erster Vorschlag zu „jahresrückblick fragen“ ist „pdf“), Quellenliste, Weiterlesen.
 # Vorher: titel 'Persönlicher Jahresrückblick: Fragen, die dich wirklich weiterbringen'.
 # Neue Version: Text überarbeitet und freigegeben von Christine im Doc „Reintext Ratgeberartikel Jahresrückblick“
-# (27.11.2026), wörtlich übernommen. Beim Merge `aktualisiert` auf das Datum setzen.
+# (27.11.2026), wörtlich übernommen.
 titel: 'Persönlicher Jahresrückblick: 11 Fragen, die dich wirklich weiterbringen'
 seitentitel: 'Jahresrückblick: 11 Fragen mit PDF-Vorlage'
 kurztitel: 'Jahresrückblick: 11 Fragen, die weiterbringen'
@@ -13,6 +13,7 @@ beschreibung: 'Jahresrückblick mit 11 Fragen: zurückschauen, ein Bild für die
 thema: jahresrueckblick
 hauptbegriff: 'Jahresrückblick Fragen'
 veroeffentlicht: '2026-11-16'
+aktualisiert: '2026-11-27'
 lesezeit: 7
 kurz:
   - 'Ein guter Jahresrückblick schaut zurück, um besser nach vorn zu planen.'
