@@ -1,0 +1,298 @@
+---
+/**
+ * Übersicht einer Rubrik unter /ratgeber/thema/<id>/ (seit 27.11.2026, Christine: Rubriken und „N Artikel“ sollen auf eine Übersicht führen).
+ * Nur Rubriken mit mindestens einem Artikel bekommen eine Seite (`themenMitArtikeln` in src/config/ratgeber.ts).
+ * Aufbau: Brotkrumen, Name und Beschreibung der Rubrik, Artikel als Liste mit kleinem Aufmacher, weitere Rubriken, Try a Life, Journal.
+ * Wortlaut: Name und Beschreibung aus `themen`; Seitentitel und Beschreibung für die Suche zur Freigabe durch Christine.
+ * Der Kopf hat bewusst kein Bild, solange die Bildsprache des Ratgebers offen ist (Christine, 27.11.2026).
+ */
+import '../../../styles/magazin.css';
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import JournalKarte from '../../../components/JournalKarte.astro';
+import TryALifeKarte from '../../../components/TryALifeKarte.astro';
+import { site, seiten } from '../../../config/site';
+import { themenMitArtikeln, artikelImThema, artikelPfad, themaPfad, aufmacher, type ThemaId } from '../../../config/ratgeber';
+import { rubrikSeite, brotkrumenDaten } from '../../../config/strukturierteDaten';
+
+export function getStaticPaths() {
+  return themenMitArtikeln.map((t) => ({ params: { thema: t.id } }));
+}
+
+const id = Astro.params.thema as ThemaId;
+const thema = themenMitArtikeln.find((t) => t.id === id)!;
+const liste = artikelImThema(id);
+const andere = themenMitArtikeln.filter((t) => t.id !== id);
+const pfad = themaPfad(id);
+const anzahl = (n: number) => (n === 1 ? '1 Artikel' : `${n} Artikel`);
+const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title={`${thema.label} · Ratgeber`}
+  description={`${thema.beschreibung} Artikel mit Übungen von ${site.inhaberin}, ${site.name}.`}
+  seite={rubrikSeite(liste.map((a) => ({ titel: a.titel, pfad: artikelPfad(a.slug) })))}
+  daten={[brotkrumenDaten([{ name: thema.label, pfad }])]}
+  dunklerSchluss
+>
+  <div class="magazin">
+    <header class="rkopf">
+      <div class="container rkopf__text">
+        <nav class="krumen" aria-label="Brotkrumen">
+          <a href={seiten.ratgeber}>Ratgeber</a>
+          <span aria-hidden="true">/</span>
+          <span>Rubrik</span>
+        </nav>
+        <h1 class="m-titel rkopf__titel">{thema.label}</h1>
+        <p class="rkopf__beschreibung m-gedaempft">{thema.beschreibung}</p>
+        <p class="m-kennzeile">{anzahl(liste.length)}</p>
+      </div>
+    </header>
+
+    <section class="rliste" aria-label={`Artikel in der Rubrik ${thema.label}`}>
+      <div class="container">
+        <ul class="rliste__liste">
+          {
+            liste.map((a) => {
+              const bild = aufmacher[a.slug];
+              return (
+                <li>
+                  <a class="rartikel" href={artikelPfad(a.slug)}>
+                    {bild && (
+                      <span class="rartikel__bild">
+                        <Image src={bild.bild} alt="" widths={[160, 320, 480]} sizes="(min-width: 700px) 200px, 104px" />
+                      </span>
+                    )}
+                    <span class="rartikel__text">
+                      <span class="rartikel__meta m-gedaempft">
+                        {datum(a.aktualisiert ?? a.veroeffentlicht)} · {a.lesezeit} Minuten Lesezeit
+                      </span>
+                      <span class="m-titel rartikel__titel">{a.titel}</span>
+                      <span class="rartikel__beschreibung m-gedaempft">{a.beschreibung}</span>
+                      <span class="rartikel__mehr">
+                        Artikel lesen <span aria-hidden="true">→</span>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+
+    {
+      andere.length > 0 && (
+        <nav class="randere" aria-labelledby="randere-titel">
+          <div class="container">
+            <p class="m-kennzeile" id="randere-titel">
+              Weitere Rubriken
+            </p>
+            <ul class="randere__liste">
+              {andere.map((t) => (
+                <li>
+                  <a href={themaPfad(t.id)}>
+                    <span class="m-titel randere__name">{t.label}</span>
+                    <span class="randere__zahl">
+                      {anzahl(artikelImThema(t.id).length)} <span aria-hidden="true">→</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a class="randere__alle" href={seiten.ratgeber}>
+              Alle Artikel im Ratgeber <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </nav>
+      )
+    }
+
+    <section class="m-journal" aria-label="Try a Life und kostenloses Journal">
+      <div class="container m-hell m-karten">
+        <TryALifeKarte />
+        <JournalKarte
+          titel="Sanft einsteigen"
+          text="Mein kostenloses Journal führt dich Schritt für Schritt durch deinen Jahresrückblick, bis zu einem ersten Schritt, der in deinen Alltag passt."
+        />
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .rkopf {
+    padding: clamp(32px, 6vw, 88px) 0 clamp(32px, 5vw, 64px);
+    border-bottom: 1px solid var(--abend-linie);
+  }
+
+  .rkopf__text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .rkopf__titel {
+    font-size: clamp(40px, 5.6vw, 76px);
+    max-width: 18ch;
+  }
+
+  .rkopf__beschreibung {
+    font-family: var(--schrift-magazin);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.45;
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  .krumen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--abend-gedaempft);
+  }
+
+  .krumen a {
+    color: var(--abend-akzent);
+    font-weight: 700;
+  }
+
+  .rliste {
+    padding: clamp(32px, 5vw, 72px) 0;
+  }
+
+  .rliste__liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rartikel {
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: clamp(18px, 3vw, 40px);
+    align-items: start;
+    padding: clamp(24px, 3vw, 36px) 0;
+    border-top: 1px solid var(--abend-linie);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  li:first-child .rartikel {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (min-width: 700px) {
+    .rartikel {
+      grid-template-columns: 200px minmax(0, 1fr);
+    }
+  }
+
+  .rartikel__bild {
+    display: block;
+    overflow: hidden;
+  }
+
+  .rartikel__bild :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 600ms var(--kurve);
+  }
+
+  .rartikel:hover .rartikel__bild :global(img) {
+    transform: scale(1.03);
+  }
+
+  .rartikel__text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rartikel__meta {
+    font-size: 14px;
+  }
+
+  .rartikel__titel {
+    font-size: clamp(24px, 2.8vw, 36px);
+  }
+
+  .rartikel__beschreibung {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .rartikel__mehr,
+  .randere__alle {
+    font-weight: 700;
+    color: var(--abend-akzent);
+    border-bottom: 1px solid currentColor;
+    align-self: flex-start;
+    padding-bottom: 2px;
+  }
+
+  .randere {
+    padding: clamp(40px, 6vw, 80px) 0;
+    border-top: 1px solid var(--abend-linie);
+  }
+
+  .randere__liste {
+    list-style: none;
+    margin: 20px 0 28px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 16px clamp(28px, 3vw, 44px);
+  }
+
+  .randere__liste a {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 44px;
+    padding-top: 16px;
+    border-top: 1px solid var(--abend-linie);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .randere__name {
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+
+  .randere__zahl {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--abend-akzent);
+  }
+
+  .randere__alle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .m-karten {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vw, 40px);
+  }
+
+  .m-journal {
+    padding: clamp(48px, 7vw, 96px) 0 clamp(64px, 8vw, 112px);
+    border-top: 1px solid var(--abend-linie);
+  }
+</style>

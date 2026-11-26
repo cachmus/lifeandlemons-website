@@ -11,7 +11,7 @@ import JournalKarte from '../../components/JournalKarte.astro';
 import FormateVergleich from '../../components/FormateVergleich.astro';
 import VorlageKarte from '../../components/VorlageKarte.astro';
 import { site, seiten } from '../../config/site';
-import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon, weiterlesenFuer, journalLinkAus } from '../../config/ratgeber';
+import { artikelModule, artikel, artikelPfad, themen, themaPfad, aufmacher, seitentitelVon, weiterlesenFuer, journalLinkAus } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
 // Aquarell-Porträt nach Christines Foto (von Christine erstellt und freigegeben, 16.11.2026)
 import portraet from '../../assets/portraet-christine-aquarell.jpg';
@@ -46,7 +46,7 @@ const sprungziele = [
   description={a.beschreibung}
   ogTyp="article"
   dunklerSchluss
-  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq, bild: bild?.bild.src })}
+  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq, bild: bild?.bild.src, thema: { name: thema.label, pfad: themaPfad(thema.id) } })}
 >
   <article class="artikel magazin">
     <header class="akopf">
@@ -55,7 +55,7 @@ const sprungziele = [
           <nav class="krumen" aria-label="Brotkrumen">
             <a href={seiten.ratgeber}>Ratgeber</a>
             <span aria-hidden="true">/</span>
-            <span>{thema.label}</span>
+            <a href={themaPfad(thema.id)}>{thema.label}</a>
           </nav>
           <h1 class="m-titel akopf__titel">{a.titel}</h1>
           <p class="akopf__beschreibung m-gedaempft">{a.beschreibung}</p>
@@ -187,6 +187,7 @@ const sprungziele = [
             </ul>
           )
         }
+        <a class="aende__alle" href={themaPfad(thema.id)}>Alle Artikel zu „{thema.label}“ <span aria-hidden="true">→</span></a>
         <a class="aende__alle" href={seiten.ratgeber}>Alle Artikel im Ratgeber <span aria-hidden="true">→</span></a>
       </div>
     </nav>

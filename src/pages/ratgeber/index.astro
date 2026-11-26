@@ -4,6 +4,7 @@
  * Artikel nach Themen, aus src/ratgeber/*.md (Konfiguration src/config/ratgeber.ts).
  * Aufbau: Kopf mit Bild, neuester Artikel groß, Rubriken mit Motiv, weitere Artikel, Try a Life, Journal (Try a Life zuerst, Christine, 19.11.2026).
  * Wortlaut: Entwurf vom 16.11.2026, Freigabe durch Christine offen.
+ * Rubriken mit Artikeln führen seit 27.11.2026 auf ihre Übersicht /ratgeber/thema/<id>/ (Christine).
  */
 import '../../styles/magazin.css';
 import { Image } from 'astro:assets';
@@ -11,7 +12,7 @@ import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import TryALifeKarte from '../../components/TryALifeKarte.astro';
 import { site } from '../../config/site';
-import { themen, artikel, artikelPfad, aufmacher } from '../../config/ratgeber';
+import { themen, artikel, artikelPfad, themaPfad, aufmacher } from '../../config/ratgeber';
 import kopfBild from '../../assets/ratgeber/magazin-kopf.jpg';
 import portraet from '../../assets/portraet-christine-aquarell.jpg';
 
@@ -92,11 +93,28 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
         <ul class="rubriken__liste">
           {
             rubriken.map((r) => (
-              <li class="rubrik">
-                <Image class="rubrik__bild" src={r.bild} alt={r.bildAlt} widths={[320, 480]} sizes="(min-width: 960px) 360px, 100vw" />
-                <h3 class="m-titel rubrik__name">{r.label}</h3>
-                <p class="m-gedaempft rubrik__text">{r.beschreibung}</p>
-                <p class="rubrik__zahl">{r.anzahl === 0 ? 'Artikel in Vorbereitung' : r.anzahl === 1 ? '1 Artikel' : `${r.anzahl} Artikel`}</p>
+              <li>
+                {r.anzahl > 0 ? (
+                  <a class="rubrik rubrik--link" href={themaPfad(r.id)}>
+                    <span class="rubrik__rahmen">
+                      <Image class="rubrik__bild" src={r.bild} alt={r.bildAlt} widths={[320, 480]} sizes="(min-width: 960px) 360px, 100vw" />
+                    </span>
+                    <h3 class="m-titel rubrik__name">{r.label}</h3>
+                    <p class="m-gedaempft rubrik__text">{r.beschreibung}</p>
+                    <p class="rubrik__zahl">
+                      {r.anzahl === 1 ? '1 Artikel' : `${r.anzahl} Artikel`} <span aria-hidden="true">→</span>
+                    </p>
+                  </a>
+                ) : (
+                  <div class="rubrik">
+                    <span class="rubrik__rahmen">
+                      <Image class="rubrik__bild" src={r.bild} alt={r.bildAlt} widths={[320, 480]} sizes="(min-width: 960px) 360px, 100vw" />
+                    </span>
+                    <h3 class="m-titel rubrik__name">{r.label}</h3>
+                    <p class="m-gedaempft rubrik__text">{r.beschreibung}</p>
+                    <p class="rubrik__zahl">Artikel in Vorbereitung</p>
+                  </div>
+                )}
               </li>
             ))
           }
@@ -298,6 +316,17 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
     gap: 12px;
   }
 
+  .rubrik--link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .rubrik__rahmen {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
   .rubrik__bild {
     display: block;
     width: 100%;
@@ -305,7 +334,11 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
     aspect-ratio: 4 / 5;
     object-fit: cover;
     background: var(--lesen-grund);
-    margin-bottom: 8px;
+    transition: transform 600ms var(--kurve);
+  }
+
+  .rubrik--link:hover .rubrik__bild {
+    transform: scale(1.03);
   }
 
   .rubrik__name {
@@ -324,6 +357,14 @@ const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'num
     text-transform: uppercase;
     color: var(--abend-akzent);
     margin: 0;
+  }
+
+  /* Wie „Artikel lesen“ beim Aufmacher: unterstrichen, damit die Rubrik als Link erkennbar ist */
+  .rubrik--link .rubrik__zahl {
+    font-weight: 700;
+    align-self: flex-start;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
   }
 
   .eintrag {

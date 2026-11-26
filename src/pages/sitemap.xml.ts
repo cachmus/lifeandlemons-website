@@ -1,11 +1,11 @@
 /**
  * Sitemap für Suchmaschinen unter /sitemap.xml.
- * Enthält jede Seite aus src/pages automatisch und alle Ratgeberartikel, außer den Adressen in `ohneSuche` (src/config/site.ts).
+ * Enthält jede Seite aus src/pages automatisch, alle Ratgeberartikel und die Rubriken mit Artikeln, außer den Adressen in `ohneSuche` (src/config/site.ts).
  * In der Google Search Console einmal einreichen; danach liest Google sie selbst neu ein.
  */
 import type { APIRoute } from 'astro';
 import { site, inDerSuche } from '../config/site';
-import { artikel, artikelPfad } from '../config/ratgeber';
+import { artikel, artikelPfad, themenMitArtikeln, themaPfad } from '../config/ratgeber';
 
 const dateien = Object.keys(import.meta.glob('./**/*.astro'));
 
@@ -22,6 +22,7 @@ export const GET: APIRoute = () => {
         .filter((datei) => !datei.includes('['))
         .map(pfadAus)
         .concat(artikel.map((a) => artikelPfad(a.slug)))
+        .concat(themenMitArtikeln.map((t) => themaPfad(t.id)))
         .filter(inDerSuche)
         .sort()
     : [];
