@@ -1,7 +1,8 @@
 /**
  * Ratgeber: Themen und Artikel.
  * Artikel liegen als Markdown in src/ratgeber/<slug>.md und erscheinen unter /ratgeber/<slug>/.
- * Neues Thema: hier in `themen` ergänzen. Themen ohne Artikel werden auf der Übersicht nicht angezeigt.
+ * Neues Thema: hier in `themen` ergänzen. Themen ohne Artikel stehen auf der Übersicht als „Artikel in Vorbereitung“,
+ * ohne Link und ohne eigene Seite; mit Artikeln führen sie auf /ratgeber/thema/<id>/.
  * Bilder: Aquarellmotive aus Christines Bestand (Game/Stil_Design_Bilder_Motive, Rechte bei Christine, bestätigt 16.11.2026).
  * Neuer Artikel: Aufmacher in src/assets/ratgeber/ ablegen und unten in `aufmacher` eintragen.
  */
@@ -110,6 +111,22 @@ export const artikel: Artikel[] = artikelModule
   .sort((a, b) => (b.veroeffentlicht > a.veroeffentlicht ? 1 : -1));
 
 export const artikelPfad = (slug: string) => `/ratgeber/${slug}/`;
+
+/**
+ * Übersicht einer Rubrik unter /ratgeber/thema/<id>/ (seit 27.11.2026, Christine: Rubriken und „N Artikel“ führen auf eine Übersicht).
+ * Eigener Ordner `thema`, damit eine Rubrik nie mit einem Artikel gleichen Namens zusammenstößt.
+ */
+export const themaPfad = (id: ThemaId) => `/ratgeber/thema/${id}/`;
+
+/** Artikel einer Rubrik, neueste zuerst */
+export const artikelImThema = (id: ThemaId) => artikel.filter((a) => a.thema === id);
+
+/** Rubriken mit mindestens einem Artikel; nur sie haben eine eigene Übersicht und einen Link */
+export const themenMitArtikeln = themen.filter((t) => artikelImThema(t.id).length > 0);
+
+if (artikel.some((a) => a.slug === 'thema')) {
+  throw new Error('[Ratgeber] Ein Artikel darf nicht „thema“ heißen: Unter /ratgeber/thema/ liegen die Rubriken.');
+}
 
 /**
  * Bis zu drei Artikel für „Weiterlesen“: zuerst die unter `verwandt` genannten, dann weitere aus demselben Thema.

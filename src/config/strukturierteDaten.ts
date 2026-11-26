@@ -196,6 +196,29 @@ export function profilseite(artikel: { titel: string; pfad: string }[]): SeitenA
   };
 }
 
+/** Brotkrumen als Liste von Name und Pfad, die erste Stufe ist immer der Ratgeber. */
+export function brotkrumenDaten(stufen: { name: string; pfad: string }[]): Knoten {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: 'Ratgeber', pfad: seiten.ratgeber }, ...stufen].map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.name,
+      item: adresse(s.pfad),
+    })),
+  };
+}
+
+/** Übersicht einer Rubrik (/ratgeber/thema/<id>/) als Sammelseite mit ihren Artikeln. */
+export function rubrikSeite(artikel: { titel: string; pfad: string }[]): SeitenAngaben {
+  return {
+    typ: 'CollectionPage',
+    felder: {
+      hasPart: artikel.map((a) => ({ '@type': 'BlogPosting', headline: a.titel, url: adresse(a.pfad), author: { '@id': ids.person } })),
+    },
+  };
+}
+
 /** Ratgeberartikel mit Brotkrumen und, falls vorhanden, Fragen und Antworten (Seiten /ratgeber/<slug>/). */
 export function artikelDaten(a: {
   titel: string;
@@ -206,6 +229,8 @@ export function artikelDaten(a: {
   faq?: { frage: string; antwort: string }[];
   /** Pfad des Aufmacherbilds (gebaute Datei unter /_astro/), sonst das Bild der Marke */
   bild?: string;
+  /** Rubrik als mittlere Stufe der Brotkrumen (seit 27.11.2026) */
+  thema?: { name: string; pfad: string };
 }): Knoten[] {
   const url = adresse(a.pfad);
   const knoten: Knoten[] = [
@@ -224,13 +249,7 @@ export function artikelDaten(a: {
       // Seit 25.11.2026 das Aufmacherbild des Artikels statt immer des Markenbilds (Ratgeber-Leitfaden)
       image: adresse(a.bild ?? '/marke/og-bild.png'),
     },
-    {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Ratgeber', item: adresse(seiten.ratgeber) },
-        { '@type': 'ListItem', position: 2, name: a.titel, item: url },
-      ],
-    },
+    brotkrumenDaten([...(a.thema ? [a.thema] : []), { name: a.titel, pfad: a.pfad }]),
   ];
   if (a.faq?.length) knoten.push(faqDaten(a.faq));
   return knoten;
