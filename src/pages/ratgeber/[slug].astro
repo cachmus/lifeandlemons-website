@@ -1,7 +1,7 @@
 ---
 /**
  * Ratgeberartikel. Inhalte aus src/ratgeber/<slug>.md (Frontmatter siehe src/config/ratgeber.ts).
- * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, weitere Artikel.
+ * Aufbau: Brotkrumen, Titel, „Kurz gesagt“, freie Vorlage (falls vorhanden), Inhaltsverzeichnis, Text, Journal-Karte, Autorin, Fragen und Antworten, Quellen, weitere Artikel.
  * Gestaltung als Magazin, Richtung B „Abendlicht“ (16.11.2026): dunkler Kopf mit Aufmacher, Text auf heller Lesefläche.
  */
 import '../../styles/magazin.css';
@@ -9,8 +9,9 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import JournalKarte from '../../components/JournalKarte.astro';
 import FormateVergleich from '../../components/FormateVergleich.astro';
+import VorlageKarte from '../../components/VorlageKarte.astro';
 import { site, seiten } from '../../config/site';
-import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon } from '../../config/ratgeber';
+import { artikelModule, artikel, artikelPfad, themen, aufmacher, seitentitelVon, weiterlesenFuer, journalLinkAus } from '../../config/ratgeber';
 import { artikelDaten } from '../../config/strukturierteDaten';
 // Aquarell-Porträt nach Christines Foto (von Christine erstellt und freigegeben, 16.11.2026)
 import portraet from '../../assets/portraet-christine-aquarell.jpg';
@@ -25,10 +26,19 @@ const a = artikel.find((x) => x.slug === slug)!;
 const Inhalt = eintrag.modul.Content as any;
 const kapitel = eintrag.modul.getHeadings().filter((h) => h.depth === 2);
 const thema = themen.find((t) => t.id === a.thema)!;
-const weitere = artikel.filter((x) => x.slug !== slug && x.thema === a.thema).slice(0, 3);
+// Zuerst die Artikel unter `verwandt`, dann dasselbe Thema (Ratgeber-Leitfaden: zwei bis vier Links zu anderen Artikeln)
+const weitere = weiterlesenFuer(a);
 const datum = new Date(a.aktualisiert ?? a.veroeffentlicht).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 const pfad = artikelPfad(slug!);
 const bild = aufmacher[slug!];
+// Herkunft im Brevo-Feld QUELLE: „ratgeber/<slug>“ (seit 25.11.2026)
+const journalZiel = journalLinkAus(slug!, seiten.journal);
+// Sprungziele des Inhaltsverzeichnisses: Kapitel, dann Fragen und Quellen
+const sprungziele = [
+  ...kapitel.map((k) => ({ id: k.slug, text: k.text })),
+  ...(a.faq?.length ? [{ id: 'fragen', text: 'Häufige Fragen' }] : []),
+  ...(a.quellen?.length ? [{ id: 'quellen', text: 'Quellen' }] : []),
+];
 ---
 
 <Base
@@ -36,7 +46,7 @@ const bild = aufmacher[slug!];
   description={a.beschreibung}
   ogTyp="article"
   dunklerSchluss
-  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq })}
+  daten={artikelDaten({ titel: a.titel, beschreibung: a.beschreibung, pfad, veroeffentlicht: a.veroeffentlicht, aktualisiert: a.aktualisiert, faq: a.faq, bild: bild?.bild.src })}
 >
   <article class="artikel magazin">
     <header class="akopf">
@@ -65,25 +75,39 @@ const bild = aufmacher[slug!];
 
     <div class="lesen">
     <div class="container artikel__raster">
-      <aside class="inhalt" aria-label="Inhalt dieses Artikels">
-        <p class="inhalt__titel">Inhalt</p>
+      <nav class="inhalt" id="inhalt" aria-labelledby="inhalt-titel">
+        <p class="inhalt__titel" id="inhalt-titel">
+          <svg class="inhalt__symbol" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h2M8 5h9M3 10h2M8 10h9M3 15h2M8 15h9" /></svg>
+          In diesem Artikel
+        </p>
         <ol>
           {
-            kapitel.map((k) => (
+            sprungziele.map((z, i) => (
               <li>
-                <a href={`#${k.slug}`}>{k.text}</a>
+                <a href={`#${z.id}`} data-ziel={z.id}>
+                  <span class="inhalt__nr" aria-hidden="true">{i + 1}</span>
+                  <span class="inhalt__text">{z.text}</span>
+                  <span class="inhalt__pfeil" aria-hidden="true">↓</span>
+                </a>
               </li>
             ))
           }
-          {a.faq?.length && <li><a href="#fragen">Häufige Fragen</a></li>}
         </ol>
-      </aside>
+      </nav>
 
       <div class="artikel__haupt">
         <div class="kurz">
           <p class="kurz__titel">Kurz gesagt</p>
           <ul>{a.kurz.map((k) => <li>{k}</li>)}</ul>
         </div>
+
+        {
+          a.vorlage && (
+            <div class="m-hell">
+              <VorlageKarte datei={a.vorlage.datei} titel={a.vorlage.titel} text={a.vorlage.text} />
+            </div>
+          )
+        }
 
         <div class="prosa">
           {a.vergleich && <FormateVergleich />}
@@ -92,6 +116,7 @@ const bild = aufmacher[slug!];
 
         <div class="artikel__journal m-hell">
           <JournalKarte
+            ziel={journalZiel}
             variante="kompakt"
             ueberschriftEbene="h2"
             titel={a.journalKarte?.titel ?? 'Alle Fragen in einem Journal'}
@@ -124,6 +149,19 @@ const bild = aufmacher[slug!];
                   <p>{f.antwort}</p>
                 </details>
               ))}
+            </section>
+          )
+        }
+
+        {
+          a.quellen?.length && (
+            <section class="quellen" id="quellen" aria-labelledby="quellen-titel">
+              <h2 id="quellen-titel">Quellen</h2>
+              <ol>
+                {a.quellen.map((q) => (
+                  <li>{q.url ? <a href={q.url} rel="noopener">{q.titel}</a> : q.titel}</li>
+                ))}
+              </ol>
             </section>
           )
         }
@@ -285,39 +323,156 @@ const bild = aufmacher[slug!];
     }
   }
 
+  /*
+   * Inhaltsverzeichnis (25.11.2026, nach NN/g „Table of Contents“): klare Beschriftung „In diesem Artikel“,
+   * nummerierte Einträge in Linkfarbe mit Pfeil nach unten als Zeichen für Sprünge innerhalb der Seite.
+   * Mobil eine eigene, leicht abgesetzte Fläche mit Zeilen als Tippflächen; ab 1040 px in der Randspalte mitlaufend,
+   * der Abschnitt, in dem man gerade liest, ist hervorgehoben.
+   */
   .inhalt {
+    font-family: var(--schrift-text);
     font-size: 15px;
-    border-left: 2px solid var(--lesen-linie);
-    padding-left: 18px;
+    background: var(--papier-hell);
+    border: 1px solid var(--lesen-linie);
+    border-top: 3px solid var(--terrakotta);
+    padding: 16px 18px 6px;
   }
 
   .inhalt__titel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 12.5px;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--terrakotta-tief);
-    margin-bottom: 10px;
+    margin: 0 0 4px;
+  }
+
+  .inhalt__symbol {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
   }
 
   .inhalt ol {
     margin: 0;
     padding: 0;
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  }
+
+  .inhalt li + li {
+    border-top: 1px solid var(--lesen-linie);
   }
 
   .inhalt a {
-    color: var(--tinte);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 44px;
+    padding: 11px 0;
+    color: var(--terrakotta-tief);
     text-decoration: none;
+    line-height: 1.4;
   }
 
-  .inhalt a:hover,
-  .inhalt a:focus-visible {
-    color: var(--terrakotta-tief);
+  .inhalt__nr {
+    flex: none;
+    min-width: 1.4em;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--terrakotta);
+  }
+
+  .inhalt__text {
+    flex: 1;
+    color: var(--tinte);
     text-decoration: underline;
+    text-decoration-color: var(--terrakotta);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .inhalt__pfeil {
+    flex: none;
+    font-weight: 700;
+    color: var(--terrakotta);
+    transition: transform 250ms var(--kurve);
+  }
+
+  .inhalt a:hover .inhalt__text,
+  .inhalt a:focus-visible .inhalt__text {
+    color: var(--terrakotta-tief);
+    text-decoration-thickness: 2px;
+  }
+
+  .inhalt a:hover .inhalt__pfeil,
+  .inhalt a:focus-visible .inhalt__pfeil {
+    transform: translateY(3px);
+  }
+
+  @media (min-width: 1040px) {
+    /* In der Randspalte schlichter: keine Fläche, Linie links, aktueller Abschnitt hervorgehoben */
+    .inhalt {
+      background: none;
+      border: 0;
+      border-left: 2px solid var(--lesen-linie);
+      padding: 0 0 0 18px;
+    }
+
+    .inhalt li + li {
+      border-top: 0;
+    }
+
+    .inhalt a {
+      min-height: 0;
+      padding: 5px 0;
+      gap: 10px;
+    }
+
+    .inhalt__text {
+      text-decoration: none;
+    }
+
+    .inhalt__pfeil {
+      display: none;
+    }
+
+    .inhalt a:hover .inhalt__text,
+    .inhalt a:focus-visible .inhalt__text {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+    }
+
+    .inhalt a[aria-current='true'] .inhalt__text {
+      font-weight: 700;
+      color: var(--terrakotta-tief);
+    }
+
+    .inhalt a[aria-current='true'] {
+      position: relative;
+    }
+
+    .inhalt a[aria-current='true']::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--terrakotta);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inhalt__pfeil {
+      transition: none;
+    }
   }
 
   .artikel__haupt {
@@ -373,6 +528,11 @@ const bild = aufmacher[slug!];
     scroll-margin-top: 110px;
   }
 
+  .fragen,
+  .quellen {
+    scroll-margin-top: 110px;
+  }
+
   .prosa :global(img) {
     display: block;
     width: 100%;
@@ -396,6 +556,45 @@ const bild = aufmacher[slug!];
   .prosa :global(h3) {
     font-family: var(--schrift-magazin);
     font-weight: 500;
+  }
+
+  /* Tabellen im Fließtext (25.11.2026): Zeilen mit Trennlinien, Text oben bündig, erste Spalte als Stichwort */
+  .prosa :global(table) {
+    width: 100%;
+    margin: 1.4em 0 1.8em;
+    border-collapse: collapse;
+    font-family: var(--schrift-text);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .prosa :global(th),
+  .prosa :global(td) {
+    padding: 12px 14px 12px 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--lesen-linie);
+  }
+
+  .prosa :global(thead th) {
+    padding-top: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terrakotta-tief);
+    border-bottom: 2px solid var(--terrakotta);
+  }
+
+  .prosa :global(tbody td:first-child) {
+    width: 9.5em;
+    font-weight: 700;
+    color: var(--tinte);
+  }
+
+  .prosa :global(th:last-child),
+  .prosa :global(td:last-child) {
+    padding-right: 0;
   }
 
   .prosa :global(p) {
@@ -464,4 +663,47 @@ const bild = aufmacher[slug!];
   .hinweis {
     font-size: 14px;
   }
+
+  .quellen h2 {
+    margin-bottom: 12px;
+  }
+
+  .quellen ol {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  .quellen a {
+    color: var(--tinte);
+    overflow-wrap: anywhere;
+  }
 </style>
+
+<script>
+  // Inhaltsverzeichnis in der Randspalte: Der Abschnitt, in dem gerade gelesen wird, trägt aria-current.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.inhalt a[data-ziel]')];
+  const ziele = links.map((l) => document.getElementById(l.dataset.ziel ?? ''));
+  let geplant = false;
+  function markiere() {
+    geplant = false;
+    let aktuell = -1;
+    ziele.forEach((z, i) => {
+      if (z && z.getBoundingClientRect().top < 160) aktuell = i;
+    });
+    links.forEach((l, i) => (i === aktuell ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current')));
+  }
+  if (links.length) {
+    window.addEventListener('scroll', () => {
+      if (!geplant) {
+        geplant = true;
+        requestAnimationFrame(markiere);
+      }
+    }, { passive: true });
+    markiere();
+  }
+</script>

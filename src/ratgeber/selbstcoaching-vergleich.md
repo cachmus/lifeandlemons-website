@@ -8,6 +8,7 @@ beschreibung: 'Journal, Workbook, App oder Einzelcoaching? Ein Vergleich nach Pr
 thema: orientierung
 hauptbegriff: 'Selbstcoaching'
 veroeffentlicht: '2026-11-19'
+aktualisiert: '2026-11-27'
 lesezeit: 5
 vergleich: true
 journalKarte:
@@ -18,6 +19,14 @@ kurz:
   - 'Ein Journal hilft dir, Bilanz zu ziehen. Für einen neuen Lebensentwurf brauchst du mehrere Wochen.'
   - 'Workbook und App führen dich durch dieselbe Methode, auf Papier oder digital.'
   - 'Ein Einzelcoaching hilft, wenn deine Lage sehr verzweigt ist und du persönliche Rückmeldung brauchst.'
+# Quellenliste und Weiterlesen ergänzt am 25.11.2026 (Ratgeber Paket 1)
+quellen:
+  - titel: 'Oyserman, D., Bybee, D., Terry, K. & Hart-Johnson, T. (2004): Possible selves as roadmaps. Journal of Research in Personality, 38(2), 130–149.'
+    url: 'https://dornsife.usc.edu/daphna-oyserman/wp-content/uploads/sites/232/2023/11/possible_selves_as_roadmaps.pdf'
+  - titel: 'Burnett, B. & Evans, D. (2016): Designing Your Life. How to Build a Well-Lived, Joyful Life. New York: Knopf.'
+    url: 'https://www.penguinrandomhouse.com/books/249885/designing-your-life-by-bill-burnett-and-dave-evans'
+verwandt:
+  - 'jahresrueckblick-fragen'
 faq:
   - frage: 'Was ist Selbstcoaching?'
     antwort: 'Beim Selbstcoaching arbeitest du allein mit einer festen Abfolge von Fragen und Übungen. Du klärst, was du willst und was dich bremst, und planst deine nächsten Schritte, ohne dass eine Coachin jede Sitzung begleitet.'

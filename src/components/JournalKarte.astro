@@ -15,6 +15,8 @@ interface Props {
   /** groß: Angebotsseite; kompakt: in Artikeln */
   variante?: 'gross' | 'kompakt';
   ueberschriftEbene?: 'h2' | 'h3';
+  /** Eigenes Linkziel, etwa mit Kampagnenangabe aus einem Ratgeberartikel; Standard ist die Journalseite */
+  ziel?: string;
 }
 
 const {
@@ -22,12 +24,13 @@ const {
   text = 'Wieder ein Jahr vorbei, und du weißt nicht genau, wo es geblieben ist? Mit diesem Journal findest du heraus, was dir im neuen Jahr wirklich wichtig ist, und machst daraus einen Plan, der auch volle Wochen übersteht.',
   variante = 'gross',
   ueberschriftEbene = 'h2',
+  ziel = seiten.journal,
 } = Astro.props;
 const Ebene = ueberschriftEbene;
 ---
 
 <div class:list={['jkarte', `jkarte--${variante}`]}>
-  <a class="jkarte__bild" href={seiten.journal} tabindex="-1" aria-hidden="true">
+  <a class="jkarte__bild" href={ziel} tabindex="-1" aria-hidden="true">
     <Image src={cover} alt="Titelseite des Journals „Wer will ich in 12 Monaten sein?“ mit einem Aquarell eines Tals" widths={[240, 360, 520]} sizes={variante === 'gross' ? '(min-width: 900px) 320px, 60vw' : '160px'} />
   </a>
   <div class="jkarte__text">
@@ -45,7 +48,7 @@ const Ebene = ueberschriftEbene;
         <p class="jkarte__meta">Rund 90 Minuten oder 35 im Kurzweg · fürs Tablet, als Druck-PDF oder am Desktop</p>
       )
     }
-    <a class="button" href={seiten.journal}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
+    <a class="button" href={ziel}>Journal kostenlos holen <span class="button__pfeil" aria-hidden="true">→</span></a>
   </div>
 </div>
 

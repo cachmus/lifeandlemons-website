@@ -204,6 +204,8 @@ export function artikelDaten(a: {
   veroeffentlicht: string;
   aktualisiert?: string;
   faq?: { frage: string; antwort: string }[];
+  /** Pfad des Aufmacherbilds (gebaute Datei unter /_astro/), sonst das Bild der Marke */
+  bild?: string;
 }): Knoten[] {
   const url = adresse(a.pfad);
   const knoten: Knoten[] = [
@@ -219,7 +221,8 @@ export function artikelDaten(a: {
       dateModified: a.aktualisiert ?? a.veroeffentlicht,
       author: { '@id': ids.person },
       publisher: { '@id': ids.organisation },
-      image: adresse('/marke/og-bild.png'),
+      // Seit 25.11.2026 das Aufmacherbild des Artikels statt immer des Markenbilds (Ratgeber-Leitfaden)
+      image: adresse(a.bild ?? '/marke/og-bild.png'),
     },
     {
       '@type': 'BreadcrumbList',

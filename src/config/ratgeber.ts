@@ -6,11 +6,13 @@
  * Neuer Artikel: Aufmacher in src/assets/ratgeber/ ablegen und unten in `aufmacher` eintragen.
  */
 import type { ImageMetadata } from 'astro';
+import type { VorlageId } from './site';
 import bildJahresrueckblick from '../assets/ratgeber/thema-jahresrueckblick.png';
 import bildOrientierung from '../assets/ratgeber/thema-orientierung.jpg';
 import bildDranbleiben from '../assets/ratgeber/thema-dranbleiben.jpg';
 import aufmacherJahresrueckblick from '../assets/ratgeber/aufmacher-jahresrueckblick.jpg';
 import aufmacherVergleich from '../assets/leben/weg-tal.jpg';
+import aufmacherLebensrad from '../assets/ratgeber/aufmacher-lebensrad.jpg';
 
 export const themen = [
   {
@@ -42,6 +44,16 @@ export const aufmacher: Record<string, { bild: ImageMetadata; alt: string }> = {
     bild: aufmacherJahresrueckblick,
     alt: 'Aquarell eines Arbeitszimmers im Abendlicht mit Schreibtisch, Stuhl und offenem Fenster',
   },
+  // Die Vorlage selbst statt des Themenbilds (Christine, 25.11.2026): Seite 2 mit Beispielwerten, Zitronenzweig aus dem Journal
+  lebensrad: {
+    bild: aufmacherLebensrad,
+    alt: 'Lebensrad-Vorlage mit neun Bereichen, als Beispiel ausgefüllt, mit einem Zitronenzweig am Rand',
+  },
+  // Vorläufig das Themenbild (Wandkalender mit Zitronenblüte, 25.11.2026); eigenes Aufmacherbild zur Wahl durch Christine
+  neujahrsvorsaetze: {
+    bild: bildJahresrueckblick,
+    alt: 'Aquarell eines Wandkalenders aus Papier mit Zitronenblüte',
+  },
   'selbstcoaching-vergleich': {
     bild: aufmacherVergleich,
     alt: 'Aquarell eines mediterranen Tals mit einem gewundenen Weg zwischen Olivenbäumen',
@@ -69,10 +81,19 @@ export interface Artikel {
   lesezeit: number;
   kurz: string[];
   faq?: { frage: string; antwort: string }[];
+  /**
+   * Quellenliste am Ende des Artikels (Ratgeber-Leitfaden, 25.11.2026: Zahlen nur mit Studie, am Ende eine Quellenliste).
+   * `titel` ist die vollständige Angabe (Autorinnen, Jahr, Titel, Zeitschrift), `url` der frei zugängliche Text, falls vorhanden.
+   */
+  quellen?: { titel: string; url?: string }[];
+  /** Artikel aus anderen Themen, die unter „Weiterlesen“ zuerst erscheinen (Dateinamen ohne .md) */
+  verwandt?: string[];
   /** true: Vergleichstabelle der Formate vor dem Text (Komponente FormateVergleich) */
   vergleich?: boolean;
   /** Eigene Überschrift und eigener Text der Journal-Karte, sonst der Text für den Jahresrückblick */
   journalKarte?: { titel: string; text: string };
+  /** Freie Vorlage zum Download nach „Kurz gesagt“; `datei` ist ein Schlüssel aus `vorlagen` in site.ts */
+  vorlage?: { datei: VorlageId; titel: string; text: string };
 }
 
 type Modul = { frontmatter: Omit<Artikel, 'slug'>; Content: unknown; getHeadings: () => { depth: number; slug: string; text: string }[] };
@@ -89,6 +110,25 @@ export const artikel: Artikel[] = artikelModule
   .sort((a, b) => (b.veroeffentlicht > a.veroeffentlicht ? 1 : -1));
 
 export const artikelPfad = (slug: string) => `/ratgeber/${slug}/`;
+
+/**
+ * Bis zu drei Artikel für „Weiterlesen“: zuerst die unter `verwandt` genannten, dann weitere aus demselben Thema.
+ * Ein Name unter `verwandt` ohne passenden Artikel bricht den Build ab, damit kein toter Verweis online geht.
+ */
+export function weiterlesenFuer(a: Artikel, anzahl = 3): Artikel[] {
+  const genannt = (a.verwandt ?? []).map((slug) => {
+    const treffer = artikel.find((x) => x.slug === slug);
+    if (!treffer) throw new Error(`[Ratgeber] „${a.slug}“ nennt unter verwandt den Artikel „${slug}“, den es nicht gibt.`);
+    return treffer;
+  });
+  const gleichesThema = artikel.filter((x) => x.thema === a.thema);
+  const liste = [...genannt, ...gleichesThema].filter((x, i, alle) => x.slug !== a.slug && alle.findIndex((y) => y.slug === x.slug) === i);
+  return liste.slice(0, anzahl);
+}
+
+/** Link zum Journal aus einem Artikel: Die Kampagnenangabe landet im Brevo-Feld QUELLE als „ratgeber/<slug>“ (JournalFormular). */
+export const journalLinkAus = (slug: string, journalPfad: string) =>
+  `${journalPfad}?utm_source=ratgeber&utm_medium=website&utm_campaign=${encodeURIComponent(slug)}`;
 
 /** Erlaubte Länge des eigenen Teils im Seitentitel (Audit geo-audit c_title): gerendert mit „ · Life&Lemons“ 30 bis 60 Zeichen */
 export const SEITENTITEL = { min: 16, max: 46 } as const;

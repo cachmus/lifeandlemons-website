@@ -1,0 +1,109 @@
+---
+# Entwurf vom 25.11.2026 (Ratgeber Paket 1), überarbeitet und freigegeben von Christine im Doc „Reintext Ratgeberartikel
+# Neujahrsvorsätze“ (26.11.2026), wörtlich übernommen.
+# Quellen: Christines Erfahrungen und Who-to-be-Gedanke aus dem Chat vom 25.11.2026 (wörtlich nah übernommen),
+# Journal „Wer will ich in 12 Monaten sein?“, Studien wie unter `quellen`. Beispielsätze unter „Welche Beispiele …“
+# aus Christines eigener Who-to-be-Liste (Chat 25.11.2026), im ersten Satz die Zeitform angeglichen.
+titel: 'Neujahrsvorsätze, die halten: 6 Beispiele für deine Who-to-be-Liste'
+seitentitel: 'Neujahrsvorsätze, die halten: 6 Beispiele'
+kurztitel: 'Neujahrsvorsätze, die halten'
+beschreibung: 'Warum gute Vorsätze so oft scheitern und was stattdessen hilft: eine Who-to-be-Liste mit Beispielen, ein Wenn-dann-Plan und ein erster Schritt für den Alltag.'
+thema: jahresrueckblick
+hauptbegriff: 'Neujahrsvorsätze'
+veroeffentlicht: '2026-11-27'
+lesezeit: 7
+kurz:
+  - 'Vorsätze scheitern oft, weil sie Listen sind: Der Alltag, widersprüchliche Ziele oder der Wunsch nach Erleichterung räumen sie ab.'
+  - 'Eine Who-to-be-Liste beschreibt, wer du sein willst. Sie wirkt wie ein Kompass für viele Entscheidungen.'
+  - 'Formuliere, was du tun willst. In einer großen Studie waren solche Vorsätze erfolgreicher als Vorsätze, etwas zu lassen.'
+  - 'Ein ausgelassener Tag zählt kaum. Wichtig ist, dass du dich am nächsten Tag wieder ausrichtest.'
+quellen:
+  - titel: 'DAK-Gesundheit (2026): Vorsätze für das Jahr 2026. Repräsentative Forsa-Umfrage, 1.002 Befragte, 19. bis 21. November 2025.'
+    url: 'https://www.dak.de/presse/bundesthemen/umfragen-studien/gute-vorsaetze-bei-jungen-menschen-im-trend_154232'
+  - titel: 'Oscarsson, M., Carlbring, P., Andersson, G. & Rozental, A. (2020): A large-scale experiment on New Year’s resolutions: Approach-oriented goals are more successful than avoidance-oriented goals. PLOS ONE, 15(12), e0234097.'
+    url: 'https://doi.org/10.1371/journal.pone.0234097'
+  - titel: 'Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W. & Wardle, J. (2010): How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 40(6), 998–1009.'
+    url: 'https://core.ac.uk/download/70653523.pdf'
+  - titel: 'Gollwitzer, P. M. & Sheeran, P. (2006): Implementation intentions and goal achievement: A meta-analysis of effects and processes. Advances in Experimental Social Psychology, 38, 69–119.'
+    url: 'https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f'
+  - titel: 'Dai, H., Milkman, K. L. & Riis, J. (2014): The fresh start effect: Temporal landmarks motivate aspirational behavior. Management Science, 60(10), 2563–2582.'
+    url: 'https://doi.org/10.1287/mnsc.2014.1901'
+verwandt:
+  - 'jahresrueckblick-fragen'
+  - 'lebensrad'
+journalKarte:
+  titel: 'Deine Who-to-be-Liste im Journal'
+  text: 'Im kostenlosen Journal „Wer will ich in 12 Monaten sein?“ schreibst du deine Who-to-be-Liste auf eine Kompass-Seite und planst deinen ersten Schritt für die nächsten 72 Stunden.'
+faq:
+  - frage: 'Wie viele Vorsätze sollte ich mir für das neue Jahr vornehmen?'
+    antwort: 'Wähle höchstens drei Lebensbereiche, in denen sich am meisten bewegen soll. Zu jedem schreibst du ein bis zwei Sätze, wer du dort sein willst, sodass genug Kraft für jeden einzelnen bleibt.'
+  - frage: 'Muss ich mit meinen Vorsätzen bis zum 1. Januar warten?'
+    antwort: 'Nein, der Jahreswechsel ist ein guter Anlass, weil viele Menschen dann ohnehin Bilanz ziehen. Ein Geburtstag, ein Monatsanfang oder ein Jobwechsel taugen genauso als Startpunkt.'
+  - frage: 'Was ist eine Who-to-be-Liste?'
+    antwort: 'Eine Who-to-be-Liste besteht aus drei bis sieben Sätzen, die mit „Ich bin jemand, der …“ beginnen. Jeder Satz beschreibt etwas, das man an dir im Alltag sehen kann. Sie ersetzt die klassische Liste mit Vorsätzen.'
+---
+
+Neujahrsvorsätze halten länger, wenn du aufschreibst, wer du sein willst, und daraus einen kleinen Schritt für deinen Alltag ableitest. Eine Liste mit Dingen, die du dir vornimmst, übersteht den Februar selten, und ich habe selbst viele Jahre gebraucht, bis ich das verstanden habe.
+
+## Was sind typische Neujahrsvorsätze?
+
+In Deutschland fassen rund vier von zehn Menschen gute Vorsätze für das neue Jahr, wie die jährliche Forsa-Umfrage für die DAK-Gesundheit zeigt. Für 2026 stand mehr Zeit für Familie und Freunde ganz oben (62 Prozent), dahinter folgten weniger Stress (61 Prozent) und mehr Bewegung (57 Prozent). Mehr Zeit für sich selbst und gesünder essen nannte jeweils gut die Hälfte.
+
+Die Rangfolge ändert sich von Jahr zu Jahr kaum, viele nehmen sich also jedes Jahr wieder Ähnliches vor.
+
+## Warum scheitern so viele Vorsätze?
+
+Mein Körper und meine Gesundheit waren jahrelang mein Dauerthema. Mich plagten als Jugendliche ein schwankendes Gewicht, Schlafprobleme und Antriebslosigkeit. Gefühlt zwanzig Jahre lang hatte ich denselben Vorsatz: meine Gesundheit und meinen Körper in Ordnung bringen. Meine Gewohnheiten beim Essen und beim Sport änderten sich zunächst nicht dauerhaft. Die guten Vorsätze sind jedes Jahr gescheitert. Rückblickend war das immer ein Hoffen und selten ein Tun, weil ich gar nicht wusste, wo ich anfangen sollte.
+
+Heute weiß ich, woran das lag. Meine Hauptgegner waren schlechte Gewohnheiten aus der Kindheit und ein Mangel an Wissen, wie „gesund leben“ überhaupt aussieht und sich anfühlen sollte. Doch selbst mit dem nötigen Wissen hat eine Liste mit Vorsätzen im Alltag starke Gegner:
+
+- **Der volle Alltag.** Wenn die Woche eng wird, fällt zuerst weg, was noch nicht zur Routine geworden ist.
+- **Widersprüchliche Ziele.** Du willst mehr Sport machen und gleichzeitig mehr Zeit für die Familie haben, und am Ende verliert eines von beidem.
+- **Der Wunsch nach Erleichterung.** Nach einem langen Tag gewinnt das, was sich sofort gut anfühlt.
+
+Und selbst wenn du etwas von deiner Liste streichen kannst, ist es damit erledigt, und danach kommt oft eine Leere, weil nichts mehr da ist, worauf du hinarbeitest.
+
+## Was hat bei mir funktioniert?
+
+Bei mir hat sich etwas verändert, als ich mich intensiv mit dem Thema beschäftigt und so viele Informationen gesammelt habe, wie ich konnte. Mit dem Wissen änderte sich meine Einstellung dazu, wie ich mit meinem Körper und meiner Gesundheit umgehe. Plötzlich konnte ich Dinge viel leichter im Alltag umsetzen. Erst wurden daraus neue Routinen, die sich aus bewussten Entscheidungen ergaben, und daraus wiederum wurden einige günstige Gewohnheiten, die sich festgesetzt haben.
+
+Diese bewussten Entscheidungen können im Alltag für sich genommen sehr klein und unbedeutend aussehen, doch in ihrer Kombination sind sie auf einmal sehr mächtig. Im Restaurant bestelle ich heute immer Wasser und keine Cola. Fruchtsaft trinke ich grundsätzlich nicht mehr. Ich esse gern Süßigkeiten, aber ich schaffe es auch, daran vorbeizulaufen, wenn ich sie gerade nicht für nötig erachte. Und wenn etwas sehr gut schmeckt, kann ich aufhören, wenn ich satt bin.
+
+Möglich wurde das durch einen Wandel in meiner Haltung mir selbst gegenüber: welcher Mensch ich bin und welches Selbstwertgefühl und Körpergefühl mir zusteht. Heute bin ich mit mir und meinem Verhältnis zu Essen und Körper sehr zufrieden.
+
+## Warum trägt eine Who-to-be-Liste mehr als ein Vorsatz?
+
+Eine Who-to-be-Liste beschreibt, wer du sein willst. Sie besteht aus Sätzen wie „Ich bin ein Mensch, der auf sich selbst achtgibt“ oder „Ich bin ein Mensch, der freundlich mit anderen umgeht“. Weil ein solcher Satz nie nach einer einzelnen Tat erledigt ist, wirkt er wie ein Kompass, an dem du viele kleine Entscheidungen ausrichtest, vom Getränk im Restaurant bis zur Frage, ob du heute noch eine Runde spazieren gehst oder die Stufen nimmst statt der Rolltreppe.
+
+Wichtig ist, dass du formulierst, was du tun willst, damit du weißt, worauf du hinarbeitest. In einer schwedischen Studie mit über 1.000 Teilnehmenden hielten sich nach einem Jahr 58,9 Prozent der Menschen, die etwas Neues anfangen wollten, für erfolgreich. Von denen, die etwas lassen wollten, waren es 47,1 Prozent. „Ich bin jemand, der im Restaurant Wasser bestellt“ hält also weiter als „Ich trinke keine Cola mehr“.
+
+![Journalseite „Mein Kompass für das neue Jahr“ mit Feldern für Werte, Lebensgefühl und drei Sätze, wer du sein willst](../assets/journal-seiten/05-kompass.jpg)
+
+*Im Journal kommt deine Who-to-be-Liste auf eine Kompass-Seite, die dich durch das Jahr begleitet.*
+
+## Welche Beispiele gibt es für gute Vorsätze?
+
+So sehen Beispielsätze aus meiner eigenen Who-to-be-Liste aus:
+
+- Ich bin jemand, der sich bei alten Freunden meldet, auch wenn wir ein Jahr lang nichts voneinander gehört haben.
+- Ich bin ein Mensch, der Fremde mit einem Lächeln begrüßt.
+- Ich bin ein Mensch, der seinen Kindern aufmerksam zuhört.
+- Ich bin ein Mensch, der sich aktiv Zeit für kreative Projekte nimmt.
+- Ich bin ein Mensch, der im Berufsleben selbstsicher seinen Standpunkt vertritt.
+- Ich bin ein Mensch, der sich im Alltag Genuss gönnt.
+
+Jeder Satz beschreibt etwas, das man an mir sehen kann (mehr oder weniger, denn sie sind die Richtung, in die ich mich Stück für Stück bewegen möchte). Für deine eigene Liste nimmst du einen klassischen Vorsatz und fragst dich, woran man ihn im Alltag erkennen würde. Aus „mehr Sport“ wird dann zum Beispiel „Ich bin jemand, der dienstags und donnerstags eine Stunde Krafttraining macht“.
+
+Drei bis sieben solcher Sätze reichen. Sie dürfen vorläufig sein, weil du sie im Laufe des Jahres nachschärfst.
+
+## Was tun, wenn du einen Tag auslässt?
+
+Ein einziger Ausrutscher heißt nicht, dass du ein anderer Mensch bist oder gescheitert bist. Du richtest dich am nächsten Tag wieder danach aus, wonach du strebst und wer du sein möchtest.
+
+Das passt zu dem, was die Forschung über Gewohnheiten weiß: In einer Studie am University College London brauchte eine neue Gewohnheit im Mittel 66 Tage, bis sie sich automatisch anfühlte, je nach Mensch zwischen 18 und 254 Tagen. Ein einzelner ausgelassener Tag hat den Aufbau dabei kaum gebremst.
+
+## Wie kommst du vom Satz zum ersten Schritt?
+
+Aus jedem Satz deiner Who-to-be-Liste machst du einen Wenn-dann-Plan, damit klar ist, wann und wo du den Satz lebst: „Wenn ich vom Abendessen aufstehe, dann ziehe ich die Schuhe an und gehe eine Runde um den Block.“ Dass solche Pläne helfen, Vorhaben umzusetzen, zeigt eine Übersichtsarbeit von Peter Gollwitzer und Paschal Sheeran über viele Studien.
+
+Im ersten Wenn-dann-Plan legst du einen ersten Schritt fest, der höchstens 30 Minuten dauert, und machst ihn in den nächsten 72 Stunden, damit aus dem Satz schnell eine erste Erfahrung wird. Du musst dafür nicht bis Silvester warten. Forschende nennen das den Neuanfangseffekt: Ein Jahreswechsel, ein Geburtstag oder ein Monatsanfang, oder sogar ein zufällig ausgewählter Montag, machen es leichter, mit etwas Neuem zu beginnen. Jeder dieser Tage ist ein guter Startpunkt.
